@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FiltersViewController.h"
 
-@interface ViewController : UIViewController
+@interface CoursesViewController : UIViewController <FiltersViewControllerDelegate>
 
 
 @end

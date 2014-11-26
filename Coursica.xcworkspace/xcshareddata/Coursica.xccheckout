@@ -12,6 +12,8 @@
 	<dict>
 		<key>373939BF6574798C9295D8E6E9BE34B3393DAC17</key>
 		<string>https://github.com/ReganBell/coursica.git</string>
+		<key>C98F34640CDAF8C591AEB91EEF768A6198C4416E</key>
+		<string>https://github.com/topfunky/hpple.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Coursica.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>373939BF6574798C9295D8E6E9BE34B3393DAC17</key>
 		<string>..</string>
+		<key>C98F34640CDAF8C591AEB91EEF768A6198C4416E</key>
+		<string>../Coursica/hpple</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/ReganBell/coursica.git</string>
@@ -35,6 +39,14 @@
 			<string>373939BF6574798C9295D8E6E9BE34B3393DAC17</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Coursica</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C98F34640CDAF8C591AEB91EEF768A6198C4416E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>hpple</string>
 		</dict>
 	</array>
 </dict>

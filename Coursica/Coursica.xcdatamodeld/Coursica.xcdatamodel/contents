@@ -5,6 +5,7 @@
         <attribute name="catalogNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="courseDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="field" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="graduate" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prereqs" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,9 +39,9 @@
         <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="meetings" inverseEntity="Course" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Course" positionX="-63" positionY="-18" width="128" height="238"/>
+        <element name="Course" positionX="-63" positionY="-18" width="128" height="253"/>
         <element name="Faculty" positionX="-54" positionY="45" width="128" height="133"/>
-        <element name="Meeting" positionX="-36" positionY="72" width="128" height="133"/>
         <element name="Location" positionX="-18" positionY="90" width="128" height="103"/>
+        <element name="Meeting" positionX="-36" positionY="72" width="128" height="133"/>
     </elements>
 </model>

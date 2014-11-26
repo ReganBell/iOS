@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * catalogNumber;
 @property (nonatomic, retain) NSString * term;
 @property (nonatomic, retain) NSNumber * bracketed;
+@property (nonatomic, retain) NSNumber * graduate;
 @property (nonatomic, retain) NSString * field;
 @property (nonatomic, retain) NSString * number;
 @property (nonatomic, retain) NSString * title;
@@ -49,5 +50,7 @@
 - (void)removeMeetingsObject:(NSManagedObject *)value;
 - (void)addMeetings:(NSSet *)values;
 - (void)removeMeetings:(NSSet *)values;
+
++ (void)updateCourses:(NSArray*)serverCourses;
 
 @end

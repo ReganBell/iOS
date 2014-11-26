@@ -10,7 +10,7 @@
 		596076B21A1000710038D4F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B11A1000710038D4F4 /* main.m */; };
 		596076B51A1000710038D4F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B41A1000710038D4F4 /* AppDelegate.m */; };
 		596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */; };
-		596076BB1A1000710038D4F4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076BA1A1000710038D4F4 /* ViewController.m */; };
+		596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076BA1A1000710038D4F4 /* CoursesViewController.m */; };
 		596076BE1A1000710038D4F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 596076BC1A1000710038D4F4 /* Main.storyboard */; };
 		596076C01A1000710038D4F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596076BF1A1000710038D4F4 /* Images.xcassets */; };
 		596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596076C11A1000710038D4F4 /* LaunchScreen.xib */; };
@@ -19,6 +19,11 @@
 		598CAB321A22C7EC008D0142 /* Meeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB311A22C7EC008D0142 /* Meeting.m */; };
 		598CAB351A22C7EC008D0142 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB341A22C7EC008D0142 /* Location.m */; };
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
+		598CAB3C1A22F30E008D0142 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB3B1A22F30E008D0142 /* InitialViewController.m */; };
+		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
+		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
+		59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */ = {isa = PBXBuildFile; fileRef = 59F51C6B1A254E3D0025E021 /* SampleAPIResponse */; };
+		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
 		98953491A049209DE0D8879E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB15AF7ACAD399D3133E341B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -40,8 +45,8 @@
 		596076B31A1000710038D4F4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		596076B41A1000710038D4F4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		596076B71A1000710038D4F4 /* Coursica.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Coursica.xcdatamodel; sourceTree = "<group>"; };
-		596076B91A1000710038D4F4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		596076BA1A1000710038D4F4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		596076B91A1000710038D4F4 /* CoursesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoursesViewController.h; sourceTree = "<group>"; };
+		596076BA1A1000710038D4F4 /* CoursesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoursesViewController.m; sourceTree = "<group>"; };
 		596076BD1A1000710038D4F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		596076BF1A1000710038D4F4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		596076C21A1000710038D4F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -56,6 +61,15 @@
 		598CAB341A22C7EC008D0142 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		598CAB361A22C7EC008D0142 /* Faculty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Faculty.h; sourceTree = "<group>"; };
 		598CAB371A22C7EC008D0142 /* Faculty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Faculty.m; sourceTree = "<group>"; };
+		598CAB3A1A22F30E008D0142 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		598CAB3B1A22F30E008D0142 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
+		598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		598CAB8A1A23CB57008D0142 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
+		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
+		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
+		59F51C6D1A2572C00025E021 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		59F51C6E1A2572C00025E021 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		DB15AF7ACAD399D3133E341B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */,
 				98953491A049209DE0D8879E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,9 +119,16 @@
 			children = (
 				596076B31A1000710038D4F4 /* AppDelegate.h */,
 				596076B41A1000710038D4F4 /* AppDelegate.m */,
-				596076B91A1000710038D4F4 /* ViewController.h */,
-				596076BA1A1000710038D4F4 /* ViewController.m */,
+				596076B91A1000710038D4F4 /* CoursesViewController.h */,
+				596076BA1A1000710038D4F4 /* CoursesViewController.m */,
+				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
+				59F51C6E1A2572C00025E021 /* DetailViewController.m */,
+				59F51C6B1A254E3D0025E021 /* SampleAPIResponse */,
+				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
+				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
+				598CAB3A1A22F30E008D0142 /* InitialViewController.h */,
+				598CAB3B1A22F30E008D0142 /* InitialViewController.m */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
 				596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */,
@@ -169,6 +191,8 @@
 		8A6560E31125F0C1D79FF9F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				598CAB8A1A23CB57008D0142 /* libxml2.dylib */,
+				598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */,
 				DB15AF7ACAD399D3133E341B /* libPods.a */,
 			);
 			name = Frameworks;
@@ -256,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
@@ -309,12 +334,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
+				598CAB3C1A22F30E008D0142 /* InitialViewController.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
 				598CAB351A22C7EC008D0142 /* Location.m in Sources */,
 				598CAB321A22C7EC008D0142 /* Meeting.m in Sources */,
+				59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */,
 				596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
-				596076BB1A1000710038D4F4 /* ViewController.m in Sources */,
+				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
 				598CAB2F1A22C7EA008D0142 /* Course.m in Sources */,
 			);
@@ -392,6 +420,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -427,6 +459,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -439,6 +475,12 @@
 			baseConfigurationReference = F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MMDrawerController\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = Coursica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -450,6 +492,12 @@
 			baseConfigurationReference = 042A5F06587ECF071CB434D7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MMDrawerController\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = Coursica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
