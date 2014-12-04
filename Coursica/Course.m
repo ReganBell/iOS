@@ -98,6 +98,12 @@
             [newCourse addLocationsObject:newLocation];
         }
     }
+    
+    NSError *error = nil;
+    [context save:&error];
+    if (error) {
+        NSLog(@"Error saving context: %@", error);
+    }
 }
 
 @end
