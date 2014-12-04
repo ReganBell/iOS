@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
+		595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F11A2E7201000ABAD8 /* QCourseOverall.csv */; };
+		595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F31A2E7214000ABAD8 /* QDifficulty.csv */; };
+		595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F41A2E7214000ABAD8 /* Qinstructors.csv */; };
+		595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F51A2E7214000ABAD8 /* QWorkload.csv */; };
+		595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FA1A2E74B9000ABAD8 /* QComment.m */; };
+		595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FD1A2E74B9000ABAD8 /* QScore.m */; };
+		595576011A2E79BF000ABAD8 /* QDataParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */; };
 		596076B21A1000710038D4F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B11A1000710038D4F4 /* main.m */; };
 		596076B51A1000710038D4F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B41A1000710038D4F4 /* AppDelegate.m */; };
 		596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */; };
@@ -39,6 +47,17 @@
 
 /* Begin PBXFileReference section */
 		042A5F06587ECF071CB434D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		595575EF1A2E71F8000ABAD8 /* Qcomments.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qcomments.csv; sourceTree = "<group>"; };
+		595575F11A2E7201000ABAD8 /* QCourseOverall.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QCourseOverall.csv; sourceTree = "<group>"; };
+		595575F31A2E7214000ABAD8 /* QDifficulty.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QDifficulty.csv; sourceTree = "<group>"; };
+		595575F41A2E7214000ABAD8 /* Qinstructors.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qinstructors.csv; sourceTree = "<group>"; };
+		595575F51A2E7214000ABAD8 /* QWorkload.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QWorkload.csv; sourceTree = "<group>"; };
+		595575F91A2E74B9000ABAD8 /* QComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QComment.h; sourceTree = "<group>"; };
+		595575FA1A2E74B9000ABAD8 /* QComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QComment.m; sourceTree = "<group>"; };
+		595575FC1A2E74B9000ABAD8 /* QScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QScore.h; sourceTree = "<group>"; };
+		595575FD1A2E74B9000ABAD8 /* QScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QScore.m; sourceTree = "<group>"; };
+		595575FF1A2E79BE000ABAD8 /* QDataParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDataParserDelegate.h; sourceTree = "<group>"; };
+		595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDataParserDelegate.m; sourceTree = "<group>"; };
 		596076AC1A1000700038D4F4 /* Coursica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coursica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596076B01A1000700038D4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596076B11A1000710038D4F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -117,8 +136,15 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
+				595575EF1A2E71F8000ABAD8 /* Qcomments.csv */,
+				595575F11A2E7201000ABAD8 /* QCourseOverall.csv */,
+				595575F31A2E7214000ABAD8 /* QDifficulty.csv */,
+				595575F41A2E7214000ABAD8 /* Qinstructors.csv */,
+				595575F51A2E7214000ABAD8 /* QWorkload.csv */,
 				596076B31A1000710038D4F4 /* AppDelegate.h */,
 				596076B41A1000710038D4F4 /* AppDelegate.m */,
+				595575FF1A2E79BE000ABAD8 /* QDataParserDelegate.h */,
+				595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */,
 				596076B91A1000710038D4F4 /* CoursesViewController.h */,
 				596076BA1A1000710038D4F4 /* CoursesViewController.m */,
 				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
@@ -175,6 +201,10 @@
 				598CAB311A22C7EC008D0142 /* Meeting.m */,
 				598CAB2D1A22C7EA008D0142 /* Course.h */,
 				598CAB2E1A22C7EA008D0142 /* Course.m */,
+				595575FC1A2E74B9000ABAD8 /* QScore.h */,
+				595575FD1A2E74B9000ABAD8 /* QScore.m */,
+				595575F91A2E74B9000ABAD8 /* QComment.h */,
+				595575FA1A2E74B9000ABAD8 /* QComment.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -280,9 +310,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */,
 				59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
+				595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */,
+				595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */,
+				595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */,
+				595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,13 +371,16 @@
 			files = (
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
 				598CAB3C1A22F30E008D0142 /* InitialViewController.m in Sources */,
+				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
 				598CAB351A22C7EC008D0142 /* Location.m in Sources */,
+				595576011A2E79BF000ABAD8 /* QDataParserDelegate.m in Sources */,
 				598CAB321A22C7EC008D0142 /* Meeting.m in Sources */,
 				59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */,
 				596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
+				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
 				598CAB2F1A22C7EA008D0142 /* Course.m in Sources */,
 			);

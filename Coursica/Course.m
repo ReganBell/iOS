@@ -11,6 +11,7 @@
 #import "Meeting.h"
 #import "Location.h"
 #import "AppDelegate.h"
+#import "CHCSVParser.h"
 
 @implementation Course
 
@@ -43,7 +44,7 @@
     for (NSDictionary *courseDict in serverCourses) {
         
         Course *newCourse = [[Course alloc] initWithEntity:courseEntity insertIntoManagedObjectContext:context];
-        newCourse.catalogNumber = courseDict[@"cat_num"];
+        newCourse.catalogNumber = [formatter numberFromString:courseDict[@"cat_num"]];
         newCourse.term = courseDict[@"term"];
         newCourse.bracketed = courseDict[@"bracketed"];
         newCourse.field = courseDict[@"field"];

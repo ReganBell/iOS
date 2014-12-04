@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CHCSVParser (2.1.0)
   - MMDrawerController (0.5.7):
     - MMDrawerController/Core (= 0.5.7)
     - MMDrawerController/MMDrawerBarButtonItem (= 0.5.7)
@@ -35,10 +36,12 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CHCSVParser
   - MMDrawerController (~> 0.5.7)
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  CHCSVParser: 1ebc9783114707e2b6f83b20fe0f246eb2fabae0
   MMDrawerController: c3ab7a318ddc7e2bcd133139c3161af08c6e1197
 
 COCOAPODS: 0.35.0

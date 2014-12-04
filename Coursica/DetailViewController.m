@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "Course.h"
+#import "AppDelegate.h"
 
 @interface DetailViewController ()
 
@@ -22,6 +23,14 @@
     [super viewDidLoad];
 
     self.titleLabel.text = [NSString stringWithFormat:@"%@ %@ - %@", self.course.field, self.course.number, self.course.title];
+
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
+    request.predicate = [NSPredicate predicateWithFormat:@"catalogNumber = %@", self.course.catalogNumber];
+    NSArray *scores = [context executeFetchRequest:request error:nil];
+    //
 }
 
 - (void)didReceiveMemoryWarning {

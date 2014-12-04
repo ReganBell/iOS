@@ -13,7 +13,7 @@
 
 @interface Course : NSManagedObject
 
-@property (nonatomic, retain) NSString * catalogNumber;
+@property (nonatomic, retain) NSNumber * catalogNumber;
 @property (nonatomic, retain) NSString * term;
 @property (nonatomic, retain) NSNumber * bracketed;
 @property (nonatomic, retain) NSNumber * graduate;
@@ -52,5 +52,6 @@
 - (void)removeMeetings:(NSSet *)values;
 
 + (void)updateCourses:(NSArray*)serverCourses;
++ (void)updateQData;
 
 @end

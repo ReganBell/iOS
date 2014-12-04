@@ -10,7 +10,8 @@
 #import "MMDrawerController.h"
 #import "CoursesViewController.h"
 #import "FiltersViewController.h"
-#import "TheScrapist.h"
+#import "CHCSVParser.h"
+#import "QDataParserDelegate.h"
 
 @interface AppDelegate ()
 
@@ -23,8 +24,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-//    [TheScrapist getFieldLinks];
     
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
@@ -68,6 +67,18 @@
 //        [self.window setTintColor:tintColor];
 //    }
     [self.window setRootViewController:self.drawerController];
+    
+    QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
+    [commentDelegate updateQDataInMode:kModeComment];
+    
+    QDataParserDelegate *difficultyDelegate = [[QDataParserDelegate alloc] init];
+    [difficultyDelegate updateQDataInMode:kModeScoreDifficulty];
+    
+    QDataParserDelegate *overallDelegate = [[QDataParserDelegate alloc] init];
+    [overallDelegate updateQDataInMode:kModeScoreOverall];
+    
+    QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
+    [workloadDelegate updateQDataInMode:KModeScoreWorkload];
     
     return YES;
 }

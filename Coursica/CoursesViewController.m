@@ -11,6 +11,8 @@
 #import "Course.h"
 #import "AppDelegate.h"
 #import "DetailViewController.h"
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
 
 @interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -29,14 +31,23 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
     [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        [Course updateCourses: responseObject];
+        [Course updateCourses:responseObject];
+        
         [self.tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error fetching lists: %@", error);
     }];
     
-    // Do any additional setup after loading the view, typically from a nib.
+    MMDrawerBarButtonItem *barButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(openFilters)];
+    barButtonItem.tintColor = [UIColor blueColor];
+    [self.navigationController.navigationItem setLeftBarButtonItem:barButtonItem];
+}
+
+- (void)openFilters {
+    
+    MMDrawerController *drawer = [self mm_drawerController];
+    [drawer openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 #pragma mark - NSFetchedResultsController Delegate
