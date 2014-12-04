@@ -168,4 +168,12 @@
     }
 }
 
+- (void)parserDidEndDocument:(CHCSVParser *)parser {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    NSError *error = nil;
+    [context save:&error];
+}
+
 @end

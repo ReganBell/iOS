@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CHCSVParser (2.1.0)
-- FrameAccessor (1.3.2)
+  - FrameAccessor (1.3.2)
   - GraphKit (1.0.0):
     - FrameAccessor (~> 1.3.2)
     - MKFoundationKit/NSArray (~> 1.2.2)

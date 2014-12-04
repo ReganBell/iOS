@@ -27,19 +27,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
-    [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                
-        //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
-        //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    
+    if (count == 0) {
         
-        [Course updateCourses: responseObject];
-        [self.tableView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error fetching lists: %@", error);
-    }];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+        [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
+            //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
+            
+            [Course updateCourses: responseObject];
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error fetching lists: %@", error);
+        }];
+    }
     
     MMDrawerBarButtonItem *barButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(openFilters)];
     barButtonItem.tintColor = [UIColor blueColor];

@@ -140,7 +140,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Coursica.sqlite"];
     
     //Uncomment to delete store:
-    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";

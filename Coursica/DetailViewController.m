@@ -35,7 +35,8 @@
     
     //[(UIScrollView *)self.view setContentSize:CGSizeMake(320, 1000)];
 
-    self.titleLabel.text = [NSString stringWithFormat:@"%@ %@ - %@", self.course.field, self.course.number, self.course.title];
+    self.title = [NSString stringWithFormat:@"%@ %@", self.course.field, self.course.number];
+    self.titleLabel.text = self.course.title;
 
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = [delegate managedObjectContext];
@@ -43,7 +44,7 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
     request.predicate = [NSPredicate predicateWithFormat:@"catalogNumber = %@", self.course.catalogNumber];
     NSArray *scores = [context executeFetchRequest:request error:nil];
-    //
+    
     self.titleLabel.text = [NSString stringWithFormat:@"%@ %@ \n %@", self.course.field, self.course.number, self.course.title];
     
     self.textView.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];

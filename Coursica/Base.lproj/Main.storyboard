@@ -134,53 +134,76 @@
                         <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edL-FG-Itv">
-                                <rect key="frame" x="20" y="124" width="460" height="170"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gM-Wv-JDV">
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CDo-tX-SN7">
+                                        <rect key="frame" x="0.0" y="0.0" width="525" height="634"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edL-FG-Itv">
+                                                <rect key="frame" x="34" y="138" width="460" height="170"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="170" id="mVg-tt-maM"/>
+                                                </constraints>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FDz-24-XgI" customClass="GKBarGraph">
+                                                <rect key="frame" x="96" y="341" width="332" height="223"/>
+                                                <color key="backgroundColor" red="0.94174163510101006" green="0.94174163510101006" blue="0.94174163510101006" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="The Fluid Earth: Oceans, Atmosphere, Climate, and Environment" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKU-dT-ecA">
+                                                <rect key="frame" x="20" y="20" width="485" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="jzv-2k-sk6"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.21772907840615838" green="0.3658750523933107" blue="0.64723405934343436" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Instructor:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cee-kz-83m">
+                                                <rect key="frame" x="34" y="277" width="226" height="80"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" red="0.16862745098039217" green="0.27843137254901962" blue="0.58039215686274515" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="edL-FG-Itv" secondAttribute="bottom" constant="326" id="20a-dW-X0g"/>
+                                            <constraint firstAttribute="trailing" secondItem="rKU-dT-ecA" secondAttribute="trailing" constant="20" id="8df-QX-NK4"/>
+                                            <constraint firstAttribute="trailing" secondItem="edL-FG-Itv" secondAttribute="trailing" constant="31" id="AgN-t3-m53"/>
+                                            <constraint firstItem="edL-FG-Itv" firstAttribute="leading" secondItem="CDo-tX-SN7" secondAttribute="leading" constant="34" id="AyZ-Cm-jde"/>
+                                            <constraint firstItem="Cee-kz-83m" firstAttribute="top" secondItem="CDo-tX-SN7" secondAttribute="top" constant="277" id="HnQ-4c-N7a"/>
+                                            <constraint firstAttribute="trailing" secondItem="Cee-kz-83m" secondAttribute="trailing" constant="265" id="J9p-Qj-nDt"/>
+                                            <constraint firstAttribute="trailing" secondItem="FDz-24-XgI" secondAttribute="trailing" constant="127" id="Snv-kx-dhK"/>
+                                            <constraint firstItem="Cee-kz-83m" firstAttribute="leading" secondItem="CDo-tX-SN7" secondAttribute="leading" constant="34" id="Xnb-FC-tsY"/>
+                                            <constraint firstItem="rKU-dT-ecA" firstAttribute="top" secondItem="CDo-tX-SN7" secondAttribute="top" constant="20" id="ZtO-RF-mNC"/>
+                                            <constraint firstItem="FDz-24-XgI" firstAttribute="leading" secondItem="CDo-tX-SN7" secondAttribute="leading" constant="126" id="clC-1m-neK"/>
+                                            <constraint firstAttribute="bottom" secondItem="Cee-kz-83m" secondAttribute="bottom" constant="277" id="d3b-9w-BLj"/>
+                                            <constraint firstItem="FDz-24-XgI" firstAttribute="top" secondItem="CDo-tX-SN7" secondAttribute="top" constant="341" id="fJb-PX-Eu7"/>
+                                            <constraint firstAttribute="bottom" secondItem="FDz-24-XgI" secondAttribute="bottom" constant="70" id="tzq-ZM-lGN"/>
+                                            <constraint firstItem="edL-FG-Itv" firstAttribute="top" secondItem="CDo-tX-SN7" secondAttribute="top" constant="138" id="uC2-Tf-kDl"/>
+                                            <constraint firstItem="rKU-dT-ecA" firstAttribute="leading" secondItem="CDo-tX-SN7" secondAttribute="leading" constant="20" id="y5Z-7H-dal"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="170" id="mVg-tt-maM"/>
+                                    <constraint firstItem="CDo-tX-SN7" firstAttribute="top" secondItem="4gM-Wv-JDV" secondAttribute="top" id="e1K-Do-J6b"/>
+                                    <constraint firstItem="CDo-tX-SN7" firstAttribute="leading" secondItem="4gM-Wv-JDV" secondAttribute="leading" id="hGo-OV-8iS"/>
+                                    <constraint firstAttribute="trailing" secondItem="CDo-tX-SN7" secondAttribute="trailing" constant="-25" id="r7p-IT-g1S"/>
+                                    <constraint firstAttribute="bottom" secondItem="CDo-tX-SN7" secondAttribute="bottom" constant="-34" id="xXM-7N-OVu"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Instructor:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cee-kz-83m">
-                                <rect key="frame" x="16" y="321" width="226" height="80"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.16862745098039217" green="0.27843137254901962" blue="0.58039215686274515" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FDz-24-XgI" customClass="GKBarGraph">
-                                <rect key="frame" x="90" y="398" width="320" height="202"/>
-                                <color key="backgroundColor" red="0.94174163510101006" green="0.94174163510101006" blue="0.94174163510101006" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course info goes here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKU-dT-ecA">
-                                <rect key="frame" x="20" y="6" width="460" height="101"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="460" id="37R-28-hGC"/>
-                                    <constraint firstAttribute="height" constant="101" id="jzv-2k-sk6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.21772907840615838" green="0.3658750523933107" blue="0.64723405934343436" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="rKU-dT-ecA" secondAttribute="trailing" constant="20" id="E6k-zA-XIv"/>
-                            <constraint firstItem="rKU-dT-ecA" firstAttribute="top" secondItem="afS-9L-A8N" secondAttribute="top" constant="6" id="Ela-5n-SWB"/>
-                            <constraint firstAttribute="centerX" secondItem="edL-FG-Itv" secondAttribute="centerX" id="Ewd-iJ-2jx"/>
-                            <constraint firstItem="edL-FG-Itv" firstAttribute="leading" secondItem="afS-9L-A8N" secondAttribute="leading" constant="20" id="HpZ-C2-Ucn"/>
-                            <constraint firstItem="rKU-dT-ecA" firstAttribute="leading" secondItem="afS-9L-A8N" secondAttribute="leading" constant="20" id="KiZ-iD-ehB"/>
-                            <constraint firstAttribute="centerX" secondItem="rKU-dT-ecA" secondAttribute="centerX" id="L4L-oN-HJq"/>
-                            <constraint firstItem="Cee-kz-83m" firstAttribute="top" secondItem="afS-9L-A8N" secondAttribute="top" constant="310" id="NmX-w7-3Js"/>
-                            <constraint firstItem="FDz-24-XgI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="afS-9L-A8N" secondAttribute="leading" constant="20" id="OWm-3M-gr5"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FDz-24-XgI" secondAttribute="trailing" constant="20" id="RpF-wJ-wNM"/>
-                            <constraint firstItem="edL-FG-Itv" firstAttribute="top" secondItem="afS-9L-A8N" secondAttribute="top" constant="124" id="X4f-kn-4m4"/>
-                            <constraint firstAttribute="trailing" secondItem="edL-FG-Itv" secondAttribute="trailing" constant="20" id="cRt-YF-srP"/>
-                            <constraint firstItem="FDz-24-XgI" firstAttribute="top" secondItem="afS-9L-A8N" secondAttribute="top" constant="374" id="n5M-rz-Roi"/>
-                            <constraint firstAttribute="trailing" secondItem="Cee-kz-83m" secondAttribute="trailing" constant="183" id="q6n-Ut-9Qk"/>
-                            <constraint firstItem="Cee-kz-83m" firstAttribute="leading" secondItem="afS-9L-A8N" secondAttribute="leading" constant="16" id="vTz-mj-Tgk"/>
+                            <constraint firstItem="4gM-Wv-JDV" firstAttribute="top" secondItem="afS-9L-A8N" secondAttribute="top" id="7d8-WG-OP9"/>
+                            <constraint firstAttribute="bottom" secondItem="4gM-Wv-JDV" secondAttribute="bottom" id="A3p-SU-538"/>
+                            <constraint firstAttribute="trailing" secondItem="4gM-Wv-JDV" secondAttribute="trailing" id="Rbk-6n-Mv8"/>
+                            <constraint firstItem="4gM-Wv-JDV" firstAttribute="leading" secondItem="afS-9L-A8N" secondAttribute="leading" id="W17-a3-yxe"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
