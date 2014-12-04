@@ -91,6 +91,7 @@
         for (NSDictionary *location in courseDict[@"locations"]) {
             
             Location *newLocation = [[Location alloc] initWithEntity:locationEntity insertIntoManagedObjectContext:context];
+            NSLog(@"%@", newLocation);
             newLocation.type = location[@"type"];
             newLocation.building = location[@"building"];
             newLocation.room = location[@"room"];

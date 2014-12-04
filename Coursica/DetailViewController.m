@@ -19,7 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *uiTextView;
 
-@property (weak, nonatomic) IBOutlet UILabel *courseInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *courseInstructorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *courseMeetingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *courseLocationLabel;
+
 
 @property (nonatomic, weak) IBOutlet GKBarGraph *graphView;
 @property (nonatomic, assign) BOOL green;
@@ -33,33 +36,93 @@
     [super viewDidLoad];
     
     //[(UIScrollView *)self.view setContentSize:CGSizeMake(320, 1000)];
+    
+    self.title = [NSString stringWithFormat:@"%@ %@", self.course.field, self.course.number];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor colorWithRed:56.0/255.0 green:93.0/255.0 blue:165.0/255.0 alpha:1] forKey:UITextAttributeTextColor]];
 
-    self.titleLabel.text = [NSString stringWithFormat:@"%@ %@ \n %@", self.course.field, self.course.number, self.course.title];
+    self.titleLabel.text = [NSString stringWithFormat:@"%@", self.course.title];
     
     self.uiTextView.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];
     
     [self.uiTextView setEditable:NO];
     
-    NSMutableString *facultyString;
+    NSMutableString *facultyString = [NSMutableString new];
     
-    for (Faculty *faculty in self.course.faculty) {
-        [facultyString stringByAppendingFormat:@"%@ %@, ", faculty.first, faculty.last];
+    if (![self.course.faculty count] == 0)
+    {
+        for (Faculty *faculty in self.course.faculty)
+        {
+            [facultyString appendFormat:@"%@ %@ ", faculty.first, faculty.last];
+        }
+    }
+    else
+    {
+        [facultyString appendString:@"TBD"];
     }
     
-    NSMutableString *meetingString;
+    NSMutableString *meetingString = [NSMutableString new];
     
-    for (Meeting *meeting in self.course.meetings) {
-        [meetingString stringByAppendingFormat:@"%@ %@-%@, ", meeting.day, meeting.beginTime, meeting.endTime];
+    if (![self.course.meetings count] == 0)
+    {
+        NSString *dayString;
+        NSString *startTime;
+        NSString *endTime;
+        for (Meeting *meeting in self.course.meetings)
+        {
+            
+            switch ([meeting.day intValue])
+            {
+                case 0:
+                    dayString = @"Sun, ";
+                    break;
+                case 1:
+                    dayString = @"Mon, ";
+                    break;
+                case 2:
+                    dayString = @"Tues, ";
+                    break;
+                case 3:
+                    dayString = @"Wed, ";
+                    break;
+                case 4:
+                    dayString = @"Thurs, ";
+                    break;
+                case 5:
+                    dayString = @"Fri, ";
+                    break;
+                default:
+                    dayString = @"Sat, ";
+                    break;
+            }
+
+            [meetingString appendFormat:@"%@ ", dayString];
+            startTime = meeting.beginTime;
+            endTime = meeting.endTime;
+        }
+        [meetingString appendFormat:@"%@ - %@", startTime, endTime];
+    }
+    else
+    {
+        [meetingString appendString:@"TBD"];
     }
     
-    NSMutableString *locationString;
-    
-    for (Location *location in self.course.locations) {
-        [locationString stringByAppendingFormat:@"%@ %@", location.building, location.room];
+    NSMutableString *locationString = [NSMutableString new];
+    NSLog(@"%@", self.course.locations);
+    if (![self.course.locations count] == 0)
+    {
+        for (Location *location in self.course.locations)
+        {
+            [locationString appendFormat:@"%@ %@", location.building, location.room];
+        }
+    }
+    else
+    {
+        [locationString appendString:@"TBD"];
     }
     
-    self.courseInfoLabel.text = [NSString stringWithFormat:@"Instructor: testing\nMeeting Time: %@\nLocation: %@", meetingString, locationString];
-    
+    self.courseInstructorLabel.text = [NSString stringWithFormat:@"Instructor: %@", facultyString];
+    self.courseMeetingLabel.text = [NSString stringWithFormat:@"Meeting Time: %@", meetingString];
+    self.courseLocationLabel.text = [NSString stringWithFormat:@"Location: %@", locationString];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
