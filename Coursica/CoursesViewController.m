@@ -29,6 +29,10 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
     [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        
+        //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
+        //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
+        
         [Course updateCourses: responseObject];
         [self.tableView reloadData];
         

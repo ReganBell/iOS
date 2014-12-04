@@ -23,4 +23,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *graduateSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *graduateLabel;
 
+@property (weak, nonatomic) IBOutlet UISwitch *testSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *testLabel;
+
 @end

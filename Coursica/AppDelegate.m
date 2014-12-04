@@ -10,7 +10,6 @@
 #import "MMDrawerController.h"
 #import "CoursesViewController.h"
 #import "FiltersViewController.h"
-#import "TheScrapist.h"
 
 @interface AppDelegate ()
 
