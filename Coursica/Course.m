@@ -41,6 +41,24 @@
     
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     
+    NSDictionary *genEds = @{@"Aesthetic and Interpretive Understanding": @1,
+                             @"Culture and Belief": @2,
+                             @"Empirical and Mathematical Reasoning": @3,
+                             @"Ethical Reasoning": @4,
+                             @"Science of Living Systems": @5,
+                             @"Science of the Physical Universe": @6,
+                             @"Societies of the World": @7,
+                             @"United States in the World": @8};
+    
+    NSDictionary *genEdAbbrvs = @{@"AESTH&INTP": @1,
+                             @"CULTR&BLF": @2,
+                             @"E&M-REASON": @3,
+                             @"ETH-REASON": @4,
+                             @"SCI-LIVSYS": @5,
+                             @"SCI-PHYUNV": @6,
+                             @"SOC-WORLD": @7,
+                             @"US-WORLD": @8};
+    
     for (NSDictionary *courseDict in serverCourses) {
         
         Course *newCourse = [[Course alloc] initWithEntity:courseEntity insertIntoManagedObjectContext:context];
@@ -53,6 +71,36 @@
         newCourse.title = courseDict[@"title"];
         newCourse.courseDescription = courseDict[@"description"];
         newCourse.notes = courseDict[@"notes"];
+        
+        int genEdsFound = 0;
+        NSNumber *fieldGenEd = nil;
+        
+        for (NSString *genEdAbbrv in genEdAbbrvs) {
+            if ([newCourse.field isEqualToString:genEdAbbrv]) {
+                newCourse.genEdOne = genEdAbbrvs[genEdAbbrv];
+                fieldGenEd = newCourse.genEdOne;
+                genEdsFound++;
+            }
+        }
+        
+        for (NSString *genEd in genEds) {
+            NSRange range = [newCourse.notes rangeOfString:genEd];
+            if (range.location != NSNotFound) {
+                NSNumber *genEdNum = genEds[genEd];
+                if (genEdNum.intValue == fieldGenEd.intValue) {
+                    continue;
+                }
+                if (genEdsFound == 0) {
+                    newCourse.genEdOne = genEdNum;
+                    genEdsFound++;
+                } else if (genEdsFound == 1) {
+                    newCourse.genEdTwo = genEdNum;
+                    genEdsFound++;
+                } else {
+                    NSLog(@"ALERT a course has more than two gen-eds");
+                }
+            }
+        }
         
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[0-9]+" options:0 error:nil];
         NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:newCourse.number options:0 range:NSMakeRange(0, [newCourse.number length])];
@@ -92,7 +140,6 @@
         for (NSDictionary *location in courseDict[@"locations"]) {
             
             Location *newLocation = [[Location alloc] initWithEntity:locationEntity insertIntoManagedObjectContext:context];
-            NSLog(@"%@", newLocation);
             newLocation.type = location[@"type"];
             newLocation.building = location[@"building"];
             newLocation.room = location[@"room"];

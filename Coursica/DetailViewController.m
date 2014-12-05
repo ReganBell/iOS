@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseInstructorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *courseMeetingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *courseLocationLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *courseInfoLabel;
 
 @property (nonatomic, weak) IBOutlet GKBarGraph *graphView;
 @property (nonatomic, assign) BOOL green;
@@ -37,6 +37,8 @@
     [super viewDidLoad];
     
     //[(UIScrollView *)self.view setContentSize:CGSizeMake(320, 1000)];
+    
+    NSLog(@"Gen Eds: %@, %@ - %@", self.course.genEdOne, self.course.genEdTwo, self.course.notes);
     
     self.title = [NSString stringWithFormat:@"%@ %@", self.course.field, self.course.number];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObject:[UIColor colorWithRed:56.0/255.0 green:93.0/255.0 blue:165.0/255.0 alpha:1] forKey:UITextAttributeTextColor]];
@@ -115,7 +117,7 @@
     }
     
     NSMutableString *locationString = [NSMutableString new];
-    NSLog(@"%@", self.course.locations);
+//    NSLog(@"%@", self.course.locations);
     if (![self.course.locations count] == 0)
     {
         for (Location *location in self.course.locations)

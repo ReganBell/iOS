@@ -84,6 +84,8 @@
 		598CAB3B1A22F30E008D0142 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		598CAB8A1A23CB57008D0142 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 2.xcdatamodel"; sourceTree = "<group>"; };
+		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
@@ -612,9 +614,11 @@
 		596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */,
+				59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */,
 				596076B71A1000710038D4F4 /* Coursica.xcdatamodel */,
 			);
-			currentVersion = 596076B71A1000710038D4F4 /* Coursica.xcdatamodel */;
+			currentVersion = 59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */;
 			path = Coursica.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

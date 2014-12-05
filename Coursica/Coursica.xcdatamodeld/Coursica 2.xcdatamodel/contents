@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B23" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Course" representedClassName="Course" syncable="YES">
+        <attribute name="bracketed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="catalogNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="courseDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="field" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genEdOne" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genEdTwo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="graduate" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prereqs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="term" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="faculty" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Faculty" inverseName="courses" inverseEntity="Faculty" syncable="YES"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="course" inverseEntity="Location" syncable="YES"/>
+        <relationship name="meetings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting" inverseName="course" inverseEntity="Meeting" syncable="YES"/>
+        <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="prerequisites" inverseEntity="Course" syncable="YES"/>
+    </entity>
+    <entity name="Faculty" representedClassName="Faculty" syncable="YES">
+        <attribute name="first" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="middle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="faculty" inverseEntity="Course" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES">
+        <attribute name="building" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="room" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="course" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="locations" inverseEntity="Course" syncable="YES"/>
+    </entity>
+    <entity name="Meeting" representedClassName="Meeting" syncable="YES">
+        <attribute name="beginTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="day" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="optional" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="meetings" inverseEntity="Course" syncable="YES"/>
+    </entity>
+    <entity name="QComment" representedClassName="QComment" syncable="YES">
+        <attribute name="catalogNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="term" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="QScore" representedClassName="QScore" syncable="YES">
+        <attribute name="catalogNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="five" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="four" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="one" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="three" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="two" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Course" positionX="-63" positionY="-18" width="128" height="285"/>
+        <element name="Faculty" positionX="-54" positionY="45" width="128" height="133"/>
+        <element name="Location" positionX="-18" positionY="90" width="128" height="103"/>
+        <element name="Meeting" positionX="-36" positionY="72" width="128" height="133"/>
+        <element name="QComment" positionX="-18" positionY="117" width="128" height="103"/>
+        <element name="QScore" positionX="-36" positionY="99" width="128" height="150"/>
+    </elements>
+</model>
