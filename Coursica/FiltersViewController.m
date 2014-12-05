@@ -21,10 +21,6 @@
     
 }
 
-
-- (IBAction)showCourses{
-}
-
 -(void)dismissFiltersViewController{
     [self dismissViewControllerAnimated:YES completion:nil];
 }

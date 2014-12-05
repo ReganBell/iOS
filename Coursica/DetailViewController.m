@@ -144,9 +144,6 @@
     
     self.green = YES;
     
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
