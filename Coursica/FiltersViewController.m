@@ -17,49 +17,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //self.automaticallyAdjustsScrollViewInsets = NO;
+    
 }
 
-- (IBAction)termSwitchedChanged:(UISwitch*)termSwitch {
-    
-    if (termSwitch.on) {
-        self.termLabel.text = @"Spring";
-        
-    } else {
-        self.termLabel.text = @"Fall";
-    }
-    
-    [self updateFilter];
+
+- (IBAction)showCourses{
 }
 
-- (IBAction)graduateSwitchChanged:(UISwitch*)graduateSwitch {
-    
-    if (graduateSwitch.on) {
-        self.graduateLabel.text = @"Graduate";
-    } else {
-        self.graduateLabel.text = @"Undergraduate";
-    }
-    
-    [self updateFilter];
-}
-
-- (void)updateFilter {
-    
-    NSPredicate *predicate = nil;
-    NSPredicate *newPredicate = [NSPredicate predicateWithFormat:@"term = %@", (self.termSwitch.on) ? @"SPRING" : @"FALL"];
-    if (!predicate) {
-        predicate = newPredicate;
-    } else {
-        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
-    }
-    
-    newPredicate = [NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:self.graduateSwitch.on]];
-    if (!predicate) {
-        predicate = newPredicate;
-    } else {
-        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
-    }
-    
-    [self.delegate filtersDidChange:predicate];
+-(void)dismissFiltersViewController{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

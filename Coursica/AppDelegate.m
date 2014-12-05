@@ -25,49 +25,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    FiltersViewController * filtersViewController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
-    
-    CoursesViewController * coursesViewController = [main instantiateInitialViewController];
-    
-    filtersViewController.delegate = coursesViewController;
-        
-    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:coursesViewController];
-    [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
-
-    UINavigationController * leftSideNavController = [[UINavigationController alloc] initWithRootViewController:filtersViewController];
-    [leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
-    self.drawerController = [[MMDrawerController alloc]
-                                 initWithCenterViewController:navigationController
-                                 leftDrawerViewController:filtersViewController
-                                 rightDrawerViewController:nil];
-    [self.drawerController setShowsShadow:NO];
-
-    [self.drawerController setRestorationIdentifier:@"MMDrawer"];
-    [self.drawerController setMaximumRightDrawerWidth:200.0];
-    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
-    [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
-    
-//    [self.drawerController
-//     setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
-//         MMDrawerControllerDrawerVisualStateBlock block;
-//         block = [[MMExampleDrawerVisualStateManager sharedManager]
-//                  drawerVisualStateBlockForDrawerSide:drawerSide];
-//         if(block){
-//             block(drawerController, drawerSide, percentVisible);
-//         }
-//     }];
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    if(OSVersionIsAtLeastiOS7()){
-//        UIColor * tintColor = [UIColor colorWithRed:29.0/255.0
-//                                              green:173.0/255.0
-//                                               blue:234.0/255.0
-//                                              alpha:1.0];
-//        [self.window setTintColor:tintColor];
-//    }
-    [self.window setRootViewController:self.drawerController];
-    
     QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
     [commentDelegate updateQDataInMode:kModeComment];
     
@@ -79,7 +36,7 @@
     
     QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
     [workloadDelegate updateQDataInMode:KModeScoreWorkload];
-    
+
     return YES;
 }
 

@@ -29,6 +29,8 @@
 @dynamic locations;
 @dynamic meetings;
 @dynamic graduate;
+@dynamic genEdOne;
+@dynamic genEdTwo;
 
 + (void)updateCourses:(NSArray *)serverCourses {
     

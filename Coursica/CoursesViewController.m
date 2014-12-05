@@ -11,8 +11,7 @@
 #import "Course.h"
 #import "AppDelegate.h"
 #import "DetailViewController.h"
-#import "MMDrawerBarButtonItem.h"
-#import "UIViewController+MMDrawerController.h"
+#import "FiltersViewController.h"
 
 @interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -47,16 +46,15 @@
             NSLog(@"Error fetching lists: %@", error);
         }];
     }
-    
-    MMDrawerBarButtonItem *barButtonItem = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(openFilters)];
-    barButtonItem.tintColor = [UIColor blueColor];
-    [self.navigationController.navigationItem setLeftBarButtonItem:barButtonItem];
 }
 
-- (void)openFilters {
+- (IBAction)showFilters{
     
-    MMDrawerController *drawer = [self mm_drawerController];
-    [drawer openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    FiltersViewController *filterController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
+    filterController.delegate = self;
+    [self presentViewController:filterController animated:YES completion:nil];
 }
 
 #pragma mark - NSFetchedResultsController Delegate
