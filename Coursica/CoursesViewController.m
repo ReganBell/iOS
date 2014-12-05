@@ -11,6 +11,7 @@
 #import "Course.h"
 #import "AppDelegate.h"
 #import "DetailViewController.h"
+#import "FiltersViewController.h"
 
 @interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -41,6 +42,20 @@
     }];
     
     // Do any additional setup after loading the view, typically from a nib.
+    
+    
+//    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Filters" style:UIBarButtonItemStylePlain target:self action:@selector(showFilters)];
+    //NSArray *barButtons = [NSArray arrayWithObject:barButton];
+    //self.navigationController.navigationItem.leftBarButtonItem = leftBarButton;
+}
+
+- (IBAction)showFilters{
+    
+    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    FiltersViewController *filterController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
+    filterController.delegate = self;
+    [self presentViewController:filterController animated:YES completion:nil];
 }
 
 #pragma mark - NSFetchedResultsController Delegate
