@@ -25,16 +25,7 @@
 @implementation QDataParserDelegate
 
 - (void)updateQDataInMode:(kParseMode)mode {
-    
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext *context = [delegate managedObjectContext];
-
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
-    NSUInteger count = [context countForFetchRequest:request error:nil];
-    if (count > 0) {
-        return;
-    }
-    
+        
     NSString *path = nil;
     
     switch (mode) {

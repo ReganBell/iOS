@@ -25,6 +25,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
+    NSUInteger count = [context countForFetchRequest:request error:nil];
+    if (count > 0) {
+        return YES;
+    }
+    
     QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
     [commentDelegate updateQDataInMode:kModeComment];
     
@@ -97,7 +105,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Coursica.sqlite"];
     
     //Uncomment to delete store:
-    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";

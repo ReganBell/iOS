@@ -19,14 +19,18 @@
     // Do any additional setup after loading the view.
     //self.automaticallyAdjustsScrollViewInsets = NO;
     
+    self.title = @"Filters";
 }
 
 
-- (IBAction)showCourses{
+- (IBAction)showCourses {
+    
+    
 }
 
--(void)dismissFiltersViewController{
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)cancelButtonPressed:(id)sender {
+    
+    [self.delegate dismissFiltersViewController];
 }
 
 - (void)didReceiveMemoryWarning {

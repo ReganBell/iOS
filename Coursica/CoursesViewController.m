@@ -50,11 +50,18 @@
 
 - (IBAction)showFilters{
     
-    
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     FiltersViewController *filterController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
     filterController.delegate = self;
-    [self presentViewController:filterController animated:YES completion:nil];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:filterController];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)dismissFiltersViewController {
+
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - NSFetchedResultsController Delegate
