@@ -24,7 +24,7 @@
     
     [self configureLabelSlider];
     
-    NSArray *buttonArray = [[NSArray alloc] initWithObjects:self.aipButton,self.erButton,self.cbButton,self.emrButton, self.slsButton, self.spuButton, self.sowButton, self.sopButton, self.uswButton, nil];
+    NSArray *buttonArray = [[NSArray alloc] initWithObjects:self.aipButton,self.erButton,self.cbButton,self.emrButton, self.slsButton, self.spuButton, self.sowButton, self.sopButton, self.uswButton, self.fallButton, self.springButton, self.undergradButton, self.gradButton, nil];
     
     for (UIButton *button in buttonArray)
     {
@@ -33,40 +33,8 @@
         button.layer.borderColor = [UIColor blueColor].CGColor;
     }
     
-//    self.aipButton.layer.cornerRadius = 2;
-//    self.aipButton.layer.borderWidth = 1;
-//    self.aipButton.layer.borderColor = [UIColor blueColor].CGColor;
-//    
-//    self.cbButton.layer.cornerRadius = 2;
-//    self.cbButton.layer.borderWidth = 1;
-//    self.cbButton.layer.borderColor = [UIColor blueColor].CGColor;
 }
 
-- (IBAction)termSwitchedChanged:(UISwitch*)termSwitch {
-    if (termSwitch.on)
-    {
-       self.termLabel.text = @"Spring";
-    }
-    else
-    {
-       self.termLabel.text = @"Fall";
-    }
-    
-    [self updateFilter];
-}
-
-- (IBAction)gradSwitchedChanged:(UISwitch*)gradSwitch {
-    if (gradSwitch.on)
-    {
-        self.gradLabel.text = @"Graduate";
-    }
-    else
-    {
-        self.gradLabel.text = @"Undergraduate";
-    }
-    
-    [self updateFilter];
-}
 
 // unnecessary
 - (IBAction)buttonClicked:(UIButton*)genEdButton {
@@ -127,14 +95,14 @@
     // TODO: update with year slider value
 - (void)updateFilter {
     
-        NSPredicate *predicate = nil;
-        NSPredicate *newPredicate = [NSPredicate predicateWithFormat:@"term = %@", (self.termSwitch.on) ? @"SPRING" : @"FALL"];
-        if (!predicate) {
-                predicate = newPredicate;
-            } else {
-                    predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
-                }
-//    
+//        NSPredicate *predicate = nil;
+//        NSPredicate *newPredicate = [NSPredicate predicateWithFormat:@"term = %@", (self.termSwitch.on) ? @"SPRING" : @"FALL"];
+//        if (!predicate) {
+//                predicate = newPredicate;
+//            } else {
+//                    predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
+//                }
+//
 //        newPredicate = [NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:self.graduateSwitch.on]];
 //        if (!predicate) {
 //                predicate = newPredicate;
@@ -142,7 +110,7 @@
 //                    predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
 //                }
 //    
-        [self.delegate filtersDidChange:predicate];
+        //[self.delegate filtersDidChange:predicate];
     }
 
 - (IBAction)showCourses {
@@ -155,6 +123,10 @@
 - (IBAction)cancelButtonPressed:(id)sender {
     
     [self.delegate dismissFiltersViewController];
+}
+
+- (IBAction)applyFiltersButtonPressed:(id)sender {
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -190,6 +162,8 @@
     self.labelSlider.upperValue = 100;
     
     self.labelSlider.minimumRange = 10;
+    
+    [self.contentView addSubview:self.labelSlider];
 }
 
 - (void) updateSliderLabels

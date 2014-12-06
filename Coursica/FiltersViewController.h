@@ -22,8 +22,12 @@
 
 @property (weak, nonatomic) id<FiltersViewControllerDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UISwitch *termSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *termLabel;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+
+@property (weak, nonatomic) IBOutlet UIButton *fallButton;
+@property (weak, nonatomic) IBOutlet UIButton *springButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *applyFiltersButton;
 
 @property (weak, nonatomic) IBOutlet UISwitch *gradSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *gradLabel;
@@ -34,8 +38,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *qOverallSlider;
 @property (weak, nonatomic) IBOutlet UILabel *qOverallLabel;
 
-@property (weak, nonatomic) IBOutlet UISwitch *graduateSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *graduateLabel;
+@property (weak, nonatomic) IBOutlet UIButton *undergradButton;
+@property (weak, nonatomic) IBOutlet UIButton *gradButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *aipButton;
 @property (weak, nonatomic) IBOutlet UIButton *cbButton;
