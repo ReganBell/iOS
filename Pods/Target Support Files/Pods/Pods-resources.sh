@@ -47,7 +47,33 @@ install_resource()
       ;;
   esac
 }
-
+          install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-handle-highlighted.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-handle-highlighted@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-handle.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-handle@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-track.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-track@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-trackBackground.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-trackCrossedOver.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default-trackCrossedOver@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme/slider-default_trackBackground@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-handle.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-handle@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-track.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-track@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-trackBackground.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-trackBackground@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-trackCrossedOver.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/DefaultTheme7/slider-default7-trackCrossedOver@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-handle-highlighted.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-handle-highlighted@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-handle.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-handle@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-track.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-track@2x.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-trackBackground.png"
+                    install_resource "NMRangeSlider/NMRangeSlider/MetalTheme/slider-metal-trackBackground@2x.png"
+          
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then
   rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${INSTALL_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

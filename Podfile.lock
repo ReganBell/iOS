@@ -38,12 +38,14 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
+  - NMRangeSlider (1.1.1)
 
 DEPENDENCIES:
   - AFNetworking
   - CHCSVParser
   - GraphKit (~> 1.0.0)
   - MMDrawerController (~> 0.5.7)
+  - NMRangeSlider (~> 1.1.1)
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
@@ -52,5 +54,6 @@ SPEC CHECKSUMS:
   GraphKit: 5b97486a04ba577adca627487e65cda0c0440687
   MKFoundationKit: 4858fe474ee45f988db5ff1e229d700743e71ed8
   MMDrawerController: c3ab7a318ddc7e2bcd133139c3161af08c6e1197
+  NMRangeSlider: ec94b718b8c11d41af49554f00a4b0949e6391dc
 
 COCOAPODS: 0.35.0

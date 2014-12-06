@@ -102,3 +102,9 @@
 #define COCOAPODS_VERSION_MINOR_MMDrawerController_Subclass 5
 #define COCOAPODS_VERSION_PATCH_MMDrawerController_Subclass 7
 
+// NMRangeSlider
+#define COCOAPODS_POD_AVAILABLE_NMRangeSlider
+#define COCOAPODS_VERSION_MAJOR_NMRangeSlider 1
+#define COCOAPODS_VERSION_MINOR_NMRangeSlider 1
+#define COCOAPODS_VERSION_PATCH_NMRangeSlider 1
+
