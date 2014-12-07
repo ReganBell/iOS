@@ -56,6 +56,8 @@
 - (void)addMeetings:(NSSet *)values;
 - (void)removeMeetings:(NSSet *)values;
 
+- (NSString *)purifyString:(NSString *)string;
+
 + (void)updateCourses:(NSArray*)serverCourses;
 + (void)updateQData;
 
