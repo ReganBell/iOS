@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "DetailViewController.h"
 #import "FiltersViewController.h"
+#import "NavigationController.h"
 
 @interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -23,6 +24,11 @@
 
 @implementation CoursesViewController
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleDefault;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -33,11 +39,23 @@
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"AvenirNext-Regular" size:17];
+    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
     label.text = @"Coursica";
+    label.textColor = [UIColor whiteColor];
     [label sizeToFit];
     self.navigationItem.titleView = label;
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.translucent = NO;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    [button setImage:[UIImage imageNamed:@"SmallSearch.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(showFilters) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = searchButton;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.opaque = YES;
+
     self.tableView.tableFooterView = [UIView new];
     
     if (count == 0) {
@@ -64,7 +82,7 @@
     FiltersViewController *filterController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
     filterController.delegate = self;
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:filterController];
+    NavigationController *navigationController = [[NavigationController alloc] initWithRootViewController:filterController];
     
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -187,14 +205,23 @@
     
     Course *course = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ - %@", course.field, course.number, course.title];
-    cell.textLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:17];
+    NSString *original = [NSString stringWithFormat:@"%@ %@ - %@", course.field, course.number, course.title];
+    NSRange boldRange = [original rangeOfString:course.title];
+
+    NSMutableAttributedString *fancy = [[NSMutableAttributedString alloc] initWithString:original];
+    [fancy addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"AvenirNext-Regular" size:14] range:NSMakeRange(0, original.length)];
+    [fancy addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:150/255.0 alpha:1.0] range:NSMakeRange(0, original.length)];
+    [fancy addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"AvenirNext-DemiBold" size:17] range:boldRange];
+    [fancy addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:boldRange];
+    
+    cell.textLabel.attributedText = fancy;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DetailViewController *detailController = [main instantiateViewControllerWithIdentifier:@"detailController"];
     detailController.course = [self.fetchedResultsController objectAtIndexPath:indexPath];
