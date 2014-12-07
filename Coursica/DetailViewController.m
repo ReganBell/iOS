@@ -38,8 +38,9 @@
 @property (strong, nonatomic) QScore *difficultyScore;
 @property (strong, nonatomic) QScore *workloadScore;
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *graphControl;
+@property (weak, nonatomic) IBOutlet UIButton *viewCommentsButton;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *graphControl;
 @property (nonatomic, weak) IBOutlet GKBarGraph *graphView;
 @property (nonatomic, assign) BOOL green;
 
@@ -143,7 +144,6 @@
     }
     
     NSMutableString *locationString = [NSMutableString new];
-//    NSLog(@"%@", self.course.locations);
     if (![self.course.locations count] == 0)
     {
         for (Location *location in self.course.locations)
@@ -196,8 +196,6 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    //[self setupButtons];
-    
     self.view.backgroundColor = [UIColor gk_cloudsColor];
     
     self.labels = @[[self.overallScore.one stringValue], [self.overallScore.two stringValue], [self.overallScore.three stringValue], [self.overallScore.four stringValue], [self.overallScore.five stringValue]];
@@ -230,10 +228,6 @@
         self.graphView.animationDuration = 2.0;
     
     self.graphView.dataSource = self;
-    
-    //GKBar *bar = self.graphView.bars[0];
-    //bar.percentage = 0.94;
-    //self.graphView.bars[0].setPercentage = 0.94;
     
     [self.graphView draw];
     
@@ -328,6 +322,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction)viewCommentsButtonClicked:(id)sender {
+    
+    
+}
 
 - (IBAction)graphControlIndexChange:(id)sender {
     
