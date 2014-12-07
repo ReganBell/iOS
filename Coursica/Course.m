@@ -58,7 +58,8 @@
                              @"Science of Living Systems": @5,
                              @"Science of the Physical Universe": @6,
                              @"Societies of the World": @7,
-                             @"United States in the World": @8};
+                             @"Study of the Past": @8,
+                             @"United States in the World": @9};
     
     NSDictionary *genEdAbbrvs = @{@"AESTH&INTP": @1,
                              @"CULTR&BLF": @2,
@@ -67,7 +68,7 @@
                              @"SCI-LIVSYS": @5,
                              @"SCI-PHYUNV": @6,
                              @"SOC-WORLD": @7,
-                             @"US-WORLD": @8};
+                             @"US-WORLD": @9};
     
     for (NSDictionary *courseDict in serverCourses) {
         

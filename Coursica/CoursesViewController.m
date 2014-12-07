@@ -30,6 +30,16 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
     
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNext-Regular" size:17];
+    label.text = @"Coursica";
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
+    
+    self.tableView.tableFooterView = [UIView new];
+    
     if (count == 0) {
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -178,6 +188,7 @@
     Course *course = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ - %@", course.field, course.number, course.title];
+    cell.textLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:17];
     
     return cell;
 }
