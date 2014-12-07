@@ -45,6 +45,7 @@
     NSEntityDescription *meetingEntity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:context];
     NSEntityDescription *locationEntity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context];
     
+    // Load all of the Q data in one fetch so we can assign courses their Q scores without making many fetches (big performance hit)
     NSMutableDictionary *scoresDict = [NSMutableDictionary new];
     NSFetchRequest *qRequest = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
     NSArray *scores = [context executeFetchRequest:qRequest error:nil];
@@ -89,6 +90,8 @@
         NSDictionary *types = @{@"difficulty":@"qDifficulty", @"workload":@"qWorkload", @"overall":@"qOverall"};
         for (NSString *scoreType in types) {
             
+            // Q Data is stored as the number of votes people gave each category, 1 through 5
+            // So we have to do a weighted average to calculate the Q score for each category
             QScore *score = [scoresDict objectForKey:[NSString stringWithFormat:@"%d - %@", newCourse.catalogNumber.intValue, scoreType]];
             NSNumber *average = [NSNumber numberWithDouble:(score.one.doubleValue + score.two.doubleValue * 2 + score.three.doubleValue * 3 + score.four.doubleValue * 4 + score.five.doubleValue * 5) / (score.one.doubleValue + score.two.doubleValue + score.three.doubleValue + score.four.doubleValue + score.five.doubleValue)];
             [newCourse setValue:average forKey:[types objectForKey:scoreType]];
@@ -97,6 +100,7 @@
         int genEdsFound = 0;
         NSNumber *fieldGenEd = nil;
         
+        // Lots of classes with a gen ed as their field don't report the gen ed they satisfy in their notes section so we have to get it from the field name
         for (NSString *genEdAbbrv in genEdAbbrvs) {
             if ([newCourse.field isEqualToString:genEdAbbrv]) {
                 newCourse.genEdOne = genEdAbbrvs[genEdAbbrv];
@@ -105,6 +109,7 @@
             }
         }
         
+        // Scan through the notes of every class looking for mention of a gen ed it satisfies, save that on the course object
         for (NSString *genEd in genEds) {
             NSRange range = [newCourse.notes rangeOfString:genEd];
             if (range.location != NSNotFound) {
@@ -118,20 +123,24 @@
                 } else if (genEdsFound == 1) {
                     newCourse.genEdTwo = genEdNum;
                     genEdsFound++;
-                } else {
-                    NSLog(@"ALERT a course has more than two gen-eds");
                 }
             }
         }
         
+        // Find out whether is a class is for undergraduates or graduates by the number
+        // First we regex out the course number (a lot of them have weird letters and periods)
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[0-9]+" options:0 error:nil];
         NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:newCourse.number options:0 range:NSMakeRange(0, [newCourse.number length])];
         
         if (rangeOfFirstMatch.location == NSNotFound) {
+            // Some undergraduate courses' number will just be a letter and regex won't find anything
             newCourse.graduate = [NSNumber numberWithBool:NO];
         } else {
+            // Extract the number string and turn into a real number
             NSString *substringForFirstMatch = [newCourse.number substringWithRange:rangeOfFirstMatch];
             double number = [formatter numberFromString:substringForFirstMatch].doubleValue;
+            
+            // Course numbering scheme explained: http://www.registrar.fas.harvard.edu/courses-exams/courses-instruction/introductory-notes
             if ((number >= 200 && number < 1000) || (number >= 2000)) {
                 newCourse.graduate = [NSNumber numberWithBool:YES];
             } else

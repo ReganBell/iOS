@@ -29,12 +29,14 @@
     
     NSManagedObjectContext *context = [self managedObjectContext];
     
+    // Only parse CSV files if we have no Q data
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
     NSUInteger count = [context countForFetchRequest:request error:nil];
     if (count > 0) {
         return YES;
     }
     
+    // Start CSV parsing operations, using CHCSVParser objects wrapped up in QDataParserDelegate objects
     QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
     [commentDelegate updateQDataInMode:kModeComment];
     

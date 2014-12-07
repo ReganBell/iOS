@@ -48,6 +48,7 @@
     
     NSString *fileString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     
+    // Create a parser object, initialized with whichever file this instance of the parser is supposed to parse
     CHCSVParser *parser = [[CHCSVParser alloc] initWithCSVString:fileString];
     parser.delegate = self;
     parser.trimsWhitespace = YES;
@@ -57,6 +58,7 @@
 
 - (NSNumberFormatter*)sharedFormatter {
     
+    // We use a shared NSNumberFormatter because they are expensive to create
     if (!_sharedFormatter) {
         _sharedFormatter = [[NSNumberFormatter alloc] init];
     }
@@ -64,6 +66,8 @@
 }
 
 - (void)parser:(CHCSVParser *)parser didBeginLine:(NSUInteger)recordNumber {
+    
+    // For every new line in the CSV, create a new Core Data object to store the data in
     
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = [delegate managedObjectContext];
@@ -98,6 +102,8 @@
 
 - (NSString*)substringWithoutEndCharacters:(NSString*)original {
     
+    // CHCSVParser returns fields inside quotes which trips up nsnumberformatter, they're stripped out here
+    
     if (original.length < 2) {
         return original;
     }
@@ -107,6 +113,7 @@
 
 - (void)parser:(CHCSVParser *)parser didReadField:(NSString *)field atIndex:(NSInteger)fieldIndex {
     
+    // Assign fields in Core Data  depending on which column of the CSV we're in and which file we're parsing
     if (self.mode == kModeComment) {
         switch (fieldIndex) {
             case 0:

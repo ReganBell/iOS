@@ -21,6 +21,7 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
+    // Tell the phone we want white text on the status bar
     return UIStatusBarStyleLightContent;
 }
 
