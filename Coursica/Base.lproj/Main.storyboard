@@ -22,7 +22,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJa-GI-LQK" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Search" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wTD-X9-U6t">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by course number, name, field, or faculty" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wTD-X9-U6t">
                                                 <rect key="frame" x="-48" y="206" width="420" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="lVH-bJ-TfI"/>

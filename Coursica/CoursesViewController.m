@@ -67,7 +67,8 @@
 #pragma mark - NSFetchedResultsController Delegate
 
 - (void)filtersDidChange:(NSPredicate *)predicate {
-    self.filterPredicate = predicate;
+    self.fetchedResultsController.fetchRequest.predicate = predicate;
+    [self.fetchedResultsController performFetch:nil];
     [self.tableView reloadData];
 }
 

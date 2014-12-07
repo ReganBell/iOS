@@ -53,16 +53,16 @@
     
     CHCSVParser *parser = [[CHCSVParser alloc] initWithCSVString:fileString];
     parser.delegate = self;
+    parser.trimsWhitespace = YES;
     self.mode = mode;
     [parser parse];
 }
 
 - (NSNumberFormatter*)sharedFormatter {
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    if (!_sharedFormatter) {
         _sharedFormatter = [[NSNumberFormatter alloc] init];
-    });
+    }
     return _sharedFormatter;
 }
 
@@ -102,6 +102,15 @@
     
 }
 
+- (NSString*)substringWithoutEndCharacters:(NSString*)original {
+    
+    if (original.length < 2) {
+        return original;
+    }
+    
+    return [original substringWithRange:NSMakeRange(1, original.length - 2)];
+}
+
 - (void)parser:(CHCSVParser *)parser didReadField:(NSString *)field atIndex:(NSInteger)fieldIndex {
     
     if (self.mode == kModeComment) {
@@ -129,17 +138,17 @@
             case 1:
                 break;
             case 2:
-                self.currentScore.catalogNumber = [self.sharedFormatter numberFromString:field];
+                self.currentScore.catalogNumber = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 3:
-                self.currentScore.one = [self.sharedFormatter numberFromString:field];
+                self.currentScore.one = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 4:
-                self.currentScore.two = [self.sharedFormatter numberFromString:field];
+                self.currentScore.two = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 5:
-                self.currentScore.three = [self.sharedFormatter numberFromString:field];
+                self.currentScore.three = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 6:
-                self.currentScore.four = [self.sharedFormatter numberFromString:field];
+                self.currentScore.four = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 7:
-                self.currentScore.five = [self.sharedFormatter numberFromString:field];
+                self.currentScore.five = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             default:
                 break;
         }

@@ -42,12 +42,15 @@
     
     NSMutableArray *predicates = [NSMutableArray new];
     
-    NSPredicate *newPredicate;// = [NSPredicate predicateWithFormat:@"term = %@", (self.termSwitch.on) ? @"SPRING" : @"FALL"];
-    [predicates addObject:newPredicate];
+    float low = self.rangeSlider.lowerValue;
+    float high = self.rangeSlider.upperValue;
     
-    newPredicate = [NSPredicate predicateWithFormat:@""];
-
+    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", high]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", low]];
+    
     [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
+    
+    [self.delegate dismissFiltersViewController];
 }
 
 
@@ -197,7 +200,7 @@
 // Handle control value changed events just like a normal slider
 - (IBAction)labelSliderChanged:(NMRangeSlider*)sender
 {
-    [self updateSliderLabels];
+    
 }
 
 
@@ -207,10 +210,11 @@
 - (void) configureRangeSlider
 {
     NMRangeSlider* rangeSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 275, 34)];
-    rangeSlider.lowerValue = 0;
-    rangeSlider.upperValue = 5;
-    [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:34]];
+    rangeSlider.minimumValue = 0;
+    rangeSlider.maximumValue = 5;
+    [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
     [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:275]];
+    rangeSlider.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:rangeSlider];
     self.rangeSlider = rangeSlider;
 }
