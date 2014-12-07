@@ -61,19 +61,6 @@
 
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = [delegate managedObjectContext];
-
-    NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];
-    NSMutableDictionary *qScoresDict = [NSMutableDictionary new];
-    for (NSString *type in qTypes) {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
-        request.predicate = [NSPredicate predicateWithFormat:@"catalogNumber = %@ AND type = %@", self.course.catalogNumber, type];
-         QScore *score = [context executeFetchRequest:request error:nil][0];
-        [qScoresDict setObject:score forKey:type];
-    }
-    
-    self.overallScore = qScoresDict[@"overall"];
-    self.difficultyScore = qScoresDict[@"difficulty"];
-    self.workloadScore = qScoresDict[@"workload"];
     
     self.descriptionLabel.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];
     self.descriptionLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
@@ -84,8 +71,9 @@
     {
         for (Faculty *faculty in self.course.faculty)
         {
-            [facultyString appendFormat:@"%@ %@ ", faculty.first, faculty.last];
+            [facultyString appendFormat:@"%@ %@, ", faculty.first, faculty.last];
         }
+        facultyString = [[facultyString substringToIndex:[facultyString length] - 2] mutableCopy];
     }
     else
     {
@@ -99,7 +87,18 @@
         NSString *dayString;
         NSString *startTime;
         NSString *endTime;
-        for (Meeting *meeting in self.course.meetings)
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+            if ([obj1 intValue] > [obj2 intValue])
+                return NSOrderedDescending;
+            else if ([obj1 intValue] < [obj2 intValue])
+                return NSOrderedAscending;
+            else
+                return NSOrderedSame;
+        }];
+        NSArray *sortedMeetingTimes = [self.course.meetings sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+        
+        
+        for (Meeting *meeting in sortedMeetingTimes)
         {
             
             switch ([meeting.day intValue])
@@ -128,8 +127,30 @@
             }
 
             [meetingString appendFormat:@"%@ ", dayString];
+            
             startTime = meeting.beginTime;
+            NSString *startHour = [startTime componentsSeparatedByString:@":"][0];
+            if ([startHour intValue] > 12)
+            {
+                int newStartHour = [startHour intValue] - 12;
+                startTime = [NSString stringWithFormat:@"%d:00", newStartHour];
+            }
+            else
+            {
+                startTime = [startTime substringToIndex:[startTime length] - 3];
+            }
             endTime = meeting.endTime;
+            NSString *endHour = [endTime componentsSeparatedByString:@":"][0];
+            if ([endHour intValue] > 12)
+            {
+                int newEndHour = [endHour intValue] - 12;
+                endTime = [NSString stringWithFormat:@"%d:%@", newEndHour, [endTime componentsSeparatedByString:@":"][1]];
+            }
+            else
+            {
+                endTime = [endTime substringToIndex:[endTime length] - 3];
+            }
+            
         }
         [meetingString appendFormat:@"%@ - %@", startTime, endTime];
     }
@@ -170,65 +191,13 @@
     self.courseMeetingLabel.attributedText = meetingLabel;
     self.courseLocationLabel.attributedText = locationLabel;
     
-    NSString *tempOverallString = [NSString stringWithFormat:@"Overall: %0.2f", [self.course.qOverall doubleValue]];
-    NSMutableAttributedString *overallLabel = [[NSMutableAttributedString alloc] initWithString:tempOverallString];
-    [overallLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,9)];
-    [overallLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(9, 4)];
-    
-    NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty: %0.2f", [self.course.qDifficulty doubleValue]];
-    NSMutableAttributedString *difficultyLabel = [[NSMutableAttributedString alloc] initWithString:tempDifficultyString];
-    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,12)];
-    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(12, 4)];
-    
-    NSString *tempWorkloadString = [NSString stringWithFormat:@"Workload: %0.2f", [self.course.qWorkload doubleValue]];
-    NSMutableAttributedString *workloadLabel = [[NSMutableAttributedString alloc] initWithString:tempWorkloadString];
-    [workloadLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,10)];
-    [workloadLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(10, 4)];
-    
-    self.overallLabel.attributedText = overallLabel;
-    self.difficultyLabel.attributedText = difficultyLabel;
-    self.workloadLabel.attributedText = workloadLabel;
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    self.view.backgroundColor = [UIColor gk_cloudsColor];
-    
-    self.labels = @[[self.overallScore.one stringValue], [self.overallScore.two stringValue], [self.overallScore.three stringValue], [self.overallScore.four stringValue], [self.overallScore.five stringValue]];
-    
-    NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
-    NSInteger largest = 0;
-    NSString *largestBar;
-    for (NSString *property in properties)
-    {
-        if([[self.overallScore valueForKey:property] intValue] > largest)
-        {
-            largestBar = property;
-            NSNumber *tempNum = [self.overallScore valueForKey:property];
-            largest = [tempNum intValue];
-        }
-    }
-    
-    NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
-    
-    self.data = @[[NSNumber numberWithDouble:self.overallScore.one.doubleValue*ratio.doubleValue],
-                  [NSNumber numberWithDouble:self.overallScore.two.doubleValue*ratio.doubleValue],
-                  [NSNumber numberWithDouble:self.overallScore.three.doubleValue*ratio.doubleValue],
-                  [NSNumber numberWithDouble:self.overallScore.four.doubleValue*ratio.doubleValue],
-                  [NSNumber numberWithDouble:self.overallScore.five.doubleValue*ratio.doubleValue]
-                 ];
-    
-        self.graphView.barWidth = 22;
-        self.graphView.barHeight = 140;
-        self.graphView.marginBar = 16;
-        self.graphView.animationDuration = 2.0;
-    
-    self.graphView.dataSource = self;
-    
-    [self.graphView draw];
-    
-    self.green = YES;
-    
     NSString *genEdString;
+    if ([self.course.genEdOne intValue] == 0)
+    {
+        genEdString = @"None";
+    }
+    else
+    {
     switch ([self.course.genEdOne intValue]) {
         case 1:
             genEdString = @"Aesthetic and Interpretive Understanding";
@@ -291,6 +260,7 @@
                 break;
         }
     }
+    }
     
     NSString *tempNotesString = [NSString stringWithFormat:@"Notes: %@", self.course.notes];
     NSMutableAttributedString *notesLabel = [[NSMutableAttributedString alloc] initWithString:tempNotesString];
@@ -310,6 +280,82 @@
     self.notesLabel.attributedText = notesLabel;
     self.catalogNumLabel.attributedText = catNumLabel;
     self.satisfiesLabel.attributedText = genEdLabel;
+    
+    NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];
+    NSMutableDictionary *qScoresDict = [NSMutableDictionary new];
+    for (NSString *type in qTypes) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
+        request.predicate = [NSPredicate predicateWithFormat:@"catalogNumber = %@ AND type = %@", self.course.catalogNumber, type];
+        NSArray *result = [context executeFetchRequest:request error:nil];
+        if (result.count == 0)
+            return;
+        
+        QScore *score = result[0];
+        [qScoresDict setObject:score forKey:type];
+    }
+    
+    self.overallScore = qScoresDict[@"overall"];
+    self.difficultyScore = qScoresDict[@"difficulty"];
+    self.workloadScore = qScoresDict[@"workload"];
+    
+    NSString *tempOverallString = [NSString stringWithFormat:@"Overall: %0.2f", [self.course.qOverall doubleValue]];
+    NSMutableAttributedString *overallLabel = [[NSMutableAttributedString alloc] initWithString:tempOverallString];
+    [overallLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,9)];
+    [overallLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(9, 4)];
+    
+    NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty: %0.2f", [self.course.qDifficulty doubleValue]];
+    NSMutableAttributedString *difficultyLabel = [[NSMutableAttributedString alloc] initWithString:tempDifficultyString];
+    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,12)];
+    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(12, 4)];
+    
+    NSString *tempWorkloadString = [NSString stringWithFormat:@"Workload: %0.2f", [self.course.qWorkload doubleValue]];
+    NSMutableAttributedString *workloadLabel = [[NSMutableAttributedString alloc] initWithString:tempWorkloadString];
+    [workloadLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,10)];
+    [workloadLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(10, 4)];
+    
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    self.view.backgroundColor = [UIColor gk_cloudsColor];
+    
+    self.labels = @[[self.overallScore.one stringValue], [self.overallScore.two stringValue], [self.overallScore.three stringValue], [self.overallScore.four stringValue], [self.overallScore.five stringValue]];
+    
+    NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
+    NSInteger largest = 0;
+    NSString *largestBar;
+    for (NSString *property in properties)
+    {
+        if([[self.overallScore valueForKey:property] intValue] > largest)
+        {
+            largestBar = property;
+            NSNumber *tempNum = [self.overallScore valueForKey:property];
+            largest = [tempNum intValue];
+        }
+    }
+    
+    NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
+    
+    self.data = @[[NSNumber numberWithDouble:self.overallScore.one.doubleValue*ratio.doubleValue],
+                  [NSNumber numberWithDouble:self.overallScore.two.doubleValue*ratio.doubleValue],
+                  [NSNumber numberWithDouble:self.overallScore.three.doubleValue*ratio.doubleValue],
+                  [NSNumber numberWithDouble:self.overallScore.four.doubleValue*ratio.doubleValue],
+                  [NSNumber numberWithDouble:self.overallScore.five.doubleValue*ratio.doubleValue]
+                  ];
+    
+    self.graphView.barWidth = 22;
+    self.graphView.barHeight = 140;
+    self.graphView.marginBar = 16;
+    self.graphView.animationDuration = 2.0;
+    
+    self.graphView.dataSource = self;
+    
+    [self.graphView draw];
+    
+    self.green = YES;
+    
+    self.overallLabel.attributedText = overallLabel;
+    self.difficultyLabel.attributedText = difficultyLabel;
+    self.workloadLabel.attributedText = workloadLabel;
 }
 
 - (void)didReceiveMemoryWarning {
