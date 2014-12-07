@@ -40,39 +40,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
+    label.text = @"Filters";
+    label.textColor = [UIColor whiteColor];
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+    [button setTitle:@"Cancel" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15];
+    [button addTarget:self.delegate action:@selector(dismissFiltersViewController) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = cancelButton;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     self.title = @"Filters";
     
-    //[self configureLabelSlider];
-    
     self.searchField.delegate = self;
     self.searchField.tintColor = CoursicaBlue;
-    
-//    NSDictionary *genEdAbbrvs = @{@"AESTH&INTP": @1,
-//                                  @"CULTR&BLF": @2,
-//                                  @"E&M-REASON": @3,
-//                                  @"ETH-REASON": @4,
-//                                  @"SCI-LIVSYS": @5,
-//                                  @"SCI-PHYUNV": @6,
-//                                  @"SOC-WORLD": @7,
-//                                  @"US-WORLD": @8};
-//    
-//    self.buttonArray = [[NSArray alloc] initWithObjects:self.aipButton,self.cbButton,self.emrButton, self.erButton,self.slsButton, self.spuButton, self.sowButton, self.sopButton, self.uswButton, self.fallButton, self.springButton, self.undergradButton, self.gradButton, nil];
-//    
-//    for (UIButton *button in self.buttonArray)
-//    {
-//        button.layer.cornerRadius = 10;
-//        
-//        UIImage *blackImage = button.imageView.image;
-////        UIImage *whiteImage = [self coloredImageFromImage:button.imageView.image withColor:[UIColor lightGrayColor]];
-//        [button setImage:blackImage forState:UIControlStateNormal];
-////        [button setImage:whiteImage forState:UIControlStateSelected];
-//        
-//        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-//        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-//    }
     
     [self configureRangeSliders];
 }
@@ -133,8 +124,8 @@
     NSString *search = self.searchField.text;
     if (search.length) {
         NSMutableArray *searchPreds = [NSMutableArray array];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"title like %@", search]];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"field like %@", search]];
+        [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", search]];
+        [searchPreds addObject:[NSPredicate predicateWithFormat:@"field CONTAINS[cd] %@", search]];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", search]];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", search]];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", search]];

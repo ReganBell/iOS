@@ -24,6 +24,8 @@
 		2DC314291A3382D30047D2AA /* statue_of_liberty-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3140E1A3382D30047D2AA /* statue_of_liberty-25.png */; };
 		2DC3142A1A3382D30047D2AA /* statue_of_liberty-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3140F1A3382D30047D2AA /* statue_of_liberty-32.png */; };
 		2DC3142D1A338FDA0047D2AA /* bust-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3142C1A338FDA0047D2AA /* bust-32.png */; };
+		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
+		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
 		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
 		595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F11A2E7201000ABAD8 /* QCourseOverall.csv */; };
 		595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F31A2E7214000ABAD8 /* QDifficulty.csv */; };
@@ -44,8 +46,8 @@
 		598CAB321A22C7EC008D0142 /* Meeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB311A22C7EC008D0142 /* Meeting.m */; };
 		598CAB351A22C7EC008D0142 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB341A22C7EC008D0142 /* Location.m */; };
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
-		598CAB3C1A22F30E008D0142 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB3B1A22F30E008D0142 /* InitialViewController.m */; };
 		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
+		59D4A0481A347F98003FD743 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A0471A347F98003FD743 /* NavigationController.m */; };
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */ = {isa = PBXBuildFile; fileRef = 59F51C6B1A254E3D0025E021 /* SampleAPIResponse */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
@@ -81,6 +83,8 @@
 		2DC3140E1A3382D30047D2AA /* statue_of_liberty-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statue_of_liberty-25.png"; sourceTree = "<group>"; };
 		2DC3140F1A3382D30047D2AA /* statue_of_liberty-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statue_of_liberty-32.png"; sourceTree = "<group>"; };
 		2DC3142C1A338FDA0047D2AA /* bust-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bust-32.png"; sourceTree = "<group>"; };
+		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
+		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
 		595575EF1A2E71F8000ABAD8 /* Qcomments.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qcomments.csv; sourceTree = "<group>"; };
 		595575F11A2E7201000ABAD8 /* QCourseOverall.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QCourseOverall.csv; sourceTree = "<group>"; };
 		595575F31A2E7214000ABAD8 /* QDifficulty.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QDifficulty.csv; sourceTree = "<group>"; };
@@ -114,12 +118,12 @@
 		598CAB341A22C7EC008D0142 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		598CAB361A22C7EC008D0142 /* Faculty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Faculty.h; sourceTree = "<group>"; };
 		598CAB371A22C7EC008D0142 /* Faculty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Faculty.m; sourceTree = "<group>"; };
-		598CAB3A1A22F30E008D0142 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
-		598CAB3B1A22F30E008D0142 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		598CAB8A1A23CB57008D0142 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 2.xcdatamodel"; sourceTree = "<group>"; };
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
+		59D4A0461A347F98003FD743 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
+		59D4A0471A347F98003FD743 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
@@ -198,6 +202,8 @@
 			children = (
 				2DC313F51A3382D30047D2AA /* Icons */,
 				595575EF1A2E71F8000ABAD8 /* Qcomments.csv */,
+				59D4A0461A347F98003FD743 /* NavigationController.h */,
+				59D4A0471A347F98003FD743 /* NavigationController.m */,
 				595575F11A2E7201000ABAD8 /* QCourseOverall.csv */,
 				595575F31A2E7214000ABAD8 /* QDifficulty.csv */,
 				595575F41A2E7214000ABAD8 /* Qinstructors.csv */,
@@ -213,9 +219,9 @@
 				59F51C6B1A254E3D0025E021 /* SampleAPIResponse */,
 				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
 				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
+				5902E6251A347E9600A38C11 /* SmallSearch.png */,
+				5902E61D1A3475DE00A38C11 /* NavBarBg.png */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
-				598CAB3A1A22F30E008D0142 /* InitialViewController.h */,
-				598CAB3B1A22F30E008D0142 /* InitialViewController.m */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
 				596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */,
@@ -383,6 +389,8 @@
 				595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */,
 				595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */,
 				2DC314171A3382D30047D2AA /* physics-25.png in Resources */,
+				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
+				5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */,
 				595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */,
 				2DC314241A3382D30047D2AA /* scales_of_Balance-32.png in Resources */,
 				595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */,
@@ -448,7 +456,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
-				598CAB3C1A22F30E008D0142 /* InitialViewController.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
 				598CAB351A22C7EC008D0142 /* Location.m in Sources */,
@@ -461,6 +468,7 @@
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
 				598CAB2F1A22C7EA008D0142 /* Course.m in Sources */,
+				59D4A0481A347F98003FD743 /* NavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

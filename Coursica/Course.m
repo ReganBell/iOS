@@ -32,6 +32,9 @@
 @dynamic graduate;
 @dynamic genEdOne;
 @dynamic genEdTwo;
+@dynamic qDifficulty;
+@dynamic qWorkload;
+@dynamic qOverall;
 
 + (void)updateCourses:(NSArray *)serverCourses {
     

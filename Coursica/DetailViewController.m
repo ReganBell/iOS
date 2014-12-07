@@ -51,9 +51,14 @@
     
     [super viewDidLoad];
     
-    self.title = [NSString stringWithFormat:@"%@ %@", self.course.field, self.course.number];
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1], NSForegroundColorAttributeName, [UIFont fontWithName:@"Avenir Next" size:16.0],NSFontAttributeName, nil]];
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
+    label.text = [NSString stringWithFormat:@"%@ %@", self.course.field, self.course.number];
+    label.textColor = [UIColor whiteColor];
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
 
     self.titleLabel.text = self.course.title;
     self.titleLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];

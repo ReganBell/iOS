@@ -35,28 +35,6 @@
         return YES;
     }
     
-    NSShadow *shadow = [[NSShadow alloc] init];
-    shadow.shadowColor = [UIColor blackColor];
-    shadow.shadowBlurRadius = 0.0;
-    shadow.shadowOffset = CGSizeMake(0.0, 2.0);
-    [[UINavigationBar appearance] setTitleTextAttributes: @{
-                                                            NSForegroundColorAttributeName : [UIColor blackColor],
-                                                            NSFontAttributeName : [UIFont fontWithName:@"AvenirNext-DemiBold" size:0.0f],
-                                                            NSShadowAttributeName : shadow
-                                                            }];
-    
-    NSShadow *backShadow = [[NSShadow alloc] init];
-    backShadow.shadowOffset = CGSizeMake(0.0, 1.0);
-    backShadow.shadowColor = [UIColor whiteColor];
-    
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor blackColor],
-       NSShadowAttributeName:backShadow,
-       NSFontAttributeName:[UIFont fontWithName:@"AvenirNext-DemiBold" size:0.0f]
-       }
-     forState:UIControlStateNormal];
-    
     QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
     [commentDelegate updateQDataInMode:kModeComment];
     
