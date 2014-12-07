@@ -8,36 +8,55 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>Pods-CHCSVParser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>Pods-FrameAccessor.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>Pods-GraphKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Pods-MKFoundationKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>Pods-MMDrawerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>Pods-NMRangeSlider.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -52,7 +71,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>24EDE6813F2CFA7B491C6CAC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2FD8B294C425E37FFDCBF35E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>35E11FDBAB80C476603EFF49</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3B9D1E8C5BCE1DB89A812D8C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,7 +126,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9FC0DD21B7E5B8126146F39A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C0D3D99E3EA9F52843E31D14</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C5BB7FB1833442E3EB154FA0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>CB12F06741DFFD0D78E06363</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CFE2F6272D4EEE6736A9B1E2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E7B1E9D4E3E2776EF071A430</key>
 		<dict>
 			<key>primary</key>
 			<true/>

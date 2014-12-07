@@ -25,6 +25,9 @@
 @property (nonatomic, retain) NSString * notes;
 @property (nonatomic, retain) NSNumber * genEdOne;
 @property (nonatomic, retain) NSNumber * genEdTwo;
+@property (nonatomic, retain) NSNumber * qDifficulty;
+@property (nonatomic, retain) NSNumber * qWorkload;
+@property (nonatomic, retain) NSNumber * qOverall;
 @property (nonatomic, retain) NSSet *faculty;
 @property (nonatomic, retain) NSSet *prerequisites;
 @property (nonatomic, retain) NSSet *locations;

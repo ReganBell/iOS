@@ -11,6 +11,8 @@
 
 @interface FiltersViewController ()
 
+@property (weak, nonatomic) NMRangeSlider *rangeSlider;
+
 @end
 
 @implementation FiltersViewController
@@ -33,6 +35,19 @@
         button.layer.borderColor = [UIColor blueColor].CGColor;
     }
     
+    [self configureRangeSlider];
+}
+
+- (IBAction)applyFiltersButtonPressed:(id)sender {
+    
+    NSMutableArray *predicates = [NSMutableArray new];
+    
+    NSPredicate *newPredicate;// = [NSPredicate predicateWithFormat:@"term = %@", (self.termSwitch.on) ? @"SPRING" : @"FALL"];
+    [predicates addObject:newPredicate];
+    
+    newPredicate = [NSPredicate predicateWithFormat:@""];
+
+    [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
 }
 
 
@@ -125,10 +140,6 @@
     [self.delegate dismissFiltersViewController];
 }
 
-- (IBAction)applyFiltersButtonPressed:(id)sender {
-    
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -193,12 +204,15 @@
 #pragma mark -
 #pragma mark - Programic Sliders
 
-- (void) configureProgramically
+- (void) configureRangeSlider
 {
     NMRangeSlider* rangeSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 275, 34)];
-    rangeSlider.lowerValue = 0.54;
-    rangeSlider.upperValue = 0.94;
-    [self.view addSubview:rangeSlider];
+    rangeSlider.lowerValue = 0;
+    rangeSlider.upperValue = 5;
+    [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:34]];
+    [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:275]];
+    [self.contentView addSubview:rangeSlider];
+    self.rangeSlider = rangeSlider;
 }
 
 /*

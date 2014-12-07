@@ -11,6 +11,9 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prereqs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qDifficulty" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="qOverall" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="qWorkload" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="term" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="faculty" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Faculty" inverseName="courses" inverseEntity="Faculty" syncable="YES"/>
@@ -56,7 +59,7 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Course" positionX="-63" positionY="-18" width="128" height="285"/>
+        <element name="Course" positionX="-63" positionY="-18" width="128" height="330"/>
         <element name="Faculty" positionX="-54" positionY="45" width="128" height="133"/>
         <element name="Location" positionX="-18" positionY="90" width="128" height="103"/>
         <element name="Meeting" positionX="-36" positionY="72" width="128" height="133"/>

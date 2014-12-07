@@ -12,6 +12,8 @@
 #import "FiltersViewController.h"
 #import "CHCSVParser.h"
 #import "QDataParserDelegate.h"
+#import "Course.h"
+#import "QScore.h"
 
 @interface AppDelegate ()
 

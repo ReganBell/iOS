@@ -12,6 +12,7 @@
 #import "Location.h"
 #import "AppDelegate.h"
 #import "CHCSVParser.h"
+#import "QScore.h"
 
 @implementation Course
 
@@ -40,6 +41,13 @@
     NSEntityDescription *facultyEntity = [NSEntityDescription entityForName:@"Faculty" inManagedObjectContext:context];
     NSEntityDescription *meetingEntity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:context];
     NSEntityDescription *locationEntity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:context];
+    
+    NSMutableDictionary *scoresDict = [NSMutableDictionary new];
+    NSFetchRequest *qRequest = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
+    NSArray *scores = [context executeFetchRequest:qRequest error:nil];
+    for (QScore *score in scores) {
+        [scoresDict setObject:score forKey:[NSString stringWithFormat:@"%d - %@", score.catalogNumber.intValue, score.type]];
+    }
     
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     
@@ -73,6 +81,14 @@
         newCourse.title = courseDict[@"title"];
         newCourse.courseDescription = courseDict[@"description"];
         newCourse.notes = courseDict[@"notes"];
+        
+        NSDictionary *types = @{@"difficulty":@"qDifficulty", @"workload":@"qWorkload", @"overall":@"qOverall"};
+        for (NSString *scoreType in types) {
+            
+            QScore *score = [scoresDict objectForKey:[NSString stringWithFormat:@"%d - %@", newCourse.catalogNumber.intValue, scoreType]];
+            NSNumber *average = [NSNumber numberWithDouble:(score.one.doubleValue + score.two.doubleValue * 2 + score.three.doubleValue * 3 + score.four.doubleValue * 4 + score.five.doubleValue * 5) / (score.one.doubleValue + score.two.doubleValue + score.three.doubleValue + score.four.doubleValue + score.five.doubleValue)];
+            [newCourse setValue:average forKey:[types objectForKey:scoreType]];
+        }
         
         int genEdsFound = 0;
         NSNumber *fieldGenEd = nil;
