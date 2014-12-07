@@ -28,7 +28,7 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Term" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zH-hB-Tnu">
-                                                <rect key="frame" x="279" y="52" width="42" height="23.5"/>
+                                                <rect key="frame" x="279" y="52" width="42" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="42" id="0Ie-jL-ewW"/>
                                                 </constraints>
@@ -37,7 +37,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General Education Requirements" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJk-XA-ZUJ">
-                                                <rect key="frame" x="170" y="206" width="261" height="23.5"/>
+                                                <rect key="frame" x="170" y="206" width="261" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="261" id="wz9-rR-QNh"/>
                                                 </constraints>
@@ -58,7 +58,7 @@
                                                 <color key="tintColor" red="0.12156862745098039" green="0.58039215686274503" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHG-TQ-lf0">
-                                                <rect key="frame" x="245" y="128" width="109" height="23.5"/>
+                                                <rect key="frame" x="245" y="128" width="109" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="92" id="Gvf-nA-wm4"/>
                                                     <constraint firstAttribute="width" constant="109" id="lXo-vk-IhG"/>
@@ -264,7 +264,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overall Q Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nd2-da-06Q">
-                                                <rect key="frame" x="169" y="460" width="261" height="23.5"/>
+                                                <rect key="frame" x="169" y="460" width="261" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="261" id="dxG-XL-FZA"/>
                                                     <constraint firstAttribute="height" constant="23.5" id="qno-nu-Lhd"/>
@@ -536,9 +536,8 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course info goes here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKU-dT-ecA">
-                                                <rect key="frame" x="20" y="2" width="460" height="68"/>
+                                                <rect key="frame" x="30" y="2" width="440" height="68"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="460" id="37R-28-hGC"/>
                                                     <constraint firstAttribute="height" constant="68" id="jzv-2k-sk6"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
@@ -662,6 +661,22 @@
                                                 <color key="textColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2IT-eA-wtq">
+                                                <rect key="frame" x="205" y="190" width="46" height="30"/>
+                                                <color key="backgroundColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="Wnr-lK-bBQ"/>
+                                                    <constraint firstAttribute="width" constant="300" id="ZRP-cp-xdU"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <state key="normal" title="View Comments">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="viewCommentsButtonClicked:" destination="Zzk-RS-XFe" eventType="touchUpInside" id="xgV-Qu-xjB"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -670,6 +685,7 @@
                                             <constraint firstItem="2Aq-1J-TyE" firstAttribute="top" secondItem="auF-sd-H7J" secondAttribute="top" constant="-130" id="84m-AD-EUQ"/>
                                             <constraint firstAttribute="centerX" secondItem="rKU-dT-ecA" secondAttribute="centerX" id="8Pm-u3-u3W"/>
                                             <constraint firstItem="y9g-PA-aHq" firstAttribute="top" secondItem="FDz-24-XgI" secondAttribute="top" constant="212" id="Cn6-NM-WIU"/>
+                                            <constraint firstItem="rKU-dT-ecA" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="30" id="Ei6-k7-iZg"/>
                                             <constraint firstItem="elY-KA-ihQ" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="20" id="Fb1-0D-8kW"/>
                                             <constraint firstAttribute="centerX" secondItem="Mzw-Af-wEh" secondAttribute="centerX" id="Iee-sg-yoO"/>
                                             <constraint firstAttribute="centerX" secondItem="n4K-oS-bbi" secondAttribute="centerX" id="LYq-c2-vTf"/>
@@ -686,12 +702,15 @@
                                             <constraint firstItem="Mzw-Af-wEh" firstAttribute="top" secondItem="Cee-kz-83m" secondAttribute="top" constant="-220" id="aK7-06-2U1"/>
                                             <constraint firstItem="2ab-cL-aIv" firstAttribute="top" secondItem="N35-pM-GZs" secondAttribute="top" constant="-25" id="dEK-1k-6w4"/>
                                             <constraint firstItem="rid-05-ZcH" firstAttribute="top" secondItem="auF-sd-H7J" secondAttribute="top" constant="30" id="dUu-Q9-Vhx"/>
+                                            <constraint firstItem="rid-05-ZcH" firstAttribute="top" secondItem="2IT-eA-wtq" secondAttribute="top" constant="-70" id="fdh-qs-wIn"/>
                                             <constraint firstItem="FDz-24-XgI" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="100" id="g3f-HC-lkm"/>
                                             <constraint firstItem="elY-KA-ihQ" firstAttribute="top" secondItem="2ab-cL-aIv" secondAttribute="top" constant="-25" id="i23-7s-Kkg"/>
                                             <constraint firstItem="K3a-xf-nRj" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="20" id="icn-DE-tst"/>
                                             <constraint firstItem="rKU-dT-ecA" firstAttribute="top" secondItem="DIR-rK-S7S" secondAttribute="top" constant="2" id="ixQ-hd-LeP"/>
                                             <constraint firstItem="auF-sd-H7J" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="20" id="kCv-I0-YEA"/>
                                             <constraint firstItem="2ab-cL-aIv" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="20" id="lDg-pf-c4e"/>
+                                            <constraint firstAttribute="trailing" secondItem="rKU-dT-ecA" secondAttribute="trailing" constant="30" id="lug-J8-f4l"/>
+                                            <constraint firstAttribute="centerX" secondItem="2IT-eA-wtq" secondAttribute="centerX" id="mR9-Xh-gHN"/>
                                             <constraint firstItem="Cee-kz-83m" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="20" id="nXc-O3-4Fo"/>
                                             <constraint firstAttribute="trailing" secondItem="2Aq-1J-TyE" secondAttribute="trailing" constant="20" id="uDJ-vI-8We"/>
                                             <constraint firstItem="n4K-oS-bbi" firstAttribute="top" secondItem="FDz-24-XgI" secondAttribute="top" constant="8" id="wFi-BR-JF5"/>
@@ -732,6 +751,7 @@
                         <outlet property="overallLabel" destination="elY-KA-ihQ" id="NKu-F3-4oh"/>
                         <outlet property="satisfiesLabel" destination="rid-05-ZcH" id="pBo-AQ-ba7"/>
                         <outlet property="titleLabel" destination="rKU-dT-ecA" id="5ZE-oh-bs3"/>
+                        <outlet property="viewCommentsButton" destination="2IT-eA-wtq" id="1my-Rn-mc8"/>
                         <outlet property="workloadLabel" destination="N35-pM-GZs" id="JoH-DT-YAy"/>
                     </connections>
                 </viewController>

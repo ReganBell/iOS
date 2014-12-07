@@ -7,23 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2DC314111A3382D30047D2AA /* dna_helix-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313F61A3382D30047D2AA /* dna_helix-25.png */; };
-		2DC314121A3382D30047D2AA /* dna_helix-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313F71A3382D30047D2AA /* dna_helix-32.png */; };
-		2DC314141A3382D30047D2AA /* globe-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313F91A3382D30047D2AA /* globe-25.png */; };
-		2DC314151A3382D30047D2AA /* globe-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313FA1A3382D30047D2AA /* globe-32.png */; };
-		2DC314171A3382D30047D2AA /* physics-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313FC1A3382D30047D2AA /* physics-25.png */; };
-		2DC314181A3382D30047D2AA /* physics-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313FD1A3382D30047D2AA /* physics-32.png */; };
-		2DC3141A1A3382D30047D2AA /* pi-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC313FF1A3382D30047D2AA /* pi-25.png */; };
-		2DC3141B1A3382D30047D2AA /* pi-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314001A3382D30047D2AA /* pi-32.png */; };
-		2DC3141D1A3382D30047D2AA /* portrait-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314021A3382D30047D2AA /* portrait-25.png */; };
-		2DC3141E1A3382D30047D2AA /* portrait-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314031A3382D30047D2AA /* portrait-32.png */; };
-		2DC314201A3382D30047D2AA /* pranava-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314051A3382D30047D2AA /* pranava-25.png */; };
-		2DC314211A3382D30047D2AA /* pranava-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314061A3382D30047D2AA /* pranava-32.png */; };
-		2DC314231A3382D30047D2AA /* scales_of_Balance-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314081A3382D30047D2AA /* scales_of_Balance-25.png */; };
-		2DC314241A3382D30047D2AA /* scales_of_Balance-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC314091A3382D30047D2AA /* scales_of_Balance-32.png */; };
-		2DC314291A3382D30047D2AA /* statue_of_liberty-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3140E1A3382D30047D2AA /* statue_of_liberty-25.png */; };
-		2DC3142A1A3382D30047D2AA /* statue_of_liberty-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3140F1A3382D30047D2AA /* statue_of_liberty-32.png */; };
-		2DC3142D1A338FDA0047D2AA /* bust-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3142C1A338FDA0047D2AA /* bust-32.png */; };
 		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
 		595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F11A2E7201000ABAD8 /* QCourseOverall.csv */; };
 		595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F31A2E7214000ABAD8 /* QDifficulty.csv */; };
@@ -64,23 +47,6 @@
 
 /* Begin PBXFileReference section */
 		042A5F06587ECF071CB434D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		2DC313F61A3382D30047D2AA /* dna_helix-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dna_helix-25.png"; sourceTree = "<group>"; };
-		2DC313F71A3382D30047D2AA /* dna_helix-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dna_helix-32.png"; sourceTree = "<group>"; };
-		2DC313F91A3382D30047D2AA /* globe-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-25.png"; sourceTree = "<group>"; };
-		2DC313FA1A3382D30047D2AA /* globe-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe-32.png"; sourceTree = "<group>"; };
-		2DC313FC1A3382D30047D2AA /* physics-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "physics-25.png"; sourceTree = "<group>"; };
-		2DC313FD1A3382D30047D2AA /* physics-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "physics-32.png"; sourceTree = "<group>"; };
-		2DC313FF1A3382D30047D2AA /* pi-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pi-25.png"; sourceTree = "<group>"; };
-		2DC314001A3382D30047D2AA /* pi-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pi-32.png"; sourceTree = "<group>"; };
-		2DC314021A3382D30047D2AA /* portrait-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "portrait-25.png"; sourceTree = "<group>"; };
-		2DC314031A3382D30047D2AA /* portrait-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "portrait-32.png"; sourceTree = "<group>"; };
-		2DC314051A3382D30047D2AA /* pranava-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pranava-25.png"; sourceTree = "<group>"; };
-		2DC314061A3382D30047D2AA /* pranava-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pranava-32.png"; sourceTree = "<group>"; };
-		2DC314081A3382D30047D2AA /* scales_of_Balance-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scales_of_Balance-25.png"; sourceTree = "<group>"; };
-		2DC314091A3382D30047D2AA /* scales_of_Balance-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scales_of_Balance-32.png"; sourceTree = "<group>"; };
-		2DC3140E1A3382D30047D2AA /* statue_of_liberty-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statue_of_liberty-25.png"; sourceTree = "<group>"; };
-		2DC3140F1A3382D30047D2AA /* statue_of_liberty-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statue_of_liberty-32.png"; sourceTree = "<group>"; };
-		2DC3142C1A338FDA0047D2AA /* bust-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bust-32.png"; sourceTree = "<group>"; };
 		595575EF1A2E71F8000ABAD8 /* Qcomments.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qcomments.csv; sourceTree = "<group>"; };
 		595575F11A2E7201000ABAD8 /* QCourseOverall.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QCourseOverall.csv; sourceTree = "<group>"; };
 		595575F31A2E7214000ABAD8 /* QDifficulty.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QDifficulty.csv; sourceTree = "<group>"; };
@@ -149,30 +115,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2DC313F51A3382D30047D2AA /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				2DC3142C1A338FDA0047D2AA /* bust-32.png */,
-				2DC313F61A3382D30047D2AA /* dna_helix-25.png */,
-				2DC313F71A3382D30047D2AA /* dna_helix-32.png */,
-				2DC313F91A3382D30047D2AA /* globe-25.png */,
-				2DC313FA1A3382D30047D2AA /* globe-32.png */,
-				2DC313FC1A3382D30047D2AA /* physics-25.png */,
-				2DC313FD1A3382D30047D2AA /* physics-32.png */,
-				2DC313FF1A3382D30047D2AA /* pi-25.png */,
-				2DC314001A3382D30047D2AA /* pi-32.png */,
-				2DC314021A3382D30047D2AA /* portrait-25.png */,
-				2DC314031A3382D30047D2AA /* portrait-32.png */,
-				2DC314051A3382D30047D2AA /* pranava-25.png */,
-				2DC314061A3382D30047D2AA /* pranava-32.png */,
-				2DC314081A3382D30047D2AA /* scales_of_Balance-25.png */,
-				2DC314091A3382D30047D2AA /* scales_of_Balance-32.png */,
-				2DC3140E1A3382D30047D2AA /* statue_of_liberty-25.png */,
-				2DC3140F1A3382D30047D2AA /* statue_of_liberty-32.png */,
-			);
-			path = Icons;
-			sourceTree = "<group>";
-		};
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
@@ -196,7 +138,6 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
-				2DC313F51A3382D30047D2AA /* Icons */,
 				595575EF1A2E71F8000ABAD8 /* Qcomments.csv */,
 				595575F11A2E7201000ABAD8 /* QCourseOverall.csv */,
 				595575F31A2E7214000ABAD8 /* QDifficulty.csv */,
@@ -372,31 +313,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */,
-				2DC314291A3382D30047D2AA /* statue_of_liberty-25.png in Resources */,
-				2DC314181A3382D30047D2AA /* physics-32.png in Resources */,
 				59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
-				2DC314121A3382D30047D2AA /* dna_helix-32.png in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
-				2DC314231A3382D30047D2AA /* scales_of_Balance-25.png in Resources */,
-				2DC3142A1A3382D30047D2AA /* statue_of_liberty-32.png in Resources */,
 				595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */,
 				595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */,
-				2DC314171A3382D30047D2AA /* physics-25.png in Resources */,
 				595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */,
-				2DC314241A3382D30047D2AA /* scales_of_Balance-32.png in Resources */,
 				595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */,
-				2DC3141A1A3382D30047D2AA /* pi-25.png in Resources */,
-				2DC314151A3382D30047D2AA /* globe-32.png in Resources */,
-				2DC3141D1A3382D30047D2AA /* portrait-25.png in Resources */,
-				2DC314141A3382D30047D2AA /* globe-25.png in Resources */,
-				2DC3141E1A3382D30047D2AA /* portrait-32.png in Resources */,
-				2DC314211A3382D30047D2AA /* pranava-32.png in Resources */,
-				2DC314201A3382D30047D2AA /* pranava-25.png in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
-				2DC314111A3382D30047D2AA /* dna_helix-25.png in Resources */,
-				2DC3142D1A338FDA0047D2AA /* bust-32.png in Resources */,
-				2DC3141B1A3382D30047D2AA /* pi-32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
