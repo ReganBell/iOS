@@ -84,16 +84,6 @@
     
     NSMutableArray *predicates = [NSMutableArray new];
     
-    switch (self.termControl.selectedSegmentIndex) {
-        case 0:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
-            break;
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
-        default:
-            break;
-    }
-    
     switch (self.courseLevelControl.selectedSegmentIndex) {
         case 0:
             [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
@@ -112,6 +102,16 @@
     
     [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
     [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
+    
+    switch (self.termControl.selectedSegmentIndex) {
+        case 0:
+            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
+            break;
+        case 1:
+            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
+        default:
+            break;
+    }
     
     for (UIButton *button in self.genEdButtons) {
         
