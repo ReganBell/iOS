@@ -312,6 +312,9 @@
     [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,16)];
     [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(16, [self.course.catalogNumber stringValue].length)];
     
+    if (!genEdString) {
+        genEdString = @"None listed";
+    }
     NSString *tempGenEdString = [NSString stringWithFormat:@"Satisfies: %@", genEdString];
     NSMutableAttributedString *genEdLabel = [[NSMutableAttributedString alloc] initWithString:tempGenEdString];
     [genEdLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,11)];
