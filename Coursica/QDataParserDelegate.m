@@ -41,9 +41,6 @@
         case KModeScoreWorkload:
             path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"QWorkload.csv"];
             break;
-        case kModeScoreInstructor:
-            path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Qinstructors.csv"];
-            break;
             
         default:
             break;
@@ -85,9 +82,6 @@
             case KModeScoreWorkload:
                 self.currentScore.type = @"workload";
                 break;
-            case kModeScoreInstructor:
-                self.currentScore.type = @"instructor";
-                break;
             case kModeScoreOverall:
                 self.currentScore.type = @"overall";
                 break;
@@ -118,15 +112,15 @@
             case 0:
                 break;
             case 1:
-                self.currentComment.catalogNumber = [self.sharedFormatter numberFromString:field];
+                self.currentComment.catalogNumber = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 2:
-                self.currentComment.year = field;
+                self.currentComment.year = [self substringWithoutEndCharacters:field];
             case 3:
-                self.currentComment.term = @([self.sharedFormatter numberFromString:field].intValue - 1);
+                self.currentComment.term = @([self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]].intValue - 1);
                 // In CSV fall is 1, spring is 2
                 // We store as a bool, fall is 0 and spring is 1
             case 4:
-                self.currentComment.comment = field;
+                self.currentComment.comment = [self substringWithoutEndCharacters:field];
             default:
                 break;
         }
@@ -149,19 +143,6 @@
                 self.currentScore.four = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
             case 7:
                 self.currentScore.five = [self.sharedFormatter numberFromString:[self substringWithoutEndCharacters:field]];
-            default:
-                break;
-        }
-    }
-    else if (self.mode == kModeScoreInstructor) {
-        switch (fieldIndex) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-                
             default:
                 break;
         }

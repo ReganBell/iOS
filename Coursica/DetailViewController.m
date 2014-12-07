@@ -14,6 +14,7 @@
 #import "Meeting.h"
 #import "GraphKit.h"
 #import "QScore.h"
+#import "CommentsViewController.h"
 //#import "UIViewController+BButton.h"
 
 @interface DetailViewController ()
@@ -325,7 +326,10 @@
 
 - (IBAction)viewCommentsButtonClicked:(id)sender {
     
-    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    CommentsViewController *controller = [main instantiateViewControllerWithIdentifier:@"comments"];
+    controller.course = self.course;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)graphControlIndexChange:(id)sender {

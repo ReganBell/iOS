@@ -31,6 +31,8 @@
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
 		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
 		59D4A0481A347F98003FD743 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A0471A347F98003FD743 /* NavigationController.m */; };
+		59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04A1A34877D003FD743 /* CommentsViewController.m */; };
+		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */ = {isa = PBXBuildFile; fileRef = 59F51C6B1A254E3D0025E021 /* SampleAPIResponse */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
@@ -90,6 +92,10 @@
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
 		59D4A0461A347F98003FD743 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		59D4A0471A347F98003FD743 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
+		59D4A0491A34877D003FD743 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentsViewController.h; path = Coursica/CommentsViewController.h; sourceTree = "<group>"; };
+		59D4A04A1A34877D003FD743 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentsViewController.m; path = Coursica/CommentsViewController.m; sourceTree = "<group>"; };
+		59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+HeightCalculation.h"; sourceTree = "<group>"; };
+		59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HeightCalculation.m"; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
@@ -122,6 +128,8 @@
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
+				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
+				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
 				596076AE1A1000700038D4F4 /* Coursica */,
 				596076CB1A1000710038D4F4 /* CoursicaTests */,
 				596076AD1A1000700038D4F4 /* Products */,
@@ -142,6 +150,8 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
+				59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */,
+				59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */,
 				595575EF1A2E71F8000ABAD8 /* Qcomments.csv */,
 				59D4A0461A347F98003FD743 /* NavigationController.h */,
 				59D4A0471A347F98003FD743 /* NavigationController.m */,
@@ -386,7 +396,9 @@
 				595576011A2E79BF000ABAD8 /* QDataParserDelegate.m in Sources */,
 				598CAB321A22C7EC008D0142 /* Meeting.m in Sources */,
 				59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */,
+				59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */,
 				596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */,
+				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
