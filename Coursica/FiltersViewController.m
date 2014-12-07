@@ -45,9 +45,10 @@
     
     self.title = @"Filters";
     
-    [self configureLabelSlider];
+    //[self configureLabelSlider];
     
     self.searchField.delegate = self;
+    self.searchField.tintColor = CoursicaBlue;
     
 //    NSDictionary *genEdAbbrvs = @{@"AESTH&INTP": @1,
 //                                  @"CULTR&BLF": @2,
