@@ -15,7 +15,6 @@ typedef enum {
     kModeScoreOverall,
     kModeScoreDifficulty,
     KModeScoreWorkload,
-    kModeScoreInstructor
     
 } kParseMode;
 

@@ -2,7 +2,7 @@
 //  DetailViewController.m
 //  Coursica
 //
-//  Created by Regan Bell on 11/25/14.
+//  Created by Matthew Beatty on 11/25/14.
 //  Copyright (c) 2014 Prestige Worldwide. All rights reserved.
 //
 
@@ -14,10 +14,12 @@
 #import "Meeting.h"
 #import "GraphKit.h"
 #import "QScore.h"
-//#import "UIViewController+BButton.h"
+#import "CommentsViewController.h"
+#import "UILabel+HeightCalculation.h"
 
 @interface DetailViewController ()
 
+// References to the UI elements used in the controller's view
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
@@ -44,6 +46,9 @@
 @property (nonatomic, weak) IBOutlet GKBarGraph *graphView;
 @property (nonatomic, assign) BOOL green;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *notesHeightConstraint;
+
 @end
 
 @implementation DetailViewController
@@ -52,6 +57,7 @@
     
     [super viewDidLoad];
     
+    // Sets title bar appearance for the view
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
@@ -60,7 +66,7 @@
     label.textColor = [UIColor whiteColor];
     [label sizeToFit];
     self.navigationItem.titleView = label;
-
+    
     self.titleLabel.text = self.course.title;
     self.titleLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
 
@@ -70,10 +76,13 @@
     self.descriptionLabel.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];
     self.descriptionLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
     
+    
     NSMutableString *facultyString = [NSMutableString new];
     
+    // Formats information from Faculty object for the view
     if (![self.course.faculty count] == 0)
     {
+        // Lists faculty names
         for (Faculty *faculty in self.course.faculty)
         {
             [facultyString appendFormat:@"%@ %@, ", faculty.first, faculty.last];
@@ -82,16 +91,20 @@
     }
     else
     {
+        // If no faculty listed, then faculty is TBD
         [facultyString appendString:@"TBD"];
     }
     
     NSMutableString *meetingString = [NSMutableString new];
     
+    // Formats the course meeting time for use in the view
+    // Sorts days so they can be printed in order in label
     if (![self.course.meetings count] == 0)
     {
         NSString *dayString;
         NSString *startTime;
         NSString *endTime;
+        // Sorts set of course meeting days
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
             if ([obj1 intValue] > [obj2 intValue])
                 return NSOrderedDescending;
@@ -102,7 +115,7 @@
         }];
         NSArray *sortedMeetingTimes = [self.course.meetings sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
         
-        
+        // Turns number day into abbreviation
         for (Meeting *meeting in sortedMeetingTimes)
         {
             
@@ -133,6 +146,7 @@
 
             [meetingString appendFormat:@"%@ ", dayString];
             
+            // Converts course times from military to standard time
             startTime = meeting.beginTime;
             NSString *startHour = [startTime componentsSeparatedByString:@":"][0];
             if ([startHour intValue] > 12)
@@ -164,6 +178,7 @@
         [meetingString appendString:@"TBD"];
     }
     
+    // Gives location of the course
     NSMutableString *locationString = [NSMutableString new];
     if (![self.course.locations count] == 0)
     {
@@ -177,11 +192,13 @@
         [locationString appendString:@"TBD"];
     }
     
+    // Does varied text coloring in the label, repeated for most information labels
     NSString *instructorString = [NSString stringWithFormat:@"Instructor: %@", facultyString];
     NSMutableAttributedString *instructorLabel = [[NSMutableAttributedString alloc] initWithString:instructorString];
     [instructorLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,12)];
     [instructorLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(12, facultyString.length)];
     
+    // More text coloring scheme work
     NSString *tempMeetingString = [NSString stringWithFormat:@"Meeting Time: %@", meetingString];
     NSMutableAttributedString *meetingLabel = [[NSMutableAttributedString alloc] initWithString:tempMeetingString];
     [meetingLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,14)];
@@ -196,6 +213,7 @@
     self.courseMeetingLabel.attributedText = meetingLabel;
     self.courseLocationLabel.attributedText = locationLabel;
     
+    // Gets Gen. Ed. requirements of the course from numerical gen. ed. listings
     NSString *genEdString;
     if ([self.course.genEdOne intValue] == 0)
     {
@@ -232,7 +250,7 @@
         default:
             break;
     }
-    
+    // Checks if the courses satisfies a second gen. ed. requirement
     if ([self.course.genEdTwo intValue] != 0)
     {
         switch ([self.course.genEdTwo intValue]) {
@@ -266,7 +284,12 @@
         }
     }
     }
+    // Says if no Gen. Ed. fulfillments were found
+    if (!genEdString) {
+        genEdString = @"None listed";
+    }
     
+    // Text color formatting
     NSString *tempNotesString = [NSString stringWithFormat:@"Notes: %@", self.course.notes];
     NSMutableAttributedString *notesLabel = [[NSMutableAttributedString alloc] initWithString:tempNotesString];
     [notesLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,7)];
@@ -277,6 +300,7 @@
     [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,16)];
     [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(16, [self.course.catalogNumber stringValue].length)];
     
+    
     NSString *tempGenEdString = [NSString stringWithFormat:@"Satisfies: %@", genEdString];
     NSMutableAttributedString *genEdLabel = [[NSMutableAttributedString alloc] initWithString:tempGenEdString];
     [genEdLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,11)];
@@ -286,6 +310,7 @@
     self.catalogNumLabel.attributedText = catNumLabel;
     self.satisfiesLabel.attributedText = genEdLabel;
     
+    // Retrieves Q scores for course
     NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];
     NSMutableDictionary *qScoresDict = [NSMutableDictionary new];
     for (NSString *type in qTypes) {
@@ -299,6 +324,7 @@
         [qScoresDict setObject:score forKey:type];
     }
     
+    // Sets the controller's Q score variables
     self.overallScore = qScoresDict[@"overall"];
     self.difficultyScore = qScoresDict[@"difficulty"];
     self.workloadScore = qScoresDict[@"workload"];
@@ -319,6 +345,9 @@
     [workloadLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(10, 4)];
     
     
+    // Sets all the information for the Q score bar graph
+    // From example of how to implement the graph on the graph's Github repository
+    // Michalkonturek/GraphKit (the source of the bar graph)
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.view.backgroundColor = [UIColor gk_cloudsColor];
@@ -328,6 +357,8 @@
     NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
     NSInteger largest = 0;
     NSString *largestBar;
+    // Adjusts percentages for graph from Q data so the largest
+    // Answer (the largest bar) will completely fill the bar, like CS50 courses online
     for (NSString *property in properties)
     {
         if([[self.overallScore valueForKey:property] intValue] > largest)
@@ -338,6 +369,7 @@
         }
     }
     
+    // Calculates ratio to proportion all the scores
     NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
     
     self.data = @[[NSNumber numberWithDouble:self.overallScore.one.doubleValue*ratio.doubleValue],
@@ -361,6 +393,14 @@
     self.overallLabel.attributedText = overallLabel;
     self.difficultyLabel.attributedText = difficultyLabel;
     self.workloadLabel.attributedText = workloadLabel;
+    
+    float height = [UILabel heightForString:self.descriptionLabel.text width:self.descriptionLabel.bounds.size.width - 40 font:self.descriptionLabel.font];
+    self.descriptionHeightConstraint.constant = height;
+    
+    height = [UILabel heightForString:tempNotesString width:self.notesLabel.bounds.size.width - 60 font:self.notesLabel.font];
+    self.notesHeightConstraint.constant = height;
+    
+    [self.view setNeedsLayout];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -371,9 +411,12 @@
 
 - (IBAction)viewCommentsButtonClicked:(id)sender {
     
-    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    CommentsViewController *controller = [main instantiateViewControllerWithIdentifier:@"comments"];
+    controller.course = self.course;
+    [self.navigationController pushViewController:controller animated:YES];
 }
-
+// Called if Q graph changes (from overall to workload/difficulty, etc.)
 - (IBAction)graphControlIndexChange:(id)sender {
     
     
@@ -444,7 +487,7 @@
     [self.graphView reset];
 }
 
-
+// Code from third-party GraphKit repository for bar graph on Github
 #pragma mark - GKBarGraphDataSource
 
 - (NSInteger)numberOfBars {

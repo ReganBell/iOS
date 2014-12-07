@@ -1,0 +1,1 @@
+Our project is an iOS application, so XCode is necessary to open it.

@@ -3,6 +3,7 @@
 //  Coursica
 //
 //  Created by Regan Bell on 11/9/14.
+//  Matthew Beatty
 //  Copyright (c) 2014 Prestige Worldwide. All rights reserved.
 //
 
@@ -32,10 +33,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Creates objects used retrieving data from CS50 API
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
     
+    // Creates title bar with app name
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
@@ -48,6 +51,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
     
+    // Creates navigation bar button
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     [button setImage:[UIImage imageNamed:@"SmallSearch.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(showFilters) forControlEvents:UIControlEventTouchUpInside];
@@ -58,6 +62,7 @@
 
     self.tableView.tableFooterView = [UIView new];
     
+    // checks for a database, and if not requests courses data from CS50 API
     if (count == 0) {
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -76,6 +81,7 @@
     }
 }
 
+    // Action called on switching to the filters screen
 - (IBAction)showFilters{
     
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -94,12 +100,14 @@
 
 #pragma mark - NSFetchedResultsController Delegate
 
+    // Response to filter changes in the filters view
 - (void)filtersDidChange:(NSPredicate *)predicate {
     self.fetchedResultsController.fetchRequest.predicate = predicate;
     [self.fetchedResultsController performFetch:nil];
     [self.tableView reloadData];
 }
 
+    // returners controller for results from API calls
 - (NSFetchedResultsController*)fetchedResultsController {
     
     if (_fetchedResultsController) {
@@ -114,16 +122,6 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    // Specify criteria for filtering which objects to fetch
-    // Search to-dos:
-    // - year
-    // - faculty
-    // - course level: grad/undergrad
-    // - search by gen ed:
-    // - general search:
-    // - fields of study
-    // - q-score filters:
-    // - scheduling, doesn't conflict with
     [fetchRequest setPredicate:self.filterPredicate];
     
     // Specify how the fetched objects should be sorted
@@ -148,7 +146,7 @@
 {
     [self.tableView beginUpdates];
 }
-
+    // changes table view sections with changes in core data
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
@@ -162,7 +160,7 @@
             return;
     }
 }
-
+    // Changes table view objects with change to the object in core data
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
@@ -177,7 +175,6 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            //[self fetchedResultsController:controller configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -218,7 +215,7 @@
     
     return cell;
 }
-
+    // Called after a selection of the table view
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -238,11 +235,6 @@
     id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
     
     return sectionInfo.numberOfObjects;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -2,8 +2,7 @@
 //  DetailViewController.h
 //  Coursica
 //
-//  Created by Regan Bell on 11/25/14.
-//  Matthew Beatty was here.
+//  Created by Matthew Beatty on 11/25/14.
 //  Copyright (c) 2014 Prestige Worldwide. All rights reserved.
 //
 
