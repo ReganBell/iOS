@@ -24,7 +24,7 @@
     
     self.title = @"Filters";
     
-    [self configureLabelSlider];
+    //[self configureLabelSlider];
     
     NSArray *buttonArray = [[NSArray alloc] initWithObjects:self.aipButton,self.erButton,self.cbButton,self.emrButton, self.slsButton, self.spuButton, self.sowButton, self.sopButton, self.uswButton, self.fallButton, self.springButton, self.undergradButton, self.gradButton, nil];
     
@@ -206,12 +206,13 @@
 
 - (void) configureRangeSlider
 {
-    NMRangeSlider* rangeSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 275, 34)];
+    NMRangeSlider* rangeSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(24, 350, 324, 34)];
     rangeSlider.lowerValue = 0;
     rangeSlider.upperValue = 5;
     [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:34]];
     [rangeSlider addConstraint:[NSLayoutConstraint constraintWithItem:rangeSlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:275]];
-    [self.contentView addSubview:rangeSlider];
+    //[rangeSlider addMotionEffect:]
+    //[self.contentView addSubview:rangeSlider];
     self.rangeSlider = rangeSlider;
 }
 
