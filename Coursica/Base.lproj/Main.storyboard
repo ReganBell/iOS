@@ -115,7 +115,7 @@
                                                     <color key="titleColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="SoV-ft-TMz"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="S83-2Z-aRu"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzI-OW-l4v">
@@ -130,7 +130,7 @@
                                                 </state>
                                                 <state key="selected" image="scales_of_Balance-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="9Sw-gL-6Ln"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="ZjG-Hv-7Lq"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgR-5j-JeZ">
@@ -145,7 +145,7 @@
                                                 </state>
                                                 <state key="selected" title="   ER" image="scales_of_Balance-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="klu-f0-0ob"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="8KR-CS-wVd"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9OF-aO-ntJ">
@@ -159,6 +159,9 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <state key="selected" title="   C&amp;B"/>
+                                                <connections>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="Z1C-6N-5ua"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYj-HO-m0i">
                                                 <rect key="frame" x="136" y="632" width="100" height="60"/>
@@ -172,7 +175,7 @@
                                                 </state>
                                                 <state key="selected" title="   SLS" image="dna_helix-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="X0g-rs-vXb"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="KXV-9M-i6k"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mFC-bA-9dX">
@@ -187,7 +190,7 @@
                                                 </state>
                                                 <state key="selected" title="   SLS" image="dna_helix-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="eec-9v-igl"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="aHO-n4-vZp"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pca-v2-Jwr">
@@ -202,7 +205,7 @@
                                                 </state>
                                                 <state key="selected" title="   E&amp;MR" image="pi-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="n1a-jY-zm3"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="8y7-sE-ATo"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NY8-MC-6sQ">
@@ -217,7 +220,7 @@
                                                 </state>
                                                 <state key="selected" title="   SPU" image="physics-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="Zth-Dq-l0C"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="1If-Qd-RG9"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJF-gn-voz" userLabel="USW">
@@ -232,7 +235,7 @@
                                                 </state>
                                                 <state key="selected" title="   SPU" image="physics-32.png"/>
                                                 <connections>
-                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchDown" id="VOH-ER-Ojd"/>
+                                                    <action selector="buttonClicked:" destination="DYQ-fo-Uao" eventType="touchUpInside" id="B1Z-Kq-B5p"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Q Score Overall Greater Than:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4F-vj-dSo">

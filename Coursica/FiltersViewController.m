@@ -12,6 +12,7 @@
 @interface FiltersViewController ()
 
 @property (weak, nonatomic) NMRangeSlider *rangeSlider;
+@property (strong, nonatomic) NSArray *buttonArray;
 
 @end
 
@@ -26,13 +27,30 @@
     
     [self configureLabelSlider];
     
-    NSArray *buttonArray = [[NSArray alloc] initWithObjects:self.aipButton,self.erButton,self.cbButton,self.emrButton, self.slsButton, self.spuButton, self.sowButton, self.sopButton, self.uswButton, self.fallButton, self.springButton, self.undergradButton, self.gradButton, nil];
+    NSDictionary *genEdAbbrvs = @{@"AESTH&INTP": @1,
+                                  @"CULTR&BLF": @2,
+                                  @"E&M-REASON": @3,
+                                  @"ETH-REASON": @4,
+                                  @"SCI-LIVSYS": @5,
+                                  @"SCI-PHYUNV": @6,
+                                  @"SOC-WORLD": @7,
+                                  @"US-WORLD": @8};
     
-    for (UIButton *button in buttonArray)
+    self.buttonArray = [[NSArray alloc] initWithObjects:self.aipButton,self.cbButton,self.emrButton, self.erButton,self.slsButton, self.spuButton, self.sowButton, self.sopButton, self.uswButton, self.fallButton, self.springButton, self.undergradButton, self.gradButton, nil];
+    
+    for (UIButton *button in self.buttonArray)
     {
         button.layer.cornerRadius = 2;
         button.layer.borderWidth = 1;
         button.layer.borderColor = [UIColor blueColor].CGColor;
+        
+        UIImage *blackImage = button.imageView.image;
+//        UIImage *whiteImage = [self coloredImageFromImage:button.imageView.image withColor:[UIColor lightGrayColor]];
+        [button setImage:blackImage forState:UIControlStateNormal];
+//        [button setImage:whiteImage forState:UIControlStateSelected];
+        
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     }
     
     [self configureRangeSlider];
@@ -48,22 +66,27 @@
     [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", high]];
     [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", low]];
     
+    for (UIButton *button in self.buttonArray) {
+        
+        if (button.selected) {
+            NSNumber *index = [NSNumber numberWithInteger:[self.buttonArray indexOfObject:button] + 1];
+            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index]];
+        }
+    }
+    
     [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
     
     [self.delegate dismissFiltersViewController];
 }
 
-
-// unnecessary
 - (IBAction)buttonClicked:(UIButton*)genEdButton {
-    if (genEdButton.backgroundColor == [UIColor grayColor])
-    {
+    
+    UIColor *coursicaBlue = [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0];
+    
+    if (genEdButton.selected) {
+        genEdButton.backgroundColor = coursicaBlue;
+    } else
         genEdButton.backgroundColor = [UIColor whiteColor];
-    }
-    else
-    {
-        genEdButton.backgroundColor = [UIColor grayColor];
-    }
 }
 
 - (IBAction)yearSliderChanged:(UISlider*)yearSlider {
