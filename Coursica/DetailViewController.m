@@ -15,6 +15,7 @@
 #import "GraphKit.h"
 #import "QScore.h"
 #import "CommentsViewController.h"
+#import "UILabel+HeightCalculation.h"
 //#import "UIViewController+BButton.h"
 
 @interface DetailViewController ()
@@ -45,6 +46,9 @@
 @property (nonatomic, weak) IBOutlet GKBarGraph *graphView;
 @property (nonatomic, assign) BOOL green;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *notesHeightConstraint;
+
 @end
 
 @implementation DetailViewController
@@ -61,7 +65,7 @@
     label.textColor = [UIColor whiteColor];
     [label sizeToFit];
     self.navigationItem.titleView = label;
-
+    
     self.titleLabel.text = self.course.title;
     self.titleLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
 
@@ -316,6 +320,14 @@
     self.notesLabel.attributedText = notesLabel;
     self.catalogNumLabel.attributedText = catNumLabel;
     self.satisfiesLabel.attributedText = genEdLabel;
+    
+    float height = [UILabel heightForString:self.descriptionLabel.text width:self.descriptionLabel.bounds.size.width - 40 font:self.descriptionLabel.font];
+    self.descriptionHeightConstraint.constant = height;
+    
+    height = [UILabel heightForString:tempNotesString width:self.notesLabel.bounds.size.width - 60 font:self.notesLabel.font];
+    self.notesHeightConstraint.constant = height;
+    
+    [self.view setNeedsLayout];
 }
 
 - (void)didReceiveMemoryWarning {
