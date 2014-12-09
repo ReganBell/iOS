@@ -3,6 +3,7 @@
 //  Coursica
 //
 //  Created by Regan Bell on 11/25/14.
+//  Matthew Beatty
 //  Copyright (c) 2014 Prestige Worldwide. All rights reserved.
 //
 
@@ -11,8 +12,9 @@
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface FiltersViewController () <UITextFieldDelegate>
+@interface FiltersViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
+    // References to the UI elements in the view
 @property (weak, nonatomic) NMRangeSlider *overallSlider;
 @property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *genEdButtons;
 @property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *genEdLabels;
@@ -38,9 +40,22 @@
 
 @implementation FiltersViewController
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    [self.searchField resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    [self applyFiltersButtonPressed:nil];
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Creates titles bar for the view
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
@@ -52,6 +67,7 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
     
+    // Creates cancel button in the title bar
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
     [button setTitle:@"Cancel" forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15];
@@ -67,7 +83,7 @@
     
     [self configureRangeSliders];
 }
-
+    // Checks for editting in the textfield
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -79,7 +95,8 @@
     [self.searchField resignFirstResponder];
     [self.view removeGestureRecognizer:recognizer];
 }
-
+    // Called when apply filters button pressed
+    // Checks all UI elements for changes in order to filter results
 - (IBAction)applyFiltersButtonPressed:(id)sender {
     
     NSMutableArray *predicates = [NSMutableArray new];
@@ -93,7 +110,7 @@
         default:
             break;
     }
-    
+    // Checking all of the Q score filters
     [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
     [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
     
@@ -113,6 +130,7 @@
             break;
     }
     
+    // Checks all Gen. Ed. filters
     for (UIButton *button in self.genEdButtons) {
         
         if (button.selected) {
@@ -131,7 +149,7 @@
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", search]];
         [predicates addObject:[NSCompoundPredicate orPredicateWithSubpredicates:searchPreds]];
     }
-    
+    // Calls function in CoursesViewController to update course list
     [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
     
     [self.delegate dismissFiltersViewController];
@@ -162,38 +180,8 @@
 - (IBAction)qOverallSliderChanged:(UISlider*)qOverallSlider {
     
     float rounded = roundf(qOverallSlider.value*10)/10;
-    self.qOverallTitleLabel.text = [NSString stringWithFormat:@"%0.1f", rounded];;
-    
-    [self updateFilter];
+    self.qOverallTitleLabel.text = [NSString stringWithFormat:@"%0.1f", rounded];
 }
-
-    // TODO: update with year slider value
-- (void)updateFilter {
-    
-//        NSPredicate *predicate = nil;
-//        NSPredicate *newPredicate = [NSPredicate predicateWithFormat:@"term = %@", (self.termSwitch.on) ? @"SPRING" : @"FALL"];
-//        if (!predicate) {
-//                predicate = newPredicate;
-//            } else {
-//                    predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
-//                }
-//
-//        newPredicate = [NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:self.graduateSwitch.on]];
-//        if (!predicate) {
-//                predicate = newPredicate;
-//            } else {
-//                    predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, newPredicate]];
-//                }
-//    
-        //[self.delegate filtersDidChange:predicate];
-    }
-
-- (IBAction)showCourses {
-    
-    
-}
-
-
 
 - (IBAction)cancelButtonPressed:(id)sender {
     
@@ -220,7 +208,8 @@
     
 }
 
-
+// From third-party range slider repository (NMRangeSlider on Github, also in our pod file)
+// functions handling the creation and changes of the range sliders
 #pragma mark -
 #pragma mark - Label  Slider
 
@@ -264,6 +253,7 @@
 
 #pragma mark - Programmatic Sliders
 
+    //Set up sliders (written by us, not third-party)
 - (void)configureOverallSlider {
     
     NMRangeSlider *overallSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 300, 34)];
@@ -276,6 +266,7 @@
     
     [self.contentView addSubview:overallSlider];
     
+    // Add programatic constraints to the slider
     [overallSlider addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
     [overallSlider addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:300]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
@@ -299,7 +290,7 @@
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallValueLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.qOverallSlider attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallValueLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
 }
-
+    //Set up sliders (written by us, not third-party)
 - (void) configureWorkloadSlider {
     
     UILabel *workloadTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -348,7 +339,7 @@
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadValueLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workloadSlider attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadValueLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
 }
-
+    //Set up sliders (written by us, not third-party)
 - (void) configureDifficultySlider {
     
     UILabel *difficultyTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];

@@ -3,6 +3,7 @@
 //  Coursica
 //
 //  Created by Regan Bell on 11/9/14.
+//  Matthew Beatty
 //  Copyright (c) 2014 Prestige Worldwide. All rights reserved.
 //
 
@@ -109,7 +110,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Coursica.sqlite"];
     
     //Uncomment to delete store:
-//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";

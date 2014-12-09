@@ -3,6 +3,7 @@
 //  Coursica
 //
 //  Created by Regan Bell on 11/23/14.
+//  Matthew Beatty
 //  Copyright (c) 2014 Prestige Worldwide. All rights reserved.
 //
 
@@ -76,6 +77,9 @@
     
     for (NSDictionary *courseDict in serverCourses) {
         
+        NSString *purifiedTitleString = [self purifyString:courseDict[@"title"]];
+        NSString *purifiedDescriptionString = [self purifyString:courseDict[@"description"]];
+        
         Course *newCourse = [[Course alloc] initWithEntity:courseEntity insertIntoManagedObjectContext:context];
         newCourse.catalogNumber = [formatter numberFromString:courseDict[@"cat_num"]];
         newCourse.term = courseDict[@"term"];
@@ -83,8 +87,10 @@
         newCourse.field = courseDict[@"field"];
         newCourse.number = courseDict[@"number"];
         newCourse.prereqs = courseDict[@"prerequisites"];
-        newCourse.title = courseDict[@"title"];
-        newCourse.courseDescription = courseDict[@"description"];
+        //newCourse.title = courseDict[@"title"];
+        //newCourse.courseDescription = courseDict[@"description"];
+        newCourse.title = purifiedTitleString;
+        newCourse.courseDescription = purifiedDescriptionString;
         newCourse.notes = courseDict[@"notes"];
         
         NSDictionary *types = @{@"difficulty":@"qDifficulty", @"workload":@"qWorkload", @"overall":@"qOverall"};
@@ -184,5 +190,14 @@
         NSLog(@"Error saving context: %@", error);
     }
 }
+
+    +(NSString *)purifyString:(NSString *)string {
+        
+        string = [string stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+        string = [string stringByReplacingOccurrencesOfString:@"\\'" withString:@"'"];
+        
+        return string;
+    }
+
 
 @end
