@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5901858A1A3E4447008884EF /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185831A3E4447008884EF /* TFHpple.m */; };
+		5901858B1A3E4447008884EF /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185851A3E4447008884EF /* TFHppleElement.m */; };
+		5901858C1A3E4447008884EF /* FullOnScrapist.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185871A3E4447008884EF /* FullOnScrapist.m */; };
+		5901858D1A3E4447008884EF /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185891A3E4447008884EF /* XPathQuery.m */; };
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
 		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
@@ -51,8 +55,17 @@
 
 /* Begin PBXFileReference section */
 		042A5F06587ECF071CB434D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		590185821A3E4447008884EF /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		590185831A3E4447008884EF /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		590185841A3E4447008884EF /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		590185851A3E4447008884EF /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		590185861A3E4447008884EF /* FullOnScrapist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullOnScrapist.h; sourceTree = "<group>"; };
+		590185871A3E4447008884EF /* FullOnScrapist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullOnScrapist.m; sourceTree = "<group>"; usesTabs = 0; };
+		590185881A3E4447008884EF /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		590185891A3E4447008884EF /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
+		592939001A479315004C4303 /* Coursica 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 5.xcdatamodel"; sourceTree = "<group>"; };
 		595575EF1A2E71F8000ABAD8 /* Qcomments.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qcomments.csv; sourceTree = "<group>"; };
 		595575F11A2E7201000ABAD8 /* QCourseOverall.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QCourseOverall.csv; sourceTree = "<group>"; };
 		595575F31A2E7214000ABAD8 /* QDifficulty.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QDifficulty.csv; sourceTree = "<group>"; };
@@ -78,6 +91,7 @@
 		596076C81A1000710038D4F4 /* CoursicaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoursicaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		596076CD1A1000710038D4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596076CE1A1000710038D4F4 /* CoursicaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoursicaTests.m; sourceTree = "<group>"; };
+		597FA8C01A3FF22600D8421E /* Coursica 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 4.xcdatamodel"; sourceTree = "<group>"; };
 		598CAB2D1A22C7EA008D0142 /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		598CAB2E1A22C7EA008D0142 /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		598CAB301A22C7EC008D0142 /* Meeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meeting.h; sourceTree = "<group>"; };
@@ -92,8 +106,8 @@
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
 		59D4A0461A347F98003FD743 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		59D4A0471A347F98003FD743 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
-		59D4A0491A34877D003FD743 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentsViewController.h; path = Coursica/CommentsViewController.h; sourceTree = "<group>"; };
-		59D4A04A1A34877D003FD743 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentsViewController.m; path = Coursica/CommentsViewController.m; sourceTree = "<group>"; };
+		59D4A0491A34877D003FD743 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
+		59D4A04A1A34877D003FD743 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+HeightCalculation.h"; sourceTree = "<group>"; };
 		59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HeightCalculation.m"; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
@@ -125,11 +139,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5901857D1A3E4447008884EF /* Scrape */ = {
+			isa = PBXGroup;
+			children = (
+				5901857E1A3E4447008884EF /* hpple */,
+				590185821A3E4447008884EF /* TFHpple.h */,
+				590185831A3E4447008884EF /* TFHpple.m */,
+				590185841A3E4447008884EF /* TFHppleElement.h */,
+				590185851A3E4447008884EF /* TFHppleElement.m */,
+				590185861A3E4447008884EF /* FullOnScrapist.h */,
+				590185871A3E4447008884EF /* FullOnScrapist.m */,
+				590185881A3E4447008884EF /* XPathQuery.h */,
+				590185891A3E4447008884EF /* XPathQuery.m */,
+			);
+			path = Scrape;
+			sourceTree = "<group>";
+		};
+		5901857E1A3E4447008884EF /* hpple */ = {
+			isa = PBXGroup;
+			children = (
+				5901857F1A3E4447008884EF /* Classes */,
+				590185801A3E4447008884EF /* UnitTesting */,
+			);
+			path = hpple;
+			sourceTree = "<group>";
+		};
+		5901857F1A3E4447008884EF /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		590185801A3E4447008884EF /* UnitTesting */ = {
+			isa = PBXGroup;
+			children = (
+				590185811A3E4447008884EF /* TestData */,
+			);
+			path = UnitTesting;
+			sourceTree = "<group>";
+		};
+		590185811A3E4447008884EF /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
-				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
-				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
 				596076AE1A1000700038D4F4 /* Coursica */,
 				596076CB1A1000710038D4F4 /* CoursicaTests */,
 				596076AD1A1000700038D4F4 /* Products */,
@@ -150,6 +209,9 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
+				5901857D1A3E4447008884EF /* Scrape */,
+				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
+				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
 				59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */,
 				59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */,
 				595575EF1A2E71F8000ABAD8 /* Qcomments.csv */,
@@ -392,15 +454,19 @@
 			files = (
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
+				5901858D1A3E4447008884EF /* XPathQuery.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
 				598CAB351A22C7EC008D0142 /* Location.m in Sources */,
 				595576011A2E79BF000ABAD8 /* QDataParserDelegate.m in Sources */,
 				598CAB321A22C7EC008D0142 /* Meeting.m in Sources */,
+				5901858B1A3E4447008884EF /* TFHppleElement.m in Sources */,
 				59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */,
 				59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */,
 				596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */,
 				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
+				5901858C1A3E4447008884EF /* FullOnScrapist.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
+				5901858A1A3E4447008884EF /* TFHpple.m in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
@@ -645,9 +711,11 @@
 			children = (
 				59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */,
 				59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */,
+				597FA8C01A3FF22600D8421E /* Coursica 4.xcdatamodel */,
+				592939001A479315004C4303 /* Coursica 5.xcdatamodel */,
 				596076B71A1000710038D4F4 /* Coursica.xcdatamodel */,
 			);
-			currentVersion = 59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */;
+			currentVersion = 592939001A479315004C4303 /* Coursica 5.xcdatamodel */;
 			path = Coursica.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

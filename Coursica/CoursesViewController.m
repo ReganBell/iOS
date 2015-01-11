@@ -137,6 +137,26 @@
     NSError *error;
     [controller performFetch:&error];
     
+    NSMutableSet *fieldAbbreviations = [[NSMutableSet alloc] init];
+    NSMutableString *abbreviations = [[NSMutableString alloc] init];
+    
+    for (Course *course in controller.fetchedObjects) {
+        
+        [fieldAbbreviations addObject:course.shortField];
+    }
+    
+    NSArray *array = [fieldAbbreviations allObjects];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 caseInsensitiveCompare:obj2];
+    }];
+    NSArray *sortedArary = [array sortedArrayUsingDescriptors:@[descriptor]];
+    
+    for (NSString *abbreviation in sortedArary) {
+        [abbreviations appendFormat:@"%@\n", abbreviation];
+    }
+    
+    NSLog(@"%@", abbreviations);
+    
     controller.delegate = self;
     
     return controller;
@@ -202,7 +222,7 @@
     
     Course *course = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    NSString *original = [NSString stringWithFormat:@"%@ %@ - %@", course.field, course.number, course.title];
+    NSString *original = [NSString stringWithFormat:@"%@ %@ - %@", course.shortField, course.number, course.title];
     NSRange boldRange = [original rangeOfString:course.title];
 
     NSMutableAttributedString *fancy = [[NSMutableAttributedString alloc] initWithString:original];

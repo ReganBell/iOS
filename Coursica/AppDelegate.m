@@ -15,6 +15,7 @@
 #import "QDataParserDelegate.h"
 #import "Course.h"
 #import "QScore.h"
+#import "FullOnScrapist.h"
 
 @interface AppDelegate ()
 
@@ -29,6 +30,9 @@
     // Override point for customization after application launch.
     
     NSManagedObjectContext *context = [self managedObjectContext];
+    
+    FullOnScrapist *scrapist = [FullOnScrapist new];
+    [scrapist getFieldLinks];
     
     // Only parse CSV files if we have no Q data
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];

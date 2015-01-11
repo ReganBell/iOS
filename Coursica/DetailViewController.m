@@ -62,7 +62,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
-    label.text = [NSString stringWithFormat:@"%@ %@", self.course.field, self.course.number];
+    label.text = [NSString stringWithFormat:@"%@ %@", self.course.shortField, self.course.number];
     label.textColor = [UIColor whiteColor];
     [label sizeToFit];
     self.navigationItem.titleView = label;
@@ -295,20 +295,20 @@
     [notesLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,7)];
     [notesLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(7, self.course.notes.length)];
     
-    NSString *tempCatNumString = [NSString stringWithFormat:@"Catalog Number: %@", [self.course.catalogNumber stringValue]];
-    NSMutableAttributedString *catNumLabel = [[NSMutableAttributedString alloc] initWithString:tempCatNumString];
-    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,16)];
-    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(16, [self.course.catalogNumber stringValue].length)];
-    
-    
-    NSString *tempGenEdString = [NSString stringWithFormat:@"Satisfies: %@", genEdString];
-    NSMutableAttributedString *genEdLabel = [[NSMutableAttributedString alloc] initWithString:tempGenEdString];
-    [genEdLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,11)];
-    [genEdLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(11, genEdString.length)];
+//    NSString *tempCatNumString = [NSString stringWithFormat:@"Catalog Number: %@", [self.course.catalogNumber stringValue]];
+//    NSMutableAttributedString *catNumLabel = [[NSMutableAttributedString alloc] initWithString:tempCatNumString];
+//    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,16)];
+//    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(16, [self.course.catalogNumber stringValue].length)];
+//    
+//    
+//    NSString *tempGenEdString = [NSString stringWithFormat:@"Satisfies: %@", genEdString];
+//    NSMutableAttributedString *genEdLabel = [[NSMutableAttributedString alloc] initWithString:tempGenEdString];
+//    [genEdLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,11)];
+//    [genEdLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(11, genEdString.length)];
 
-    self.notesLabel.attributedText = notesLabel;
-    self.catalogNumLabel.attributedText = catNumLabel;
-    self.satisfiesLabel.attributedText = genEdLabel;
+//    self.notesLabel.attributedText = notesLabel;
+//    self.catalogNumLabel.attributedText = catNumLabel;
+//    self.satisfiesLabel.attributedText = genEdLabel;
     
     // Retrieves Q scores for course
     NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];

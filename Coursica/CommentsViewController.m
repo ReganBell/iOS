@@ -26,6 +26,30 @@
     
     self.tableView.allowsSelection = NO;
     
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"QComment" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"catalogNumber = %@", self.course.catalogNumber]];
+    
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"year" ascending:NO]]];
+    
+    NSArray *comments = [context executeFetchRequest:fetchRequest error:nil];
+    NSLinguisticTagger *tagger = [[NSLinguisticTagger alloc] initWithTagSchemes:@[NSLinguisticTagSchemeLexicalClass] options:0];
+    NSMutableString *allComments = [NSMutableString new];
+    for (QComment *comment in comments) {
+        [allComments appendFormat:@" %@", comment.comment];
+    }
+    tagger.string = allComments;
+    
+    [tagger enumerateTagsInRange:NSMakeRange(0, allComments.length) scheme:NSLinguisticTagSchemeLexicalClass options:0 usingBlock:^(NSString *tag, NSRange tokenRange, NSRange sentenceRange, BOOL *stop) {
+        NSLog(@"%@ - %@", tag, [allComments substringWithRange:tokenRange]);
+    }];
+    
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];

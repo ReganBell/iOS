@@ -20,7 +20,7 @@
 @dynamic catalogNumber;
 @dynamic term;
 @dynamic bracketed;
-@dynamic field;
+@dynamic shortField;
 @dynamic number;
 @dynamic title;
 @dynamic courseDescription;
@@ -81,10 +81,10 @@
         NSString *purifiedDescriptionString = [self purifyString:courseDict[@"description"]];
         
         Course *newCourse = [[Course alloc] initWithEntity:courseEntity insertIntoManagedObjectContext:context];
-        newCourse.catalogNumber = [formatter numberFromString:courseDict[@"cat_num"]];
+        newCourse.catalogNumber = courseDict[@"cat_num"];
         newCourse.term = courseDict[@"term"];
         newCourse.bracketed = courseDict[@"bracketed"];
-        newCourse.field = courseDict[@"field"];
+        newCourse.shortField = courseDict[@"field"];
         newCourse.number = courseDict[@"number"];
         newCourse.prereqs = courseDict[@"prerequisites"];
         //newCourse.title = courseDict[@"title"];
@@ -108,7 +108,7 @@
         
         // Lots of classes with a gen ed as their field don't report the gen ed they satisfy in their notes section so we have to get it from the field name
         for (NSString *genEdAbbrv in genEdAbbrvs) {
-            if ([newCourse.field isEqualToString:genEdAbbrv]) {
+            if ([newCourse.shortField isEqualToString:genEdAbbrv]) {
                 newCourse.genEdOne = genEdAbbrvs[genEdAbbrv];
                 fieldGenEd = newCourse.genEdOne;
                 genEdsFound++;
@@ -191,13 +191,13 @@
     }
 }
 
-    +(NSString *)purifyString:(NSString *)string {
++ (NSString *)purifyString:(NSString *)string {
         
-        string = [string stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
-        string = [string stringByReplacingOccurrencesOfString:@"\\'" withString:@"'"];
-        
-        return string;
-    }
+    string = [string stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+    string = [string stringByReplacingOccurrencesOfString:@"\\'" withString:@"'"];
+    
+    return string;
+}
 
 
 @end

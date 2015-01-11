@@ -38,6 +38,7 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
+  - MWFeedParser/NSString+HTML (1.0.1)
   - NMRangeSlider (1.1.1)
 
 DEPENDENCIES:
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - CHCSVParser
   - GraphKit (~> 1.0.0)
   - MMDrawerController (~> 0.5.7)
+  - MWFeedParser/NSString+HTML
   - NMRangeSlider (~> 1.1.1)
 
 SPEC CHECKSUMS:
@@ -54,6 +56,7 @@ SPEC CHECKSUMS:
   GraphKit: 5b97486a04ba577adca627487e65cda0c0440687
   MKFoundationKit: 4858fe474ee45f988db5ff1e229d700743e71ed8
   MMDrawerController: c3ab7a318ddc7e2bcd133139c3161af08c6e1197
+  MWFeedParser: 003cbf5398e99a7f2057fbe9583054fd1b84be72
   NMRangeSlider: ec94b718b8c11d41af49554f00a4b0949e6391dc
 
 COCOAPODS: 0.35.0

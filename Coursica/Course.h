@@ -14,16 +14,18 @@
 
 @interface Course : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * catalogNumber;
+@property (nonatomic, retain) NSString * catalogNumber;
 @property (nonatomic, retain) NSString * term;
 @property (nonatomic, retain) NSNumber * bracketed;
 @property (nonatomic, retain) NSNumber * graduate;
-@property (nonatomic, retain) NSString * field;
+@property (nonatomic, retain) NSString * shortField;
 @property (nonatomic, retain) NSString * number;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * courseDescription;
 @property (nonatomic, retain) NSString * prereqs;
 @property (nonatomic, retain) NSString * notes;
+@property (nonatomic, retain) NSString * examGroup;
+@property (nonatomic, retain) NSString * longField;
 @property (nonatomic, retain) NSNumber * genEdOne;
 @property (nonatomic, retain) NSNumber * genEdTwo;
 @property (nonatomic, retain) NSNumber * qDifficulty;
