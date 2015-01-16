@@ -34,6 +34,23 @@
 //    FullOnScrapist *scrapist = [FullOnScrapist new];
 //    [scrapist scrapeSearchResultsPage];
     
+    NSError *error;
+
+    NSString *shortString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ShortFields"] encoding:NSUTF8StringEncoding error:&error];
+    NSString *longString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"LongFields"] encoding:NSUTF8StringEncoding error:&error];
+    
+    NSArray *shortFields = [shortString componentsSeparatedByString:@",\n"];
+    NSArray *longFields = [longString componentsSeparatedByString:@",\n"];
+    
+    NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionary];
+    
+    int i = 0;
+    for (NSString *longField in longFields) {
+        [fieldsDict setObject:shortFields[i] forKey:longField];
+        i++;
+    }
+    
+    
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
     [request setPropertiesToFetch:@[@"longField"]];
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:nil];
@@ -43,13 +60,23 @@
         
         NSString *field = course.longField;
         NSScanner *scanner = [[NSScanner alloc] initWithString:field];
-        NSString *final;
-        [scanner scanUpToString:@"(" intoString:&final];
-        final = [final stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"*[]"]];
-        final = [final stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+        [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"*[]"]];
+        NSString *trimmed;
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&trimmed];
         
-        [set addObject:final];
+        NSString *longField = [trimmed stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
+        
+        NSString *shortField = fieldsDict[longField];
+        if (shortField == nil) {
+            
+            NSArray *components = [longField componentsSeparatedByString:@" "];
+            shortField = [components[0] uppercaseString];
+        }
+        course.shortField = shortField;
+//
+//        [set addObject:final];
     }
+    [context save:nil];
     
     NSArray *unsorted = [set allObjects];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES];
