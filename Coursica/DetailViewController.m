@@ -148,27 +148,27 @@
             
             // Converts course times from military to standard time
             startTime = meeting.beginTime;
-            NSString *startHour = [startTime componentsSeparatedByString:@":"][0];
-            if ([startHour intValue] > 12)
-            {
-                int newStartHour = [startHour intValue] - 12;
-                startTime = [NSString stringWithFormat:@"%d:00", newStartHour];
-            }
-            else
-            {
-                startTime = [startTime substringToIndex:[startTime length] - 3];
-            }
+//            NSString *startHour = [startTime componentsSeparatedByString:@":"][0];
+//            if ([startHour intValue] > 12)
+//            {
+//                int newStartHour = [startHour intValue] - 12;
+//                startTime = [NSString stringWithFormat:@"%d:00", newStartHour];
+//            }
+//            else
+//            {
+//                startTime = [startTime substringToIndex:[startTime length] - 3];
+//            }
             endTime = meeting.endTime;
-            NSString *endHour = [endTime componentsSeparatedByString:@":"][0];
-            if ([endHour intValue] > 12)
-            {
-                int newEndHour = [endHour intValue] - 12;
-                endTime = [NSString stringWithFormat:@"%d:%@", newEndHour, [endTime componentsSeparatedByString:@":"][1]];
-            }
-            else
-            {
-                endTime = [endTime substringToIndex:[endTime length] - 3];
-            }
+//            NSString *endHour = [endTime componentsSeparatedByString:@":"][0];
+//            if ([endHour intValue] > 12)
+//            {
+//                int newEndHour = [endHour intValue] - 12;
+//                endTime = [NSString stringWithFormat:@"%d:%@", newEndHour, [endTime componentsSeparatedByString:@":"][1]];
+//            }
+//            else
+//            {
+//                endTime = [endTime substringToIndex:[endTime length] - 3];
+//            }
             
         }
         [meetingString appendFormat:@"%@ - %@", startTime, endTime];

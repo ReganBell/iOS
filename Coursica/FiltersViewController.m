@@ -102,10 +102,10 @@
     NSMutableArray *predicates = [NSMutableArray new];
     
     switch (self.courseLevelControl.selectedSegmentIndex) {
-        case 0:
+        case 1:
             [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
             break;
-        case 1:
+        case 2:
             [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
         default:
             break;
@@ -121,10 +121,10 @@
     [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
     
     switch (self.termControl.selectedSegmentIndex) {
-        case 0:
+        case 1:
             [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
             break;
-        case 1:
+        case 2:
             [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
         default:
             break;
@@ -143,7 +143,7 @@
     if (search.length) {
         NSMutableArray *searchPreds = [NSMutableArray array];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", search]];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"field CONTAINS[cd] %@", search]];
+        [searchPreds addObject:[NSPredicate predicateWithFormat:@"shortField CONTAINS[cd] %@", search]];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", search]];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", search]];
         [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", search]];
@@ -166,10 +166,10 @@
                 
                 if (genEdButton.selected) {
                     label.textColor = [UIColor whiteColor];
-                    label.backgroundColor = CoursicaBlue;
+                    label.layer.backgroundColor = CoursicaBlue.CGColor;
                 } else {
                     label.textColor = [UIColor grayColor];
-                    label.backgroundColor = [UIColor whiteColor];
+                    label.layer.backgroundColor = [UIColor whiteColor].CGColor;
                 }
             }];
         }

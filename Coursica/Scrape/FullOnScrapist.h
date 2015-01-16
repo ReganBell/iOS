@@ -10,6 +10,6 @@
 
 @interface FullOnScrapist : NSObject
 
-- (void)getFieldLinks;
+- (void)scrapeSearchResultsPage;
 
 @end

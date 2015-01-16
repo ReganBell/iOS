@@ -13,6 +13,8 @@
 		5901858D1A3E4447008884EF /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185891A3E4447008884EF /* XPathQuery.m */; };
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
+		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
+		594E93E21A68D1B7003DB4E7 /* LongFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93E11A68D1B7003DB4E7 /* LongFields */; };
 		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
 		595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F11A2E7201000ABAD8 /* QCourseOverall.csv */; };
 		595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F31A2E7214000ABAD8 /* QDifficulty.csv */; };
@@ -66,6 +68,8 @@
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
 		592939001A479315004C4303 /* Coursica 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 5.xcdatamodel"; sourceTree = "<group>"; };
+		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
+		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
 		595575EF1A2E71F8000ABAD8 /* Qcomments.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qcomments.csv; sourceTree = "<group>"; };
 		595575F11A2E7201000ABAD8 /* QCourseOverall.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QCourseOverall.csv; sourceTree = "<group>"; };
 		595575F31A2E7214000ABAD8 /* QDifficulty.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QDifficulty.csv; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 				595575F51A2E7214000ABAD8 /* QWorkload.csv */,
 				596076B31A1000710038D4F4 /* AppDelegate.h */,
 				596076B41A1000710038D4F4 /* AppDelegate.m */,
+				594E93DF1A68D197003DB4E7 /* ShortFields */,
+				594E93E11A68D1B7003DB4E7 /* LongFields */,
 				595575FF1A2E79BE000ABAD8 /* QDataParserDelegate.h */,
 				595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */,
 				596076B91A1000710038D4F4 /* CoursesViewController.h */,
@@ -395,6 +401,7 @@
 				59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
+				594E93E21A68D1B7003DB4E7 /* LongFields in Resources */,
 				595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */,
 				595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */,
 				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
@@ -402,6 +409,7 @@
 				595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */,
 				595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
+				594E93E01A68D197003DB4E7 /* ShortFields in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

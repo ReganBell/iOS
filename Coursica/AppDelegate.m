@@ -31,28 +31,50 @@
     
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    FullOnScrapist *scrapist = [FullOnScrapist new];
-    [scrapist getFieldLinks];
+//    FullOnScrapist *scrapist = [FullOnScrapist new];
+//    [scrapist scrapeSearchResultsPage];
     
-    // Only parse CSV files if we have no Q data
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
-    NSUInteger count = [context countForFetchRequest:request error:nil];
-    if (count > 0) {
-        return YES;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    [request setPropertiesToFetch:@[@"longField"]];
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:nil];
+    NSMutableSet *set = [NSMutableSet set];
+    
+    for (Course *course in array) {
+        
+        NSString *field = course.longField;
+        NSScanner *scanner = [[NSScanner alloc] initWithString:field];
+        NSString *final;
+        [scanner scanUpToString:@"(" intoString:&final];
+        final = [final stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"*[]"]];
+        final = [final stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+        
+        [set addObject:final];
     }
     
-    // Start CSV parsing operations, using CHCSVParser objects wrapped up in QDataParserDelegate objects
-    QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
-    [commentDelegate updateQDataInMode:kModeComment];
+    NSArray *unsorted = [set allObjects];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES];
     
-    QDataParserDelegate *difficultyDelegate = [[QDataParserDelegate alloc] init];
-    [difficultyDelegate updateQDataInMode:kModeScoreDifficulty];
+    NSLog(@"%@", [unsorted sortedArrayUsingDescriptors:@[descriptor]]);
     
-    QDataParserDelegate *overallDelegate = [[QDataParserDelegate alloc] init];
-    [overallDelegate updateQDataInMode:kModeScoreOverall];
+    // Only parse CSV files if we have no Q data
+//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
+//    NSUInteger count = [context countForFetchRequest:request error:nil];
+//    if (count > 0) {
+//        return YES;
+//    }
     
-    QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
-    [workloadDelegate updateQDataInMode:KModeScoreWorkload];
+//    // Start CSV parsing operations, using CHCSVParser objects wrapped up in QDataParserDelegate objects
+//    QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
+//    [commentDelegate updateQDataInMode:kModeComment];
+//    
+//    QDataParserDelegate *difficultyDelegate = [[QDataParserDelegate alloc] init];
+//    [difficultyDelegate updateQDataInMode:kModeScoreDifficulty];
+//    
+//    QDataParserDelegate *overallDelegate = [[QDataParserDelegate alloc] init];
+//    [overallDelegate updateQDataInMode:kModeScoreOverall];
+//    
+//    QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
+//    [workloadDelegate updateQDataInMode:KModeScoreWorkload];
 
     return YES;
 }
@@ -114,7 +136,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Coursica.sqlite"];
     
     //Uncomment to delete store:
-    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";

@@ -62,23 +62,23 @@
 
     self.tableView.tableFooterView = [UIView new];
     
-    // checks for a database, and if not requests courses data from CS50 API
-    if (count == 0) {
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
-        [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
-            //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
-            
-            [Course updateCourses: responseObject];
-            [self.tableView reloadData];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error fetching lists: %@", error);
-        }];
-    }
+//    // checks for a database, and if not requests courses data from CS50 API
+//    if (count == 0) {
+//        
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+//        [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//            //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
+//            //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
+//            
+//            [Course updateCourses: responseObject];
+//            [self.tableView reloadData];
+//            
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            NSLog(@"Error fetching lists: %@", error);
+//        }];
+//    }
 }
 
     // Action called on switching to the filters screen
@@ -125,7 +125,7 @@
     [fetchRequest setPredicate:self.filterPredicate];
     
     // Specify how the fetched objects should be sorted
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"field"
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"shortField"
                                                                    ascending:YES];
     NSSortDescriptor *numberDescriptor = [[NSSortDescriptor alloc] initWithKey:@"number" ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, numberDescriptor, nil]];
@@ -137,25 +137,25 @@
     NSError *error;
     [controller performFetch:&error];
     
-    NSMutableSet *fieldAbbreviations = [[NSMutableSet alloc] init];
-    NSMutableString *abbreviations = [[NSMutableString alloc] init];
-    
-    for (Course *course in controller.fetchedObjects) {
-        
-        [fieldAbbreviations addObject:course.shortField];
-    }
-    
-    NSArray *array = [fieldAbbreviations allObjects];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 caseInsensitiveCompare:obj2];
-    }];
-    NSArray *sortedArary = [array sortedArrayUsingDescriptors:@[descriptor]];
-    
-    for (NSString *abbreviation in sortedArary) {
-        [abbreviations appendFormat:@"%@\n", abbreviation];
-    }
-    
-    NSLog(@"%@", abbreviations);
+//    NSMutableSet *fieldAbbreviations = [[NSMutableSet alloc] init];
+//    NSMutableString *abbreviations = [[NSMutableString alloc] init];
+//    
+//    for (Course *course in controller.fetchedObjects) {
+//        
+//        [fieldAbbreviations addObject:course.shortField];
+//    }
+//    
+//    NSArray *array = [fieldAbbreviations allObjects];
+//    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+//        return [obj1 caseInsensitiveCompare:obj2];
+//    }];
+//    NSArray *sortedArary = [array sortedArrayUsingDescriptors:@[descriptor]];
+//    
+//    for (NSString *abbreviation in sortedArary) {
+//        [abbreviations appendFormat:@"%@\n", abbreviation];
+//    }
+//    
+//    NSLog(@"%@", abbreviations);
     
     controller.delegate = self;
     
@@ -221,6 +221,10 @@
     }
     
     Course *course = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if (course.title.length == 0) {
+        return cell;
+    }
     
     NSString *original = [NSString stringWithFormat:@"%@ %@ - %@", course.shortField, course.number, course.title];
     NSRange boldRange = [original rangeOfString:course.title];

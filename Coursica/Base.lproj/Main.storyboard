@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Z6k-Ox-CIW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Z6k-Ox-CIW">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Filters-->
@@ -31,7 +32,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Term" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zH-hB-Tnu">
-                                                <rect key="frame" x="279" y="52" width="42" height="24"/>
+                                                <rect key="frame" x="279" y="52" width="42" height="23.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="42" id="0Ie-jL-ewW"/>
                                                 </constraints>
@@ -49,19 +50,19 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4hm-uL-Wcp">
-                                                <rect key="frame" x="205" y="86" width="190" height="29"/>
+                                                <rect key="frame" x="205" y="85" width="190" height="29"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="190" id="vez-pu-Ajd"/>
                                                 </constraints>
                                                 <segments>
+                                                    <segment title="Both"/>
                                                     <segment title="Fall"/>
                                                     <segment title="Spring"/>
-                                                    <segment title="Both"/>
                                                 </segments>
-                                                <color key="tintColor" red="0.12156862745098039" green="0.58039215686274503" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHG-TQ-lf0">
-                                                <rect key="frame" x="245" y="128" width="109" height="24"/>
+                                                <rect key="frame" x="245" y="127" width="109" height="23.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="92" id="Gvf-nA-wm4"/>
                                                     <constraint firstAttribute="width" constant="109" id="lXo-vk-IhG"/>
@@ -84,9 +85,9 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="314" id="eXT-5u-TTw"/>
                                                 </constraints>
                                                 <segments>
+                                                    <segment title="Both"/>
                                                     <segment title="Undergraduate"/>
                                                     <segment title="Graduate"/>
-                                                    <segment title="Both"/>
                                                 </segments>
                                                 <color key="tintColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <variation key="default">
@@ -598,7 +599,7 @@
                                                     <segment title="Difficulty"/>
                                                     <segment title="Workload"/>
                                                 </segments>
-                                                <color key="tintColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                                <color key="tintColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="graphControlIndexChange:" destination="Zzk-RS-XFe" eventType="valueChanged" id="uRp-83-WUK"/>
                                                 </connections>
