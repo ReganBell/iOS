@@ -111,15 +111,15 @@
             break;
     }
     // Checking all of the Q score filters
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
-    
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
-    
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
-    
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+//    
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
+//    
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
+
     switch (self.termControl.selectedSegmentIndex) {
         case 1:
             [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
@@ -140,15 +140,25 @@
     }
     
     NSString *search = self.searchField.text;
+
     if (search.length) {
-        NSMutableArray *searchPreds = [NSMutableArray array];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", search]];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"shortField CONTAINS[cd] %@", search]];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", search]];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", search]];
-        [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", search]];
-        [predicates addObject:[NSCompoundPredicate orPredicateWithSubpredicates:searchPreds]];
+        
+        NSMutableArray *termPreds = [NSMutableArray array];
+        NSArray *terms = [search componentsSeparatedByString:@" "];
+        for (NSString *searchTerm in terms) {
+            
+            NSMutableArray *searchPreds = [NSMutableArray array];
+            [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", searchTerm]];
+            [searchPreds addObject:[NSPredicate predicateWithFormat:@"shortField CONTAINS[cd] %@", searchTerm]];
+            [searchPreds addObject:[NSPredicate predicateWithFormat:@"longField CONTAINS[cd] %@", searchTerm]];
+            [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", searchTerm]];
+            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", searchTerm]];
+            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", searchTerm]];
+            [termPreds addObject:[NSCompoundPredicate orPredicateWithSubpredicates:searchPreds]];
+        }
+        [predicates addObject:[NSCompoundPredicate andPredicateWithSubpredicates:termPreds]];
     }
+    
     // Calls function in CoursesViewController to update course list
     [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
     

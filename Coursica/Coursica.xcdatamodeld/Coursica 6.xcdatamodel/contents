@@ -18,6 +18,7 @@
         <attribute name="shortField" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="term" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleTokenSet" optional="YES" transient="YES" attributeType="Transformable" syncable="YES"/>
         <relationship name="faculty" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Faculty" inverseName="courses" inverseEntity="Faculty" syncable="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="course" inverseEntity="Location" syncable="YES"/>
         <relationship name="meetings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting" inverseName="course" inverseEntity="Meeting" syncable="YES"/>
@@ -61,7 +62,7 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Course" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="Course" positionX="0" positionY="0" width="128" height="375"/>
         <element name="Faculty" positionX="0" positionY="0" width="128" height="135"/>
         <element name="Location" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Meeting" positionX="0" positionY="0" width="128" height="135"/>
