@@ -38,52 +38,188 @@
     
     NSError *error;
 
-    NSString *shortString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ShortFields"] encoding:NSUTF8StringEncoding error:&error];
-    NSString *longString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"LongFields"] encoding:NSUTF8StringEncoding error:&error];
-    
-    NSArray *shortFields = [shortString componentsSeparatedByString:@",\n"];
-    NSArray *longFields = [longString componentsSeparatedByString:@",\n"];
-    
-    NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionary];
-    
-    int i = 0;
-    for (NSString *longField in longFields) {
-        [fieldsDict setObject:shortFields[i] forKey:longField];
-        i++;
-    }
+//    NSString *shortString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ShortFields"] encoding:NSUTF8StringEncoding error:&error];
+//    NSString *longString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"LongFields"] encoding:NSUTF8StringEncoding error:&error];
+//    
+//    NSArray *shortFields = [shortString componentsSeparatedByString:@",\n"];
+//    NSArray *longFields = [longString componentsSeparatedByString:@",\n"];
+//    
+//    NSMutableDictionary *fieldsDict = [NSMutableDictionary dictionary];
+//    
+//    int i = 0;
+//    for (NSString *longField in longFields) {
+//        [fieldsDict setObject:shortFields[i] forKey:longField];
+//        i++;
+//    }
     
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
-    [request setPropertiesToFetch:@[@"longField"]];
+    [request setPropertiesToFetch:@[@"longField", @"title"]];
+    request.predicate = [NSPredicate predicateWithFormat:@"bracketed = %@", @NO];
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:nil];
-    NSMutableSet *set = [NSMutableSet set];
+//    NSMutableDictionary *uniqueTitles = [NSMutableDictionary dictionary];
+//    
+//    NSNumberFormatter *formatter = [NSNumberFormatter new];
+//    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[0-9]+" options:0 error:nil];
+    
+    NSMutableDictionary *titleInvertedIndex = [NSMutableDictionary dictionary];
+    
+    NSMutableCharacterSet *allowedChars = [NSMutableCharacterSet lowercaseLetterCharacterSet];
+    [allowedChars formUnionWithCharacterSet:[NSCharacterSet uppercaseLetterCharacterSet]];
+    [allowedChars formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
+    [allowedChars formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
+//    NSMutableArray *titleTokenSets = [NSMutableArray array];
     
     for (Course *course in array) {
         
-        NSString *field = course.longField;
-        NSScanner *scanner = [[NSScanner alloc] initWithString:field];
-        [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"*[]"]];
-        NSString *trimmed;
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&trimmed];
+        NSScanner *scanitizer = [NSScanner scannerWithString:course.title];
+        NSString *cleanTitle;
+        [scanitizer scanCharactersFromSet:allowedChars intoString:&cleanTitle];
         
-        NSString *longField = [trimmed stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
-        
-        NSString *shortField = fieldsDict[longField];
-        if (shortField == nil) {
-            
-            NSArray *components = [longField componentsSeparatedByString:@" "];
-            shortField = [components[0] uppercaseString];
+        NSMutableSet *uniqueTerms = [NSMutableSet set];
+        NSArray *allTerms = [cleanTitle componentsSeparatedByString:@" "];
+        for (NSString *term in allTerms) {
+            [uniqueTerms addObject:[term lowercaseString]];
         }
-        course.shortField = shortField;
+        course.titleTokenSet = uniqueTerms;
+        for (NSString *unique in uniqueTerms) {
+            
+            NSNumber *addOne;
+            
+            NSMutableDictionary *termDict = titleInvertedIndex[unique];
+            if (termDict) {
+                NSNumber *occurences = termDict[@"n"];
+                termDict[@"n"] = @(occurences.intValue + 1);
+            } else {
+                termDict = [NSMutableDictionary dictionary];
+                termDict[@"n"] = @1;
+            }
+            
+            NSMutableArray *termCourses = termDict[@"courses"];
+            if (termCourses.count == 0) {
+                termCourses = [NSMutableArray array];
+                [termCourses addObject:course];
+            } else {
+                [termCourses addObject:course];
+            }
+            termDict[@"courses"] = termCourses;
+            titleInvertedIndex[unique] = termDict;
+        }
+        
+//        Course *existingCourse = uniqueTitles[course.title];
+//        if (existingCourse) {
+//            [context deleteObject:course];
+//        } else
+//            [uniqueTitles setObject:course forKey:course.title];
+//        
+//        NSRange range = [course.title rangeOfString:@"]"];
+//        NSInteger location = range.location;
+//        if (location == (course.title.length - 1)) {
+//            course.bracketed = @YES;
+//        } else {
+//            course.bracketed = @NO;
+//        }
+//        
+//        course.number = [course.number stringByReplacingOccurrencesOfString:@")" withString:@""];
+        
+//        // Find out whether is a class is for undergraduates or graduates by the number
+//        // First we regex out the course number (a lot of them have weird letters and periods)
+//        NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:course.number options:0 range:NSMakeRange(0, [course.number length])];
+//        
+//        if (rangeOfFirstMatch.location == NSNotFound) {
+//            // Some undergraduate courses' number will just be a letter and regex won't find anything
+//            course.graduate = [NSNumber numberWithBool:NO];
+//        } else {
+//            // Extract the number string and turn into a real number
+//            NSString *substringForFirstMatch = [course.number substringWithRange:rangeOfFirstMatch];
+//            double number = [formatter numberFromString:substringForFirstMatch].doubleValue;
+//            
+//            // Course numbering scheme explained: http://www.registrar.fas.harvard.edu/courses-exams/courses-instruction/introductory-notes
+//            if ((number >= 200 && number < 1000) || (number >= 2000)) {
+//                course.graduate = [NSNumber numberWithBool:YES];
+//            } else
+//                course.graduate = [NSNumber numberWithBool:NO];
+//        }
+        
+//        NSString *field = course.longField;
+//        NSScanner *scanner = [[NSScanner alloc] initWithString:field];
+//        [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"*[]"]];
+//        NSString *trimmed;
+//        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&trimmed];
+//        
+//        NSString *longField = [trimmed stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
+//        
+//        NSString *shortField = fieldsDict[longField];
+//        if (shortField == nil) {
+//            
+//            NSArray *components = [longField componentsSeparatedByString:@" "];
+//            shortField = [components[0] uppercaseString];
+//        }
+//        course.shortField = shortField;
 //
 //        [set addObject:final];
     }
+    
+    for (NSString *term in titleInvertedIndex) {
+        
+        NSMutableDictionary *termDict = titleInvertedIndex[term];
+        NSNumber *occurences = termDict[@"n"];
+        double idf = log(array.count / occurences.doubleValue);
+        termDict[@"idf"] = @(idf);
+    }
+    
     [context save:nil];
     
-    NSArray *unsorted = [set allObjects];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES];
+    NSString *search = @"nazi cinema";
+    NSArray *searchTerms = [search componentsSeparatedByString:@" "];
     
-    NSLog(@"%@", [unsorted sortedArrayUsingDescriptors:@[descriptor]]);
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
+    
+    for (NSString *term in searchTerms) {
+        
+        NSMutableDictionary *termDict = titleInvertedIndex[term];
+        if (!termDict) {
+            continue;
+        }
+        
+        NSNumber *idfNum = termDict[@"idf"];
+        double idf = idfNum.doubleValue;
+        
+        for (Course *course in termDict[@"courses"]) {
+            
+                NSDictionary *result = results[course.objectID];
+                NSNumber *newScore;
+                if (result) {
+                    NSNumber *oldScore = result[@"score"];
+                    newScore = @(oldScore.doubleValue + idf);
+                } else {
+                    newScore = idfNum;
+                }
+                
+                results[course.objectID] = @{@"score":newScore, @"course":course};
+        }
+    }
+    
+    NSMutableArray *unsorted = [NSMutableArray array];
+    
+    for (NSString *catNum in results) {
+        [unsorted addObject:[results objectForKey:catNum]];
+    }
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+
+    NSArray *sortedResults = [unsorted sortedArrayUsingDescriptors:@[descriptor]];
+    for (NSDictionary *result in sortedResults) {
+        Course *course = result[@"course"];
+        NSLog(@"\n%@\n%@", course.title, result[@"score"]);
+    }
+    
+//
+//    
+//    NSArray *unsorted = [set allObjects];
+//    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES];
+//    
+//    NSLog(@"%@", [unsorted sortedArrayUsingDescriptors:@[descriptor]]);
     
     // Only parse CSV files if we have no Q data
 //    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];

@@ -103,7 +103,11 @@
     // Response to filter changes in the filters view
 - (void)filtersDidChange:(NSPredicate *)predicate {
     self.fetchedResultsController.fetchRequest.predicate = predicate;
-    [self.fetchedResultsController performFetch:nil];
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
     [self.tableView reloadData];
 }
 
@@ -122,7 +126,16 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Course" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    [fetchRequest setPredicate:self.filterPredicate];
+    NSMutableArray *predicates = [NSMutableArray array];
+    if (self.filterPredicate) {
+        [predicates addObject:self.filterPredicate];
+    }
+    
+    NSPredicate *bracketPred = [NSPredicate predicateWithFormat:@"bracketed = %@", @NO];
+    [predicates addObject:bracketPred];
+    
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+    [fetchRequest setPredicate:predicate];
     
     // Specify how the fetched objects should be sorted
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"shortField"
@@ -251,7 +264,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return self.fetchedResultsController.sections.count;
+    if (self.fetchedResultsController.sections.count == 0 && self.filterPredicate) {
+        return 1;
+    } else
+        return self.fetchedResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

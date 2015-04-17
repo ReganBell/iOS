@@ -112,6 +112,7 @@
 		598CAB371A22C7EC008D0142 /* Faculty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Faculty.m; sourceTree = "<group>"; };
 		598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		598CAB8A1A23CB57008D0142 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 6.xcdatamodel"; sourceTree = "<group>"; };
 		59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 2.xcdatamodel"; sourceTree = "<group>"; };
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
 		59D4A0461A347F98003FD743 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
@@ -739,9 +740,10 @@
 				59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */,
 				597FA8C01A3FF22600D8421E /* Coursica 4.xcdatamodel */,
 				592939001A479315004C4303 /* Coursica 5.xcdatamodel */,
+				599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */,
 				596076B71A1000710038D4F4 /* Coursica.xcdatamodel */,
 			);
-			currentVersion = 592939001A479315004C4303 /* Coursica 5.xcdatamodel */;
+			currentVersion = 599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */;
 			path = Coursica.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

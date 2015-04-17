@@ -35,6 +35,7 @@
 @property (nonatomic, retain) NSSet *prerequisites;
 @property (nonatomic, retain) NSSet *locations;
 @property (nonatomic, retain) NSSet *meetings;
+@property (nonatomic, retain) NSMutableSet *titleTokenSet;
 @end
 
 @interface Course (CoreDataGeneratedAccessors)
