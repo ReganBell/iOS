@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C0D3D99E3EA9F52843E31D14"
+               BlueprintIdentifier = "EFA1B26F1CDC8270A458CCF0"
                BuildableName = "libPods-GraphKit.a"
                BlueprintName = "Pods-GraphKit"
                ReferencedContainer = "container:Pods.xcodeproj">

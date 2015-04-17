@@ -127,7 +127,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
-            landmarkName = "qDifficultyTitleLabel"
+            landmarkName = "qWorkloadValueLabel"
             landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
@@ -225,6 +225,36 @@
             endingLineNumber = "184"
             landmarkName = "+purifyString:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[Course updateCourses:]"
+                  moduleName = "Coursica"
+                  urlString = "file:///Users/MBeatty/Dev/coursica/Coursica/Course.m"
+                  timestampString = "450816533.709223"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "184"
+                  endingLineNumber = "184"
+                  offsetFromSymbolStart = "11940">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[Course updateCourses:]"
+                  moduleName = "Coursica"
+                  urlString = "file:///Users/MBeatty/Dev/coursica/Coursica/Course.m"
+                  timestampString = "450816533.709407"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "184"
+                  endingLineNumber = "184"
+                  offsetFromSymbolStart = "12098">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -11,6 +11,8 @@
 #import "MMDrawerController.h"
 #import "CoursesViewController.h"
 #import "FiltersViewController.h"
+#import "LoginViewController.h"
+#import "NavigationController.h"
 #import "CHCSVParser.h"
 #import "QDataParserDelegate.h"
 #import "Course.h"
@@ -99,6 +101,28 @@
 //    
 //    QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
 //    [workloadDelegate updateQDataInMode:KModeScoreWorkload];
+    
+    
+    // Checking login status
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
+    {
+        LoginViewController *loginController = [main
+            instantiateViewControllerWithIdentifier:@"loginController"];
+        self.window.rootViewController = loginController;
+        [self.window makeKeyAndVisible];
+    }
+    else
+    {
+        NavigationController *navigationController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
+        self.window.rootViewController = navigationController;
+        [self.window makeKeyAndVisible];
+    }
+    
 
     return YES;
 }
@@ -160,7 +184,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Coursica.sqlite"];
     
     //Uncomment to delete store:
-//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";

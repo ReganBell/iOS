@@ -37,7 +37,7 @@
     // Creates objects used retrieving data from CS50 API
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    NSUInteger coesrunt = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
     
     // Creates title bar with app name
     CGRect frame = CGRectMake(0, 0, 0, 0);
