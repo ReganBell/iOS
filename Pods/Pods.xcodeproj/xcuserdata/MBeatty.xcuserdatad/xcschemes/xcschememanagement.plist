@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-MWFeedParser.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-NMRangeSlider.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>24EDE6813F2CFA7B491C6CAC</key>
+		<key>2A8A2E8A1CC127301DEA7D95</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2FD8B294C425E37FFDCBF35E</key>
+		<key>620AE184B4A9F15ECE0B1FE5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B9D1E8C5BCE1DB89A812D8C</key>
+		<key>8CDBB5791B2D03F8A4D58DD1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9FC0DD21B7E5B8126146F39A</key>
+		<key>AF1F588748ED2B9DF4138C59</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C0D3D99E3EA9F52843E31D14</key>
+		<key>C47C4140E55C01742DE72AF3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C5BB7FB1833442E3EB154FA0</key>
+		<key>DEC16242AD06BB91B3943BF1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CFE2F6272D4EEE6736A9B1E2</key>
+		<key>E0A5283C0C3A50E1C448A9E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E7B1E9D4E3E2776EF071A430</key>
+		<key>E10795974C6787250C6044F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFA1B26F1CDC8270A458CCF0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
