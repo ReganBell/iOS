@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "CHCSVParser.h"
 #import "QScore.h"
+#import "SearchManager.h"
 
 @implementation Course
 
@@ -36,6 +37,9 @@
 @dynamic qDifficulty;
 @dynamic qWorkload;
 @dynamic qOverall;
+@dynamic longField;
+@dynamic examGroup;
+@dynamic decimalNumber;
 
 + (void)updateCourses:(NSArray *)serverCourses {
     
@@ -87,8 +91,6 @@
         newCourse.shortField = courseDict[@"field"];
         newCourse.number = courseDict[@"number"];
         newCourse.prereqs = courseDict[@"prerequisites"];
-        //newCourse.title = courseDict[@"title"];
-        //newCourse.courseDescription = courseDict[@"description"];
         newCourse.title = purifiedTitleString;
         newCourse.courseDescription = purifiedDescriptionString;
         newCourse.notes = courseDict[@"notes"];
@@ -182,6 +184,8 @@
             newLocation.room = location[@"room"];
             [newCourse addLocationsObject:newLocation];
         }
+        
+        [[SearchManager sharedSearchManager] addCourseToSearchIndex:newCourse];
     }
     
     NSError *error = nil;

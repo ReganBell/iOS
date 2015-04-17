@@ -4,7 +4,6 @@
         <attribute name="bracketed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="catalogNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="courseDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="decimalNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="examGroup" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="genEdOne" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="genEdTwo" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -63,7 +62,7 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Course" positionX="0" positionY="0" width="128" height="390"/>
+        <element name="Course" positionX="0" positionY="0" width="128" height="375"/>
         <element name="Faculty" positionX="0" positionY="0" width="128" height="135"/>
         <element name="Location" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Meeting" positionX="0" positionY="0" width="128" height="135"/>

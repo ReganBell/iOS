@@ -1,0 +1,4711 @@
+{
+"log": {
+"version": "1.2",
+"creator": {
+"name": "WebInspector",
+"version": "537.36"
+},
+"pages": [
+{
+"startedDateTime": "2015-03-20T19:07:50.932Z",
+"id": "page_1",
+"title": "https://www.pin1.harvard.edu/cas/login;jsessionid=6783EE6A14543BED115656284A23AFAB?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276",
+"pageTimings": {
+"onContentLoad": 3494.3501949310303,
+"onLoad": 3797.370195388794
+}
+}
+],
+"entries": [
+{
+"startedDateTime": "2015-03-20T19:07:50.932Z",
+"time": 440.68002700805664,
+"request": {
+"method": "POST",
+"url": "https://www.pin1.harvard.edu/cas/login;jsessionid=6783EE6A14543BED115656284A23AFAB?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Cookie",
+"value": "JSESSIONID=6783EE6A14543BED115656284A23AFAB"
+},
+{
+"name": "Origin",
+"value": "https://www.pin1.harvard.edu"
+},
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate"
+},
+{
+"name": "Host",
+"value": "www.pin1.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Content-Type",
+"value": "application/x-www-form-urlencoded"
+},
+{
+"name": "Accept",
+"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=0"
+},
+{
+"name": "Referer",
+"value": "https://www.pin1.harvard.edu/cas/login?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+},
+{
+"name": "Content-Length",
+"value": "213"
+}
+],
+"queryString": [
+{
+"name": "service",
+"value": "https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276"
+}
+],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "6783EE6A14543BED115656284A23AFAB",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 1099,
+"bodySize": 213,
+"postData": {
+"mimeType": "application/x-www-form-urlencoded",
+"text": "compositeAuthenticationSourceType=PIN&username=10907373&password=Fogs79%2Cobis&_eventId_submit=Login&lt=LT-16522134-sgUynrLsIb00SuTiHQ6VeMGFKAmYNB&execution=e1s1&casPageDisplayType=DEFAULT&nonMobileOptionOnMobile=",
+"params": [
+{
+"name": "compositeAuthenticationSourceType",
+"value": "PIN"
+},
+{
+"name": "username",
+"value": "10907373"
+},
+{
+"name": "password",
+"value": "Fogs79%2Cobis"
+},
+{
+"name": "_eventId_submit",
+"value": "Login"
+},
+{
+"name": "lt",
+"value": "LT-16522134-sgUynrLsIb00SuTiHQ6VeMGFKAmYNB"
+},
+{
+"name": "execution",
+"value": "e1s1"
+},
+{
+"name": "casPageDisplayType",
+"value": "DEFAULT"
+},
+{
+"name": "nonMobileOptionOnMobile",
+"value": ""
+}
+]
+}
+},
+"response": {
+"status": 302,
+"statusText": "Moved Temporarily",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Pragma",
+"value": "no-cache"
+},
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:47 GMT"
+},
+{
+"name": "Connection",
+"value": "close"
+},
+{
+"name": "Content-Type",
+"value": "text/plain; charset=UTF-8"
+},
+{
+"name": "Location",
+"value": "https://www.pin1.harvard.edu/pin/authenticate?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276&ticket=ST-5630521-ToNAIA9zTmGEMaG3XenL-pin2casprod2.huit.harvard.edu"
+},
+{
+"name": "Cache-Control",
+"value": "no-cache"
+},
+{
+"name": "Cache-Control",
+"value": "no-store"
+},
+{
+"name": "Set-Cookie",
+"value": "CASPRIVACY=\"\"; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/cas/"
+},
+{
+"name": "Set-Cookie",
+"value": "CASTGC=TGT-3912135-B2Ig799FgyyafsCSwNfbF00Yz9asDy16hpYu0bvkwEhmEa5sh9-pin2casprod2.huit.harvard.edu; Domain=pin1.harvard.edu; Path=/cas/; Secure; HttpOnly"
+},
+{
+"name": "Content-Length",
+"value": "0"
+},
+{
+"name": "Expires",
+"value": "Thu, 01 Jan 1970 00:00:00 GMT"
+}
+],
+"cookies": [
+{
+"name": "CASPRIVACY",
+"value": "\"\"",
+"path": "/cas/",
+"expires": "1970-01-01T00:00:10.000Z",
+"httpOnly": false,
+"secure": false
+},
+{
+"name": "CASTGC",
+"value": "TGT-3912135-B2Ig799FgyyafsCSwNfbF00Yz9asDy16hpYu0bvkwEhmEa5sh9-pin2casprod2.huit.harvard.edu",
+"path": "/cas/",
+"domain": "pin1.harvard.edu",
+"expires": null,
+"httpOnly": true,
+"secure": true
+}
+],
+"content": {
+"size": 0,
+"mimeType": "text/plain",
+"compression": 0
+},
+"redirectURL": "https://www.pin1.harvard.edu/pin/authenticate?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276&ticket=ST-5630521-ToNAIA9zTmGEMaG3XenL-pin2casprod2.huit.harvard.edu",
+"headersSize": 776,
+"bodySize": 0,
+"_transferSize": 776
+},
+"cache": {},
+"timings": {
+"blocked": 1.12300005275756,
+"dns": 35.62399995280434,
+"connect": 181.53100000927208,
+"send": 0.08100003469701278,
+"wait": 221.36699996190197,
+"receive": 0.9540269966236679,
+"ssl": 156.82800003560283
+},
+"connection": "829628",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:51.374Z",
+"time": 177.00982093811035,
+"request": {
+"method": "GET",
+"url": "https://www.pin1.harvard.edu/pin/authenticate?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276&ticket=ST-5630521-ToNAIA9zTmGEMaG3XenL-pin2casprod2.huit.harvard.edu",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "www.pin1.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://www.pin1.harvard.edu/cas/login?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=0"
+}
+],
+"queryString": [
+{
+"name": "__authen_application",
+"value": "FAS_CS_COURSE_EVAL_REPORTS"
+},
+{
+"name": "original_request",
+"value": "%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276"
+},
+{
+"name": "ticket",
+"value": "ST-5630521-ToNAIA9zTmGEMaG3XenL-pin2casprod2.huit.harvard.edu"
+}
+],
+"cookies": [],
+"headersSize": 893,
+"bodySize": 0
+},
+"response": {
+"status": 302,
+"statusText": "Moved Temporarily",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Location",
+"value": "https://www.pin1.harvard.edu/pin/authenticate;jsessionid=52265D756F2617C236591B9AA35138DA?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276"
+},
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:47 GMT"
+},
+{
+"name": "Connection",
+"value": "close"
+},
+{
+"name": "Set-Cookie",
+"value": "JSESSIONID=52265D756F2617C236591B9AA35138DA; Path=/pin/; Secure; HttpOnly"
+},
+{
+"name": "Content-Length",
+"value": "0"
+},
+{
+"name": "Content-Type",
+"value": "text/plain; charset=UTF-8"
+}
+],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "52265D756F2617C236591B9AA35138DA",
+"path": "/pin/",
+"expires": null,
+"httpOnly": true,
+"secure": true
+}
+],
+"content": {
+"size": 0,
+"mimeType": "text/plain",
+"compression": 0
+},
+"redirectURL": "https://www.pin1.harvard.edu/pin/authenticate;jsessionid=52265D756F2617C236591B9AA35138DA?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276",
+"headersSize": 484,
+"bodySize": 0,
+"_transferSize": 484
+},
+"cache": {},
+"timings": {
+"blocked": 0.349999987520278,
+"dns": 0.663000042550262,
+"connect": 131.14199996925845,
+"send": 0.08600001456301243,
+"wait": 43.722999980672995,
+"receive": 1.0458209435453512,
+"ssl": 90.72699997341229
+},
+"connection": "829644",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:51.553Z",
+"time": 287.7800464630127,
+"request": {
+"method": "GET",
+"url": "https://www.pin1.harvard.edu/pin/authenticate;jsessionid=52265D756F2617C236591B9AA35138DA?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "www.pin1.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://www.pin1.harvard.edu/cas/login?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=52265D756F2617C236591B9AA35138DA"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=0"
+}
+],
+"queryString": [
+{
+"name": "__authen_application",
+"value": "FAS_CS_COURSE_EVAL_REPORTS"
+},
+{
+"name": "original_request",
+"value": "%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276"
+}
+],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "52265D756F2617C236591B9AA35138DA",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 921,
+"bodySize": 0
+},
+"response": {
+"status": 302,
+"statusText": "Moved Temporarily",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Location",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/login?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&__authen_time=Fri+Mar+20+15%3A07%3A48+EDT+2015&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276&__authen_pgp_signature=iD8DBQBVDHAEHcM3pba7O2MRAiUzAJ4idjLYl%2BTDIrsrTRx6RDuVaRMHzwCg4E5R%0D%0Ai2zH4xRKVq3T%2FeqMxN4i4Jg%3D%0D%0A%3DHFf0%0D%0A&__authen_pgp_version=5.0&__authen_huid=10907373&__authen_ip=72.231.9.10"
+},
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:47 GMT"
+},
+{
+"name": "Connection",
+"value": "close"
+},
+{
+"name": "Content-Type",
+"value": "text/plain; charset=UTF-8"
+},
+{
+"name": "Content-Length",
+"value": "0"
+},
+{
+"name": "Content-Language",
+"value": "en-US"
+}
+],
+"cookies": [],
+"content": {
+"size": 0,
+"mimeType": "text/plain",
+"compression": 0
+},
+"redirectURL": "https://webapps.fas.harvard.edu/course_evaluation_reports/login?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&__authen_time=Fri+Mar+20+15%3A07%3A48+EDT+2015&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276&__authen_pgp_signature=iD8DBQBVDHAEHcM3pba7O2MRAiUzAJ4idjLYl%2BTDIrsrTRx6RDuVaRMHzwCg4E5R%0D%0Ai2zH4xRKVq3T%2FeqMxN4i4Jg%3D%0D%0A%3DHFf0%0D%0A&__authen_pgp_version=5.0&__authen_huid=10907373&__authen_ip=72.231.9.10",
+"headersSize": 658,
+"bodySize": 0,
+"_transferSize": 658
+},
+"cache": {},
+"timings": {
+"blocked": 0.397999945562333,
+"dns": 0.750000006519257,
+"connect": 123.27999999979541,
+"send": 0.07500004721799769,
+"wait": 162.21499996027,
+"receive": 1.0620465036477071,
+"ssl": 96.8649999704209
+},
+"connection": "829657",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:51.842Z",
+"time": 317.46983528137207,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/login?__authen_application=FAS_CS_COURSE_EVAL_REPORTS&__authen_time=Fri+Mar+20+15%3A07%3A48+EDT+2015&original_request=%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276&__authen_pgp_signature=iD8DBQBVDHAEHcM3pba7O2MRAiUzAJ4idjLYl%2BTDIrsrTRx6RDuVaRMHzwCg4E5R%0D%0Ai2zH4xRKVq3T%2FeqMxN4i4Jg%3D%0D%0A%3DHFf0%0D%0A&__authen_pgp_version=5.0&__authen_huid=10907373&__authen_ip=72.231.9.10",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://www.pin1.harvard.edu/cas/login?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0719BF921B2A01491272EDCFDF4BB3BD"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=0"
+}
+],
+"queryString": [
+{
+"name": "__authen_application",
+"value": "FAS_CS_COURSE_EVAL_REPORTS"
+},
+{
+"name": "__authen_time",
+"value": "Fri+Mar+20+15%3A07%3A48+EDT+2015"
+},
+{
+"name": "original_request",
+"value": "%2Fcourse_evaluation_reports%2Ffas%2Fnew_course_summary.html%3Fcourse_id%3D37276"
+},
+{
+"name": "__authen_pgp_signature",
+"value": "iD8DBQBVDHAEHcM3pba7O2MRAiUzAJ4idjLYl%2BTDIrsrTRx6RDuVaRMHzwCg4E5R%0D%0Ai2zH4xRKVq3T%2FeqMxN4i4Jg%3D%0D%0A%3DHFf0%0D%0A"
+},
+{
+"name": "__authen_pgp_version",
+"value": "5.0"
+},
+{
+"name": "__authen_huid",
+"value": "10907373"
+},
+{
+"name": "__authen_ip",
+"value": "72.231.9.10"
+}
+],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0719BF921B2A01491272EDCFDF4BB3BD",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 1157,
+"bodySize": 0
+},
+"response": {
+"status": 302,
+"statusText": "Moved Temporarily",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Location",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:48 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "Set-Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725; Path=/; Secure"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "0"
+}
+],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"path": "/",
+"expires": null,
+"httpOnly": false,
+"secure": true
+}
+],
+"content": {
+"size": 0,
+"mimeType": "x-unknown",
+"compression": 0
+},
+"redirectURL": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276",
+"headersSize": 328,
+"bodySize": 0,
+"_transferSize": 328
+},
+"cache": {},
+"timings": {
+"blocked": 0.546999974176288,
+"dns": 0.760000024456532,
+"connect": 150.54900001268817,
+"send": 0.11600001016600459,
+"wait": 164.47599994717203,
+"receive": 1.0218353127130513,
+"ssl": 100.7229999522682
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:52.161Z",
+"time": 1882.0900917053223,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://www.pin1.harvard.edu/cas/login?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=0"
+}
+],
+"queryString": [
+{
+"name": "course_id",
+"value": "37276"
+}
+],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 787,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Transfer-Encoding",
+"value": "chunked"
+},
+{
+"name": "Content-Type",
+"value": "text/html;charset=utf-8"
+}
+],
+"cookies": [],
+"content": {
+"size": 10667,
+"mimeType": "text/html",
+"compression": -20
+},
+"redirectURL": "",
+"headersSize": 175,
+"bodySize": 10687,
+"_transferSize": 10862
+},
+"cache": {},
+"timings": {
+"blocked": 1.14100001519546,
+"dns": -1,
+"connect": -1,
+"send": 0.13200001558288998,
+"wait": 1879.4429999543318,
+"receive": 1.3740917202121636,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.070Z",
+"time": 68.51983070373535,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/header-image-for-public.css",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/css,*/*;q=0.1"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:34 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "text/css"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "527"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 527,
+"mimeType": "text/css",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 299,
+"bodySize": 527,
+"_transferSize": 826
+},
+"cache": {},
+"timings": {
+"blocked": 7.01699999626726,
+"dns": -1,
+"connect": -1,
+"send": 0.08500000694766996,
+"wait": 60.68399996729567,
+"receive": 0.7338307332247496,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.070Z",
+"time": 232.74993896484375,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/tabs-site.css",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/css,*/*;q=0.1"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 510,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Mon, 23 Jun 2014 18:14:09 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "text/css"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "38562"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 38562,
+"mimeType": "text/css",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 38562,
+"_transferSize": 38863
+},
+"cache": {},
+"timings": {
+"blocked": 68.4529999853112,
+"dns": -1,
+"connect": -1,
+"send": 0.05600001895800233,
+"wait": 112.29600000660879,
+"receive": 51.94493895396576,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.070Z",
+"time": 191.78009033203125,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/jquery-ui-1.7.2.custom.css",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/css,*/*;q=0.1"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 523,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:35 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "text/css"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "27869"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 27869,
+"mimeType": "text/css",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 27869,
+"_transferSize": 28170
+},
+"cache": {},
+"timings": {
+"blocked": 2.99399998039007,
+"dns": 0.0759999966248901,
+"connect": 87.41500001633544,
+"send": 0.09499996667720723,
+"wait": 69.2090000375174,
+"receive": 31.991090334486245,
+"ssl": 55.10900000808759
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.071Z",
+"time": 385.78009605407715,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/print-eval.css",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "text/css,*/*;q=0.1"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 511,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:35 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "text/css"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "29647"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 29647,
+"mimeType": "text/css",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 29647,
+"_transferSize": 29948
+},
+"cache": {},
+"timings": {
+"blocked": 2.10799998603761,
+"dns": 0.14700001338496982,
+"connect": 168.67899999488142,
+"send": 0.04700000863499554,
+"wait": 161.29700001329198,
+"receive": 53.50209603784617,
+"ssl": 107.13800002122312
+},
+"connection": "829741",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.071Z",
+"time": 294.4600582122803,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/jquery-1.5.2.min.js",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "*/*"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 501,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:33 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "text/JavaScript"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "85925"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 85925,
+"mimeType": "text/javascript",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 308,
+"bodySize": 85925,
+"_transferSize": 86233
+},
+"cache": {},
+"timings": {
+"blocked": 3.57400003122166,
+"dns": 0.05999999120830957,
+"connect": 97.48799999943003,
+"send": 0.09899999713499597,
+"wait": 74.99200000893401,
+"receive": 118.24705818435126,
+"ssl": 56.329000042751204
+},
+"connection": "829777",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.071Z",
+"time": 233.27994346618652,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/benchmark-desc.js",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "*/*"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 499,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:33 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "text/JavaScript"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "364"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 364,
+"mimeType": "text/javascript",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 306,
+"bodySize": 364,
+"_transferSize": 670
+},
+"cache": {},
+"timings": {
+"blocked": 1.05300004361197,
+"dns": 0.05799997597932993,
+"connect": 169.2390000098387,
+"send": 0.05999999120800226,
+"wait": 61.658999999054004,
+"receive": 1.2109434464945252,
+"ssl": 112.95899999095082
+},
+"connection": "829729",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.363Z",
+"time": 42.19985008239746,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/scaleQuality.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 522,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Tue, 27 May 2014 16:56:57 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "3535"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 3535,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 3535,
+"_transferSize": 3836
+},
+"cache": {},
+"timings": {
+"blocked": 3.21699999039993,
+"dns": -1,
+"connect": -1,
+"send": 0.1090000150725201,
+"wait": 36.14300000481305,
+"receive": 2.730850072111963,
+"ssl": -1
+},
+"connection": "829777",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.364Z",
+"time": 63.159942626953125,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/number_respondants.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 528,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Tue, 27 May 2014 16:56:58 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "1258"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 1258,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 1258,
+"_transferSize": 1559
+},
+"cache": {},
+"timings": {
+"blocked": 3.20800003828481,
+"dns": -1,
+"connect": -1,
+"send": 0.05999999120831001,
+"wait": 56.875000009313275,
+"receive": 3.0169425881467262,
+"ssl": -1
+},
+"connection": "829729",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.364Z",
+"time": 64.11004066467285,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/mean_score.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 520,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Tue, 27 May 2014 16:56:58 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "959"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 959,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 300,
+"bodySize": 959,
+"_transferSize": 1259
+},
+"cache": {},
+"timings": {
+"blocked": 3.14300000900403,
+"dns": -1,
+"connect": -1,
+"send": 0.05299999611452,
+"wait": 58.46900003962215,
+"receive": 2.4450406199321506,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.364Z",
+"time": 56.08010292053223,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-16-18-24-23-19.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 526,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "2353"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 2353,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 2353,
+"_transferSize": 2508
+},
+"cache": {},
+"timings": {
+"blocked": 3.00299999071285,
+"dns": -1,
+"connect": -1,
+"send": 0.04700000863522025,
+"wait": 50.24400004185733,
+"receive": 2.786102879326826,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.364Z",
+"time": 64.65983390808105,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/details.gif",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 517,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:31 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/gif"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "802"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 802,
+"mimeType": "image/gif",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 300,
+"bodySize": 802,
+"_transferSize": 1102
+},
+"cache": {},
+"timings": {
+"blocked": 2.97099997987971,
+"dns": -1,
+"connect": -1,
+"send": 0.044999993406229954,
+"wait": 59.153000009246156,
+"receive": 2.490833925548955,
+"ssl": -1
+},
+"connection": "829765",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.404Z",
+"time": 54.46982383728027,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-8-9-29-30-24.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "2309"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 2309,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 2309,
+"_transferSize": 2464
+},
+"cache": {},
+"timings": {
+"blocked": 1.11800001468509,
+"dns": -1,
+"connect": -1,
+"send": 0.07799995364622014,
+"wait": 50.04900001222269,
+"receive": 3.2248238567262746,
+"ssl": -1
+},
+"connection": "829777",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.418Z",
+"time": 48.33984375,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-14-23-17-21-26.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 526,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "2145"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 2145,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 2145,
+"_transferSize": 2300
+},
+"cache": {},
+"timings": {
+"blocked": 0.97200000891462,
+"dns": -1,
+"connect": -1,
+"send": 0.07499998901038996,
+"wait": 43.925000005401685,
+"receive": 3.3678437466733016,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.490Z",
+"time": 73.71997833251953,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-21-24-30-15-10.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 526,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "2150"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 2150,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 2150,
+"_transferSize": 2305
+},
+"cache": {},
+"timings": {
+"blocked": 2.01200001174584,
+"dns": -1,
+"connect": -1,
+"send": 0.05299999611452,
+"wait": 68.49799997871743,
+"receive": 3.156978345941738,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.489Z",
+"time": 65.67001342773438,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-12-14-16-19-8.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 525,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "2375"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 2375,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 2375,
+"_transferSize": 2530
+},
+"cache": {},
+"timings": {
+"blocked": 3.26099997619167,
+"dns": -1,
+"connect": -1,
+"send": 0.05000003147869991,
+"wait": 59.72799996379763,
+"receive": 2.6310134562663734,
+"ssl": -1
+},
+"connection": "829777",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.536Z",
+"time": 35.86006164550781,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/scaleHoursBucket.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 526,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Tue, 27 May 2014 16:56:58 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "1616"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 1616,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 1616,
+"_transferSize": 1917
+},
+"cache": {},
+"timings": {
+"blocked": 2.55999999353662,
+"dns": -1,
+"connect": -1,
+"send": 0.10699999984354003,
+"wait": 30.17800004454334,
+"receive": 3.0150616075843146,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.488Z",
+"time": 49.37005043029785,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-0-1-13-31-56.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "1412"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 1412,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 1412,
+"_transferSize": 1567
+},
+"cache": {},
+"timings": {
+"blocked": 4.41399996634573,
+"dns": -1,
+"connect": -1,
+"send": 0.1100000226870197,
+"wait": 42.176000017207144,
+"receive": 2.670050424057955,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.482Z",
+"time": 109.56001281738281,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/scaleRecommendation.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 529,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Tue, 27 May 2014 16:56:58 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "6233"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 6233,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 6233,
+"_transferSize": 6534
+},
+"cache": {},
+"timings": {
+"blocked": 1.36300001759082,
+"dns": -1,
+"connect": -1,
+"send": 0.11299998732284,
+"wait": 105.66900001140334,
+"receive": 2.4150128010658136,
+"ssl": -1
+},
+"connection": "829765",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.509Z",
+"time": 71.21014595031738,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-14-15-29-17-26.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 526,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "2169"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 2169,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 2169,
+"_transferSize": 2324
+},
+"cache": {},
+"timings": {
+"blocked": 1.68699998175725,
+"dns": -1,
+"connect": -1,
+"send": 0.30600000172854,
+"wait": 66.61300000268972,
+"receive": 2.6041459641418783,
+"ssl": -1
+},
+"connection": "829741",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.613Z",
+"time": 38.81978988647461,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/scaleSatisfaction.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 527,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Tue, 27 May 2014 16:56:58 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "3994"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 3994,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 3994,
+"_transferSize": 4295
+},
+"cache": {},
+"timings": {
+"blocked": 2.16400000499561,
+"dns": -1,
+"connect": -1,
+"send": 0.09499996667728006,
+"wait": 33.58200000366201,
+"receive": 2.9787899111397067,
+"ssl": -1
+},
+"connection": "829777",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.578Z",
+"time": 77.95000076293945,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/histobar-4-6-17-25-47.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "1501"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 1501,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 155,
+"bodySize": 1501,
+"_transferSize": 1656
+},
+"cache": {},
+"timings": {
+"blocked": 1.40100001590326,
+"dns": -1,
+"connect": -1,
+"send": 0.16200001118704987,
+"wait": 73.19899997673929,
+"receive": 3.1880007591098547,
+"ssl": -1
+},
+"connection": "829741",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.590Z",
+"time": 63.94004821777344,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-24-105-1.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 525,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "732"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 732,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 732,
+"_transferSize": 886
+},
+"cache": {},
+"timings": {
+"blocked": 0.953999988269061,
+"dns": -1,
+"connect": -1,
+"send": 0.10399997700005914,
+"wait": 59.400000027380884,
+"receive": 3.4820482251234353,
+"ssl": -1
+},
+"connection": "829765",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.570Z",
+"time": 44.389963150024414,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-79-105-2.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 525,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "657"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 657,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 657,
+"_transferSize": 811
+},
+"cache": {},
+"timings": {
+"blocked": 1.75599998328835,
+"dns": -1,
+"connect": -1,
+"send": 0.17900002421811,
+"wait": 40.01100000459704,
+"receive": 2.4439631379209175,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.611Z",
+"time": 46.70000076293945,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-13-105-3.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 525,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "664"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 664,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 664,
+"_transferSize": 818
+},
+"cache": {},
+"timings": {
+"blocked": 3.40099999448285,
+"dns": -1,
+"connect": -1,
+"send": 0.13699999544768993,
+"wait": 40.26100004557516,
+"receive": 2.901000727433754,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.632Z",
+"time": 85.52002906799316,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-0-105-4.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "409"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 409,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 409,
+"_transferSize": 563
+},
+"cache": {},
+"timings": {
+"blocked": 3.04699997650459,
+"dns": -1,
+"connect": -1,
+"send": 0.0969999819062699,
+"wait": 79.76900000358005,
+"receive": 2.6070291060022583,
+"ssl": -1
+},
+"connection": "829729",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.563Z",
+"time": 70.25003433227539,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-1-105-5.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "539"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 539,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 539,
+"_transferSize": 693
+},
+"cache": {},
+"timings": {
+"blocked": 2.44100001873449,
+"dns": -1,
+"connect": -1,
+"send": 0.14000001829117004,
+"wait": 63.742999976966544,
+"receive": 3.926034318283186,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.538Z",
+"time": 97.3198413848877,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-1-105-6.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "551"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 551,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 551,
+"_transferSize": 705
+},
+"cache": {},
+"timings": {
+"blocked": 1.07600004412234,
+"dns": -1,
+"connect": -1,
+"send": 0.09799998952075994,
+"wait": 92.80799998668951,
+"receive": 3.3378413645550893,
+"ssl": -1
+},
+"connection": "829729",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.553Z",
+"time": 59.5700740814209,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/barPercentage-1-105-7.png",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/fas/new_course_summary.html?course_id=37276"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 524,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Length",
+"value": "539"
+},
+{
+"name": "Content-Type",
+"value": "image/png"
+}
+],
+"cookies": [],
+"content": {
+"size": 539,
+"mimeType": "image/png",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 154,
+"bodySize": 539,
+"_transferSize": 693
+},
+"cache": {},
+"timings": {
+"blocked": 1.27399998018518,
+"dns": -1,
+"connect": -1,
+"send": 0.10800000745803007,
+"wait": 55.08499999996279,
+"receive": 3.1030740938148966,
+"ssl": -1
+},
+"connection": "829777",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.427Z",
+"time": 56.81014060974121,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/fas-home-back.jpg",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/tabs-site.css"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 493,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:30 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/jpg"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "593"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 593,
+"mimeType": "image/jpg",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 300,
+"bodySize": 593,
+"_transferSize": 893
+},
+"cache": {},
+"timings": {
+"blocked": 3.32399999024346,
+"dns": -1,
+"connect": -1,
+"send": 0.09099999442697015,
+"wait": 52.57100000744687,
+"receive": 0.824140617623911,
+"ssl": -1
+},
+"connection": "829765",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.428Z",
+"time": 61.54990196228027,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/fas-header-back.jpg",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/tabs-site.css"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 495,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:29 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/jpg"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "2470"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 2470,
+"mimeType": "image/jpg",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 2470,
+"_transferSize": 2771
+},
+"cache": {},
+"timings": {
+"blocked": 2.42599996272475,
+"dns": -1,
+"connect": -1,
+"send": 0.11300004553049003,
+"wait": 58.25999996159226,
+"receive": 0.7509019924327731,
+"ssl": -1
+},
+"connection": "829682",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.429Z",
+"time": 110.53013801574707,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/fas-logo-back3.gif",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/header-image-for-public.css"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 508,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:29 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/gif"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "4973"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 4973,
+"mimeType": "image/gif",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 4973,
+"_transferSize": 5274
+},
+"cache": {},
+"timings": {
+"blocked": 2.14499997673556,
+"dns": -1,
+"connect": -1,
+"send": 0.07300003198907001,
+"wait": 106.64299997733937,
+"receive": 1.6691380296830687,
+"ssl": -1
+},
+"connection": "829729",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.458Z",
+"time": 51.670074462890625,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/CoursePlanner.gif",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/tabs-site.css"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 493,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:31 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/gif"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "5099"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 5099,
+"mimeType": "image/gif",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 301,
+"bodySize": 5099,
+"_transferSize": 5400
+},
+"cache": {},
+"timings": {
+"blocked": 1.57900003250688,
+"dns": -1,
+"connect": -1,
+"send": 0.05999999120832,
+"wait": 49.1840000031516,
+"receive": 0.8470744360238243,
+"ssl": -1
+},
+"connection": "829741",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.467Z",
+"time": 25.259971618652344,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/printPage.gif",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/tabs-site.css"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 489,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:30 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/gif"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "861"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 861,
+"mimeType": "image/gif",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 300,
+"bodySize": 861,
+"_transferSize": 1161
+},
+"cache": {},
+"timings": {
+"blocked": 2.31000001076609,
+"dns": -1,
+"connect": -1,
+"send": 0.1819999888539301,
+"wait": 21.84600004693498,
+"receive": 0.9219715720973447,
+"ssl": -1
+},
+"connection": "829753",
+"pageref": "page_1"
+},
+{
+"startedDateTime": "2015-03-20T19:07:54.456Z",
+"time": 34.440040588378906,
+"request": {
+"method": "GET",
+"url": "https://webapps.fas.harvard.edu/course_evaluation_reports/images/tabBack.jpg",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Accept-Encoding",
+"value": "gzip, deflate, sdch"
+},
+{
+"name": "Host",
+"value": "webapps.fas.harvard.edu"
+},
+{
+"name": "Accept-Language",
+"value": "en-US,en;q=0.8"
+},
+{
+"name": "User-Agent",
+"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36"
+},
+{
+"name": "Accept",
+"value": "image/webp,*/*;q=0.8"
+},
+{
+"name": "Referer",
+"value": "https://webapps.fas.harvard.edu/course_evaluation_reports/tabs-site.css"
+},
+{
+"name": "Cookie",
+"value": "JSESSIONID=0A6236E13DF16E55AB5FFBDA26D22725"
+},
+{
+"name": "Connection",
+"value": "keep-alive"
+}
+],
+"queryString": [],
+"cookies": [
+{
+"name": "JSESSIONID",
+"value": "0A6236E13DF16E55AB5FFBDA26D22725",
+"expires": null,
+"httpOnly": false,
+"secure": false
+}
+],
+"headersSize": 487,
+"bodySize": 0
+},
+"response": {
+"status": 200,
+"statusText": "OK",
+"httpVersion": "HTTP/1.1",
+"headers": [
+{
+"name": "Date",
+"value": "Fri, 20 Mar 2015 19:07:50 GMT"
+},
+{
+"name": "Last-Modified",
+"value": "Wed, 05 Jun 2013 18:29:31 GMT"
+},
+{
+"name": "Server",
+"value": "Apache-Coyote/1.1"
+},
+{
+"name": "X-Cocoon-Version",
+"value": "2.1.7"
+},
+{
+"name": "Content-Type",
+"value": "image/jpg"
+},
+{
+"name": "Cache-Control",
+"value": "max-age=86400, public"
+},
+{
+"name": "Accept-Ranges",
+"value": "bytes"
+},
+{
+"name": "Content-Length",
+"value": "319"
+},
+{
+"name": "Expires",
+"value": "Sat, 21 Mar 2015 19:07:50 GMT"
+}
+],
+"cookies": [],
+"content": {
+"size": 319,
+"mimeType": "image/jpg",
+"compression": 0
+},
+"redirectURL": "",
+"headersSize": 300,
+"bodySize": 319,
+"_transferSize": 619
+},
+"cache": {},
+"timings": {
+"blocked": 3.43899999279529,
+"dns": -1,
+"connect": -1,
+"send": 0.11100003030150996,
+"wait": 29.985999979544403,
+"receive": 0.9040405857377039,
+"ssl": -1
+},
+"connection": "829777",
+"pageref": "page_1"
+}
+]
+}
+}
+
+https://www.pin1.harvard.edu/cas/login?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276
+
+<form id="fm1" action="/cas/login;jsessionid=6783EE6A14543BED115656284A23AFAB?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Fnew_course_summary.html%253Fcourse_id%253D37276" method="post">
+<div class="form" id="login">
+<br>
+
+
+<div id="errorDiv" class="dynamic-text-area" style="display:none">
+<br>
+
+<br>
+</div>
+<fieldset class="inner" id="multi-choice">
+<dl>
+
+
+<dt>
+<label class="label-text" accesskey="L">
+Select a <span class="accesskey">L</span>ogin type:
+</label>
+<a class="help-link" target="help_window" href="http://reference.iam.harvard.edu/what-login-id-0" tabindex="21">What is a login type?</a>
+</dt>
+
+
+<dd>
+<ul>
+<li>
+
+
+<input id="compositeAuthenticationSourceType1" type="radio" name="compositeAuthenticationSourceType" value="PIN" checked="" tabindex="1">
+
+
+
+<label for="compositeAuthenticationSourceType1">
+Harvard University ID (HUID)
+</label>
+
+</li>
+</ul>
+</dd>
+
+<dd>
+<ul>
+<li>
+
+
+
+<input id="compositeAuthenticationSourceType2" type="radio" name="compositeAuthenticationSourceType" value="HMS ECOMMONS" tabindex="2">
+
+
+<label for="compositeAuthenticationSourceType2">
+eCommons Login
+</label>
+
+</li>
+</ul>
+</dd>
+
+<dd>
+<ul>
+<li>
+
+
+
+<input id="compositeAuthenticationSourceType3" type="radio" name="compositeAuthenticationSourceType" value="ADID" tabindex="3">
+
+
+<label for="compositeAuthenticationSourceType3">
+FAS/Central Username
+</label>
+
+</li>
+</ul>
+</dd>
+
+
+</dl></fieldset>
+
+<fieldset class="outer">
+<fieldset class="inner" id="form-field">
+<dl>
+<dt>
+<label class="label-text" for="username" accesskey="I">
+Login <span class="accesskey">I</span>D:
+</label>
+
+
+</dt>
+<dd>
+
+
+<input id="username" name="username" class="required" tabindex="11" accesskey="u" type="text" value="" size="40" maxlength="71" autocomplete="off">
+<a class="help-link" target="help_window" href="http://reference.iam.harvard.edu/what-login-id-0" tabindex="22">
+What is a login ID?
+</a>
+
+</dd>
+</dl>
+</fieldset>
+
+<fieldset class="inner" id="form-field">
+<dl>
+<dt>
+<label class="label-text" for="password" accesskey="P">
+<span class="accesskey">P</span>IN / Password:
+</label>
+
+
+</dt>
+<dd>
+
+<input id="password" name="password" class="required" tabindex="12" accesskey="p" type="password" value="" size="40" maxlength="40" autocomplete="off">
+<a class="help-link" target="help_window" href="http://reference.iam.harvard.edu/what-pinpassword" tabindex="23">
+What is a PIN / Password?
+</a>
+</dd>
+</dl>
+</fieldset>
+
+<input type="submit" class="login-button" name="_eventId_submit" value="Login" tabindex="13">
+
+<a class="help-link" target="help_window" href="http://reference.iam.harvard.edu/what-pinpassword" tabindex="24">
+New user? Forgot your PIN / Password?
+</a>
+
+<input type="hidden" name="lt" value="LT-16522134-sgUynrLsIb00SuTiHQ6VeMGFKAmYNB">
+<input type="hidden" name="execution" value="e1s1">
+<input type="hidden" name="casPageDisplayType" value="DEFAULT">
+<input type="hidden" name="nonMobileOptionOnMobile" value="">
+
+</fieldset>
+</div>  <!-- end of form class -->
+
+
+
+<br>
+</form>
