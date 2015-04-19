@@ -20,6 +20,7 @@
 #import "FullOnScrapist.h"
 #import "SearchManager.h"
 #import "Faculty.h"
+#import "ScrapeViewController.h"
 
 @interface AppDelegate ()
 
@@ -108,8 +109,15 @@
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    // Set up scraping view controller; comment out for standard login flow
+    
+//    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];
+//    self.window.rootViewController = scrapeController;
+//    [self.window makeKeyAndVisible];
+    
         
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
     {
         LoginViewController *loginController = [main
             instantiateViewControllerWithIdentifier:@"loginController"];
