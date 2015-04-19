@@ -14,6 +14,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="delegate" destination="W9h-mQ-8Pq" id="zaF-mI-zIc"/>
+                        </connections>
                     </webView>
                     <connections>
                         <outlet property="webview" destination="dxN-mY-E7B" id="fB5-dQ-stB"/>

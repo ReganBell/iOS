@@ -112,24 +112,24 @@
     
     // Set up scraping view controller; comment out for standard login flow
     
-//    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];
-//    self.window.rootViewController = scrapeController;
-//    [self.window makeKeyAndVisible];
+    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];
+    self.window.rootViewController = scrapeController;
+    [self.window makeKeyAndVisible];
     
         
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
-    {
-        LoginViewController *loginController = [main
-            instantiateViewControllerWithIdentifier:@"loginController"];
-        self.window.rootViewController = loginController;
-        [self.window makeKeyAndVisible];
-    }
-    else
-    {
-        NavigationController *navigationController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
-        self.window.rootViewController = navigationController;
-        [self.window makeKeyAndVisible];
-    }
+//    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
+//    {
+//        LoginViewController *loginController = [main
+//            instantiateViewControllerWithIdentifier:@"loginController"];
+//        self.window.rootViewController = loginController;
+//        [self.window makeKeyAndVisible];
+//    }
+//    else
+//    {
+//        NavigationController *navigationController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
+//        self.window.rootViewController = navigationController;
+//        [self.window makeKeyAndVisible];
+//    }
     
 
     return YES;
