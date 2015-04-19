@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/Scrape/FullOnScrapist.m"
-            timestampString = "443069484.198631"
+            timestampString = "446528995.080266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
-            landmarkName = "-facultyFromRawString:withEntity:context:"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
+            landmarkName = "-sharedParenthesesRegEx"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/Scrape/FullOnScrapist.m"
-            timestampString = "443069484.198631"
+            timestampString = "446531785.479424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
-            landmarkName = "-catalogNumberFromRawString:"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
+            landmarkName = "-facultyFromRawString:withEntity:context:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -93,12 +93,76 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Coursica/Scrape/FullOnScrapist.m"
-            timestampString = "443069484.198631"
+            filePath = "Coursica/CoursesViewController.m"
+            timestampString = "448850298.527151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "-filtersDidChange:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/SearchManager.m"
+            timestampString = "444116128.030632"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "-coursesForSearch:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/SearchManager.m"
+            timestampString = "444116128.030632"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "-searchInIndex:forTerms:withZoneWeight:results:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/SearchManager.m"
+            timestampString = "444116128.030632"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "-coursesForSearch:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/Scrape/FullOnScrapist.m"
+            timestampString = "446528995.080266"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "252"
+            endingLineNumber = "252"
             landmarkName = "-createCourseFromCoursePageData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -110,12 +174,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/Scrape/FullOnScrapist.m"
-            timestampString = "443069484.198631"
+            timestampString = "446528995.080266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "-meetingsForRawMeetingsString:"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "-createCourseFromCoursePageData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -126,12 +190,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/Scrape/FullOnScrapist.m"
-            timestampString = "443069484.198631"
+            timestampString = "446528995.080266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "-meetingsForRawMeetingsString:"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "-createCourseFromCoursePageData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -141,45 +205,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Coursica/AppDelegate.m"
-            timestampString = "443069715.863644"
+            filePath = "Coursica/Scrape/FullOnScrapist.m"
+            timestampString = "446528991.209943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "-createCourseFromCoursePageData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Coursica/CoursesViewController.m"
-            timestampString = "443583320.413593"
+            filePath = "Coursica/ScrapeViewController.m"
+            timestampString = "448906080.685449"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "-filtersDidChange:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Coursica/AppDelegate.m"
-            timestampString = "443676303.768061"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "-webView:didFailLoadWithError:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

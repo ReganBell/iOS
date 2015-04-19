@@ -15,12 +15,15 @@
 #import "Faculty.h"
 #import "Meeting.h"
 #import "Location.h"
+#import "SearchManager.h"
 
 @interface FullOnScrapist ()
 
 @property (strong, nonatomic) NSNumberFormatter *sharedFormatter;
 @property (strong, nonatomic) NSRegularExpression *sharedParenthesesRegEx;
 @property (strong, nonatomic) NSOperationQueue *requestQueue;
+@property (strong, nonatomic) NSMutableDictionary *fieldsDict;
+@property (strong, nonatomic) NSMutableDictionary *uniqueCourses;
 
 @end
 
@@ -54,9 +57,34 @@
 
 - (void)scrapeSearchResultsPage {
     
+    // Create fields dict to use to assign field abbreviations
+    
+    NSError *error;
+    
+    NSString *shortString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ShortFields"] encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    
+    NSString *longString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"LongFields"] encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    
+    NSArray *shortFields = [shortString componentsSeparatedByString:@",\n"];
+    NSArray *longFields = [longString componentsSeparatedByString:@",\n"];
+    
+    self.fieldsDict = [NSMutableDictionary dictionary];
+    
+    int i = 0;
+    for (NSString *longField in longFields) {
+        [self.fieldsDict setObject:shortFields[i] forKey:longField];
+        i++;
+    }
+
     //Scrape search results pages 0-566
     
-    for (int i = 0; i < 567; i++) {
+    for (int i = 60; i < 100; i++) {
         
         NSString *coursePageURLString = [NSString stringWithFormat:@"http://www.registrar.fas.harvard.edu/courses-exams/course-catalog?search_api_views_fulltext=&page=%d", i];
         
@@ -73,18 +101,6 @@
         }];
         
         [self.requestQueue addOperation:operation];
-        
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        
-//        
-//        [manager GET:coursePageURLString parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-//            
-//            [self createCoursesFromResultsPageData:responseObject];
-//            
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error fetching lists: %@", error);
-//        }];
     }
 }
 
@@ -114,15 +130,121 @@
         
         [self.requestQueue addOperation:operation];
     }
-//
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//        [manager GET:linkString parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-//            
-//            
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error fetching lists: %@", error);
-//        }];
+}
+
+- (void)setTitleFieldNumberOfCourse:(Course*)newCourse fromRawTitle:(NSString*)rawTitle {
+    
+    // "Dramatic Arts 101. Introduction to Theater"
+    NSScanner *scanner = [[NSScanner alloc] initWithString:rawTitle];
+    NSString *fieldAndNumber;
+    NSString *title;
+    
+    // "Dramatic Arts 101."
+    [scanner scanUpToString:@". " intoString:&fieldAndNumber];
+    [scanner setScanLocation:scanner.scanLocation + 2];
+    
+    // "Introduction to Theater"
+    [scanner scanUpToString:@"" intoString:&title];
+    
+    title = [self sanitizedCourseTitle:title];
+    
+    // Check if course is bracketed, e.g. "[Introduction to Computer Science]" meaning it isn't currently being offered but is still in the catalog
+    NSRange range = [title rangeOfString:@"]"];
+    if (range.location == (title.length - 1)) {
+        newCourse.bracketed = @YES;
+        newCourse.title = [NSString stringWithFormat:@"[%@", title];
+    } else {
+        newCourse.bracketed = @NO;
+        newCourse.title = title;
+    }
+    
+    // Some fieldAndNumbers are like Aesthetic and Interpretive Understanding 59 (formerly Culture and Belief 54)
+    // We remove anything inside parentheses
+    range = NSMakeRange(0, fieldAndNumber.length);
+    fieldAndNumber = [self.sharedParenthesesRegEx stringByReplacingMatchesInString:fieldAndNumber options:0 range:range withTemplate:@""];
+    fieldAndNumber = [fieldAndNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSArray *comps = [fieldAndNumber componentsSeparatedByString:@" "];
+    NSString *number = [comps lastObject];
+    newCourse.number = [number stringByReplacingOccurrencesOfString:@")" withString:@""];
+    
+    // So we can rank classes by their actual numeric value, not by string comparison ("131" shouldn't come before "14")
+    NSScanner *numberScanner = [NSScanner scannerWithString:newCourse.number];
+    NSInteger decimalNumber = -1;
+    BOOL success = [numberScanner scanInteger:&decimalNumber];
+    if (success) {
+        newCourse.decimalNumber = @(decimalNumber);
+    } else
+        newCourse.decimalNumber = @(-1);
+    
+    NSString *field = [fieldAndNumber stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@", number] withString:@""];
+    NSScanner *fieldScanner = [[NSScanner alloc] initWithString:field];
+    [fieldScanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@"*[]"]];
+    NSString *trimmed;
+    [fieldScanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&trimmed];
+    
+    NSString *longField = [trimmed stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
+    newCourse.longField = longField;
+    
+    NSString *shortField = self.fieldsDict[longField];
+    if (shortField == nil) {
+        
+        NSArray *components = [longField componentsSeparatedByString:@" "];
+        shortField = [components[0] uppercaseString];
+    }
+    newCourse.shortField = shortField;
+}
+
+- (void)setGenEdsForCourse:(Course*)newCourse {
+    
+    NSDictionary *genEds = @{@"Aesthetic and Interpretive Understanding": @1,
+                             @"Culture and Belief": @2,
+                             @"Empirical and Mathematical Reasoning": @3,
+                             @"Ethical Reasoning": @4,
+                             @"Science of Living Systems": @5,
+                             @"Science of the Physical Universe": @6,
+                             @"Societies of the World": @7,
+                             @"Study of the Past": @8,
+                             @"United States in the World": @9};
+    
+    NSDictionary *genEdAbbrvs = @{@"AESTH&INTP": @1,
+                                  @"CULTR&BLF": @2,
+                                  @"E&M-REASON": @3,
+                                  @"ETH-REASON": @4,
+                                  @"SCI-LIVSYS": @5,
+                                  @"SCI-PHYUNV": @6,
+                                  @"SOC-WORLD": @7,
+                                  @"US-WORLD": @9};
+    
+    int genEdsFound = 0;
+    NSNumber *fieldGenEd = nil;
+    
+    // Lots of classes with a gen ed as their field don't report the gen ed they satisfy in their notes section so we have to get it from the field name
+    for (NSString *genEdAbbrv in genEdAbbrvs) {
+        if ([newCourse.shortField isEqualToString:genEdAbbrv]) {
+            newCourse.genEdOne = genEdAbbrvs[genEdAbbrv];
+            fieldGenEd = newCourse.genEdOne;
+            genEdsFound++;
+        }
+    }
+    
+    // Scan through the notes of every class looking for mention of a gen ed it satisfies, save that on the course object
+    for (NSString *genEd in genEds) {
+        NSRange range = [newCourse.notes rangeOfString:genEd];
+        if (range.location != NSNotFound) {
+            NSNumber *genEdNum = genEds[genEd];
+            if (genEdNum.intValue == fieldGenEd.intValue) {
+                continue;
+            }
+            if (genEdsFound == 0) {
+                newCourse.genEdOne = genEdNum;
+                genEdsFound++;
+            } else if (genEdsFound == 1) {
+                newCourse.genEdTwo = genEdNum;
+                genEdsFound++;
+            }
+        }
+    }
 }
 
 - (void)createCourseFromCoursePageData:(NSData*)pageData {
@@ -140,26 +262,14 @@
     
     NSString *titleXPath = @"//h1[@id='page-title']";
     TFHppleElement *titleElement = [coursePage peekAtSearchWithXPathQuery:titleXPath];
+    [self setTitleFieldNumberOfCourse:newCourse fromRawTitle:titleElement.text];
     
-    // "Dramatic Arts 101. Introduction to Theater"
-    NSString *rawTitle = titleElement.text;
-    
-    NSScanner *scanner = [[NSScanner alloc] initWithString:rawTitle];
-    NSString *fieldAndNumber;
-    NSString *title;
-    [scanner scanUpToString:@"." intoString:&fieldAndNumber];
-    [scanner setScanLocation:scanner.scanLocation + 2];
-    [scanner scanUpToString:@"" intoString:&title];
-    
-    newCourse.title = title;
-    
-    NSArray *comps = [fieldAndNumber componentsSeparatedByString:@" "];
-    NSString *number = [comps lastObject];
-    newCourse.number = number;
-    
-    NSString *field = [fieldAndNumber stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@" %@", number] withString:@""];
-    //            newCourse.shortField = field;
-    newCourse.longField = field;
+    Course *existingCourse = self.uniqueCourses[newCourse.title];
+    if (existingCourse) {
+        [context deleteObject:newCourse];
+        return;
+    } else
+        [self.uniqueCourses setObject:newCourse forKey:newCourse.title];
     
     NSString *rawCatNum = [self textForCourseField:@"catalog_number" onPage:coursePage];
     newCourse.catalogNumber = rawCatNum;
@@ -168,10 +278,9 @@
     NSSet *newFaculty = [self facultyFromRawString:rawFaculty withEntity:facultyEntity context:context];
     [newCourse addFaculty:newFaculty];
     
-    NSString *rawLevel = [self textForCourseField:@"level" onPage:coursePage];
-    newCourse.graduate = [self graduateForRawCourseLevel:rawLevel];
+    newCourse.graduate = [self graduateForCourse:newCourse];
     
-    //            NSString *rawCredit = [self textForCourseField:@"credit_amount" onPage:coursePage];
+//    NSString *rawCredit = [self textForCourseField:@"credit_amount" onPage:coursePage];
     
     NSString *rawTerm = [self textForCourseField:@"term" onPage:coursePage];
     newCourse.term = [self termForRawTermString:rawTerm];
@@ -186,14 +295,39 @@
     
     NSString *rawExamGroup = [self textForCourseField:@"exam_group" onPage:coursePage];
     
-    
-    NSString *rawDescription = [self textForCourseField:@"description" onPage:coursePage];
-    newCourse.courseDescription = rawDescription;
+    NSString *description = [self textForCourseField:@"description" onPage:coursePage];
+    if (description.length == 0)
+        newCourse.courseDescription = @"No course description provided.";
+    else
+        newCourse.courseDescription = description;
     
     NSString *rawPrereqs = [self textForCourseField:@"prerequisites" onPage:coursePage];
+    newCourse.prereqs = rawPrereqs;
+    
     NSString *rawNotes = [self textForCourseField:@"notes" onPage:coursePage];
+    newCourse.notes = rawNotes;
+    
+    [self setGenEdsForCourse:newCourse];
     
     [context save:nil];
+}
+
+- (NSString*)sanitizedCourseTitle:(NSString*)title {
+    
+//    NSMutableCharacterSet *allowedChars = [NSMutableCharacterSet lowercaseLetterCharacterSet];
+//    [allowedChars formUnionWithCharacterSet:[NSCharacterSet uppercaseLetterCharacterSet]];
+//    [allowedChars formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
+//    [allowedChars formUnionWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+//    title =
+    
+    return [title stringByReplacingOccurrencesOfString:@" - (New Course)" withString:@""];
+    
+//    NSScanner *scanitizer = [NSScanner scannerWithString:title];
+//    NSString *cleanTitle;
+//    [scanitizer scanCharactersFromSet:allowedChars intoString:&cleanTitle];
+//    
+//    return cleanTitle;
 }
 
 - (NSSet*)meetingsForRawMeetingsString:(NSString*)rawString {
@@ -317,11 +451,26 @@
     }
 }
 
-- (NSNumber*)graduateForRawCourseLevel:(NSString*)rawLevel {
+- (NSNumber*)graduateForCourse:(Course*)course {
     
-    BOOL graduate = ([rawLevel rangeOfString:@"Graduates" options:NSCaseInsensitiveSearch].location != NSNotFound);
-    BOOL both = ([rawLevel rangeOfString:@"and" options:NSCaseInsensitiveSearch].location != NSNotFound);
-    if (graduate && !both) {
+//    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[0-9]+" options:0 error:nil];
+//    
+//    // Find out whether is a class is for undergraduates or graduates by the number
+//    // First we regex out the course number (a lot of them have weird letters and periods)
+//    NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:numberString options:0 range:NSMakeRange(0, [numberString length])];
+//    
+//    if (rangeOfFirstMatch.location == NSNotFound) {
+//        // Some undergraduate courses' number will just be a letter and regex won't find anything
+//        return [NSNumber numberWithBool:NO];
+//    } else {
+//        // Extract the number string and turn into a real number
+//        NSString *substringForFirstMatch = [numberString substringWithRange:rangeOfFirstMatch];
+//        double number = [self.sharedFormatter numberFromString:substringForFirstMatch].doubleValue;
+    
+    int number = course.decimalNumber.doubleValue;
+    
+    // Course numbering scheme explained: http://www.registrar.fas.harvard.edu/courses-exams/courses-instruction/introductory-notes
+    if ((number >= 200 && number < 1000) || (number >= 2000)) {
         return [NSNumber numberWithBool:YES];
     } else
         return [NSNumber numberWithBool:NO];
@@ -343,9 +492,15 @@
     // "David J. Malan and Jelani Nelson"
     // "David Malan"
     
-    if ([rawString rangeOfString:@"to be determined"].location != NSNotFound) {
+    if (!rawString) {
         return nil;
     }
+    
+    if ([rawString rangeOfString:@"to be determined" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        return nil;
+    }
+    
+    NSLog(@"Parsing raw faculty: %@", rawString);
     
     NSMutableString *string = [NSMutableString stringWithString:rawString];
     [self.sharedParenthesesRegEx replaceMatchesInString:string options:0 range:NSMakeRange(0, rawString.length) withTemplate:@""];
@@ -377,6 +532,8 @@
         } else
             facultyFullNames = @[string];
     }
+    
+    NSLog(@"fullNames: %@", facultyFullNames);
     
     NSMutableSet *facultySet = [NSMutableSet set];
     

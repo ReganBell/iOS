@@ -14,6 +14,7 @@
 #import "DetailViewController.h"
 #import "FiltersViewController.h"
 #import "NavigationController.h"
+#import "SearchManager.h"
 
 @interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
@@ -36,7 +37,7 @@
     // Creates objects used retrieving data from CS50 API
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSUInteger coesrunt = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
     
     // Creates title bar with app name
     CGRect frame = CGRectMake(0, 0, 0, 0);
@@ -62,23 +63,24 @@
 
     self.tableView.tableFooterView = [UIView new];
     
-//    // checks for a database, and if not requests courses data from CS50 API
-//    if (count == 0) {
-//        
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
-//        [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            
-//            //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
-//            //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
-//            
-//            [Course updateCourses: responseObject];
-//            [self.tableView reloadData];
-//            
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error fetching lists: %@", error);
-//        }];
-//    }
+    // checks for a database, and if not requests courses data from CS50 API
+    if (count == 0) {
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", nil];
+        [manager GET:@"http://api.cs50.net/courses/3/courses?key=bb344e1e4724ebdcfe53cc61f0cb2649&output=json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            //matt's key : 7f9c3089fc20f15bd6c4b460b5ff328d
+            //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
+            
+            [Course updateCourses: responseObject];
+            [[SearchManager sharedSearchManager] calculateIDFs];
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error fetching lists: %@", error);
+        }];
+    }
 }
 
     // Action called on switching to the filters screen
@@ -140,8 +142,13 @@
     // Specify how the fetched objects should be sorted
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"shortField"
                                                                    ascending:YES];
+    // Sort by decimal number first so 10, 100, 1000 would be in the right order
+    NSSortDescriptor *decimalNumberDescriptor = [[NSSortDescriptor alloc] initWithKey:@"decimalNumber" ascending:YES];
+    
+    // Fall back to number string when decimalNumber is the same, e.g. Math Ma and Mb both have decimal number -1, so sorting will fall back to this string comparison descriptor and sort them correctly
     NSSortDescriptor *numberDescriptor = [[NSSortDescriptor alloc] initWithKey:@"number" ascending:YES];
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, numberDescriptor, nil]];
+
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, decimalNumberDescriptor, numberDescriptor, nil]];
     
     NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
                                           

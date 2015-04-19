@@ -9,6 +9,7 @@
 
 #import "FiltersViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SearchManager.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
@@ -99,68 +100,71 @@
     // Checks all UI elements for changes in order to filter results
 - (IBAction)applyFiltersButtonPressed:(id)sender {
     
-    NSMutableArray *predicates = [NSMutableArray new];
-    
-    switch (self.courseLevelControl.selectedSegmentIndex) {
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
-            break;
-        case 2:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
-        default:
-            break;
-    }
-    // Checking all of the Q score filters
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+//    NSMutableArray *predicates = [NSMutableArray new];
 //    
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
+//    switch (self.courseLevelControl.selectedSegmentIndex) {
+//        case 1:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
+//            break;
+//        case 2:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
+//        default:
+//            break;
+//    }
+//    // Checking all of the Q score filters
+////    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
+////    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+////    
+////    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
+////    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
+////    
+////    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
+////    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
+//
+//    switch (self.termControl.selectedSegmentIndex) {
+//        case 1:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
+//            break;
+//        case 2:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
+//        default:
+//            break;
+//    }
 //    
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
-
-    switch (self.termControl.selectedSegmentIndex) {
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
-            break;
-        case 2:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
-        default:
-            break;
-    }
+//    // Checks all Gen. Ed. filters
+//    for (UIButton *button in self.genEdButtons) {
+//        
+//        if (button.selected) {
+//            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
+//        }
+//    }
+//    
+//    NSString *search = self.searchField.text;
+//
+//    if (search.length) {
+//        
+//        NSMutableArray *termPreds = [NSMutableArray array];
+//        NSArray *terms = [search componentsSeparatedByString:@" "];
+//        for (NSString *searchTerm in terms) {
+//            
+//            NSMutableArray *searchPreds = [NSMutableArray array];
+//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", searchTerm]];
+//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"shortField CONTAINS[cd] %@", searchTerm]];
+//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"longField CONTAINS[cd] %@", searchTerm]];
+//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", searchTerm]];
+//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", searchTerm]];
+//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", searchTerm]];
+//            [termPreds addObject:[NSCompoundPredicate orPredicateWithSubpredicates:searchPreds]];
+//        }
+//        [predicates addObject:[NSCompoundPredicate andPredicateWithSubpredicates:termPreds]];
+//    }
+//    
+//    // Calls function in CoursesViewController to update course list
+//    [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
     
-    // Checks all Gen. Ed. filters
-    for (UIButton *button in self.genEdButtons) {
-        
-        if (button.selected) {
-            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
-            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
-        }
-    }
+    NSArray *results = [[SearchManager sharedSearchManager] coursesForSearch:@"latin america"];
     
-    NSString *search = self.searchField.text;
-
-    if (search.length) {
-        
-        NSMutableArray *termPreds = [NSMutableArray array];
-        NSArray *terms = [search componentsSeparatedByString:@" "];
-        for (NSString *searchTerm in terms) {
-            
-            NSMutableArray *searchPreds = [NSMutableArray array];
-            [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", searchTerm]];
-            [searchPreds addObject:[NSPredicate predicateWithFormat:@"shortField CONTAINS[cd] %@", searchTerm]];
-            [searchPreds addObject:[NSPredicate predicateWithFormat:@"longField CONTAINS[cd] %@", searchTerm]];
-            [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", searchTerm]];
-            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", searchTerm]];
-            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", searchTerm]];
-            [termPreds addObject:[NSCompoundPredicate orPredicateWithSubpredicates:searchPreds]];
-        }
-        [predicates addObject:[NSCompoundPredicate andPredicateWithSubpredicates:termPreds]];
-    }
-    
-    // Calls function in CoursesViewController to update course list
-    [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
     
     [self.delegate dismissFiltersViewController];
 }

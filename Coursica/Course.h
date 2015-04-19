@@ -35,7 +35,11 @@
 @property (nonatomic, retain) NSSet *prerequisites;
 @property (nonatomic, retain) NSSet *locations;
 @property (nonatomic, retain) NSSet *meetings;
-@property (nonatomic, retain) NSMutableSet *titleTokenSet;
+
+// Actual NSNumber representation of course number, used so that classes won't be ordered by string comparison
+// For instance we want it to go 11, 13, 14, 131 -- not 11, 13, 131, 14
+@property (nonatomic, retain) NSNumber *decimalNumber;
+
 @end
 
 @interface Course (CoreDataGeneratedAccessors)
