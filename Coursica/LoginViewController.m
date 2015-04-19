@@ -50,7 +50,7 @@
     self.loginButton.clipsToBounds = YES;
     
     UIImageView *backgroundImageView =
-        [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jharvard.jpg"]];
+        [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jharvard_dark.jpg"]];
     backgroundImageView.frame = self.view.bounds;
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack: backgroundImageView];
