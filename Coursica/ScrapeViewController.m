@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "TFHpple.h"
 #import "NSString+HTML.h"
+#import "SearchManager.h"
 
 @interface ScrapeViewController () <UIWebViewDelegate>
 
@@ -100,11 +101,54 @@
 
 #pragma mark - Save Cookies
 
+- (void)scrapeUrls {
+    
+    NSString *js = @"var headers = document.getElementsByClassName(\"course\"); var titles = new Array(1313);for (var i = 0; i < 1313; i++) {titles[i] = new Array(5);} for (var i = 0; i < headers.length; i++) {titles[i][0] = \"*&*\"; titles[i][1] = headers[i].innerText; titles[i][2] = \"*&*\"; titles[i][3] = headers[i].firstElementChild.href; titles[i][4] = \"*&*\"}; titles.toString();";
+    NSString *result = [self.webview stringByEvaluatingJavaScriptFromString:js];
+    NSArray *comps = [result componentsSeparatedByString:@"*&*,"];
+    NSMutableDictionary *courses = [NSMutableDictionary dictionary];
+    for (int i = 1; i < comps.count; i += 3) {
+        NSString * untrimmed = comps[i];
+        NSString * trimmed = [untrimmed stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\n,"]];
+        NSString * untrimmedURL = comps[i+1];
+        NSString * trimmedURL = [untrimmedURL stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\n,"]];
+        courses[trimmed] = trimmedURL;
+        
+        Course *match = [[[SearchManager sharedSearchManager] coursesForSearch:trimmed] firstObject];
+        
+    }
+    
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
     NSString *result = [webView stringByEvaluatingJavaScriptFromString:@"var inputs = document.getElementsByClassName(\"course-block-head\");for (var i = 0; i < inputs.length; i++) {inputs[i].click();}"];
     
-    NSLog(@"%@", result);
+    NSTimer *scrapeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(scrapeUrls) userInfo:nil repeats:NO];
+    
+    /*
+     
+     
+     
+     var headers = document.getElementsByClassName("course-block-head");for (var i = 0; i < headers.length; i++) {headers[i].click();}
+     var titles = new Array(1313);
+     for (var i = 0; i < 1313; i++) {
+     titles[i] = new Array(2);
+     }
+     var headers = document.getElementsByClassName("course");
+     for (var i = 0; i < headers.length; i++) {titles[i][0] = headers[i].innerText; titles[i][1] = headers[i].firstElementChild.href}
+     titles.toString()
+     
+     var inputs = document.getElementsByClassName(\"course-block-head\");for (var i = 0; i < inputs.length; i++) {inputs[i].click();}
+     
+     var titles = new Array(1313);
+     for (var i = 0; i < 1313; i++) {
+     titles[i] = new Array(2);
+     }
+     
+     for (var i = 0; i < inputs.length; i++) {titles[i][0] = inputs[i].innerText; titles[i][1] = inputs[i].firstElementChild.href}
+     
+     */
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *requestDict = [NSMutableDictionary dictionary];

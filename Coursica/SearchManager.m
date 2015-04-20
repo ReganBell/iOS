@@ -255,6 +255,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedSearchManager = [[self alloc] init];
+        [sharedSearchManager]
     });
     return sharedSearchManager;
 }

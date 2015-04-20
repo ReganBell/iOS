@@ -74,6 +74,7 @@
 		590185891A3E4447008884EF /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
+		5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 10.xcdatamodel"; sourceTree = "<group>"; };
 		592939001A479315004C4303 /* Coursica 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 5.xcdatamodel"; sourceTree = "<group>"; };
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
 		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
@@ -755,6 +756,7 @@
 		596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */,
 				59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */,
 				59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */,
 				597FA8C01A3FF22600D8421E /* Coursica 4.xcdatamodel */,

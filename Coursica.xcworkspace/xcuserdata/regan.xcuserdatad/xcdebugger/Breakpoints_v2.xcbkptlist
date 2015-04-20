@@ -222,12 +222,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/ScrapeViewController.m"
-            timestampString = "448906080.685449"
+            timestampString = "451242847.323791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "-webView:didFailLoadWithError:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/ScrapeViewController.m"
+            timestampString = "451242843.153671"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-scrapeUrls"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
