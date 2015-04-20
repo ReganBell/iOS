@@ -23,6 +23,21 @@
 
 @implementation SearchManager
 
+- (void)setUp {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = delegate.managedObjectContext;
+    
+    NSFetchRequest *coursesFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    
+    NSError *error = nil;
+    NSArray *allCourses = [context executeFetchRequest:coursesFetch error:&error];
+    for (Course *course in allCourses) {
+        [self addCourseToSearchIndex:course];
+    }
+    [self calculateIDFs];
+}
+
 - (NSMutableDictionary *)titleInvertedIndex {
     
     if (!_titleInvertedIndex) {
@@ -255,7 +270,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedSearchManager = [[self alloc] init];
-        [sharedSearchManager]
+        [sharedSearchManager setUp];
     });
     return sharedSearchManager;
 }
