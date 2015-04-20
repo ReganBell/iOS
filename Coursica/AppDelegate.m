@@ -21,6 +21,7 @@
 #import "SearchManager.h"
 #import "Faculty.h"
 #import "ScrapeViewController.h"
+#import "QReport.h"
 
 @interface AppDelegate ()
 
@@ -106,16 +107,20 @@
     
     // Checking login status
     
-    
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    // Open straight to the courses view controller
+    
+//    UINavigationController *coursesController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
+//    self.window.rootViewController = coursesController;
+//    [self.window makeKeyAndVisible];
     
     // Set up scraping view controller; comment out for standard login flow
     
     ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];
     self.window.rootViewController = scrapeController;
     [self.window makeKeyAndVisible];
-    
         
 //    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
 //    {
@@ -192,7 +197,7 @@
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Coursica.sqlite"];
     
     //Uncomment to delete store:
-    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+//    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";

@@ -74,7 +74,6 @@
             //regan's key : bb344e1e4724ebdcfe53cc61f0cb2649
             
             [Course updateCourses: responseObject];
-            [[SearchManager sharedSearchManager] calculateIDFs];
             [self.tableView reloadData];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

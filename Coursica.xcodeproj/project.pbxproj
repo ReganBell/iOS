@@ -14,6 +14,8 @@
 		5901858D1A3E4447008884EF /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185891A3E4447008884EF /* XPathQuery.m */; };
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
+		5926C2DD1AE57B1000342A5A /* QReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5926C2DC1AE57B1000342A5A /* QReport.m */; };
+		5926C2E01AE57B1100342A5A /* QFacultyReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5926C2DF1AE57B1100342A5A /* QFacultyReport.m */; };
 		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
 		594E93E21A68D1B7003DB4E7 /* LongFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93E11A68D1B7003DB4E7 /* LongFields */; };
 		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
@@ -75,6 +77,12 @@
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
 		5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 10.xcdatamodel"; sourceTree = "<group>"; };
+		5926C2DB1AE57B1000342A5A /* QReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QReport.h; sourceTree = "<group>"; };
+		5926C2DC1AE57B1000342A5A /* QReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QReport.m; sourceTree = "<group>"; };
+		5926C2DE1AE57B1100342A5A /* QFacultyReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QFacultyReport.h; sourceTree = "<group>"; };
+		5926C2DF1AE57B1100342A5A /* QFacultyReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QFacultyReport.m; sourceTree = "<group>"; };
+		5926C2E11AE5800800342A5A /* Coursica 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 11.xcdatamodel"; sourceTree = "<group>"; };
+		5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 12.xcdatamodel"; sourceTree = "<group>"; };
 		592939001A479315004C4303 /* Coursica 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 5.xcdatamodel"; sourceTree = "<group>"; };
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
 		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
@@ -301,6 +309,10 @@
 		598CAB391A22C7F2008D0142 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5926C2DE1AE57B1100342A5A /* QFacultyReport.h */,
+				5926C2DF1AE57B1100342A5A /* QFacultyReport.m */,
+				5926C2DB1AE57B1000342A5A /* QReport.h */,
+				5926C2DC1AE57B1000342A5A /* QReport.m */,
 				598CAB361A22C7EC008D0142 /* Faculty.h */,
 				598CAB371A22C7EC008D0142 /* Faculty.m */,
 				598CAB331A22C7EC008D0142 /* Location.h */,
@@ -497,9 +509,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
+				5926C2DD1AE57B1000342A5A /* QReport.m in Sources */,
 				59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				5901858D1A3E4447008884EF /* XPathQuery.m in Sources */,
+				5926C2E01AE57B1100342A5A /* QFacultyReport.m in Sources */,
 				59F9AAF71AC0E88C0040659C /* ScrapeViewController.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
 				598CAB351A22C7EC008D0142 /* Location.m in Sources */,
@@ -756,6 +770,8 @@
 		596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5926C2E11AE5800800342A5A /* Coursica 11.xcdatamodel */,
+				5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */,
 				5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */,
 				59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */,
 				59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */,
@@ -767,7 +783,7 @@
 				59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */,
 				596076B71A1000710038D4F4 /* Coursica.xcdatamodel */,
 			);
-			currentVersion = 59B506D51A76C49E0046BE2F /* Coursica 8.xcdatamodel */;
+			currentVersion = 5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */;
 			path = Coursica.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

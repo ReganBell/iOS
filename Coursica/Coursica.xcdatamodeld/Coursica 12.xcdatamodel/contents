@@ -24,7 +24,7 @@
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="course" inverseEntity="Location" syncable="YES"/>
         <relationship name="meetings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting" inverseName="course" inverseEntity="Meeting" syncable="YES"/>
         <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="prerequisites" inverseEntity="Course" syncable="YES"/>
-        <relationship name="qreports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QReport" inverseName="course" inverseEntity="QReport" syncable="YES"/>
+        <relationship name="qReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QReport" inverseName="course" inverseEntity="QReport" syncable="YES"/>
     </entity>
     <entity name="Faculty" representedClassName="Faculty" syncable="YES">
         <attribute name="first" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,7 +33,7 @@
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="faculty" inverseEntity="Course" syncable="YES"/>
-        <relationship name="qreports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QFacultyReport" inverseName="faculty" inverseEntity="QFacultyReport" syncable="YES"/>
+        <relationship name="qReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QFacultyReport" inverseName="faculty" inverseEntity="QFacultyReport" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="building" optional="YES" attributeType="String" syncable="YES"/>
@@ -70,30 +70,37 @@
         <attribute name="overallBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="timely" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="timelyBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="faculty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Faculty" inverseName="qreports" inverseEntity="Faculty" syncable="YES"/>
+        <relationship name="faculty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Faculty" inverseName="qReports" inverseEntity="Faculty" syncable="YES"/>
         <relationship name="report" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QReport" inverseName="facultyReports" inverseEntity="QReport" syncable="YES"/>
     </entity>
     <entity name="QReport" representedClassName="QReport" syncable="YES">
         <attribute name="assignments" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="assignmentsBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="assignmentsMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="enrollment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="feedback" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="feedbackBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="feedbackMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="materials" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="materialsBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="materialsMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="overall" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="overallBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="overallMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="recommend" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="recommendBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="recommendMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="section" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sectionBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sectionMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="term" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="workload" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="workloadBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="workloadMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="qreports" inverseEntity="Course" syncable="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="qReports" inverseEntity="Course" syncable="YES"/>
         <relationship name="facultyReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QFacultyReport" inverseName="report" inverseEntity="QFacultyReport" syncable="YES"/>
     </entity>
     <entity name="QScore" representedClassName="QScore" syncable="YES">
@@ -111,8 +118,8 @@
         <element name="Location" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Meeting" positionX="0" positionY="0" width="128" height="135"/>
         <element name="QComment" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="QReport" positionX="9" positionY="153" width="128" height="358"/>
-        <element name="QScore" positionX="0" positionY="0" width="128" height="150"/>
         <element name="QFacultyReport" positionX="18" positionY="162" width="128" height="283"/>
+        <element name="QReport" positionX="9" positionY="153" width="128" height="465"/>
+        <element name="QScore" positionX="0" positionY="0" width="128" height="150"/>
     </elements>
 </model>

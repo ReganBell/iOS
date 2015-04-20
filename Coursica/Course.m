@@ -40,6 +40,7 @@
 @dynamic longField;
 @dynamic examGroup;
 @dynamic decimalNumber;
+@dynamic qReports;
 
 + (void)updateCourses:(NSArray *)serverCourses {
     
@@ -185,7 +186,6 @@
             [newCourse addLocationsObject:newLocation];
         }
         
-        [[SearchManager sharedSearchManager] addCourseToSearchIndex:newCourse];
     }
     
     NSError *error = nil;
@@ -193,6 +193,11 @@
     if (error) {
         NSLog(@"Error saving context: %@", error);
     }
+}
+
+- (NSString *)displayTitle {
+    
+    return [NSString stringWithFormat:@"%@ %@: %@", self.shortField, self.number, self.title];
 }
 
 + (NSString *)purifyString:(NSString *)string {
