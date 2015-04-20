@@ -15,6 +15,16 @@
 #import "AppDelegate.h"
 #import "QReport.h"
 
+typedef enum {
+
+    ScrapeStateMain,
+    ScrapeStateInstructor,
+    ScrapeStateCommentLoad, //You have to load the comments page, and then grab a specific url from it to load actual comments
+    ScrapeStateComment,
+    ScrapeStateURLs
+
+} ScrapeState;
+
 @interface ScrapeViewController () <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
@@ -23,6 +33,7 @@
 @property (strong, nonatomic) QReport *currentReport;
 @property (strong, nonatomic) NSArray *reports;
 @property (strong, nonatomic) NSNumberFormatter *sharedFormatter;
+@property (assign) ScrapeState state;
 
 @end
 
@@ -73,6 +84,7 @@
 // Use this basic url for getting Q Report URLs
 //    NSURL *stringURL = [NSURL URLWithString:@"https://webapps.fas.harvard.edu/course_evaluation_reports/fas/list?yearterm=2014_1"];
     
+    self.state = ScrapeStateMain;
     [self.webview loadRequest:[NSURLRequest requestWithURL:stringURL]];
 }
 
@@ -293,37 +305,47 @@
     
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    //
-//    NSString *result = [webView stringByEvaluatingJavaScriptFromString:@"var inputs = document.getElementsByClassName(\"course-block-head\");for (var i = 0; i < inputs.length; i++) {inputs[i].click();}"];
-//    
-    NSTimer *scrapeTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(scrapeQData) userInfo:nil repeats:NO];
+- (void)scrapeComments {
     
-    /*
-     
-     
-     
-     
-     
-     var headers = document.getElementsByClassName("course-block-head");for (var i = 0; i < headers.length; i++) {headers[i].click();}
-     var titles = new Array(1313);
-     for (var i = 0; i < 1313; i++) {
-     titles[i] = new Array(2);
-     }
-     var headers = document.getElementsByClassName("course");
-     for (var i = 0; i < headers.length; i++) {titles[i][0] = headers[i].innerText; titles[i][1] = headers[i].firstElementChild.href}
-     titles.toString()
-     
-     var inputs = document.getElementsByClassName(\"course-block-head\");for (var i = 0; i < inputs.length; i++) {inputs[i].click();}
-     
-     var titles = new Array(1313);
-     for (var i = 0; i < 1313; i++) {
-     titles[i] = new Array(2);
-     }
-     
-     for (var i = 0; i < inputs.length; i++) {titles[i][0] = inputs[i].innerText; titles[i][1] = inputs[i].firstElementChild.href}
-     
-     */
+    NSString *commentsJS = @"var elements = document.getElementsByClassName('response');var comments = []; var j = 0; for (var i = 0; i < elements.length; i++) {comments[j] = '#c#'; comments[j+1] = elements[i].innerText; j += 2}; comments.toString();";
+    NSString *rawComments = [self.webview stringByEvaluatingJavaScriptFromString:commentsJS];
+    if (rawComments.length == 0) {
+        [self logErrorMessageWithMessage:@"Could not extract any comments!"];
+    } else
+        self.currentReport.comments = rawComments;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    switch (self.state) {
+        case ScrapeStateComment:
+            [self scrapeComments];
+            break;
+        case ScrapeStateCommentLoad: {
+            NSString *commentURLString = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('reportContent').getElementsByTagName('a')[0].href"];
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:commentURLString]];
+            self.state = ScrapeStateComment;
+            [self.webview loadRequest:request];
+            break;
+        }
+        case ScrapeStateMain: {
+            [self scrapeQData];
+            NSString *commentURLJS = @"document.getElementById('tabNav').getElementsByTagName('a')[2].href";
+            NSString *result = [self.webview stringByEvaluatingJavaScriptFromString:commentURLJS];
+            NSURL *commentURL = [NSURL URLWithString:result];
+            self.state = ScrapeStateCommentLoad;
+            [self.webview loadRequest:[NSURLRequest requestWithURL:commentURL]];
+            break;
+        }
+        case ScrapeStateURLs: {
+            // Running this javascript clicks on every department header to expose all of the course links
+            [webView stringByEvaluatingJavaScriptFromString:@"var inputs = document.getElementsByClassName('course-block-head');for (var i = 0; i < inputs.length; i++) {inputs[i].click();}"];
+            // We wait a few seconds for all of the links to load
+            [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(scrapeUrls) userInfo:nil repeats:NO];
+        }
+        default:
+            break;
+    }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *requestDict = [NSMutableDictionary dictionary];
