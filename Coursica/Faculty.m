@@ -19,5 +19,6 @@
 @dynamic last;
 @dynamic suffix;
 @dynamic courses;
+@dynamic facultyReports;
 
 @end

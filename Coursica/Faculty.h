@@ -20,6 +20,8 @@
 @property (nonatomic, retain) NSString * last;
 @property (nonatomic, retain) NSString * suffix;
 @property (nonatomic, retain) NSSet *courses;
+@property (nonatomic, retain) NSSet *facultyReports;
+
 @end
 
 @interface Faculty (CoreDataGeneratedAccessors)
@@ -28,5 +30,10 @@
 - (void)removeCoursesObject:(Course *)value;
 - (void)addCourses:(NSSet *)values;
 - (void)removeCourses:(NSSet *)values;
+
+- (void)addFacultyReportsObject:(NSManagedObject *)value;
+- (void)removeFacultyReportsObject:(NSManagedObject *)value;
+- (void)addFacultyReports:(NSSet *)values;
+- (void)removeFacultyReports:(NSSet *)values;
 
 @end

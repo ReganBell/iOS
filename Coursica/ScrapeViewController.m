@@ -14,11 +14,15 @@
 #import "Course.h"
 #import "AppDelegate.h"
 #import "QReport.h"
+#import "Faculty.h"
+#import "QFacultyReport.h"
 
 typedef enum {
 
+    ScrapeStateAuth,
     ScrapeStateMain,
-    ScrapeStateInstructor,
+    ScrapeStateInstructorComplete,
+    ScrapeStateInstructorIncomplete,
     ScrapeStateCommentLoad, //You have to load the comments page, and then grab a specific url from it to load actual comments
     ScrapeStateComment,
     ScrapeStateURLs
@@ -34,6 +38,7 @@ typedef enum {
 @property (strong, nonatomic) NSArray *reports;
 @property (strong, nonatomic) NSNumberFormatter *sharedFormatter;
 @property (assign) ScrapeState state;
+@property (strong, nonatomic) NSMutableDictionary *facultyDict;
 
 @end
 
@@ -69,10 +74,36 @@ typedef enum {
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"QReport"];
+    fetch.predicate = [NSPredicate predicateWithFormat:@"comments = nil"];
     NSError *error;
     NSArray *reports = [context executeFetchRequest:fetch error:&error];
     if (reports.count == 0 || error) {
-        NSLog(@"Error fetching reports. %@", error);
+        NSLog(@"Error fetching reports! %@", error);
+        return;
+    }
+    
+    NSFetchRequest *faculty = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
+    NSArray *facultyArray = [context executeFetchRequest:faculty error:&error];
+    
+    NSMutableDictionary *facultyDict = [NSMutableDictionary dictionary];
+    for (Faculty *faculty in facultyArray) {
+        NSString *key = [NSString stringWithFormat:@"%@ %@", faculty.first, faculty.last];
+        if ([faculty.middle isEqualToString:@" "]) {
+            faculty.middle = @"";
+        }
+        Faculty *existing = facultyDict[key];
+        if (existing) {
+            [existing addCourses:faculty.courses];
+            [context deleteObject:faculty];
+        }
+        facultyDict[key] = faculty;
+    }
+    
+    [context save:nil];
+    self.facultyDict = facultyDict;
+    
+    if (facultyArray.count == 0 || error) {
+        NSLog(@"Error fetching faculty! %@", error);
         return;
     }
     
@@ -105,6 +136,15 @@ typedef enum {
     return [NSString stringWithFormat:@"var headers = document.getElementsByClassName('graphReport');var images = headers[%lu].getElementsByTagName('img');var histobars= []; var j = 0; for (var i = 0; i < images.length; i++) {if (images[i].alt.search('Segments') != -1) histobars[j] = images[i].alt; j++;}; histobars.toString();", index];
 }
 
+- (id)safeObjectAtIndex:(NSUInteger)index inArray:(NSArray*)array fallback:(id)fallback {
+    
+    if (index >= array.count) {
+        [self logErrorMessageWithMessage:[NSString stringWithFormat:@"Index %lu out of bounds of array size %lu!", index, array.count]];
+        return fallback;
+    } else
+        return array[index];
+}
+
 - (void)scrapeQData {
     
     // Get main five q scores
@@ -112,46 +152,46 @@ typedef enum {
     NSString *result = [self.webview stringByEvaluatingJavaScriptFromString:mainScoresJS];
     NSArray *scores = [self scoresFromJSArrayString:result];
 
-    self.currentReport.overall = scores[0];
-    self.currentReport.materials = scores[1];
-    self.currentReport.assignments = scores[2];
-    self.currentReport.feedback = scores[3];
-    self.currentReport.section = scores[4];
+    self.currentReport.overall = [self safeObjectAtIndex:0 inArray:scores fallback:@(-1)];
+    self.currentReport.materials = [self safeObjectAtIndex:1 inArray:scores fallback:@(-1)];
+    self.currentReport.assignments = [self safeObjectAtIndex:2 inArray:scores fallback:@(-1)];
+    self.currentReport.feedback = [self safeObjectAtIndex:3 inArray:scores fallback:@(-1)];
+    self.currentReport.section = [self safeObjectAtIndex:4 inArray:scores fallback:@(-1)];
     
     NSString *mainCategoryMediansJS = [self JSStringForMedianScoresOfCategoryAtIndex:0];
     result = [self.webview stringByEvaluatingJavaScriptFromString:mainCategoryMediansJS];
 
     NSArray *medians = [self mediansFromHistogramAltText:result];
     
-    self.currentReport.overallMedian = medians[0];
-    self.currentReport.materialsMedian = medians[1];
-    self.currentReport.assignmentsMedian = medians[2];
-    self.currentReport.feedbackMedian = medians[3];
-    self.currentReport.sectionMedian = medians[4];
+    self.currentReport.overallMedian = [self safeObjectAtIndex:0 inArray:scores fallback:@(-1)];
+    self.currentReport.materialsMedian = [self safeObjectAtIndex:1 inArray:scores fallback:@(-1)];
+    self.currentReport.assignmentsMedian = [self safeObjectAtIndex:2 inArray:scores fallback:@(-1)];
+    self.currentReport.feedbackMedian = [self safeObjectAtIndex:3 inArray:scores fallback:@(-1)];
+    self.currentReport.sectionMedian = [self safeObjectAtIndex:4 inArray:scores fallback:@(-1)];
     
     NSString *workloadScoreJS = [self JSStringForScoresOfCategoryAtIndex:1];
     result = [self.webview stringByEvaluatingJavaScriptFromString:workloadScoreJS];
     NSArray *workloadScore = [self scoresFromJSArrayString:result];
     
-    self.currentReport.workload = workloadScore[0];
+    self.currentReport.workload = [self safeObjectAtIndex:0 inArray:workloadScore fallback:@(-1)];
     
     NSString *workloadMedianJS = [self JSStringForMedianScoresOfCategoryAtIndex:1];
     result = [self.webview stringByEvaluatingJavaScriptFromString:workloadMedianJS];
     NSArray *workloadMedian = [self mediansFromHistogramAltText:result];
     
-    self.currentReport.workloadMedian = workloadMedian[0];
+    self.currentReport.workloadMedian = [self safeObjectAtIndex:0 inArray:workloadMedian fallback:@(-1)];
     
     NSString *recommendScoreJS = [self JSStringForScoresOfCategoryAtIndex:2];
     result = [self.webview stringByEvaluatingJavaScriptFromString:recommendScoreJS];
     NSArray *recommendScore = [self scoresFromJSArrayString:result];
     
-    self.currentReport.recommend = recommendScore[0];
+    self.currentReport.recommend = [self safeObjectAtIndex:0 inArray:recommendScore fallback:@(-1)];
     
     NSString *recommendMedianJS = [self JSStringForMedianScoresOfCategoryAtIndex:2];
     result = [self.webview stringByEvaluatingJavaScriptFromString:recommendMedianJS];
     NSArray *recommendMedian = [self mediansFromHistogramAltText:result];
     
-    self.currentReport.recommendMedian = recommendMedian[0];
+    self.currentReport.recommendMedian = [self safeObjectAtIndex:0 inArray:recommendMedian fallback:@(-1)];
     
     NSString *enrollmentJS = @"document.getElementById('summaryStats').innerText";
     result = [self.webview stringByEvaluatingJavaScriptFromString:enrollmentJS];
@@ -305,6 +345,96 @@ typedef enum {
     
 }
 
+- (void)scrapeInstructors {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = delegate.managedObjectContext;
+    
+    NSEntityDescription *facultyReportEntity = [NSEntityDescription entityForName:@"QFacultyReport" inManagedObjectContext:context];
+    QFacultyReport *facultyReport = [[QFacultyReport alloc] initWithEntity:facultyReportEntity insertIntoManagedObjectContext:context];
+    
+    NSEntityDescription *facultyEntity = [NSEntityDescription entityForName:@"Faculty" inManagedObjectContext:context];
+    
+    NSString *nameJS = @"document.getElementsByClassName('instructor')[0].innerText";
+    NSString *rawName = [self.webview stringByEvaluatingJavaScriptFromString:nameJS];
+    NSDictionary *names = [self namesFromRawNameString:rawName];
+    if (!names) {
+        
+        // Some courses do not have an instructor, e.g. tutorials
+        self.state = ScrapeStateInstructorComplete;
+        return;
+    }
+    Faculty *faculty = self.facultyDict[names[@"key"]];
+    if (!faculty) {
+        faculty = [[Faculty alloc] initWithEntity:facultyEntity insertIntoManagedObjectContext:context];
+        faculty.first = names[@"first"];
+        faculty.middle = names[@"middle"];
+        faculty.last = names[@"last"];
+    }
+    facultyReport.faculty = faculty;
+    
+    NSString *scoresJS = [self JSStringForScoresOfCategoryAtIndex:0];
+    NSString *result = [self.webview stringByEvaluatingJavaScriptFromString:scoresJS];
+    NSArray *scores = [self scoresFromJSArrayString:result];
+    
+    facultyReport.overall = [self safeObjectAtIndex:0 inArray:scores fallback:@(-1)];
+    facultyReport.lectures = [self safeObjectAtIndex:1 inArray:scores fallback:@(-1)];
+    facultyReport.accessible = [self safeObjectAtIndex:2 inArray:scores fallback:@(-1)];
+    facultyReport.enthusiasm = [self safeObjectAtIndex:3 inArray:scores fallback:@(-1)];
+    facultyReport.discussion = [self safeObjectAtIndex:4 inArray:scores fallback:@(-1)];
+    facultyReport.feedback = [self safeObjectAtIndex:5 inArray:scores fallback:@(-1)];
+    facultyReport.timely = [self safeObjectAtIndex:6 inArray:scores fallback:@(-1)];
+    
+    [self.currentReport addFacultyReportsObject:facultyReport];
+    
+    NSString *instructorsJS = @"var elements = document.getElementById('subHeader').getElementsByTagName('option'); var names = []; var j = 0; for (var i = 0; i < elements.length; i++) {names[i+j] = elements[i].innerText; names[i+j+1] = '###'; j++} names.toString();";
+    NSString *instructorsRaw = [self.webview stringByEvaluatingJavaScriptFromString:instructorsJS];
+    NSArray *unfiltered = [instructorsRaw componentsSeparatedByString:@"###"];
+    NSArray *instructors = [self arrayByFilteringEmptyStringsFromArray:unfiltered];
+    if ([rawName isEqualToString:[instructors lastObject]] || self.currentReport.facultyReports.count == instructors.count) {
+        self.state = ScrapeStateInstructorComplete;
+    } else {
+        [self selectInstructorAtIndex:self.currentReport.facultyReports.count];
+    }
+}
+         
+- (void)selectInstructorAtIndex:(NSUInteger)index {
+    
+    NSString *selectString = [NSString stringWithFormat:@"var option = document.getElementById('subHeader').getElementsByTagName('option')[%lu]; option.selected = true;", index];
+    NSString *js = [NSString stringWithFormat:@"%@ var inputs = document.getElementsByTagName('input');for (var i = 0; i < inputs.length; i++) {if(inputs[i].type.toLowerCase() == 'submit') {inputs[i].click()}}", selectString];
+    [self.webview stringByEvaluatingJavaScriptFromString:js];
+}
+
+- (NSDictionary*)namesFromRawNameString:(NSString*)rawString {
+    
+    NSArray *unfiltered = [rawString componentsSeparatedByString:@","];
+    NSArray *components = [self arrayByFilteringEmptyStringsFromArray:unfiltered];
+    if (components.count != 2) {
+        [self logErrorMessageWithMessage:@"Couldn't get name from raw string '%@'!"];
+        return nil;
+    }
+    
+    NSMutableDictionary *namesDict = [NSMutableDictionary dictionary];
+    namesDict[@"last"] = components[0];
+    NSString *remainder = components[1];
+    unfiltered = [remainder componentsSeparatedByString:@" "];
+    NSArray *firstMiddle = [self arrayByFilteringEmptyStringsFromArray:unfiltered];
+    
+    if (firstMiddle.count == 0 || firstMiddle.count > 2) {
+        [self logErrorMessageWithMessage:@"Couldn't get name from first-middle '%@'!"];
+        return nil;
+    }
+    
+    namesDict[@"first"] = firstMiddle[0];
+    
+    if (firstMiddle.count == 2)
+        namesDict[@"middle"] = firstMiddle[1];
+    
+    namesDict[@"key"] = [NSString stringWithFormat:@"%@ %@", namesDict[@"first"], namesDict[@"last"]];
+    
+    return [NSDictionary dictionaryWithDictionary:namesDict];
+}
+
 - (void)scrapeComments {
     
     NSString *commentsJS = @"var elements = document.getElementsByClassName('response');var comments = []; var j = 0; for (var i = 0; i < elements.length; i++) {comments[j] = '#c#'; comments[j+1] = elements[i].innerText; j += 2}; comments.toString();";
@@ -317,10 +447,19 @@ typedef enum {
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
+    //Flow: ScrapeStateMain -> ScrapeStateCommenLoad -> ScrapeStateComment -> ScrapeStateInstructor -> next
+    
     switch (self.state) {
-        case ScrapeStateComment:
+        case ScrapeStateComment: {
             [self scrapeComments];
+            NSString *instructorURLJS = @"document.getElementById('tabNav').getElementsByTagName('a')[1].href";
+            NSString *result = [self.webview stringByEvaluatingJavaScriptFromString:instructorURLJS];
+            NSURL *instructorURL = [NSURL URLWithString:result];
+            self.state = ScrapeStateInstructorIncomplete;
+            self.currentReport.facultyReports = nil;
+            [self.webview loadRequest:[NSURLRequest requestWithURL:instructorURL]];
             break;
+        }
         case ScrapeStateCommentLoad: {
             NSString *commentURLString = [webView stringByEvaluatingJavaScriptFromString:@"document.getElementById('reportContent').getElementsByTagName('a')[0].href"];
             NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:commentURLString]];
@@ -342,6 +481,30 @@ typedef enum {
             [webView stringByEvaluatingJavaScriptFromString:@"var inputs = document.getElementsByClassName('course-block-head');for (var i = 0; i < inputs.length; i++) {inputs[i].click();}"];
             // We wait a few seconds for all of the links to load
             [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(scrapeUrls) userInfo:nil repeats:NO];
+            break;
+        }
+        case ScrapeStateInstructorIncomplete: {
+            
+            [self scrapeInstructors];
+            
+            if (self.state == ScrapeStateInstructorComplete) {
+                self.currentReportIndex++;
+                if (self.currentReportIndex < self.reports.count) {
+                    self.state = ScrapeStateMain;
+                    
+                    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                    NSManagedObjectContext *context = delegate.managedObjectContext;
+                    NSError *error = nil;
+                    [context save:&error];
+                    if (error) {
+                        [self logErrorMessageWithMessage:@"Error saving context!"];
+                    } else {
+                        NSLog(@"Report #%lu scraped", self.currentReportIndex);
+                    }
+                    [self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.currentReport.url]]];
+                }
+            }
+            break;
         }
         default:
             break;
@@ -366,13 +529,15 @@ typedef enum {
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    NSLog(@"%@", request.URL);
-    
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray *cookies = [cookieJar cookiesForURL:request.URL];
     if (cookies.count == 0) {
         NSLog(@"No cookies, must auth");
+        self.state = ScrapeStateAuth;
+    }
+    if (self.state == ScrapeStateAuth && cookies.count > 0) {
+        self.state = ScrapeStateMain;
     }
     for (cookie in cookies) {
         NSDictionary *cookieDict = cookie.properties;
