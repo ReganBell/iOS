@@ -74,13 +74,15 @@ typedef enum {
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"QReport"];
-    fetch.predicate = [NSPredicate predicateWithFormat:@"comments = nil"];
+//    fetch.predicate = [NSPredicate predicateWithFormat:@"year = 2013 AND overall = 0.0"];
+    fetch.predicate = [NSPredicate predicateWithFormat:@"comments != nil AND year = 2014"];
     NSError *error;
     NSArray *reports = [context executeFetchRequest:fetch error:&error];
     if (reports.count == 0 || error) {
         NSLog(@"Error fetching reports! %@", error);
         return;
     }
+    [self writeQReportsToFile:reports];
     
     NSFetchRequest *faculty = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
     NSArray *facultyArray = [context executeFetchRequest:faculty error:&error];
@@ -117,6 +119,49 @@ typedef enum {
     
     self.state = ScrapeStateMain;
     [self.webview loadRequest:[NSURLRequest requestWithURL:stringURL]];
+}
+
+- (void)writeQReportsToFile:(NSArray*)reports {
+    
+    NSMutableString *fileString = [NSMutableString string];
+    
+    for (QReport *report in reports) {
+        
+        [fileString appendFormat:@"%@</title>", report.course.displayTitle];
+        
+        NSArray *untrimmed = [self arrayByFilteringEmptyStringsFromArray:[report.comments componentsSeparatedByString:@"#c#"]];
+        
+        NSMutableCharacterSet *trimChars = [NSMutableCharacterSet characterSetWithCharactersInString:@","];
+        [trimChars formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        for (NSString *comment in untrimmed) {
+            NSString *tidyString = [comment stringByTrimmingCharactersInSet:trimChars];
+            [fileString appendFormat:@"%@</comment>", tidyString];
+        }
+        
+        [fileString appendString:@"</course>"];
+    }
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = paths[0];
+    
+    NSString *emptyString = @"";
+    NSError *error;
+    [emptyString writeToFile:[documents stringByAppendingString:@"QData"] atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    
+    // get a handle to the file
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:[documents stringByAppendingString:@"QData"]];
+    
+    // convert the string to an NSData object
+    NSData *textData = [fileString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // write the data to the end of the file
+    [fileHandle writeData:textData];
+    
+    // clean up
+    [fileHandle closeFile];
+    
+    NSLog(@"Wrote to %@", [documents stringByAppendingString:@"/QData"]);
 }
 
 - (QReport*)currentReport {
@@ -249,6 +294,7 @@ typedef enum {
     
     return [array filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         NSString *string = evaluatedObject;
+        
         return string.length != 0;
     }]];
 }
@@ -525,6 +571,7 @@ typedef enum {
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
     NSLog(@"%@", error);
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:webView selector:@selector(reload) userInfo:nil repeats:NO];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {

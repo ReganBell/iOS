@@ -112,16 +112,16 @@
     
     // Open straight to the courses view controller
     
-//    UINavigationController *coursesController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
-//    self.window.rootViewController = coursesController;
-//    [self.window makeKeyAndVisible];
+    UINavigationController *coursesController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
+    self.window.rootViewController = coursesController;
+    [self.window makeKeyAndVisible];
     
     // Set up scraping view controller; comment out for standard login flow
     
-    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];
-    self.window.rootViewController = scrapeController;
-    [self.window makeKeyAndVisible];
-        
+//    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];
+//    self.window.rootViewController = scrapeController;
+//    [self.window makeKeyAndVisible];
+    
 //    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
 //    {
 //        LoginViewController *loginController = [main
