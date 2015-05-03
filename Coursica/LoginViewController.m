@@ -103,15 +103,21 @@
     [self loginFailedWithMessage:@"Error connecting to the network."];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     if ([[webView.request.URL absoluteString] isEqualToString:@"https://courses.cs50.net/"]) {
         [self.delegate userDidLogin];
     }
+    return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
     
     self.PINSiteLoaded = YES;
     if (self.userDidSubmit && !self.PINSiteTried) {
         [self tryUserCredentials];
+    } else if (self.PINSiteTried) {
+        [self loginFailedWithMessage:@"Invalid HUID or password, try again."];
     }
 }
 
@@ -146,6 +152,7 @@
     self.UIStateError = YES;
     self.messageLabel.text = message;
     self.titleTopSpace.constant = self.titleTopSpaceError;
+    [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
     [UIView animateWithDuration:0.2 animations:^{
         self.messageLabel.alpha = 1.0;
         [self.view layoutIfNeeded];

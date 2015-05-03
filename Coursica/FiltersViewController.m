@@ -20,6 +20,8 @@
 @property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *genEdButtons;
 @property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *genEdLabels;
 
+@property (weak, nonatomic) IBOutlet UIView *termBarView;
+
 @property (weak, nonatomic) IBOutlet UILabel *qOverallTitleLabel;
 @property (weak, nonatomic) NMRangeSlider *qOverallSlider;
 @property (weak, nonatomic) UILabel *qOverallValueLabel;
