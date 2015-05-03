@@ -129,7 +129,7 @@
 - (void)userDidLogin {
     
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
