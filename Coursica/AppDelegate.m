@@ -23,7 +23,7 @@
 #import "ScrapeViewController.h"
 #import "QReport.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <LoginViewControllerDelegate>
 
 @property (strong, nonatomic) MMDrawerController *drawerController;
 
@@ -104,17 +104,7 @@
 //    QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
 //    [workloadDelegate updateQDataInMode:KModeScoreWorkload];
     
-    
-    // Checking login status
-    
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    // Open straight to the courses view controller
-    
-    UINavigationController *coursesController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
-    self.window.rootViewController = coursesController;
-    [self.window makeKeyAndVisible];
     
     // Set up scraping view controller; comment out for standard login flow
     
@@ -122,22 +112,24 @@
 //    self.window.rootViewController = scrapeController;
 //    [self.window makeKeyAndVisible];
     
-//    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"logged_in"])
-//    {
-//        LoginViewController *loginController = [main
-//            instantiateViewControllerWithIdentifier:@"loginController"];
-//        self.window.rootViewController = loginController;
-//        [self.window makeKeyAndVisible];
-//    }
-//    else
-//    {
-//        NavigationController *navigationController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
-//        self.window.rootViewController = navigationController;
-//        [self.window makeKeyAndVisible];
-//    }
-    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NavigationController *navigationController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"])
+    {
+        LoginViewController *loginController = [main instantiateViewControllerWithIdentifier:@"loginController"];
+        loginController.delegate = self;
+        [navigationController presentViewController:loginController animated:NO completion:nil];
+    }
 
     return YES;
+}
+
+- (void)userDidLogin {
+    
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

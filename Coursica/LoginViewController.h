@@ -11,7 +11,15 @@
 
 @class Course;
 
+@protocol LoginViewControllerDelegate <NSObject>
+
+- (void)userDidLogin;
+
+@end
+
 @interface LoginViewController : UIViewController
+
+@property (weak, nonatomic) id<LoginViewControllerDelegate> delegate;
 
 - (IBAction)onButtonFill:(id)sender;
 

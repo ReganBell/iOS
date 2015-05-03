@@ -11,43 +11,58 @@
 #import "CoursesViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define coursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface LoginViewController ()
-
+@interface LoginViewController () <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-
+@property (weak, nonatomic) IBOutlet UIWebView *secretWebView;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopSpace;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (assign) BOOL PINSiteLoaded;
+@property (assign) BOOL userDidSubmit;
+@property (assign) BOOL PINSiteTried;
+@property (nonatomic, assign) CGFloat titleTopSpaceInitial;
+@property (nonatomic, assign) CGFloat titleTopSpaceError;
+@property (assign) BOOL UIStateError;
 
 @end
 
 @implementation LoginViewController
 
+/* This works by loading a UIWebView behind the main login view. When the login view loads for the first time,
+ we make a request to CS50 courses for its authentication. 
+ When we load this authentication page, self.PINSiteLoaded is set to YES
+ When the user submits their credentials, self.userDidSubmit is set to YES
+ If these are both set to YES, we try their credentials, and if the authentication website routes us back to cs50 courses,
+ we know that login was successful and can dismiss the login controller
+ */
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext *context = [delegate managedObjectContext];
+    self.PINSiteLoaded = NO;
+    self.userDidSubmit = NO;
+    self.PINSiteTried = NO;
+    self.UIStateError = NO;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://courses.cs50.net/classes/login"]];
+    [self.secretWebView loadRequest:request];
     
-//    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ios7_3.jpg"]];
-//    [self.view addSubview:backgroundView];
-    
-    self.usernameField.layer.cornerRadius=4.0f;
-    self.passwordField.layer.cornerRadius=4.0f;
-    
+    self.usernameField.layer.cornerRadius = 4.0f;
+    self.passwordField.layer.cornerRadius = 4.0f;
     
     self.usernameField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
     self.passwordField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
-    //self.usernameField.layer.masksToBounds=YES;
-    //self.usernameField.layer.borderColor=[[UIColor redColor]CGColor];
-    //self.usernameField.layer.borderWidth= 1.0f;
     
-    self.loginButton.layer.cornerRadius = 2; // this value vary as per your desire
+    self.loginButton.layer.cornerRadius = 2;
     self.loginButton.clipsToBounds = YES;
+    
+    self.titleTopSpaceInitial = self.titleTopSpace.constant;
     
     UIImageView *backgroundImageView =
         [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jharvard_dark.jpg"]];
@@ -59,6 +74,47 @@
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
+- (CGFloat)titleTopSpaceError {
+    return _titleTopSpaceInitial - 25;
+}
+
+- (void)tryUserCredentials {
+    
+    [self removeFailureUIState];
+    [self.loginButton setTitle:@"Logging in..." forState:UIControlStateNormal];
+    
+    [self.secretWebView stringByEvaluatingJavaScriptFromString:@"setContent('PIN','Harvard University ID (HUID)');"];
+    
+    NSString *username = self.usernameField.text;
+    NSString *usernameJS  = [NSString stringWithFormat:@"document.getElementById('username').value = '%@'", username];
+    [self.secretWebView stringByEvaluatingJavaScriptFromString:usernameJS];
+    
+    NSString *password = self.passwordField.text;
+    NSString *passwordJS  = [NSString stringWithFormat:@"document.getElementById('password').value = '%@'", password];
+    [self.secretWebView stringByEvaluatingJavaScriptFromString:passwordJS];
+    
+    NSString *submitJS = @"document.getElementsByName('_eventId_submit')[0].click()";
+    self.PINSiteTried = YES;
+    [self.secretWebView stringByEvaluatingJavaScriptFromString:submitJS];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    
+    [self loginFailedWithMessage:@"Error connecting to the network."];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    if ([[webView.request.URL absoluteString] isEqualToString:@"https://courses.cs50.net/"]) {
+        [self.delegate userDidLogin];
+    }
+    
+    self.PINSiteLoaded = YES;
+    if (self.userDidSubmit && !self.PINSiteTried) {
+        [self tryUserCredentials];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -68,44 +124,51 @@
     return UIStatusBarStyleLightContent;
 }
 
-//- (BOOL)checkAuthentication:(NSString *)username password:(NSString *)password)
-//{
-//}
-
-- (IBAction)loginButtonPressed:(id)sender {
-    //usernameField.text and passwordField.text
+- (void)removeFailureUIState {
     
-    // Check authentication
-    // If authentication fails, display failure
-    // If authentication succeeds
-    // (Maybe save user info in keychain) else save that they authenticated in nsuserdefaults, send to courseview
-    
-    //if (checkAuthentication(self.usernameField.text, self.passwordField.text))
-    if (false)
-    {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:YES forKey:@"logged_in"];
-        [defaults synchronize];
-        NSLog(@"data saved");
-        
-        UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        CoursesViewController *coursesController = [main instantiateViewControllerWithIdentifier:@"coursesController"];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Error"
-                                                        message:@"Invalid HUID number or password. Please try again."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Okay"
-                                              otherButtonTitles:nil];
-        [alert show];
+    if (!self.UIStateError) {
+        return;
     }
     
+    self.titleTopSpace.constant = self.titleTopSpaceInitial;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.messageLabel.alpha = 0.0;
+        [self.view layoutIfNeeded];
+        // Change to red failure color
+        self.loginButton.backgroundColor = coursicaBlue;
+    } completion:^(BOOL finished) {
+        self.UIStateError = !finished;
+    }];
 }
 
+- (void)loginFailedWithMessage:(NSString*)message {
+    
+    self.UIStateError = YES;
+    self.messageLabel.text = message;
+    self.titleTopSpace.constant = self.titleTopSpaceError;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.messageLabel.alpha = 1.0;
+        [self.view layoutIfNeeded];
+        // Change to red failure color
+        self.loginButton.backgroundColor = [UIColor colorWithRed:1.0 green:30/255.0 blue:31/255.0 alpha:1.0];
+    }];
+}
 
-/*
- #pragma mark - Navigation
- */
+- (IBAction)loginButtonPressed:(id)sender {
+
+    if (self.usernameField.text.length == 0) {
+        [self loginFailedWithMessage:@"Your HUID is required to log in."];
+        return;
+    }
+    if (self.passwordField.text.length == 0) {
+        [self loginFailedWithMessage:@"Your password is required to log in."];
+        return;
+    }
+    
+    self.userDidSubmit = YES;
+    if (self.PINSiteLoaded) {
+        [self tryUserCredentials];
+    }
+}
 
 @end
