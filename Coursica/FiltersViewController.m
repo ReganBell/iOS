@@ -12,6 +12,7 @@
 #import "SearchManager.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
+#define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
 
 @interface FiltersViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -19,6 +20,14 @@
 @property (weak, nonatomic) NMRangeSlider *overallSlider;
 @property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *genEdButtons;
 @property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *genEdLabels;
+@property (nonatomic, strong) IBOutletCollection(UIView) NSArray *cards;
+@property (nonatomic, strong) IBOutletCollection(UIImageView) NSArray *genEdImageViews;
+
+@property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *termBarButtons;
+@property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *termBarLabels;
+
+@property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *gradBarButtons;
+@property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *gradBarLabels;
 
 @property (weak, nonatomic) IBOutlet UIView *termBarView;
 
@@ -39,6 +48,9 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 
+@property (assign) NSInteger selectedTermIndex;
+@property (assign) NSInteger selectedGradIndex;
+
 @end
 
 @implementation FiltersViewController
@@ -56,9 +68,43 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    // Creates titles bar for the view
+    for (UIImageView *genEdImageView in self.genEdImageViews) {
+        
+        genEdImageView.image = [genEdImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        genEdImageView.tintColor = UnselectedGray;
+    }
+    
+    for (UIView *card in self.cards) {
+        
+        card.layer.cornerRadius = 4.0f;
+        card.clipsToBounds = YES;
+    }
+    
+    int i = 0;
+    for (UIButton *genEdButton in self.genEdButtons) {
+        [genEdButton addTarget:self action:@selector(genEdButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        genEdButton.tag = i;
+        i++;
+    }
+    
+    int j = 0;
+    for (UIButton *termButton in self.termBarButtons) {
+        [termButton addTarget:self action:@selector(termButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        termButton.tag = j;
+        j++;
+    }
+    
+    int k = 0;
+    for (UIButton *gradButton in self.gradBarButtons) {
+        [gradButton addTarget:self action:@selector(gradButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        gradButton.tag = k;
+        k++;
+    }
+    
+    // Creates title bar with app name
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
@@ -69,23 +115,83 @@
     self.navigationItem.titleView = label;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
-    
-    // Creates cancel button in the title bar
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
-    [button setTitle:@"Cancel" forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15];
-    [button addTarget:self.delegate action:@selector(dismissFiltersViewController) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = cancelButton;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    self.title = @"Filters";
-    
-    self.searchField.delegate = self;
-    self.searchField.tintColor = CoursicaBlue;
-    
+    self.navigationController.navigationBar.translucent = NO;
+//
+//    // Creates titles bar for the view
+//    CGRect frame = CGRectMake(0, 0, 0, 0);
+//    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
+//    label.text = @"Filters";
+//    label.textColor = [UIColor whiteColor];
+//    [label sizeToFit];
+//    self.navigationItem.titleView = label;
+//    
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
+//    
+//    // Creates cancel button in the title bar
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 20)];
+//    [button setTitle:@"Cancel" forState:UIControlStateNormal];
+//    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15];
+//    [button addTarget:self.delegate action:@selector(dismissFiltersViewController) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    self.navigationItem.rightBarButtonItem = cancelButton;
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    
+//    self.title = @"Filters";
+//    
+//    self.searchField.delegate = self;
+//    self.searchField.tintColor = CoursicaBlue;
+//    
     [self configureRangeSliders];
 }
+
+- (void)selectButton:(UIButton*)button inArray:(NSArray*)array {
+    
+    button.selected = !button.selected;
+    
+    UILabel *label = array[button.tag];
+    
+    UIColor *newColor = (button.selected) ? CoursicaBlue : UnselectedGray;
+    label.textColor = newColor;
+}
+
+- (void)gradButtonPressed:(UIButton*)senderButton {
+    
+    self.selectedGradIndex = senderButton.tag;
+    [self selectButton:senderButton inArray:self.gradBarLabels];
+    for (UIButton *button in self.gradBarButtons) {
+        if (button.selected && button.tag != senderButton.tag) {
+            [self selectButton:button inArray:self.gradBarLabels];
+        }
+    }
+}
+
+- (void)termButtonPressed:(UIButton*)senderButton {
+    
+    self.selectedTermIndex = senderButton.tag;
+    [self selectButton:senderButton inArray:self.termBarLabels];
+    for (UIButton *button in self.termBarButtons) {
+        if (button.selected && button.tag != senderButton.tag) {
+            [self selectButton:button inArray:self.termBarLabels];
+        }
+    }
+}
+
+- (void)genEdButtonPressed:(UIButton*)senderButton {
+    
+    senderButton.selected = !senderButton.selected;
+    
+    UIImageView *iconView = self.genEdImageViews[senderButton.tag];
+    UILabel *label = self.genEdLabels[senderButton.tag];
+    
+    UIColor *newColor = (senderButton.selected) ? CoursicaBlue : UnselectedGray;
+    [UIView animateWithDuration:0 animations:^{
+        label.textColor = newColor;
+        iconView.tintColor = newColor;
+    }];
+}
+
     // Checks for editting in the textfield
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
@@ -272,6 +378,11 @@
     //Set up sliders (written by us, not third-party)
 - (void)configureOverallSlider {
     
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(16, 6, 300, 34)];
+    titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
+    titleLabel.text = @"Overall Q Score";
+    
+    
     NMRangeSlider *overallSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 300, 34)];
     overallSlider.minimumValue = 0;
     overallSlider.maximumValue = 5;
@@ -285,8 +396,8 @@
     // Add programatic constraints to the slider
     [overallSlider addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
     [overallSlider addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:300]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.cards.lastObject attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.cards.lastObject attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     
     overallSlider.translatesAutoresizingMaskIntoConstraints = NO;
     [overallSlider addTarget:self action:@selector(labelSliderChanged:) forControlEvents:UIControlEventValueChanged];

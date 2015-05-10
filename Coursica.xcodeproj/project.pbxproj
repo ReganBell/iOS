@@ -40,6 +40,14 @@
 		598CAB351A22C7EC008D0142 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB341A22C7EC008D0142 /* Location.m */; };
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
 		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
+		59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D57F1AF6CA3F0006A57B /* DNA.png */; };
+		59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5801AF6CA3F0006A57B /* judge1.png */; };
+		59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5811AF6CA3F0006A57B /* telescope7.png */; };
+		59B9D58A1AF6CA3F0006A57B /* USA.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5821AF6CA3F0006A57B /* USA.png */; };
+		59B9D58B1AF6CA3F0006A57B /* function.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5831AF6CA3F0006A57B /* function.png */; };
+		59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5841AF6CA3F0006A57B /* Globe.png */; };
+		59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5851AF6CA3F0006A57B /* hinduism.png */; };
+		59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5861AF6CA3F0006A57B /* Easel.png */; };
 		59D4A0481A347F98003FD743 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A0471A347F98003FD743 /* NavigationController.m */; };
 		59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04A1A34877D003FD743 /* CommentsViewController.m */; };
 		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
@@ -127,6 +135,14 @@
 		59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 7.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D51A76C49E0046BE2F /* Coursica 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 8.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D61A76CDCF0046BE2F /* Coursica 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 9.xcdatamodel"; sourceTree = "<group>"; };
+		59B9D57F1AF6CA3F0006A57B /* DNA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DNA.png; sourceTree = "<group>"; };
+		59B9D5801AF6CA3F0006A57B /* judge1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = judge1.png; sourceTree = "<group>"; };
+		59B9D5811AF6CA3F0006A57B /* telescope7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = telescope7.png; sourceTree = "<group>"; };
+		59B9D5821AF6CA3F0006A57B /* USA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA.png; sourceTree = "<group>"; };
+		59B9D5831AF6CA3F0006A57B /* function.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = function.png; sourceTree = "<group>"; };
+		59B9D5841AF6CA3F0006A57B /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
+		59B9D5851AF6CA3F0006A57B /* hinduism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hinduism.png; sourceTree = "<group>"; };
+		59B9D5861AF6CA3F0006A57B /* Easel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Easel.png; sourceTree = "<group>"; };
 		59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 2.xcdatamodel"; sourceTree = "<group>"; };
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
 		59D4A0461A347F98003FD743 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
@@ -241,6 +257,7 @@
 			children = (
 				5901857D1A3E4447008884EF /* Scrape */,
 				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
+				59B9D57E1AF6CA260006A57B /* Gen Ed Icons */,
 				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
 				59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */,
 				59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */,
@@ -327,6 +344,21 @@
 				595575FA1A2E74B9000ABAD8 /* QComment.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		59B9D57E1AF6CA260006A57B /* Gen Ed Icons */ = {
+			isa = PBXGroup;
+			children = (
+				59B9D57F1AF6CA3F0006A57B /* DNA.png */,
+				59B9D5801AF6CA3F0006A57B /* judge1.png */,
+				59B9D5811AF6CA3F0006A57B /* telescope7.png */,
+				59B9D5821AF6CA3F0006A57B /* USA.png */,
+				59B9D5831AF6CA3F0006A57B /* function.png */,
+				59B9D5841AF6CA3F0006A57B /* Globe.png */,
+				59B9D5851AF6CA3F0006A57B /* hinduism.png */,
+				59B9D5861AF6CA3F0006A57B /* Easel.png */,
+			);
+			name = "Gen Ed Icons";
 			sourceTree = "<group>";
 		};
 		59D51FB81A9D66A2006F7850 /* Q Data CSV Files */ = {
@@ -443,10 +475,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */,
+				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
+				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
 				595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */,
 				59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */,
+				59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
+				59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
+				59B9D58A1AF6CA3F0006A57B /* USA.png in Resources */,
 				594E93E21A68D1B7003DB4E7 /* LongFields in Resources */,
 				5975FD371AE0C9F200180AEC /* jharvard_dark.png in Resources */,
 				59F9AAF41AC0E62A0040659C /* httpHeadersLog in Resources */,
@@ -454,8 +492,10 @@
 				595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */,
 				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
 				5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */,
+				59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */,
 				595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */,
 				595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */,
+				59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
 				594E93E01A68D197003DB4E7 /* ShortFields in Resources */,
 			);

@@ -13,14 +13,18 @@
 
 #define coursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface LoginViewController () <UIWebViewDelegate>
+@interface LoginViewController () <UIWebViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIWebView *secretWebView;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopSpace;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageHUIDSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titlePasswordSpace;
+@property (weak, nonatomic) IBOutlet UIView *keyboardView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (assign) BOOL PINSiteLoaded;
@@ -62,7 +66,14 @@
     self.loginButton.layer.cornerRadius = 2;
     self.loginButton.clipsToBounds = YES;
     
-    self.titleTopSpaceInitial = self.titleTopSpace.constant;
+    self.titleTopSpaceInitial = self.titlePasswordSpace.constant;
+    
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    if (height < 568) {
+        self.messageHUIDSpace.constant -= 8;
+    }
+    
+    [self registerKeyboardNotifications];
     
     UIImageView *backgroundImageView =
         [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jharvard_dark.jpg"]];
@@ -75,13 +86,22 @@
 }
 
 - (CGFloat)titleTopSpaceError {
-    return _titleTopSpaceInitial - 25;
+    
+    // TODO: Handle the error message animation on the 4s in a less sketchy way
+    
+    CGFloat shift = 25;
+    
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    if (height < 568) {
+        shift = 5;
+    }
+    
+    return _titleTopSpaceInitial + shift;
 }
 
 - (void)tryUserCredentials {
     
     [self removeFailureUIState];
-    [self.loginButton setTitle:@"Logging in..." forState:UIControlStateNormal];
     
     [self.secretWebView stringByEvaluatingJavaScriptFromString:@"setContent('PIN','Harvard University ID (HUID)');"];
     
@@ -106,6 +126,10 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     if ([[webView.request.URL absoluteString] isEqualToString:@"https://courses.cs50.net/"]) {
+        
+        [self.usernameField resignFirstResponder];
+        [self.passwordField resignFirstResponder];
+        
         [self.delegate userDidLogin];
     }
     return YES;
@@ -136,7 +160,9 @@
         return;
     }
     
-    self.titleTopSpace.constant = self.titleTopSpaceInitial;
+    if (self.titleTopSpaceError == self.titleTopSpaceError)
+        self.titlePasswordSpace.constant = self.titleTopSpaceInitial;
+
     [UIView animateWithDuration:0.2 animations:^{
         self.messageLabel.alpha = 0.0;
         [self.view layoutIfNeeded];
@@ -151,7 +177,8 @@
     
     self.UIStateError = YES;
     self.messageLabel.text = message;
-    self.titleTopSpace.constant = self.titleTopSpaceError;
+    self.titlePasswordSpace.constant = self.titleTopSpaceError;
+        
     [self.loginButton setTitle:@"Log in" forState:UIControlStateNormal];
     [UIView animateWithDuration:0.2 animations:^{
         self.messageLabel.alpha = 1.0;
@@ -173,9 +200,46 @@
     }
     
     self.userDidSubmit = YES;
+    [self.loginButton setTitle:@"Logging in..." forState:UIControlStateNormal];
     if (self.PINSiteLoaded) {
         [self tryUserCredentials];
     }
+}
+
+- (void)registerKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardChangeFrame:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardChangeFrame:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardChangeFrame:)
+                                                 name:UIKeyboardWillChangeFrameNotification
+                                               object:nil];
+}
+
+-(void)keyboardChangeFrame:(NSNotification*)notification{
+    
+    CGRect keyboardEndFrame;
+    [[notification userInfo][UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    UIViewAnimationCurve curve =[notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    self.keyboardHeight.constant = CGRectGetHeight(keyboardEndFrame);
+    [self.view setNeedsUpdateConstraints];
+    [self.view setNeedsLayout];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [self.view layoutIfNeeded];
+    
+    [UIView commitAnimations];
 }
 
 @end
