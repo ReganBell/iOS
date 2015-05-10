@@ -143,7 +143,7 @@
 //    self.searchField.delegate = self;
 //    self.searchField.tintColor = CoursicaBlue;
 //    
-    [self configureRangeSliders];
+//    [self configureRangeSliders];
 }
 
 - (void)selectButton:(UIButton*)button inArray:(NSArray*)array {
