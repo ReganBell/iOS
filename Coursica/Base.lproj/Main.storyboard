@@ -1360,6 +1360,7 @@
                     <connections>
                         <outlet property="applyFiltersButton" destination="jAG-tK-Hri" id="gXU-MJ-EoX"/>
                         <outlet property="contentView" destination="aJa-GI-LQK" id="EWS-dp-9nN"/>
+                        <outlet property="genEdBarView" destination="kZk-F8-pv9" id="lCo-oD-BA5"/>
                         <outlet property="scrollView" destination="Kej-Os-19P" id="51U-S0-ese"/>
                         <outlet property="termBarView" destination="NVl-PG-6Tl" id="ao7-oR-Lkr"/>
                         <outletCollection property="cards" destination="NVl-PG-6Tl" id="NQd-bS-dAl"/>

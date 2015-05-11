@@ -52,6 +52,7 @@
 		59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04A1A34877D003FD743 /* CommentsViewController.m */; };
 		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
 		59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DCAEC21A75D6E800929151 /* SearchManager.m */; };
+		59E661CF1B01476200200FAE /* SliderTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E661CE1B01476200200FAE /* SliderTab.png */; };
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */ = {isa = PBXBuildFile; fileRef = 59F51C6B1A254E3D0025E021 /* SampleAPIResponse */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
@@ -153,6 +154,7 @@
 		59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HeightCalculation.m"; sourceTree = "<group>"; };
 		59DCAEC11A75D6E800929151 /* SearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchManager.h; sourceTree = "<group>"; };
 		59DCAEC21A75D6E800929151 /* SearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchManager.m; sourceTree = "<group>"; };
+		59E661CE1B01476200200FAE /* SliderTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SliderTab.png; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				5975FD361AE0C9F200180AEC /* jharvard_dark.png */,
 				5902E6251A347E9600A38C11 /* SmallSearch.png */,
 				5902E61D1A3475DE00A38C11 /* NavBarBg.png */,
+				59E661CE1B01476200200FAE /* SliderTab.png */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
@@ -476,6 +479,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */,
+				59E661CF1B01476200200FAE /* SliderTab.png in Resources */,
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
 				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
 				595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */,

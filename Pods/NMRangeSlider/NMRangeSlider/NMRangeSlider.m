@@ -27,6 +27,10 @@ NSUInteger DeviceSystemMajorVersion() {
 {
     float _lowerTouchOffset;
     float _upperTouchOffset;
+    float _minimumHandleSpacing;
+    CGFloat _handleHeight;
+    CGFloat _handleWidth;
+    CGFloat _trackHeight;
     float _stepValueInternal;
     BOOL _haveAddedSubviews;
 }
@@ -83,6 +87,7 @@ NSUInteger DeviceSystemMajorVersion() {
     _minimumValue = 0.0;
     _maximumValue = 1.0;
     _minimumRange = 0.0;
+    
     _stepValue = 0.0;
     _stepValueInternal = 0.0;
     
@@ -95,6 +100,11 @@ NSUInteger DeviceSystemMajorVersion() {
     _upperMinimumValue = NAN;
     _upperHandleHidden = NO;
     _lowerHandleHidden = NO;
+    
+    _minimumHandleSpacing = 12.0;
+    _trackHeight = 7.0;
+    _handleHeight = 21.0;
+    _handleWidth = 31.0;
 }
 
 // ------------------------------------------------------------------------------------------------------
@@ -161,6 +171,34 @@ NSUInteger DeviceSystemMajorVersion() {
 
 - (void) setLowerValue:(float) lowerValue upperValue:(float) upperValue animated:(BOOL)animated
 {
+    CGFloat spacing = self.upperCenter.x - self.lowerCenter.x - _handleWidth;
+    if (spacing < _minimumHandleSpacing) {
+        
+        if (!isnan(lowerValue)) {
+    
+            CGFloat diff = lowerValue - _lowerValue;
+            NSLog(@"%f", diff);
+            if (diff > 0) {
+                if (_upperValue > 4.99)
+                    return;
+                upperValue = _upperValue + diff;
+            }
+        }
+        
+        if (!isnan(upperValue)) {
+            
+//            if (_lowerValue < 0.01)
+//                return;
+            
+            CGFloat diff = _upperValue - upperValue;
+            if (diff > 0) {
+                if (_lowerValue < 0.01)
+                    return;
+                lowerValue = _lowerValue - diff;
+            }
+        }
+    }
+    
     if((!animated) && (isnan(lowerValue) || lowerValue==_lowerValue) && (isnan(upperValue) || upperValue==_upperValue))
     {
         //nothing to set
@@ -232,12 +270,14 @@ NSUInteger DeviceSystemMajorVersion() {
         {
             UIImage* image = [UIImage imageNamed:@"slider-default-trackBackground"];
             image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0)];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             _trackBackgroundImage = image;
         }
         else
         {
             UIImage* image = [UIImage imageNamed:@"slider-default7-trackBackground"];
             image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 2.0, 0.0, 2.0)];
+            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             _trackBackgroundImage = image;
         }
     }
@@ -406,7 +446,7 @@ NSUInteger DeviceSystemMajorVersion() {
     
     UIImage* currentTrackImage = [self trackImageForCurrentValues];
     
-    retValue.size = CGSizeMake(currentTrackImage.size.width, currentTrackImage.size.height);
+    retValue.size = CGSizeMake(currentTrackImage.size.width, _trackHeight);
     
     if(currentTrackImage.capInsets.top || currentTrackImage.capInsets.bottom)
     {
@@ -442,7 +482,7 @@ NSUInteger DeviceSystemMajorVersion() {
 {
     CGRect trackBackgroundRect;
     
-    trackBackgroundRect.size = CGSizeMake(_trackBackgroundImage.size.width-4, _trackBackgroundImage.size.height);
+    trackBackgroundRect.size = CGSizeMake(_trackBackgroundImage.size.width-4, _trackHeight);
     
     if(_trackBackgroundImage.capInsets.top || _trackBackgroundImage.capInsets.bottom)
     {
@@ -465,7 +505,7 @@ NSUInteger DeviceSystemMajorVersion() {
     CGRect thumbRect;
     UIEdgeInsets insets = thumbImage.capInsets;
 
-    thumbRect.size = CGSizeMake(thumbImage.size.width, thumbImage.size.height);
+    thumbRect.size = CGSizeMake(_handleWidth, _handleHeight);
     
     if(insets.top || insets.bottom)
     {
@@ -533,8 +573,13 @@ NSUInteger DeviceSystemMajorVersion() {
     }
 
     self.trackBackground.frame = [self trackBackgroundRect];
+    self.trackBackground.tintColor = [UIColor colorWithWhite:216/255.0 alpha:1.0];
+    self.trackBackground.layer.cornerRadius = 4.0f;
+    self.trackBackground.clipsToBounds = YES;
     self.track.frame = [self trackRect];
     self.track.image = [self trackImageForCurrentValues];
+    self.track.layer.cornerRadius = 4.0f;
+    self.track.clipsToBounds = YES;
 
     // Layout the lower handle
     self.lowerHandle.frame = [self thumbRectForValue:_lowerValue image:self.lowerHandleImageNormal];
@@ -576,7 +621,6 @@ NSUInteger DeviceSystemMajorVersion() {
 {
     CGPoint touchPoint = [touch locationInView:self];
     
-    
     //Check both buttons upper and lower thumb handles because
     //they could be on top of each other.
     
@@ -600,6 +644,7 @@ NSUInteger DeviceSystemMajorVersion() {
 
 -(BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    
     if(!_lowerHandle.highlighted && !_upperHandle.highlighted ){
         return YES;
     }
@@ -630,7 +675,7 @@ NSUInteger DeviceSystemMajorVersion() {
     if(_upperHandle.highlighted )
     {
         float newValue = [self upperValueForCenterX:(touchPoint.x - _upperTouchOffset)];
-
+        
         //if both upper and lower is selected, then the new value must be HIGHER
         //otherwise the touch event is ignored.
         if(!_lowerHandle.highlighted || newValue>_upperValue)
