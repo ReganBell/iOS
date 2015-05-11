@@ -16,11 +16,29 @@
 #import "NavigationController.h"
 #import "SearchManager.h"
 
+#define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
+
 @interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSPredicate *filterPredicate;
+
+@property (strong, nonatomic) FiltersViewController *filterController;
+@property (strong, nonatomic) UIView *navBarView;
+@property (strong, nonatomic) UIView *navBarRightButtonView;
+
+@property (strong, nonatomic) UIButton *cancelButton;
+@property (strong, nonatomic) NSLayoutConstraint *cancelButtonCenterY;
+
+@property (strong, nonatomic) UIButton *searchButton;
+@property (strong, nonatomic) NSLayoutConstraint *searchButtonCenterY;
+
+@property (strong, nonatomic) UILabel *coursicaTitleLabel;
+@property (strong, nonatomic) NSLayoutConstraint *coursicaTitleCenterY;
+
+@property (strong, nonatomic) UITextField *searchBar;
+@property (strong, nonatomic) NSLayoutConstraint *searchBarCenterY;
 
 @end
 
@@ -39,29 +57,21 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
     
-    // Creates title bar with app name
-    CGRect frame = CGRectMake(0, 0, 0, 0);
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
-    label.text = @"Coursica";
-    label.textColor = [UIColor whiteColor];
-    [label sizeToFit];
-    self.navigationItem.titleView = label;
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.translucent = NO;
-    
-    // Creates navigation bar button
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    [button setImage:[UIImage imageNamed:@"SmallSearch.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(showFilters) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.rightBarButtonItem = searchButton;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.opaque = YES;
 
     self.tableView.tableFooterView = [UIView new];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.translucent = NO;
+    
+    self.navigationItem.titleView = self.navBarView;
+    
+    CGRect frame = self.navBarView.superview.superview.frame;
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:window attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.coursicaTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    [window addConstraint:centerX];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navBarRightButtonView];
     
     // checks for a database, and if not requests courses data from CS50 API
     if (count == 0) {
@@ -82,16 +92,219 @@
     }
 }
 
+- (UIView*)navBarRightButtonView {
+    
+    if (_navBarRightButtonView) {
+        return _navBarRightButtonView;
+    }
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
+    [view addSubview:self.cancelButton];
+    [view addSubview:self.searchButton];
+    NSLayoutConstraint *centerXCancel = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.cancelButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *centerXSearch = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.searchButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    NSLayoutConstraint *centerYCancel = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.cancelButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    self.cancelButtonCenterY = centerYCancel;
+    NSLayoutConstraint *centerYSearch = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.searchButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    self.searchButtonCenterY = centerYSearch;
+    NSLayoutConstraint *searchHeight = [NSLayoutConstraint constraintWithItem:self.searchButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:24.0];
+    NSLayoutConstraint *searchWidth = [NSLayoutConstraint constraintWithItem:self.searchButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:24.0];
+    
+    [view addConstraints:@[centerXCancel, centerXSearch, centerYCancel, centerYSearch, searchHeight, searchWidth]];
+    self.cancelButton.hidden = YES;
+    _navBarRightButtonView = view;
+    
+    return _navBarRightButtonView;
+}
+
+- (UITextField*)searchBar {
+    
+    if (_searchBar) {
+        return _searchBar;
+    }
+    
+    UITextField *searchBar = [[UITextField alloc] initWithFrame:CGRectZero];
+    
+    searchBar.backgroundColor = [UIColor colorWithRed:31/255.0 green:117/255.0 blue:1 alpha:1.0];
+    searchBar.layer.cornerRadius = 4.0f;
+    searchBar.layer.masksToBounds = YES;
+    searchBar.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    UIFont *searchBarFont = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
+    
+    searchBar.font = searchBarFont;
+    searchBar.textColor = [UIColor whiteColor];
+    
+    UIView *leftSpacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [searchBar setLeftViewMode:UITextFieldViewModeAlways];
+    [searchBar setLeftView:leftSpacerView];
+    
+    UIColor *placeholderColor = [UIColor colorWithWhite:1.0 alpha:0.4];
+    
+    NSMutableParagraphStyle *style = [searchBar.defaultTextAttributes[NSParagraphStyleAttributeName] mutableCopy];
+    style.minimumLineHeight = searchBar.font.lineHeight - (searchBar.font.lineHeight - searchBarFont.lineHeight) / 2.0;
+    
+    NSString *placeholder = @"Search for courses";
+    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc] initWithString:placeholder
+                                                                                attributes: @{NSForegroundColorAttributeName:placeholderColor,
+                                                                                              NSFontAttributeName:searchBarFont,
+                                                                                              NSParagraphStyleAttributeName:style}];
+    searchBar.attributedPlaceholder = attributedPlaceholder;
+    _searchBar = searchBar;
+    return searchBar;
+}
+
+- (UIView*)navBarView {
+    
+    if (_navBarView) {
+        return _navBarView;
+    }
+    
+    CGRect frame = CGRectZero;
+    frame.size = self.navigationController.navigationBar.frame.size;
+    UIView *navBarView = [[UIView alloc] initWithFrame:frame];
+    UITextField *searchBar = self.searchBar;
+    searchBar.hidden = YES;
+    navBarView.clipsToBounds = YES;
+    
+    [navBarView addSubview:searchBar];
+    UIView *coursicaTitleLabel =  self.coursicaTitleLabel;
+    [navBarView addSubview:coursicaTitleLabel];
+    
+    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:coursicaTitleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeCenterYWithinMargins multiplier:1.0 constant:0.0];
+    self.coursicaTitleCenterY = centerY;
+    [navBarView addConstraint:centerY];
+    
+    NSLayoutConstraint *rightSpacing = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeRightMargin relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-20];
+    NSLayoutConstraint *leftSpacing = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeLeftMargin relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:10];
+    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:29.0];
+    NSLayoutConstraint *center = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeCenterYWithinMargins multiplier:1.0 constant:0.0];
+    self.searchBarCenterY = center;
+    [navBarView addConstraints:@[rightSpacing, leftSpacing, height, center]];
+    _navBarView = navBarView;
+
+    return _navBarView;
+}
+
+- (UIButton*)cancelButton {
+    
+    if (_cancelButton) {
+        return _cancelButton;
+    }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
+    [button setTitle:@"Cancel" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:14.0];
+    [button addTarget:self action:@selector(cancelFiltersButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    _cancelButton = button;
+    return _cancelButton;
+}
+
+- (UIButton*)searchButton {
+    
+    if (_searchButton) {
+        return _searchButton;
+    }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    [button setImage:[UIImage imageNamed:@"SmallSearch.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(showFilters) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    _searchButton = button;
+    return _searchButton;
+}
+
+- (UILabel*)coursicaTitleLabel {
+    
+    if (_coursicaTitleLabel) {
+        return _coursicaTitleLabel;
+    }
+    
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
+    label.text = @"Coursica";
+    label.textColor = [UIColor whiteColor];
+    [label sizeToFit];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    _coursicaTitleLabel = label;
+    return _coursicaTitleLabel;
+}
+
+- (FiltersViewController*)filterController {
+    
+    if (!_filterController) {
+        
+        UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        _filterController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
+        _filterController.delegate = self;
+        _filterController.view.alpha = 0.0;
+        [self.view addSubview:_filterController.view];
+    }
+    
+    return _filterController;
+}
+
+- (void)cancelFiltersButtonPressed:(UIButton*)sender {
+    
+    self.coursicaTitleLabel.hidden = NO;
+    self.searchButton.hidden = NO;
+    self.coursicaTitleLabel.alpha = 0.0;
+    self.searchButton.alpha = 0.0;
+    self.coursicaTitleCenterY.constant = 0.0;
+    self.searchButtonCenterY.constant = 0.0;
+    self.searchBarCenterY.constant = 20.0;
+    self.cancelButtonCenterY.constant = -20.0;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.searchBar.alpha = 0.0;
+        self.cancelButton.alpha = 0.0;
+        self.coursicaTitleLabel.alpha = 1.0;
+        self.searchButton.alpha = 1.0;
+        self.filterController.view.alpha = 0.0;
+        [self.navigationController.navigationBar layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        self.searchBar.hidden = YES;
+        self.cancelButton.hidden = YES;
+        self.filterController.view.hidden = YES;
+    }];
+}
+
     // Action called on switching to the filters screen
 - (IBAction)showFilters{
     
-    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    FiltersViewController *filterController = [main instantiateViewControllerWithIdentifier:@"filtersController"];
-    filterController.delegate = self;
+    self.searchBar.hidden = NO;
+    self.cancelButton.hidden = NO;
+    self.searchBar.alpha = 0.0;
+    self.cancelButton.alpha = 0.0;
+    self.coursicaTitleCenterY.constant = -20.0;
+    self.searchButtonCenterY.constant = 20.0;
+    self.searchBarCenterY.constant = 0.0;
+    self.cancelButtonCenterY.constant = 0.0;
     
-    NavigationController *navigationController = [[NavigationController alloc] initWithRootViewController:filterController];
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.searchBar.alpha = 1.0;
+        self.cancelButton.alpha = 1.0;
+        self.coursicaTitleLabel.alpha = 0.0;
+        self.searchButton.alpha = 0.0;
+        [self.navigationController.navigationBar layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+
+        self.searchButton.hidden = YES;
+        self.coursicaTitleLabel.hidden = YES;
+    }];
     
-    [self presentViewController:navigationController animated:YES completion:nil];
+    self.filterController.view.hidden = NO;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.filterController.view.alpha = 1.0;
+    }];
 }
 
 - (void)dismissFiltersViewController {

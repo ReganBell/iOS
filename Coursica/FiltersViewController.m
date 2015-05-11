@@ -48,6 +48,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (assign) NSInteger selectedTermIndex;
 @property (assign) NSInteger selectedGradIndex;
 
@@ -114,9 +116,11 @@
     [label sizeToFit];
     self.navigationItem.titleView = label;
     
+    self.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
-//
+
 //    // Creates titles bar for the view
 //    CGRect frame = CGRectMake(0, 0, 0, 0);
 //    UILabel *label = [[UILabel alloc] initWithFrame:frame];
