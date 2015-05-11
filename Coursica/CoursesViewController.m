@@ -65,13 +65,18 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
     
-    self.navigationItem.titleView = self.navBarView;
     
-    CGRect frame = self.navBarView.superview.superview.frame;
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:window attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.coursicaTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-    [window addConstraint:centerX];
+    self.navigationItem.titleView = self.navBarView;
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat constant = screenWidth / 2 - 8;
+    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.coursicaTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.navBarView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:constant];
+    [self.navBarView addConstraint:centerX];
+    [self.navBarView layoutIfNeeded];
+    CGRect frame = self.navigationItem.titleView.frame;
+    CGRect bounds = self.navigationItem.titleView.bounds;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navBarRightButtonView];
+    CGRect rightFrame = self.navBarRightButtonView.frame;
+
     
     // checks for a database, and if not requests courses data from CS50 API
     if (count == 0) {
@@ -259,6 +264,8 @@
     self.searchButtonCenterY.constant = 0.0;
     self.searchBarCenterY.constant = 20.0;
     self.cancelButtonCenterY.constant = -20.0;
+    
+    [self.searchBar resignFirstResponder];
     
     [UIView animateWithDuration:0.3 animations:^{
         self.searchBar.alpha = 0.0;
