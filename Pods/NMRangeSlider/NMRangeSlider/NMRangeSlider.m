@@ -172,28 +172,37 @@ NSUInteger DeviceSystemMajorVersion() {
 - (void) setLowerValue:(float) lowerValue upperValue:(float) upperValue animated:(BOOL)animated
 {
     CGFloat spacing = self.upperCenter.x - self.lowerCenter.x - _handleWidth;
+    
     if (spacing < _minimumHandleSpacing) {
         
+        //If we are modifying the lower value
         if (!isnan(lowerValue)) {
     
+            //Get movement delta
             CGFloat diff = lowerValue - _lowerValue;
-            NSLog(@"%f", diff);
+            
+            // Diff > 0 means movement towards upper handle, diff < 0 means away from upper handle
             if (diff > 0) {
+                // If we are pushing up against the end of the scale, we shouldn't do anything
                 if (_upperValue > 4.99)
                     return;
+                // Otherwise, we want to move the upper handle with the lower handle
                 upperValue = _upperValue + diff;
             }
         }
         
+        //If we are modifying the upper value
         if (!isnan(upperValue)) {
             
-//            if (_lowerValue < 0.01)
-//                return;
-            
+            //Get movement delta
             CGFloat diff = _upperValue - upperValue;
+            
+            // Diff > 0 means movement towards lower handle, diff < 0 means away from lower handle
             if (diff > 0) {
+                // If we are pushing up against the end of the scale, we shouldn't do anything
                 if (_lowerValue < 0.01)
                     return;
+                // Otherwise, we want to move the lower handle with the upper handle
                 lowerValue = _lowerValue - diff;
             }
         }

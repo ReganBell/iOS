@@ -10,6 +10,9 @@
 #import "FiltersViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SearchManager.h"
+#import "DoubleSliderView.h"
+#import "QReport.h"
+#import "AppDelegate.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
@@ -54,9 +57,16 @@
 @property (assign) NSInteger selectedTermIndex;
 @property (assign) NSInteger selectedGradIndex;
 
+@property (weak, nonatomic) IBOutlet UIButton *filterCoursesButton;
+
 @end
 
 @implementation FiltersViewController
+
+- (IBAction)filterCoursesButtonPressed:(id)sender {
+    
+
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
@@ -85,6 +95,9 @@
         card.layer.cornerRadius = 4.0f;
         card.clipsToBounds = YES;
     }
+    
+    self.filterCoursesButton.layer.cornerRadius = 4.0f;
+    self.filterCoursesButton.clipsToBounds = YES;
     
     int i = 0;
     for (UIButton *genEdButton in self.genEdButtons) {
@@ -123,7 +136,7 @@
     self.navigationController.navigationBar.translucent = NO;
 
     [self.contentView addSubview:self.genEdBarView];
-    [self configureRangeSliders];
+    [self configureSliders];
 }
 
 - (void)selectButton:(UIButton*)button inArray:(NSArray*)array {
@@ -356,168 +369,37 @@
 #pragma mark - Programmatic Sliders
 
     //Set up sliders (written by us, not third-party)
-- (void)configureOverallSlider {
+- (DoubleSliderView*)configureSliderWithTitle:(NSString*)title font:(UIFont*)font textColor:(UIColor*)textColor {
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
-    titleLabel.text = @"Overall Q Score";
-    titleLabel.textColor = [UIColor colorWithWhite:155/255.0 alpha:1.0];
-    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    titleLabel.textAlignment = NSTextAlignmentCenter;
+    DoubleSliderView *sliderView = [[DoubleSliderView alloc] initWithTitle:title font:font textColor:textColor];
+    [self.contentView addSubview:sliderView];
     
-    NMRangeSlider *overallSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 300, 34)];
-    UIImage *handleImage = [UIImage imageNamed:@"SliderTab"];
-    overallSlider.lowerHandleImageNormal = handleImage;
-    overallSlider.upperHandleImageNormal = handleImage;
-    overallSlider.lowerHandleImageHighlighted = handleImage;
-    overallSlider.upperHandleImageHighlighted = handleImage;
-    overallSlider.minimumValue = 0;
-    overallSlider.maximumValue = 5;
-    overallSlider.lowerValue = 3;
-    overallSlider.upperValue = 5;
-    overallSlider.tintColor = CoursicaBlue;
-    overallSlider.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeLeft multiplier:1 constant:18]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeRight multiplier:1 constant:-18]];
+    [sliderView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50.0]];
     
-    [self.contentView addSubview:overallSlider];
-    [self.contentView addSubview:titleLabel];
-    
-    // 25 spacing
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
-    [titleLabel addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:20]];
-    [titleLabel addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:120]];
-    
-    
-//    // Add programatic constraints to the slider
-    [overallSlider addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1 constant:25]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1 constant:-25]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:8]];
-//
-    overallSlider.translatesAutoresizingMaskIntoConstraints = NO;
-    [overallSlider addTarget:self action:@selector(labelSliderChanged:) forControlEvents:UIControlEventValueChanged];
-
-    self.qOverallSlider = overallSlider;
-    
-//    UILabel *overallValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//    overallValueLabel.font = titleLabel.font;
-//    overallValueLabel.text = [NSString stringWithFormat:@"%.1f to %.1f", overallSlider.lowerValue, overallSlider.upperValue];
-//    overallValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-//    overallValueLabel.textAlignment = NSTextAlignmentCenter;
-//    self.qOverallValueLabel = overallValueLabel;
-//    [self.contentView addSubview:overallValueLabel];
-//    
-//    [overallValueLabel addConstraint:[NSLayoutConstraint constraintWithItem:overallValueLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0.0 multiplier:1.0 constant:titleLabel.frame.size.height]];
-//    [overallValueLabel addConstraint:[NSLayoutConstraint constraintWithItem:overallValueLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0.0 multiplier:1.0 constant:150.0]];
-//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallValueLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.qOverallSlider attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-//    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overallValueLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-}
-    //Set up sliders (written by us, not third-party)
-- (void) configureWorkloadSlider {
-    
-    UILabel *workloadTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    workloadTitleLabel.font = self.qOverallTitleLabel.font;
-    workloadTitleLabel.text = @"Workload Q Score";
-    workloadTitleLabel.textAlignment = NSTextAlignmentCenter;
-    workloadTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.qWorkloadTitleLabel = workloadTitleLabel;
-    [self.contentView addSubview:workloadTitleLabel];
-    
-    [workloadTitleLabel addConstraint:[NSLayoutConstraint constraintWithItem:workloadTitleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:self.qOverallTitleLabel.frame.size.height]];
-    [workloadTitleLabel addConstraint:[NSLayoutConstraint constraintWithItem:workloadTitleLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:200]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadTitleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.qOverallValueLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    
-    NMRangeSlider *workloadSlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 300, 34)];
-    workloadSlider.minimumValue = 0;
-    workloadSlider.maximumValue = 5;
-    workloadSlider.lowerValue = 3;
-    workloadSlider.upperValue = 5;
-    workloadSlider.stepValue = 0.1;
-    workloadSlider.tintColor = CoursicaBlue;
-    self.qWorkloadSlider = workloadSlider;
-    
-    [self.contentView addSubview:workloadSlider];
-    
-    [workloadSlider addConstraint:[NSLayoutConstraint constraintWithItem:workloadSlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
-    [workloadSlider addConstraint:[NSLayoutConstraint constraintWithItem:workloadSlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:300]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadSlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workloadTitleLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadSlider attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    
-    workloadSlider.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    [workloadSlider addTarget:self action:@selector(labelSliderChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    UILabel *workloadValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    workloadValueLabel.font = self.qOverallTitleLabel.font;
-    workloadValueLabel.text = [NSString stringWithFormat:@"%.1f to %.1f", workloadSlider.lowerValue, workloadSlider.upperValue];
-    self.qWorkloadValueLabel = workloadValueLabel;
-    self.qWorkloadValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.qWorkloadValueLabel.textAlignment = NSTextAlignmentCenter;
-    [self.contentView addSubview:workloadValueLabel];
-    
-    [workloadValueLabel addConstraint:[NSLayoutConstraint constraintWithItem:workloadValueLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:self.qOverallTitleLabel.frame.size.height]];
-    [workloadValueLabel addConstraint:[NSLayoutConstraint constraintWithItem:workloadValueLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:150]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadValueLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workloadSlider attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workloadValueLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-}
-    //Set up sliders (written by us, not third-party)
-- (void) configureDifficultySlider {
-    
-    UILabel *difficultyTitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    difficultyTitleLabel.font = self.qOverallTitleLabel.font;
-    difficultyTitleLabel.text = @"Difficulty Q Score";
-    difficultyTitleLabel.textAlignment = NSTextAlignmentCenter;
-    difficultyTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.qDifficultyTitleLabel = difficultyTitleLabel;
-    [self.contentView addSubview:difficultyTitleLabel];
-    
-    [difficultyTitleLabel addConstraint:[NSLayoutConstraint constraintWithItem:difficultyTitleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:self.qOverallTitleLabel.frame.size.height]];
-    [difficultyTitleLabel addConstraint:[NSLayoutConstraint constraintWithItem:difficultyTitleLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:150]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficultyTitleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.qWorkloadValueLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficultyTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    
-    NMRangeSlider *difficultySlider = [[NMRangeSlider alloc] initWithFrame:CGRectMake(16, 6, 300, 34)];
-    difficultySlider.minimumValue = 0;
-    difficultySlider.maximumValue = 5;
-    difficultySlider.lowerValue = 3;
-    difficultySlider.upperValue = 5;
-    difficultySlider.stepValue = 0.1;
-    difficultySlider.tintColor = CoursicaBlue;
-    self.qDifficultySlider = difficultySlider;
-    
-    [self.contentView addSubview:difficultySlider];
-    
-    [difficultySlider addConstraint:[NSLayoutConstraint constraintWithItem:difficultySlider attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:40]];
-    [difficultySlider addConstraint:[NSLayoutConstraint constraintWithItem:difficultySlider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:300]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficultySlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:difficultyTitleLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficultySlider attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    
-    difficultySlider.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    [difficultySlider addTarget:self action:@selector(labelSliderChanged:) forControlEvents:UIControlEventValueChanged];
-    self.qDifficultySlider = difficultySlider;
-    
-    UILabel *difficultyValueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    difficultyValueLabel.font = self.qOverallTitleLabel.font;
-    difficultyValueLabel.text = [NSString stringWithFormat:@"%.1f to %.1f", difficultySlider.lowerValue, difficultySlider.upperValue];
-    difficultyValueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    difficultyValueLabel.textAlignment = NSTextAlignmentCenter;
-    self.qDifficultyValueLabel = difficultyValueLabel;
-    [self.contentView addSubview:difficultyValueLabel];
-    
-    [difficultyValueLabel addConstraint:[NSLayoutConstraint constraintWithItem:difficultyValueLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:self.qOverallTitleLabel.frame.size.height]];
-    [difficultyValueLabel addConstraint:[NSLayoutConstraint constraintWithItem:difficultyValueLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1 constant:150]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficultyValueLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:difficultySlider attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficultyValueLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.qOverallTitleLabel attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    return sliderView;
 }
 
-- (void) configureRangeSliders
+- (void) configureSliders
 {
-    [self configureOverallSlider];
-//    [self configureWorkloadSlider];
-//    [self configureDifficultySlider];
+    UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
+    UIColor *textColor = [UIColor colorWithWhite:155/255.0 alpha:1.0];
+    
+    DoubleSliderView *overall = [self configureSliderWithTitle:@"Overall Q Score" font:font textColor:textColor];
+    self.qOverallSlider = overall.slider;
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overall attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
+    
+    DoubleSliderView *workload = [self configureSliderWithTitle:@"Workload" font:font textColor:textColor];
+    self.qDifficultySlider = workload.slider;
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
+    
+    DoubleSliderView *difficulty = [self configureSliderWithTitle:@"Difficulty" font:font textColor:textColor];
+    self.qWorkloadSlider = overall.slider;
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficulty attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workload attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }
 
 /*
