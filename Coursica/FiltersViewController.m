@@ -9,7 +9,6 @@
 
 #import "FiltersViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "SearchManager.h"
 #import "DoubleSliderView.h"
 #import "QReport.h"
 #import "AppDelegate.h"
@@ -17,7 +16,7 @@
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
 
-@interface FiltersViewController () <UITextFieldDelegate, UIScrollViewDelegate>
+@interface FiltersViewController ()
 
     // References to the UI elements in the view
 @property (weak, nonatomic) NMRangeSlider *overallSlider;
@@ -63,21 +62,53 @@
 
 @implementation FiltersViewController
 
+- (NSPredicate *)filters {
+    
+    NSMutableArray *predicates = [NSMutableArray new];
+
+    switch (self.selectedGradIndex) {
+        case 0:
+            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
+            break;
+        case 1:
+            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
+        default:
+            break;
+    }
+    
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+//
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
+//
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
+    
+    switch (self.selectedTermIndex) {
+        case 0:
+            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
+            break;
+        case 1:
+            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
+        default:
+            break;
+    }
+
+    for (UIButton *button in self.genEdButtons) {
+
+        if (button.selected) {
+            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
+            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
+        }
+    }
+
+    return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+}
+
 - (IBAction)filterCoursesButtonPressed:(id)sender {
     
-
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    [self.searchField resignFirstResponder];
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    [textField resignFirstResponder];
-    [self applyFiltersButtonPressed:nil];
-    return YES;
+    [self.delegate filtersDidChange];
 }
 
 - (void)viewDidLoad {
@@ -185,86 +216,10 @@
     }];
 }
 
-    // Checks for editting in the textfield
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    [self.view addGestureRecognizer:recognizer];
-}
-
-- (void)handleTap:(UITapGestureRecognizer*)recognizer {
-    
-    [self.searchField resignFirstResponder];
-    [self.view removeGestureRecognizer:recognizer];
-}
     // Called when apply filters button pressed
     // Checks all UI elements for changes in order to filter results
 - (IBAction)applyFiltersButtonPressed:(id)sender {
     
-//    NSMutableArray *predicates = [NSMutableArray new];
-//    
-//    switch (self.courseLevelControl.selectedSegmentIndex) {
-//        case 1:
-//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
-//            break;
-//        case 2:
-//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
-//        default:
-//            break;
-//    }
-//    // Checking all of the Q score filters
-////    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
-////    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
-////    
-////    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
-////    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
-////    
-////    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
-////    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
-//
-//    switch (self.termControl.selectedSegmentIndex) {
-//        case 1:
-//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
-//            break;
-//        case 2:
-//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
-//        default:
-//            break;
-//    }
-//    
-//    // Checks all Gen. Ed. filters
-//    for (UIButton *button in self.genEdButtons) {
-//        
-//        if (button.selected) {
-//            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
-//            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
-//        }
-//    }
-//    
-//    NSString *search = self.searchField.text;
-//
-//    if (search.length) {
-//        
-//        NSMutableArray *termPreds = [NSMutableArray array];
-//        NSArray *terms = [search componentsSeparatedByString:@" "];
-//        for (NSString *searchTerm in terms) {
-//            
-//            NSMutableArray *searchPreds = [NSMutableArray array];
-//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@", searchTerm]];
-//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"shortField CONTAINS[cd] %@", searchTerm]];
-//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"longField CONTAINS[cd] %@", searchTerm]];
-//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"number like %@", searchTerm]];
-//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.first", searchTerm]];
-//            [searchPreds addObject:[NSPredicate predicateWithFormat:@"ANY %K CONTAINS[cd] %@", @"faculty.last", searchTerm]];
-//            [termPreds addObject:[NSCompoundPredicate orPredicateWithSubpredicates:searchPreds]];
-//        }
-//        [predicates addObject:[NSCompoundPredicate andPredicateWithSubpredicates:termPreds]];
-//    }
-//    
-//    // Calls function in CoursesViewController to update course list
-//    [self.delegate filtersDidChange:[NSCompoundPredicate andPredicateWithSubpredicates:predicates]];
-    
-    NSArray *results = [[SearchManager sharedSearchManager] coursesForSearch:@"latin america"];
     
     
     [self.delegate dismissFiltersViewController];
@@ -392,12 +347,12 @@
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overall attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *workload = [self configureSliderWithTitle:@"Workload" font:font textColor:textColor];
-    self.qDifficultySlider = workload.slider;
+    self.qWorkloadSlider = workload.slider;
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *difficulty = [self configureSliderWithTitle:@"Difficulty" font:font textColor:textColor];
-    self.qWorkloadSlider = overall.slider;
+    self.qDifficultySlider = overall.slider;
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficulty attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workload attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }

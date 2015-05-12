@@ -18,7 +18,7 @@
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+@interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -44,6 +44,26 @@
 
 @implementation CoursesViewController
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    NSString *search = textField.text;
+    
+    if (!search.length) {
+        [textField resignFirstResponder];
+        return YES;
+    }
+    
+    [[SearchManager sharedSearchManager] assignScoresForSearch:search];
+
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"searchScore > %@", @0];
+    NSPredicate *masterPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[self.filterController.filters, searchPredicate]];
+    
+    self.filterPredicate = masterPredicate;
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     
     return UIStatusBarStyleDefault;
@@ -65,7 +85,6 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
     
-    
     self.navigationItem.titleView = self.navBarView;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat constant = screenWidth / 2 - 8;
@@ -77,7 +96,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navBarRightButtonView];
     CGRect rightFrame = self.navBarRightButtonView.frame;
 
-    
     // checks for a database, and if not requests courses data from CS50 API
     if (count == 0) {
         
@@ -116,7 +134,7 @@
     NSLayoutConstraint *searchWidth = [NSLayoutConstraint constraintWithItem:self.searchButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:24.0];
     
     [view addConstraints:@[centerXCancel, centerXSearch, centerYCancel, centerYSearch, searchHeight, searchWidth]];
-    self.cancelButton.hidden = YES;
+    self.cancelButton.alpha = 0.0;
     _navBarRightButtonView = view;
     
     return _navBarRightButtonView;
@@ -134,6 +152,7 @@
     searchBar.layer.cornerRadius = 4.0f;
     searchBar.layer.masksToBounds = YES;
     searchBar.translatesAutoresizingMaskIntoConstraints = NO;
+    searchBar.returnKeyType = UIReturnKeySearch;
     
     UIFont *searchBarFont = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0];
     
@@ -169,7 +188,7 @@
     frame.size = self.navigationController.navigationBar.frame.size;
     UIView *navBarView = [[UIView alloc] initWithFrame:frame];
     UITextField *searchBar = self.searchBar;
-    searchBar.hidden = YES;
+    searchBar.alpha = 0.0;
     navBarView.clipsToBounds = YES;
     
     [navBarView addSubview:searchBar];
@@ -254,64 +273,55 @@
     return _filterController;
 }
 
-- (void)cancelFiltersButtonPressed:(UIButton*)sender {
+- (void)setFiltersShowing:(BOOL)showing searchActive:(BOOL)searchActive {
     
-    self.coursicaTitleLabel.hidden = NO;
-    self.searchButton.hidden = NO;
-    self.coursicaTitleLabel.alpha = 0.0;
-    self.searchButton.alpha = 0.0;
-    self.coursicaTitleCenterY.constant = 0.0;
-    self.searchButtonCenterY.constant = 0.0;
-    self.searchBarCenterY.constant = 20.0;
-    self.cancelButtonCenterY.constant = -20.0;
+    NSArray *unhideViews, *hideViews, *moveInConstraints, *moveOutConstraints;
     
-    [self.searchBar resignFirstResponder];
+    if (showing) {
+        unhideViews = @[self.searchBar, self.cancelButton];
+        moveInConstraints = @[self.searchBarCenterY, self.cancelButtonCenterY];
+        moveOutConstraints = @[self.searchButtonCenterY, self.coursicaTitleCenterY];
+        hideViews = @[self.coursicaTitleLabel, self.searchButton];
+    } else {
+        unhideViews = @[self.coursicaTitleLabel, self.searchButton];
+        moveInConstraints = @[self.coursicaTitleCenterY, self.searchButtonCenterY];
+        moveOutConstraints = @[self.searchBarCenterY, self.cancelButtonCenterY];
+        hideViews = @[self.searchBar, self.cancelButton];
+    }
+    
+    for (UIView *unhide in unhideViews)
+        unhide.alpha = 0.0;
+    
+    for (NSLayoutConstraint *moveIn in moveInConstraints)
+        moveIn.constant = 0.0;
+    
+    NSLayoutConstraint *firstOut = moveOutConstraints.firstObject;
+    firstOut.constant = 20.0;
+    NSLayoutConstraint *lastOut = moveOutConstraints.lastObject;
+    lastOut.constant = -20.0;
+    
+    if (!showing)
+        [self.searchBar resignFirstResponder];
     
     [UIView animateWithDuration:0.3 animations:^{
-        self.searchBar.alpha = 0.0;
-        self.cancelButton.alpha = 0.0;
-        self.coursicaTitleLabel.alpha = 1.0;
-        self.searchButton.alpha = 1.0;
-        self.filterController.view.alpha = 0.0;
+        for (UIView *hide in hideViews)
+            hide.alpha = 0.0;
+        for (UIView *unhide in unhideViews)
+            unhide.alpha = 1.0;
+        self.filterController.view.alpha = (showing) ? 1.0 : 0.0;
         [self.navigationController.navigationBar layoutIfNeeded];
-        
-    } completion:^(BOOL finished) {
-        self.searchBar.hidden = YES;
-        self.cancelButton.hidden = YES;
-        self.filterController.view.hidden = YES;
     }];
+}
+
+- (void)cancelFiltersButtonPressed:(UIButton*)sender {
+    
+    [self setFiltersShowing:NO searchActive:NO];
 }
 
     // Action called on switching to the filters screen
 - (IBAction)showFilters{
     
-    self.searchBar.hidden = NO;
-    self.cancelButton.hidden = NO;
-    self.searchBar.alpha = 0.0;
-    self.cancelButton.alpha = 0.0;
-    self.coursicaTitleCenterY.constant = -20.0;
-    self.searchButtonCenterY.constant = 20.0;
-    self.searchBarCenterY.constant = 0.0;
-    self.cancelButtonCenterY.constant = 0.0;
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        self.searchBar.alpha = 1.0;
-        self.cancelButton.alpha = 1.0;
-        self.coursicaTitleLabel.alpha = 0.0;
-        self.searchButton.alpha = 0.0;
-        [self.navigationController.navigationBar layoutIfNeeded];
-        
-    } completion:^(BOOL finished) {
-
-        self.searchButton.hidden = YES;
-        self.coursicaTitleLabel.hidden = YES;
-    }];
-    
-    self.filterController.view.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.filterController.view.alpha = 1.0;
-    }];
+    [self setFiltersShowing:YES searchActive:NO];
 }
 
 - (void)dismissFiltersViewController {
@@ -321,18 +331,16 @@
 
 #pragma mark - NSFetchedResultsController Delegate
 
-    // Response to filter changes in the filters view
-- (void)filtersDidChange:(NSPredicate *)predicate {
-    self.fetchedResultsController.fetchRequest.predicate = predicate;
+- (void)updateFetch {
+    
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
     if (error) {
-        NSLog(@"%@", error);
+        NSLog(@"Error updating fetch: %@", error);
     }
     [self.tableView reloadData];
 }
 
-    // returners controller for results from API calls
 - (NSFetchedResultsController*)fetchedResultsController {
     
     if (_fetchedResultsController) {
@@ -358,7 +366,8 @@
     NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
     [fetchRequest setPredicate:predicate];
     
-    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *searchDescriptor = [[NSSortDescriptor alloc] initWithKey:@"searchScore" ascending:NO];
+    
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"shortField"
                                                                    ascending:YES];
     // Sort by decimal number first so 10, 100, 1000 would be in the right order
@@ -367,7 +376,7 @@
     // Fall back to number string when decimalNumber is the same, e.g. Math Ma and Mb both have decimal number -1, so sorting will fall back to this string comparison descriptor and sort them correctly
     NSSortDescriptor *numberDescriptor = [[NSSortDescriptor alloc] initWithKey:@"number" ascending:YES];
 
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, decimalNumberDescriptor, numberDescriptor, nil]];
+    [fetchRequest setSortDescriptors:@[searchDescriptor, sortDescriptor, decimalNumberDescriptor, numberDescriptor]];
     
     NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
                                           
@@ -375,26 +384,6 @@
     
     NSError *error;
     [controller performFetch:&error];
-    
-//    NSMutableSet *fieldAbbreviations = [[NSMutableSet alloc] init];
-//    NSMutableString *abbreviations = [[NSMutableString alloc] init];
-//    
-//    for (Course *course in controller.fetchedObjects) {
-//        
-//        [fieldAbbreviations addObject:course.shortField];
-//    }
-//    
-//    NSArray *array = [fieldAbbreviations allObjects];
-//    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
-//        return [obj1 caseInsensitiveCompare:obj2];
-//    }];
-//    NSArray *sortedArary = [array sortedArrayUsingDescriptors:@[descriptor]];
-//    
-//    for (NSString *abbreviation in sortedArary) {
-//        [abbreviations appendFormat:@"%@\n", abbreviation];
-//    }
-//    
-//    NSLog(@"%@", abbreviations);
     
     controller.delegate = self;
     
@@ -419,7 +408,7 @@
             return;
     }
 }
-    // Changes table view objects with change to the object in core data
+
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
@@ -478,7 +467,7 @@
     
     return cell;
 }
-    // Called after a selection of the table view
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -505,7 +494,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

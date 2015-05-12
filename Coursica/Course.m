@@ -41,6 +41,7 @@
 @dynamic examGroup;
 @dynamic decimalNumber;
 @dynamic qReports;
+@dynamic searchScore;
 
 + (void)updateCourses:(NSArray *)serverCourses {
     

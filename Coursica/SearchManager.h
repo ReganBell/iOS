@@ -15,6 +15,6 @@
 + (SearchManager*)sharedSearchManager;
 - (void)addCourseToSearchIndex:(Course*)course;
 - (void)calculateIDFs;
-- (NSArray*)coursesForSearch:(NSString*)search;
+- (void)assignScoresForSearch:(NSString*)search;
 
 @end

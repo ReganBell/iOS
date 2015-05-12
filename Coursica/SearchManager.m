@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableDictionary *commonAbbrevs;
 @property (strong, nonatomic) NSSet *stopWords;
 @property (assign) NSInteger coursesCount;
+@property (strong, nonatomic) NSArray *allCourses;
 
 @end
 
@@ -31,8 +32,8 @@
     NSFetchRequest *coursesFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
     
     NSError *error = nil;
-    NSArray *allCourses = [context executeFetchRequest:coursesFetch error:&error];
-    for (Course *course in allCourses) {
+    self.allCourses = [context executeFetchRequest:coursesFetch error:&error];
+    for (Course *course in self.allCourses) {
         [self addCourseToSearchIndex:course];
     }
     [self calculateIDFs];
@@ -224,7 +225,16 @@
     }
 }
 
-- (NSArray *)coursesForSearch:(NSString *)search {
+- (void)clearSearchScores {
+    
+    for (Course *course in self.allCourses) {
+        course.searchScore = @0;
+    }
+}
+
+- (void)assignScoresForSearch:(NSString *)search {
+    
+    [self clearSearchScores];
     
     NSMutableArray *searchTerms = [NSMutableArray arrayWithArray:[search componentsSeparatedByString:@" "]];
     NSInteger count = searchTerms.count;
@@ -255,14 +265,21 @@
         [unsorted addObject:[results objectForKey:catNum]];
     }
     
+    for (NSDictionary *result in unsorted) {
+        Course *course = result[@"course"];
+        course.searchScore = result[@"score"];
+    }
+    
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
     
     NSArray *sortedResults = [unsorted sortedArrayUsingDescriptors:@[descriptor]];
-    for (NSDictionary *result in sortedResults) {
+    NSDictionary *top = sortedResults.firstObject;
+    NSDictionary *bottom = sortedResults.lastObject;
+    
+    for (NSDictionary *result in @[top, bottom]) {
         Course *course = result[@"course"];
         NSLog(@"\n%@ %@ - %@\n%@", course.shortField, course.number, course.title, result[@"score"]);
     }
-    return sortedResults;
 }
 
 + (SearchManager *)sharedSearchManager {
