@@ -114,6 +114,9 @@
 
 - (void)addCourseToSearchIndex:(Course*)course {
     
+    if (!course.longField)
+        course.longField = self.commonAbbrevs[course.shortField];
+    
     [self addField:course.longField toIndex:self.fieldInvertedIndex fromCourse:course];
     [self addField:course.title toIndex:self.titleInvertedIndex fromCourse:course];
     
@@ -253,11 +256,12 @@
         }
     }
     
+    NSLog(@"Searching for %@", searchTerms);
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     
-    [self searchInIndex:self.fieldInvertedIndex forTerms:searchTerms withZoneWeight:0.3 results:results];
+    [self searchInIndex:self.fieldInvertedIndex forTerms:searchTerms withZoneWeight:0.6 results:results];
     [self searchInIndex:self.titleInvertedIndex forTerms:searchTerms withZoneWeight:0.3 results:results];
-    [self searchInIndex:self.numberInvertedIndex forTerms:searchTerms withZoneWeight:0.3 results:results];
+    [self searchInIndex:self.numberInvertedIndex forTerms:searchTerms withZoneWeight:0.6 results:results];
     
     NSMutableArray *unsorted = [NSMutableArray array];
     
@@ -270,16 +274,16 @@
         course.searchScore = result[@"score"];
     }
     
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
-    
-    NSArray *sortedResults = [unsorted sortedArrayUsingDescriptors:@[descriptor]];
-    NSDictionary *top = sortedResults.firstObject;
-    NSDictionary *bottom = sortedResults.lastObject;
-    
-    for (NSDictionary *result in @[top, bottom]) {
-        Course *course = result[@"course"];
-        NSLog(@"\n%@ %@ - %@\n%@", course.shortField, course.number, course.title, result[@"score"]);
-    }
+//    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+//    
+//    NSArray *sortedResults = [unsorted sortedArrayUsingDescriptors:@[descriptor]];
+//    NSDictionary *top = sortedResults.firstObject;
+//    NSDictionary *bottom = sortedResults.lastObject;
+//    
+//    for (NSDictionary *result in @[top, bottom]) {
+//        Course *course = result[@"course"];
+//        NSLog(@"\n%@ %@ - %@\n%@", course.shortField, course.number, course.title, result[@"score"]);
+//    }
 }
 
 + (SearchManager *)sharedSearchManager {

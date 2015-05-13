@@ -16,5 +16,6 @@
 - (void)addCourseToSearchIndex:(Course*)course;
 - (void)calculateIDFs;
 - (void)assignScoresForSearch:(NSString*)search;
+- (void)clearSearchScores;
 
 @end
