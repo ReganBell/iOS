@@ -106,6 +106,11 @@
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
+    // Build inverted index for search
+    // We might want to save this into NSUserDefaults
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [SearchManager sharedSearchManager];
+    });
     // Set up scraping view controller; comment out for standard login flow
     
 //    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];

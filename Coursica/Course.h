@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSNumber * qDifficulty;
 @property (nonatomic, retain) NSNumber * qOverall;
 @property (nonatomic, retain) NSNumber * qWorkload;
+@property (nonatomic, retain) NSNumber *searchScore;
 @property (nonatomic, retain) NSString * shortField;
 @property (nonatomic, retain) NSString * term;
 @property (nonatomic, retain) NSString * title;

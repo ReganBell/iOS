@@ -13,7 +13,7 @@
 
 @protocol FiltersViewControllerDelegate <NSObject>
 
-- (void)filtersDidChange:(NSPredicate*)predicate;
+- (void)filtersDidChange;
 
 - (void)dismissFiltersViewController;
 
@@ -33,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *lowerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *upperLabel;
 
-
-- (IBAction)labelSliderChanged:(NMRangeSlider*)sender;
+- (NSPredicate*)filters;
 
 @end

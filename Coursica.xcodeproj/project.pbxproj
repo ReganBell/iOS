@@ -52,6 +52,9 @@
 		59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04A1A34877D003FD743 /* CommentsViewController.m */; };
 		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
 		59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DCAEC21A75D6E800929151 /* SearchManager.m */; };
+		59E661CF1B01476200200FAE /* SliderTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E661CE1B01476200200FAE /* SliderTab.png */; };
+		59E661D51B01769300200FAE /* DoubleSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E661D41B01769300200FAE /* DoubleSliderView.m */; };
+		59E661D91B01A72A00200FAE /* FadeOut.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E661D81B01A72A00200FAE /* FadeOut.png */; };
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */ = {isa = PBXBuildFile; fileRef = 59F51C6B1A254E3D0025E021 /* SampleAPIResponse */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
@@ -153,6 +156,11 @@
 		59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HeightCalculation.m"; sourceTree = "<group>"; };
 		59DCAEC11A75D6E800929151 /* SearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchManager.h; sourceTree = "<group>"; };
 		59DCAEC21A75D6E800929151 /* SearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchManager.m; sourceTree = "<group>"; };
+		59E661CE1B01476200200FAE /* SliderTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SliderTab.png; sourceTree = "<group>"; };
+		59E661D31B01769300200FAE /* DoubleSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleSliderView.h; sourceTree = "<group>"; };
+		59E661D41B01769300200FAE /* DoubleSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubleSliderView.m; sourceTree = "<group>"; };
+		59E661D81B01A72A00200FAE /* FadeOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FadeOut.png; sourceTree = "<group>"; };
+		59E661DA1B0288F700200FAE /* Coursica 14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 14.xcdatamodel"; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
@@ -282,11 +290,15 @@
 				2DE095481A71583C00FD524A /* LoginViewController.h */,
 				2DE095491A71589200FD524A /* LoginViewController.m */,
 				59F51C6B1A254E3D0025E021 /* SampleAPIResponse */,
+				59E661D31B01769300200FAE /* DoubleSliderView.h */,
+				59E661D41B01769300200FAE /* DoubleSliderView.m */,
 				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
 				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
+				59E661D81B01A72A00200FAE /* FadeOut.png */,
 				5975FD361AE0C9F200180AEC /* jharvard_dark.png */,
 				5902E6251A347E9600A38C11 /* SmallSearch.png */,
 				5902E61D1A3475DE00A38C11 /* NavBarBg.png */,
+				59E661CE1B01476200200FAE /* SliderTab.png */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
@@ -476,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */,
+				59E661CF1B01476200200FAE /* SliderTab.png in Resources */,
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
 				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
 				595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */,
@@ -484,6 +497,7 @@
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
+				59E661D91B01A72A00200FAE /* FadeOut.png in Resources */,
 				59B9D58A1AF6CA3F0006A57B /* USA.png in Resources */,
 				594E93E21A68D1B7003DB4E7 /* LongFields in Resources */,
 				5975FD371AE0C9F200180AEC /* jharvard_dark.png in Resources */,
@@ -572,6 +586,7 @@
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
 				598CAB2F1A22C7EA008D0142 /* Course.m in Sources */,
+				59E661D51B01769300200FAE /* DoubleSliderView.m in Sources */,
 				59D4A0481A347F98003FD743 /* NavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,6 +825,7 @@
 		596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				59E661DA1B0288F700200FAE /* Coursica 14.xcdatamodel */,
 				5926C2E11AE5800800342A5A /* Coursica 11.xcdatamodel */,
 				5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */,
 				5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */,
@@ -823,7 +839,7 @@
 				59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */,
 				596076B71A1000710038D4F4 /* Coursica.xcdatamodel */,
 			);
-			currentVersion = 5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */;
+			currentVersion = 59E661DA1B0288F700200FAE /* Coursica 14.xcdatamodel */;
 			path = Coursica.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

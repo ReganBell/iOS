@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D72i" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Course" representedClassName="Course" syncable="YES">
+        <attribute name="bracketed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="catalogNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="courseDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="decimalNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="examGroup" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genEdOne" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="genEdTwo" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="graduate" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="longField" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prereqs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qDifficulty" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="qOverall" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="qWorkload" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="searchScore" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="shortField" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="term" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleTokenSet" optional="YES" transient="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="faculty" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Faculty" inverseName="courses" inverseEntity="Faculty" syncable="YES"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Location" inverseName="course" inverseEntity="Location" syncable="YES"/>
+        <relationship name="meetings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting" inverseName="course" inverseEntity="Meeting" syncable="YES"/>
+        <relationship name="prerequisites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="prerequisites" inverseEntity="Course" syncable="YES"/>
+        <relationship name="qReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QReport" inverseName="course" inverseEntity="QReport" syncable="YES"/>
+    </entity>
+    <entity name="Faculty" representedClassName="Faculty" syncable="YES">
+        <attribute name="first" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="middle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="faculty" inverseEntity="Course" syncable="YES"/>
+        <relationship name="qReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QFacultyReport" inverseName="faculty" inverseEntity="QFacultyReport" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES">
+        <attribute name="building" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="room" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="course" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="locations" inverseEntity="Course" syncable="YES"/>
+    </entity>
+    <entity name="Meeting" representedClassName="Meeting" syncable="YES">
+        <attribute name="beginTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="day" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="optional" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="meetings" inverseEntity="Course" syncable="YES"/>
+    </entity>
+    <entity name="QComment" representedClassName="QComment" syncable="YES">
+        <attribute name="catalogNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="term" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="QFacultyReport" representedClassName="QFacultyReport" syncable="YES">
+        <attribute name="accessible" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="accessibleBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="discussion" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="discussionBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="enthusiasm" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="enthusiasmBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="feedback" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="feedbackBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lectures" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lecturesBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="overall" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="overallBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="timely" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="timelyBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="faculty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Faculty" inverseName="qReports" inverseEntity="Faculty" syncable="YES"/>
+        <relationship name="report" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QReport" inverseName="facultyReports" inverseEntity="QReport" syncable="YES"/>
+    </entity>
+    <entity name="QReport" representedClassName="QReport" syncable="YES">
+        <attribute name="assignments" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="assignmentsBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="assignmentsMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="enrollment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="feedback" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="feedbackBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="feedbackMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="materials" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="materialsBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="materialsMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="overall" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="overallBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="overallMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="recommend" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="recommendBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="recommendMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="section" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sectionBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sectionMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="term" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workload" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="workloadBaseline" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="workloadMedian" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="qReports" inverseEntity="Course" syncable="YES"/>
+        <relationship name="facultyReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QFacultyReport" inverseName="report" inverseEntity="QFacultyReport" syncable="YES"/>
+    </entity>
+    <entity name="QScore" representedClassName="QScore" syncable="YES">
+        <attribute name="catalogNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="five" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="four" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="one" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="three" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="two" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Course" positionX="0" positionY="0" width="128" height="420"/>
+        <element name="Faculty" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Location" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Meeting" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="QComment" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="QFacultyReport" positionX="18" positionY="162" width="128" height="283"/>
+        <element name="QReport" positionX="9" positionY="153" width="128" height="465"/>
+        <element name="QScore" positionX="0" positionY="0" width="128" height="150"/>
+    </elements>
+</model>
