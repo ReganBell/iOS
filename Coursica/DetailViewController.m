@@ -326,7 +326,7 @@
     
     // Sets the controller's Q score variables
     self.overallScore = qScoresDict[@"overall"];
-    self.difficultyScore = qScoresDict[@"difficulty"];
+//    self.difficultyScore = qScoresDict[@"difficulty"];
     self.workloadScore = qScoresDict[@"workload"];
     
     NSString *tempOverallString = [NSString stringWithFormat:@"Overall: %0.2f", [self.course.qOverall doubleValue]];
@@ -334,10 +334,10 @@
     [overallLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,9)];
     [overallLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(9, 4)];
     
-    NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty: %0.2f", [self.course.qDifficulty doubleValue]];
-    NSMutableAttributedString *difficultyLabel = [[NSMutableAttributedString alloc] initWithString:tempDifficultyString];
-    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,12)];
-    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(12, 4)];
+//    NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty: %0.2f", [self.course.qDifficulty doubleValue]];
+//    NSMutableAttributedString *difficultyLabel = [[NSMutableAttributedString alloc] initWithString:tempDifficultyString];
+//    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,12)];
+//    [difficultyLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(12, 4)];
     
     NSString *tempWorkloadString = [NSString stringWithFormat:@"Workload: %0.2f", [self.course.qWorkload doubleValue]];
     NSMutableAttributedString *workloadLabel = [[NSMutableAttributedString alloc] initWithString:tempWorkloadString];
@@ -391,7 +391,7 @@
     self.green = YES;
     
     self.overallLabel.attributedText = overallLabel;
-    self.difficultyLabel.attributedText = difficultyLabel;
+//    self.difficultyLabel.attributedText = difficultyLabel;
     self.workloadLabel.attributedText = workloadLabel;
     
     float height = [UILabel heightForString:self.descriptionLabel.text width:self.descriptionLabel.bounds.size.width - 40 font:self.descriptionLabel.font];

@@ -15,6 +15,7 @@
 #import "CHCSVParser.h"
 #import "QScore.h"
 #import "SearchManager.h"
+#import "QReport.h"
 
 @implementation Course
 
@@ -34,14 +35,70 @@
 @dynamic graduate;
 @dynamic genEdOne;
 @dynamic genEdTwo;
-@dynamic qDifficulty;
-@dynamic qWorkload;
-@dynamic qOverall;
 @dynamic longField;
 @dynamic examGroup;
 @dynamic decimalNumber;
 @dynamic qReports;
 @dynamic searchScore;
+
+- (NSNumber *)qOverall {
+    
+    if (!_qOverall) {
+        
+        QReport *mostRecent = [self mostRecentReport];
+        
+        if (!mostRecent)
+            _qOverall = nil;
+        else
+            _qOverall = mostRecent.overall;
+    }
+    
+    return _qOverall;
+}
+
+- (NSNumber *)qWorkload {
+    
+    if (!_qWorkload) {
+        
+        QReport *mostRecent = [self mostRecentReport];
+        
+        if (!mostRecent)
+            _qWorkload = nil;
+        else
+            _qWorkload = mostRecent.workload;
+    }
+    
+    return _qWorkload;
+}
+
+- (QReport*)mostRecentReport {
+    
+    if (self.qReports.count == 0) {
+        return nil;
+    }
+    
+    QReport *mostRecent = nil;
+    
+    for (QReport *report in self.qReports) {
+        if (mostRecent == nil) {
+            mostRecent = report;
+        } else {
+            switch ([report.year compare:mostRecent.year]) {
+                case NSOrderedSame:
+                    if (report.term.intValue >= mostRecent.term.intValue) {
+                        mostRecent = report;
+                    }
+                    break;
+                case NSOrderedDescending:
+                    mostRecent = report;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return mostRecent;
+}
 
 + (void)updateCourses:(NSArray *)serverCourses {
     

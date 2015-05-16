@@ -12,7 +12,11 @@
 
 @class Course;
 
-@interface Course : NSManagedObject
+@interface Course : NSManagedObject {
+    
+    NSNumber *_qOverall;
+    NSNumber *_qWorkload;
+}
 
 @property (nonatomic, retain) NSNumber * bracketed;
 @property (nonatomic, retain) NSString * catalogNumber;
@@ -25,9 +29,8 @@
 @property (nonatomic, retain) NSString * notes;
 @property (nonatomic, retain) NSString * number;
 @property (nonatomic, retain) NSString * prereqs;
-@property (nonatomic, retain) NSNumber * qDifficulty;
-@property (nonatomic, retain) NSNumber * qOverall;
-@property (nonatomic, retain) NSNumber * qWorkload;
+@property (nonatomic, strong) NSNumber * qOverall;
+@property (nonatomic, strong) NSNumber * qWorkload;
 @property (nonatomic, retain) NSNumber *searchScore;
 @property (nonatomic, retain) NSString * shortField;
 @property (nonatomic, retain) NSString * term;

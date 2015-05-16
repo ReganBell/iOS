@@ -18,8 +18,6 @@
 
 @interface FiltersViewController ()
 
-    // References to the UI elements in the view
-@property (weak, nonatomic) NMRangeSlider *overallSlider;
 @property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *genEdButtons;
 @property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *genEdLabels;
 @property (nonatomic, strong) IBOutletCollection(UIView) NSArray *cards;
@@ -34,22 +32,9 @@
 @property (weak, nonatomic) IBOutlet UIView *termBarView;
 @property (weak, nonatomic) IBOutlet UIView *genEdBarView;
 
-@property (weak, nonatomic) IBOutlet UILabel *qOverallTitleLabel;
 @property (weak, nonatomic) NMRangeSlider *qOverallSlider;
-@property (weak, nonatomic) UILabel *qOverallValueLabel;
-
-@property (weak, nonatomic) UILabel *qWorkloadTitleLabel;
 @property (weak, nonatomic) NMRangeSlider *qWorkloadSlider;
-@property (weak, nonatomic) UILabel *qWorkloadValueLabel;
-
-@property (weak, nonatomic) UILabel *qDifficultyTitleLabel;
 @property (weak, nonatomic) NMRangeSlider *qDifficultySlider;
-@property (weak, nonatomic) UILabel *qDifficultyValueLabel;
-
-@property (weak, nonatomic) IBOutlet UISegmentedControl *termControl;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *courseLevelControl;
-
-@property (weak, nonatomic) IBOutlet UITextField *searchField;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -76,14 +61,11 @@
             break;
     }
     
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
-//
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
-//
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty >= %f", self.qDifficultySlider.lowerValue]];
-//    [predicates addObject:[NSPredicate predicateWithFormat:@"qDifficulty <= %f", self.qDifficultySlider.upperValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+
+    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
     
     switch (self.selectedTermIndex) {
         case 0:
@@ -151,37 +133,36 @@
         k++;
     }
     
-    // Creates title bar with app name
-    CGRect frame = CGRectMake(0, 0, 0, 0);
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
-    label.text = @"Filters";
-    label.textColor = [UIColor whiteColor];
-    [label sizeToFit];
-    self.navigationItem.titleView = label;
-    
     self.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.translucent = NO;
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self.scrollView addGestureRecognizer:recognizer];
+    
+    [self selectButton:self.termBarButtons.lastObject inArray:self.termBarLabels];
+    [self selectButton:self.gradBarButtons.lastObject inArray:self.gradBarLabels];
 
     [self.contentView addSubview:self.genEdBarView];
     [self configureSliders];
 }
 
+- (void)handleTap:(UITapGestureRecognizer*)recognizer {
+    
+    [self.delegate keyboardShouldDismiss];
+}
+
+#pragma mark - Button Press Methods
+
 - (void)selectButton:(UIButton*)button inArray:(NSArray*)array {
     
     button.selected = !button.selected;
-    
     UILabel *label = array[button.tag];
-    
     UIColor *newColor = (button.selected) ? CoursicaBlue : UnselectedGray;
     label.textColor = newColor;
 }
 
 - (void)gradButtonPressed:(UIButton*)senderButton {
     
+    [self.delegate keyboardShouldDismiss];
     self.selectedGradIndex = senderButton.tag;
     [self selectButton:senderButton inArray:self.gradBarLabels];
     for (UIButton *button in self.gradBarButtons) {
@@ -193,6 +174,7 @@
 
 - (void)termButtonPressed:(UIButton*)senderButton {
     
+    [self.delegate keyboardShouldDismiss];
     self.selectedTermIndex = senderButton.tag;
     [self selectButton:senderButton inArray:self.termBarLabels];
     for (UIButton *button in self.termBarButtons) {
@@ -204,6 +186,7 @@
 
 - (void)genEdButtonPressed:(UIButton*)senderButton {
     
+    [self.delegate keyboardShouldDismiss];
     senderButton.selected = !senderButton.selected;
     
     UIImageView *iconView = self.genEdImageViews[senderButton.tag];
@@ -216,41 +199,9 @@
     }];
 }
 
-    // Called when apply filters button pressed
-    // Checks all UI elements for changes in order to filter results
 - (IBAction)applyFiltersButtonPressed:(id)sender {
     
-    
-    
     [self.delegate dismissFiltersViewController];
-}
-
-- (IBAction)buttonClicked:(UIButton*)genEdButton {
-    
-    genEdButton.selected = !genEdButton.selected;
-    
-    for (UILabel *label in self.genEdLabels) {
-        if (label.tag == genEdButton.tag) {
-            
-            [UIView animateWithDuration:0.2 animations:^{
-                
-                if (genEdButton.selected) {
-                    label.textColor = [UIColor whiteColor];
-                    label.layer.backgroundColor = CoursicaBlue.CGColor;
-                } else {
-                    label.textColor = [UIColor grayColor];
-                    label.layer.backgroundColor = [UIColor whiteColor].CGColor;
-                }
-            }];
-        }
-    }
-}
-
-
-- (IBAction)qOverallSliderChanged:(UISlider*)qOverallSlider {
-    
-    float rounded = roundf(qOverallSlider.value*10)/10;
-    self.qOverallTitleLabel.text = [NSString stringWithFormat:@"%0.1f", rounded];
 }
 
 - (IBAction)cancelButtonPressed:(id)sender {
@@ -258,72 +209,8 @@
     [self.delegate dismissFiltersViewController];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self updateSliderLabels];
-    //[self updateSetValuesSlider];
-    
-    if([self.view respondsToSelector:@selector(setTintColor:)])
-    {
-        self.view.tintColor = [UIColor orangeColor];
-    }
-    
-}
-
-// From third-party range slider repository (NMRangeSlider on Github, also in our pod file)
-// functions handling the creation and changes of the range sliders
-#pragma mark -
-#pragma mark - Label  Slider
-
-- (void) configureLabelSlider
-{
-    self.labelSlider.minimumValue = 0;
-    self.labelSlider.maximumValue = 100;
-    
-    self.labelSlider.lowerValue = 0;
-    self.labelSlider.upperValue = 100;
-    
-    self.labelSlider.minimumRange = 10;
-    
-    [self.contentView addSubview:self.labelSlider];
-}
-
-- (void) updateSliderLabels
-{
-    // You get get the center point of the slider handles and use this to arrange other subviews
-    
-    CGPoint lowerCenter;
-    lowerCenter.x = (self.labelSlider.lowerCenter.x + self.labelSlider.frame.origin.x);
-    lowerCenter.y = (self.labelSlider.center.y - 30.0f);
-    self.lowerLabel.center = lowerCenter;
-    self.lowerLabel.text = [NSString stringWithFormat:@"%d", (int)self.labelSlider.lowerValue];
-    
-    CGPoint upperCenter;
-    upperCenter.x = (self.labelSlider.upperCenter.x + self.labelSlider.frame.origin.x);
-    upperCenter.y = (self.labelSlider.center.y - 30.0f);
-    self.upperLabel.center = upperCenter;
-    self.upperLabel.text = [NSString stringWithFormat:@"%d", (int)self.labelSlider.upperValue];
-}
-
-// Handle control value changed events just like a normal slider
-- (IBAction)labelSliderChanged:(NMRangeSlider*)sender
-{
-    self.qOverallValueLabel.text = [NSString stringWithFormat:@"%.1f to %.1f", self.qOverallSlider.lowerValue, self.qOverallSlider.upperValue];
-    self.qWorkloadValueLabel.text = [NSString stringWithFormat:@"%.1f to %.1f", self.qWorkloadSlider.lowerValue, self.qWorkloadSlider.upperValue];
-    self.qDifficultyValueLabel.text = [NSString stringWithFormat:@"%.1f to %.1f", self.qDifficultySlider.lowerValue, self.qDifficultySlider.upperValue];
-}
-
 #pragma mark - Programmatic Sliders
 
-    //Set up sliders (written by us, not third-party)
 - (DoubleSliderView*)configureSliderWithTitle:(NSString*)title font:(UIFont*)font textColor:(UIColor*)textColor {
     
     DoubleSliderView *sliderView = [[DoubleSliderView alloc] initWithTitle:title font:font textColor:textColor];
@@ -350,21 +237,6 @@
     self.qWorkloadSlider = workload.slider;
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
-    
-    DoubleSliderView *difficulty = [self configureSliderWithTitle:@"Difficulty" font:font textColor:textColor];
-    self.qDifficultySlider = overall.slider;
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:difficulty attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workload attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

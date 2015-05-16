@@ -39,7 +39,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kej-Os-19P">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kej-Os-19P">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJa-GI-LQK" userLabel="ContentView">
@@ -1401,10 +1401,6 @@
                                 <exclude reference="FUG-wN-FhU"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="5AH-X2-2n8"/>
-                                <exclude reference="GOx-ib-WMC"/>
-                                <exclude reference="aQ6-HJ-aF2"/>
-                                <exclude reference="oi3-wW-MOe"/>
                                 <exclude reference="79I-cO-68W"/>
                                 <exclude reference="RLm-Pa-wfr"/>
                                 <exclude reference="a7x-lW-wwQ"/>
@@ -1413,6 +1409,10 @@
                                 <exclude reference="tXy-m2-aD5"/>
                                 <exclude reference="yLC-rM-w8Q"/>
                                 <exclude reference="LE0-6A-FTz"/>
+                                <exclude reference="GOx-ib-WMC"/>
+                                <exclude reference="aQ6-HJ-aF2"/>
+                                <exclude reference="oi3-wW-MOe"/>
+                                <exclude reference="5AH-X2-2n8"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1421,9 +1421,6 @@
                                 <include reference="FUG-wN-FhU"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="GOx-ib-WMC"/>
-                                <include reference="aQ6-HJ-aF2"/>
-                                <include reference="oi3-wW-MOe"/>
                                 <include reference="79I-cO-68W"/>
                                 <exclude reference="RLm-Pa-wfr"/>
                                 <include reference="a7x-lW-wwQ"/>
@@ -1432,6 +1429,9 @@
                                 <exclude reference="tXy-m2-aD5"/>
                                 <include reference="yLC-rM-w8Q"/>
                                 <include reference="LE0-6A-FTz"/>
+                                <exclude reference="GOx-ib-WMC"/>
+                                <include reference="aQ6-HJ-aF2"/>
+                                <include reference="oi3-wW-MOe"/>
                             </mask>
                         </variation>
                     </view>

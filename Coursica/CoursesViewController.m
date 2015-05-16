@@ -44,68 +44,28 @@
 
 @implementation CoursesViewController
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    [self filtersDidChange];
-    return YES;
-}
-
-- (void)filtersDidChange {
-    
-    NSString *search = self.searchBar.text;
-    
-    if (!search.length) {
-        [self.searchBar resignFirstResponder];
-    }
-    
-    [[SearchManager sharedSearchManager] assignScoresForSearch:search];
-    
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"searchScore > %f", 0.05];
-    NSPredicate *masterPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[searchPredicate]];
-    
-    [self updateFetchWithPredicate:masterPredicate];
-    
-    [self setFiltersShowing:NO searchActive:YES];
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-    [self setFiltersShowing:YES searchActive:YES];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    
-    return UIStatusBarStyleDefault;
-}
-
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    // Creates objects used retrieving data from CS50 API
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    [self updateCoursesData];
+    [self layoutNavigationBar];
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.opaque = YES;
-
+    
     self.tableView.tableFooterView = [UIView new];
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavBarBg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
-    
-    self.navigationItem.titleView = self.navBarView;
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat constant = screenWidth / 2 - 8;
-    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.coursicaTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.navBarView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:constant];
-    [self.navBarView addConstraint:centerX];
-    [self.navBarView layoutIfNeeded];
-    CGRect frame = self.navigationItem.titleView.frame;
-    CGRect bounds = self.navigationItem.titleView.bounds;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navBarRightButtonView];
-    CGRect rightFrame = self.navBarRightButtonView.frame;
+}
 
-    // checks for a database, and if not requests courses data from CS50 API
+- (void)updateCoursesData {
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSUInteger count = [delegate.managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    
     if (count == 0) {
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -122,6 +82,19 @@
             NSLog(@"Error fetching lists: %@", error);
         }];
     }
+}
+
+#pragma mark - Navigation Bar Layout
+
+- (void)layoutNavigationBar {
+    
+    self.navigationItem.titleView = self.navBarView;
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat constant = screenWidth / 2 - 8;
+    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.coursicaTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.navBarView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:constant];
+    [self.navBarView addConstraint:centerX];
+    [self.navBarView layoutIfNeeded];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navBarRightButtonView];
 }
 
 - (UIView*)navBarRightButtonView {
@@ -216,7 +189,7 @@
     self.searchBarCenterY = center;
     [navBarView addConstraints:@[rightSpacing, leftSpacing, height, center]];
     _navBarView = navBarView;
-
+    
     return _navBarView;
 }
 
@@ -267,6 +240,38 @@
     
     _coursicaTitleLabel = label;
     return _coursicaTitleLabel;
+}
+
+#pragma mark - Filters View Transition
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+    [self setFiltersShowing:YES searchActive:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [self filtersDidChange];
+    return YES;
+}
+
+- (void)filtersDidChange {
+    
+    NSString *search = self.searchBar.text;
+    
+    if (!search.length) {
+        [self.searchBar resignFirstResponder];
+        
+    }
+    
+    [[SearchManager sharedSearchManager] assignScoresForSearch:search];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"searchScore > %f", 0.05];
+    NSPredicate *masterPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[searchPredicate]];
+    
+    [self updateFetchWithPredicate:masterPredicate];
+    
+    [self setFiltersShowing:NO searchActive:YES];
 }
 
 - (FiltersViewController*)filterController {
@@ -334,15 +339,14 @@
     [self updateFetchWithPredicate:nil];
 }
 
-    // Action called on switching to the filters screen
 - (IBAction)showFilters{
     
     [self setFiltersShowing:YES searchActive:NO];
 }
 
-- (void)dismissFiltersViewController {
-
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)keyboardShouldDismiss {
+    
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - NSFetchedResultsController Delegate
@@ -520,6 +524,11 @@
     id <NSFetchedResultsSectionInfo> sectionInfo = self.fetchedResultsController.sections[section];
     
     return sectionInfo.numberOfObjects;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    
+    return UIStatusBarStyleDefault;
 }
 
 - (void)didReceiveMemoryWarning {

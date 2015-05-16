@@ -14,7 +14,7 @@
 @protocol FiltersViewControllerDelegate <NSObject>
 
 - (void)filtersDidChange;
-
+- (void)keyboardShouldDismiss;
 - (void)dismissFiltersViewController;
 
 @end
