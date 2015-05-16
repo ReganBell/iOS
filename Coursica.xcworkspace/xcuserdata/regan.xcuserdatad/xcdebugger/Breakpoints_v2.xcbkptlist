@@ -93,22 +93,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Coursica/SearchManager.m"
-            timestampString = "453174673.882481"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "-searchInIndex:forTerms:withZoneWeight:results:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Coursica/Scrape/FullOnScrapist.m"
             timestampString = "446528995.080266"
             startingColumnNumber = "9223372036854775807"
@@ -180,6 +164,22 @@
             startingLineNumber = "415"
             endingLineNumber = "415"
             landmarkName = "-scrapeInstructors"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/SearchManager.m"
+            timestampString = "453446998.556998"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
+            landmarkName = "-assignScoresForSearch:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

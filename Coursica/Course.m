@@ -92,6 +92,16 @@
         newCourse.bracketed = courseDict[@"bracketed"];
         newCourse.shortField = courseDict[@"field"];
         newCourse.number = courseDict[@"number"];
+        
+        // So we can rank classes by their actual numeric value, not by string comparison ("131" shouldn't come before "14")
+        NSScanner *numberScanner = [NSScanner scannerWithString:newCourse.number];
+        NSInteger decimalNumber = -1;
+        BOOL success = [numberScanner scanInteger:&decimalNumber];
+        if (success) {
+            newCourse.decimalNumber = @(decimalNumber);
+        } else
+            newCourse.decimalNumber = @(-1);
+        
         newCourse.prereqs = courseDict[@"prerequisites"];
         newCourse.title = purifiedTitleString;
         newCourse.courseDescription = purifiedDescriptionString;

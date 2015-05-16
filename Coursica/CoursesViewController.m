@@ -227,7 +227,7 @@
     }
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
-    [button setTitle:@"Cancel" forState:UIControlStateNormal];
+    [button setTitle:@"Clear" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:14.0];
     [button addTarget:self action:@selector(cancelFiltersButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
