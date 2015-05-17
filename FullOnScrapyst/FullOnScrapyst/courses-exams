@@ -1,0 +1,645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="en" dir="ltr" version="HTML+RDFa 1.1"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/terms/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:og="http://ogp.me/ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:sioc="http://rdfs.org/sioc/ns#"
+  xmlns:sioct="http://rdfs.org/sioc/types#"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta about="/courses-exams/courses-instruction" property="sioc:num_replies" content="0" datatype="xsd:integer" />
+<link rel="shortcut icon" href="http://www.registrar.fas.harvard.edu/sites/default/files/favicon.ico" type="image/vnd.microsoft.icon" />
+<meta content="Courses of Instruction " about="/courses-exams/courses-instruction" property="dc:title" />
+<link rel="shortlink" href="/node/15" />
+<meta name="Generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="canonical" href="/courses-exams/courses-instruction" />
+  <title>Courses of Instruction  | FAS Registrar&#039;s Office</title>  
+  <link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css__9zsakYbWSOTLroLLtWO9P7zLJXhXtSJo2OgXN4wIrU.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css_eZ3p35qbpMElau5YqPT6uqOLsCc1hWBKiKaQN1wwWzk.css" media="screen" />
+<link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css_uDl1ch8mi23P8w1gKgpTazYTfdfUeXgrRd2RKw6JTHo.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css_x-phTPn2hfqu0MHs4BWDE6TE8SicW9ixcH0jt7GGFBw.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css_Y163vtUEYW_oDAl5fvUZwNG2PUjNtc9eLDRGmc-TBj8.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css_Ql7giiMk_-ZeMdnz_jY1krfvnsi_f9k1oezBNdVDkbU.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.registrar.fas.harvard.edu/sites/default/files/css/css_5lNy9ChIVtpxgxJpGrSvWsCItztxNx_iLlIwgD8JwoU.css" media="all" />
+  <script type="text/javascript" src="http://www.registrar.fas.harvard.edu/sites/default/files/js/js_3jHghlMLrjr9xXAC0JufqSSch3oAbkZstSqYdc4uuck.js"></script>
+<script type="text/javascript" src="http://www.registrar.fas.harvard.edu/sites/default/files/js/js_LrE4XeaTHVPbksjz9emjwW1NyOT1L0CCBZha1nGxx58.js"></script>
+<script type="text/javascript" src="http://www.registrar.fas.harvard.edu/sites/default/files/js/js_Lopcmj_l7IPEWti3kt7eC_-s6R9YoZyFydEsmfkGqq8.js"></script>
+<script type="text/javascript" src="http://www.registrar.fas.harvard.edu/sites/default/files/js/js_aAP3gjX1ZZRV_M8MgNUnhoqc1oyilKxyPQQQ1RhhDOU.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+var _gaq = _gaq || [];_gaq.push(["_setAccount", "UA-39801147-1"]);_gaq.push(["_trackPageview"]);(function() {var ga = document.createElement("script");ga.type = "text/javascript";ga.async = true;ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ga, s);})();
+//--><!]]>
+</script>
+<script type="text/javascript" src="http://www.registrar.fas.harvard.edu/sites/default/files/js/js_uQRtAXeqzhNRhPygFzskLMLfnyR0dBaIgEanEV8Jxws.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"fasro","theme_token":"MKDOQ7sFeZIKZ2W3U28ngWdz7jFy7OWbx7tJD48zaJ4","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"misc\/ui\/jquery.ui.core.min.js":1,"misc\/ui\/jquery.ui.widget.min.js":1,"misc\/jquery.cookie.js":1,"sites\/all\/modules\/qtip\/library\/jquery.qtip.js":1,"sites\/all\/modules\/qtip\/js\/qtip.js":1,"misc\/ui\/jquery.ui.mouse.min.js":1,"misc\/ui\/jquery.ui.slider.min.js":1,"misc\/jquery.form.js":1,"misc\/ajax.js":1,"sites\/all\/modules\/collapsiblock\/collapsiblock.js":1,"sites\/all\/modules\/spamspan\/spamspan.js":1,"sites\/all\/libraries\/colorbox\/colorbox\/jquery.colorbox-min.js":1,"sites\/all\/modules\/colorbox\/js\/colorbox.js":1,"sites\/all\/modules\/colorbox\/styles\/default\/colorbox_default_style.js":1,"sites\/all\/modules\/nice_menus\/superfish\/js\/superfish.js":1,"sites\/all\/modules\/nice_menus\/superfish\/js\/jquery.bgiframe.min.js":1,"sites\/all\/modules\/nice_menus\/superfish\/js\/jquery.hoverIntent.minified.js":1,"sites\/all\/modules\/nice_menus\/nice_menus.js":1,"sites\/all\/modules\/search_api_ranges-7.x-1.3\/search_api_ranges\/jquery.numeric.js":1,"sites\/all\/modules\/search_api_ranges-7.x-1.3\/search_api_ranges\/search_api_ranges.js":1,"sites\/all\/modules\/views\/js\/base.js":1,"misc\/progress.js":1,"sites\/all\/modules\/views\/js\/ajax_view.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/fasro\/js\/css_browser_selector.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/qtip\/library\/jquery.qtip.css":1,"sites\/all\/modules\/qtip\/css\/qtip.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"misc\/ui\/jquery.ui.slider.css":1,"sites\/all\/modules\/calendar\/css\/calendar_multiday.css":1,"sites\/all\/modules\/collapsiblock\/collapsiblock.css":1,"modules\/comment\/comment.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/colorbox\/styles\/default\/colorbox_default_style.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/nice_menus\/nice_menus.css":1,"sites\/all\/modules\/nice_menus\/nice_menus_default.css":1,"sites\/all\/themes\/omega\/alpha\/css\/alpha-reset.css":1,"sites\/all\/themes\/omega\/alpha\/css\/alpha-mobile.css":1,"sites\/all\/themes\/omega\/alpha\/css\/alpha-alpha.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-text.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-branding.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-menu.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-forms.css":1,"sites\/all\/themes\/omega\/omega\/css\/omega-visuals.css":1,"sites\/all\/themes\/fasro\/css\/global.css":1,"normal::sites\/all\/themes\/fasro\/css\/fasro-alpha-default.css":1,"normal::sites\/all\/themes\/fasro\/css\/fasro-alpha-default-normal.css":1,"sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/normal\/alpha-default-normal-12.css":1,"sites\/all\/themes\/omega\/alpha\/css\/grid\/alpha_default\/normal\/alpha-default-normal-16.css":1}},"collapsiblock":{"blocks":{"block-views-cal-event-block-2":"1","block-facetapi-hl37srbotbedfdgderxhkvxfsq41dssh":"3","block-menu-block-1":"1","block-facetapi-jpim0qr2m8t0dqftumyhx3gdoxfnwzin":"3","block-multiblock-1":"1","block-facetapi-aiot4pcpjrgdiybitnnx1vnsjas9rz20":"3","block-facetapi-2bb2clzu8to9nubchnpxs7e1pux2xq51":"3","block-facetapi-dtc4gwbyfujl1hlq02np319eyo3oieff":"3","block-facetapi-vtlpsxgk1kiymi1vibtj09kban6wl1nj":"3","block-facetapi-wf9tlnyza2fkuwdjjjtgefv5xdae09l2":"3","block-facetapi-sbwvcpg2212rmtpaxukhrrpoku0vsnpl":"3","block-current-search-standard":"1","block-views--exp-course-catalog-page":"1","block-views-cal-event-block-1":"1","block-nodeblock-49":"1","block-delta-blocks-breadcrumb":"1","block-block-2":"1","block-block-1":"1","block-views-collapsible-items-block-block":"1","block-block-3":"1","block-ddblock-1":"1","block-facetapi-9nkf1rqejrgtmjdusf4aqhg1djkvc7ql":"3","block-nodeblock-92988":"1","block-block-4":"1"},"default_state":"1","slide_type":"1","slide_speed":"200","block_title":"h2.block-title","block":"section.block","block_content":"div.content"},"colorbox":{"opacity":"0.85","current":"{current} of {total}","previous":"\u00ab Prev","next":"Next \u00bb","close":"Close","maxWidth":"100%","maxHeight":"100%","fixed":true,"__drupal_alter_by_ref":["default"]},"nice_menus_options":{"delay":800,"speed":1},"qtip":{"target_position":"top_center","tooltip_position":"bottom_center","show_speech_bubble_tip":1,"show_speech_bubble_tip_side":1,"speech_bubble_size":"12","show_speech_bubble_tip_solid":0,"show_shadow":0,"rounded_corners":1,"color":"ui-tooltip-light","custom_color":"","show_event_type":"mouseenter","hide_event_type":"mouseleave","show_webform_descriptions":0,"additional_elements":""},"views":{"ajax_path":"\/views\/ajax","ajaxViews":{"views_dom_id:a794e3e820944a1cfd08b785ae70b60f":{"view_name":"courses_of_instruction","view_display_id":"block","view_args":"2014-2015","view_path":"node\/15","view_base_path":"test\/instructions\/%","view_dom_id":"a794e3e820944a1cfd08b785ae70b60f","pager_element":0}}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls|xml|z|zip"}});
+//--><!]]>
+</script>
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body class="html not-front not-logged-in page-node page-node- page-node-15 node-type-page context-courses-exams">
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+  </div>
+  <div class="region region-page-top" id="region-page-top">
+  <div class="region-inner region-page-top-inner">
+      </div>
+</div>  <div class="page clearfix" id="page">
+      <header id="section-header" class="section section-header">
+  <div id="zone-branding-wrapper" class="zone-wrapper zone-branding-wrapper clearfix">  
+  <div id="zone-branding" class="zone zone-branding clearfix container-12">
+    <div class="grid-12 region region-branding" id="region-branding">
+  <div class="region-inner region-branding-inner">
+        <div class="branding-data clearfix">
+            <div class="logo-img">
+        <a href="/" rel="home" title=""><img src="http://www.registrar.fas.harvard.edu/sites/default/files/harvard_fas_logo_0.jpg" alt="" id="logo" /></a>      </div>
+                </div>
+        <div class="block block-block block-4 block-block-4 odd block-without-title" id="block-block-4">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+       <style>
+<!--/*--><![CDATA[/* ><!--*/
+.block-block-4 {position:relative; z-index:2;float: right;text-align: right;width: 120px;}#block-nice-menus-2{margin-right: -135px;}
+/*--><!]]>*/
+</style><p><a href="https://twitter.com/HarvardReg" target="_blank"><img alt="Follow us on Twitter" class="media-image" height="24" title="Follow us on Twitter" width="24" typeof="foaf:Image" src="http://www.registrar.fas.harvard.edu/sites/default/files/media/tw.png" /></a> <a href="http://harvardregistrar.tumblr.com/" target="_blank" title="Visit us on Tumblr"><img alt="Visit us on Tumblr" class="media-image" height="24" title="Visit us on Tumblr" width="24" typeof="foaf:Image" src="http://www.registrar.fas.harvard.edu/sites/default/files/media/tu_2.png" /></a> <a href="https://www.facebook.com/HarvardReg" target="_blank" title="Visit us on Tumblr"><img alt="Visit us on Facebook" class="media-image" height="24" title="Visit us on Facebook" width="24" typeof="foaf:Image" src="http://www.registrar.fas.harvard.edu/sites/default/files/media/fb_2.png" /></a> <a href="http://www.youtube.com/user/HarvardRegistrar" target="_blank" title="Visit us on YouTube"><img alt="Visit us on YouTube" class="media-image" height="24" title="Visit us on YouTube" width="24" typeof="foaf:Image" src="http://www.registrar.fas.harvard.edu/sites/default/files/media/yt_2.png" /></a></p>
+     </div>
+  </div>
+</div><div class="block block-nice-menus block-2 block-nice-menus-2 even block-without-title" id="block-nice-menus-2">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <ul class="nice-menu nice-menu-down" id="nice-menu-2"><li class="menu-503 menu-path-courses-exams-course-catalog  first   odd  "><a href="/courses-exams/course-catalog" title="">Search Courses</a></li>
+<li class="menu-270 menuparent  menu-path-calendar   even  "><a href="/calendar" title="">Calendar</a><ul><li class="menu-1130 menu-path-node-93200  first   odd   last "><a href="/calendar/five-year-calendar">Five Year Calendar</a></li>
+</ul></li>
+<li class="menu-277 menuparent  menu-path-node-8   odd   last "><a href="/about-us">About Us</a><ul><li class="menu-361 menu-path-node-31  first   odd  "><a href="/about-us/staff-directory">Staff Directory</a></li>
+<li class="menu-362 menu-path-node-32   even  "><a href="/about-us/directions">Directions</a></li>
+<li class="menu-363 menu-path-node-72978   odd   last "><a href="/about-us/contact-us">Contact Us</a></li>
+</ul></li>
+</ul>
+    </div>
+  </div>
+</div>  </div>
+</div>  </div>
+</div><div id="zone-menu-wrapper" class="zone-wrapper zone-menu-wrapper clearfix">  
+  <div id="zone-menu" class="zone zone-menu clearfix container-12">
+    <div class="grid-12 region region-menu" id="region-menu">
+  <div class="region-inner region-menu-inner">
+        <div class="block block-search block-form block-search-form odd block-without-title" id="block-search-form">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <form action="/courses-exams/courses-instruction" method="post" id="search-block-form" accept-charset="UTF-8"><div><div class="container-inline">
+      <h2 class="element-invisible">Search form</h2>
+    <div class="form-item form-type-textfield form-item-search-block-form">
+  <label class="element-invisible" for="edit-search-block-form--2">Search </label>
+ <input title="Enter the terms you wish to search for." type="text" id="edit-search-block-form--2" name="search_block_form" value="" size="15" maxlength="128" class="form-text" />
+</div>
+<div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Search" class="form-submit" /></div><input type="hidden" name="form_build_id" value="form-GPJar05-14k-aLVGUhreIE51CfSF8rpZW0s2lH_f7Ic" />
+<input type="hidden" name="form_id" value="search_block_form" />
+</div>
+</div></form>    </div>
+  </div>
+</div><div class="block block-nice-menus block-1 block-nice-menus-1 even block-without-title" id="block-nice-menus-1">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <ul class="nice-menu nice-menu-down" id="nice-menu-1"><li class="menu-271 menuparent  menu-path-node-2  first   odd  "><a href="/registration-enrollment-degrees" title="Registration &amp; Degrees">Registration &amp; Degrees</a><ul><li class="menu-280 menu-path-node-11  first   odd  "><a href="/registration-enrollment-degrees/online-registration-enrollment" title="Online Registration &amp; Enrollment">Online Registration &amp; Enrollment</a></li>
+<li class="menu-281 menu-path-node-12   even  "><a href="/registration-enrollment-degrees/cross-registration" title="Cross Registration">Cross Registration</a></li>
+<li class="menu-282 menu-path-node-13   odd  "><a href="/registration-enrollment-degrees/tuition-assistance" title="Tuition Assistance">Tuition Assistance</a></li>
+<li class="menu-352 menuparent  menu-path-node-22   even   last "><a href="/registration-enrollment-degrees/graduation-diplomas" title="Graduation &amp; Diplomas">Graduation &amp; Diplomas</a><ul><li class="menu-878 menu-path-node-38017  first   odd   last "><a href="/registration-enrollment-degrees/graduation-diplomas/phd-dissertation-submission" title="PhD Dissertation Submission">PhD Dissertation Submission</a></li>
+</ul></li>
+</ul></li>
+<li class="menu-272 menuparent  menu-path-node-3 active-trail   even  "><a href="/courses-exams" title="Courses &amp; Exams">Courses &amp; Exams</a><ul><li class="menu-284 menuparent  menu-path-node-15 active-trail  first   odd  "><a href="/courses-exams/courses-instruction" class="active">Courses of Instruction</a><ul><li class="menu-988 menu-path-node-91510  first   odd   last "><a href="/courses-exams/courses-instruction/previous-courses-instruction" title="Previous Courses of Instruction">Previous Courses of Instruction</a></li>
+</ul></li>
+<li class="menu-868 menu-path-courses-exams-course-catalog   even  "><a href="/courses-exams/course-catalog" title="Search Courses">Search Courses</a></li>
+<li class="menu-989 menu-path-node-91511   odd  "><a href="/courses-exams/course-evaluations" title="Course Evaluations">Course Evaluations</a></li>
+<li class="menu-285 menuparent  menu-path-node-16   even  "><a href="/courses-exams/sectioning-students" title="Sectioning for Students">Sectioning for Students</a><ul><li class="menu-1105 menu-path-node-92166  first   odd   last "><a href="/courses-exams/sectioning-students/sectioning-instructions-students" title="Sectioning Instructions for Students">Sectioning Instructions for Students</a></li>
+</ul></li>
+<li class="menu-586 menu-path-node-85   odd   last "><a href="/courses-exams/exam-policy" title="Exam Policy">Exam Policy</a></li>
+</ul></li>
+<li class="menu-273 menuparent  menu-path-node-4   odd  "><a href="/certifications-transcripts-student-records" title="Transcripts &amp; Records">Transcripts &amp; Records</a><ul><li class="menu-287 menu-path-node-18  first   odd  "><a href="/certification-transcripts-student-records/order-transcript" title="Order Transcript">Order Transcript</a></li>
+<li class="menu-288 menu-path-node-19   even  "><a href="/certification-transcripts-student-records/certification-enrollment-and-degree-verifications" title="Certifications">Certifications</a></li>
+<li class="menu-544 menu-path-node-40   odd  "><a href="/certification-transcripts-student-records/test-scores-advanced-standing" title="Test Scores &amp; Advanced Standing">Test Scores &amp; Advanced Standing</a></li>
+<li class="menu-986 menu-path-node-91507   even   last "><a href="/certification-transcripts-student-records/view/edit-directory-information" title="View/Edit Directory Information">View/Edit Directory Information</a></li>
+</ul></li>
+<li class="menu-274 menu-path-node-5   even  "><a href="/forms-petitions" title="Forms &amp; Petitions">Forms &amp; Petitions</a></li>
+<li class="menu-278 menuparent  menu-path-node-9   odd  "><a href="/general-information" title="General Information">General Information</a><ul><li class="menu-364 menu-path-node-34  first   odd  "><a href="/general-information/faqs" title="FAQs">FAQs</a></li>
+<li class="menu-1120 menu-path-node-93078   even  "><a href="/general-information/john-harvard-and-harvard-college-scholarships">John Harvard and Harvard College Scholarships</a></li>
+<li class="menu-365 menuparent  menu-path-node-35   odd  "><a href="/general-information/handbooks" title="Handbooks">Handbooks</a><ul><li class="menu-907 menu-path-node-91496  first   odd   last "><a href="/general-information/handbooks/archived-handbooks" title="Archived Handbooks">Archived Handbooks</a></li>
+</ul></li>
+<li class="menu-357 menu-path-node-27   even  "><a href="/general-information/reporting-analysis-services" title="Reporting &amp; Analysis Services">Reporting &amp; Analysis Services</a></li>
+<li class="menu-367 menu-path-node-37   odd  "><a href="/general-information/religious-observation-policy" title="Religious Observation Policy">Religious Observation Policy</a></li>
+<li class="menu-368 menu-path-node-38   even  "><a href="/general-information/voter-registration" title="Voter Registration">Voter Registration</a></li>
+<li class="menu-590 menu-path-node-87   odd   last "><a href="/general-information/family-educational-rights-and-privacy-act-ferpa" title="FERPA">FERPA</a></li>
+</ul></li>
+<li class="menu-276 menuparent  menu-path-node-7   even   last "><a href="/faculty-staff" title="For Faculty &amp; Staff">For Faculty &amp; Staff</a><ul><li class="menu-1136 menu-path-node-108054  first   odd  "><a href="/faculty-staff/courses" title="Courses">Courses</a></li>
+<li class="menu-510 menu-path-node-56   even  "><a href="/faculty-staffcourses/catalog-coordinator" title="Catalog Coordinators">Catalog Coordinators</a></li>
+<li class="menu-354 menuparent  menu-path-node-24   odd  "><a href="/faculty-staff/online-grading" title="Online Grading">Online Grading</a><ul><li class="menu-511 menu-path-node-57  first   odd   last "><a href="/faculty-staffonline-grading/grade-changes" title="Grade Changes">Grade Changes</a></li>
+</ul></li>
+<li class="menu-355 menuparent  menu-path-node-25   even  "><a href="/faculty-staff/classrooms" title="Classrooms">Classrooms</a><ul><li class="menu-513 menu-path-node-59  first   odd  "><a href="/faculty-staff/classrooms/inventory" title="Inventory">Inventory</a></li>
+<li class="menu-514 menu-path-node-60   even   last "><a href="/faculty-staffclassrooms/requests" title="Requests">Requests</a></li>
+</ul></li>
+<li class="menu-509 menu-path-node-55   odd  "><a href="/faculty-staff/courses/enrollment" title="Enrollment">Enrollment</a></li>
+<li class="menu-359 menuparent  menu-path-node-29   even  "><a href="/faculty-staff/sectioning" title="Sectioning">Sectioning</a><ul><li class="menu-588 menu-path-node-84  first   odd   last "><a href="/faculty-staff/sectioning/sectioning-instructions" title="Sectioning Instructions">Sectioning Instructions</a></li>
+</ul></li>
+<li class="menu-356 menuparent  menu-path-node-26   odd  "><a href="/faculty-staff/exams" title="Exams">Exams</a><ul><li class="menu-515 menu-path-node-61  first   odd  "><a href="/faculty-staff/exams/schedule" title="Schedule">Schedule</a></li>
+<li class="menu-516 menu-path-node-62   even  "><a href="/faculty-staff/exams/procedures" title="Procedures">Procedures</a></li>
+<li class="menu-517 menu-path-node-63   odd   last "><a href="/faculty-staff/exams/attendance" title="Attendance">Attendance</a></li>
+</ul></li>
+<li class="menu-358 menu-path-node-28   even   last "><a href="/faculty-staff/communication-packet" title="Communication Packet">Communication Packet</a></li>
+</ul></li>
+</ul>
+    </div>
+  </div>
+</div>  </div>
+</div>
+  </div>
+</div><div id="zone-header-wrapper" class="zone-wrapper zone-header-wrapper clearfix custom-wrapper-class">  
+  <div id="zone-header" class="zone zone-header clearfix custom-zone-class container-12">
+    <div class="grid-6 region region-header-first custom-header-first-class" id="region-header-first">
+  <div class="region-inner region-header-first-inner">
+    <div class="block block-delta-blocks block-breadcrumb block-delta-blocks-breadcrumb odd block-without-title" id="block-delta-blocks-breadcrumb">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <div id="breadcrumb" class="clearfix"><ul class="breadcrumb"><li class="depth-1 odd first"><a href="/">Home</a></li><li class="depth-2 even last"><a href="/courses-exams" title="Courses &amp; Exams">Courses &amp; Exams</a></li></ul></div>    </div>
+  </div>
+</div>  </div>
+</div><div class="grid-6 region region-header-second custom-header-second-class" id="region-header-second">
+  <div class="region-inner region-header-second-inner">
+    <div class="block block-nodeblock block-50 block-nodeblock-50 odd block-without-title" id="block-nodeblock-50">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <div id="node-50" class="node node-custom-block clearfix" about="/social-icons" typeof="sioc:Item foaf:Document" class="node node-custom-block node-published node-not-promoted node-not-sticky author-wds odd clearfix" id="node-custom-block-50">
+
+  
+      
+  
+  <div class="content" class="content clearfix">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><ul class="addthis_toolbox addthis_default_style" id="toolbar-links">
+            <li><a href="javascript:print();" class="tool-icon print">Print</a> / </li>	
+            <li><a href="http://www.addthis.com/bookmark.php" class="tool-icon email addthis_button_email at300b" target="_blank" title="Email"><span class="at16nc at300bs at15nc at15t_email at16t_email"><span class="at_a11y">Share on email</span></span>Email</a> / </li>
+            <li class="last"><a href="http://www.addthis.com/bookmark.php" class="tool-icon share addthis_button_compact" target="_blank">Share<span class="arrow arrow-gray-down">&nbsp;</span></a></li>
+        <div class="atclear"></div></ul>
+<!-- AddThis Button BEGIN -->
+
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e89caa819ab285b"></script>
+<!-- AddThis Button END --></div></div></div>  </div>
+
+  
+  
+</div>
+    </div>
+  </div>
+</div>  </div>
+</div>  </div>
+</div></header>    
+      <section id="section-content" class="section section-content">
+  <div id="zone-content-wrapper" class="zone-wrapper zone-content-wrapper clearfix">  
+  <div id="zone-content" class="zone zone-content clearfix container-16">    
+        
+        <aside class="grid-3 region region-sidebar-first" id="region-sidebar-first">
+  <div class="region-inner region-sidebar-first-inner">
+    <div class="block block-menu-block block-1 block-menu-block-1 odd block-without-title" id="block-menu-block-1">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <div class="menu-block-wrapper menu-block-1 menu-name-main-menu parent-mlid-0 menu-level-2">
+  <ul class="menu"><li class="first expanded active-trail active menu-mlid-284"><a href="/courses-exams/courses-instruction" class="active-trail active">Courses of Instruction</a><ul class="menu"><li class="first last leaf menu-mlid-988"><a href="/courses-exams/courses-instruction/previous-courses-instruction" title="Previous Courses of Instruction">Previous Courses of Instruction</a></li>
+</ul></li>
+<li class="leaf menu-mlid-868"><a href="/courses-exams/course-catalog" title="Search Courses">Search Courses</a></li>
+<li class="leaf menu-mlid-989"><a href="/courses-exams/course-evaluations" title="Course Evaluations">Course Evaluations</a></li>
+<li class="collapsed menu-mlid-285"><a href="/courses-exams/sectioning-students" title="Sectioning for Students">Sectioning for Students</a></li>
+<li class="last leaf menu-mlid-586"><a href="/courses-exams/exam-policy" title="Exam Policy">Exam Policy</a></li>
+</ul></div>
+    </div>
+  </div>
+</div><div class="block block-block block-1 block-block-1 even block-without-title" id="block-block-1">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+       <p>.</p>
+     </div>
+  </div>
+</div>  </div>
+</aside><div class="grid-13 region region-content" id="region-content">
+  <div class="region-inner region-content-inner">
+    <a id="main-content"></a>
+                <h1 class="title" id="page-title">Courses of Instruction </h1>
+                        <div class="block block-system block-main block-system-main odd block-without-title" id="block-system-main">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <article about="/courses-exams/courses-instruction" typeof="foaf:Document" class="node node-page node-published node-not-promoted node-not-sticky author-wds even clearfix" id="node-page-15">
+            
+  
+  <div class="content clearfix">
+      </div>
+  
+  <div class="clearfix">
+          <nav class="links node-links clearfix"></nav>
+    
+      </div>
+</article>    </div>
+  </div>
+</div><div class="block block-views block-courses-of-instruction-block block-views-courses-of-instruction-block even block-without-title" id="block-views-courses-of-instruction-block">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <div class="view view-courses-of-instruction view-id-courses_of_instruction view-display-id-block view-dom-id-a794e3e820944a1cfd08b785ae70b60f">
+        
+  
+  
+      <div class="view-content">
+      <table class="views-view-grid cols-3" class="views-view-grid">
+  <tbody>
+          <tr class="row-1 row-first">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/introductory-notes">Introductory Notes </a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/dramatic-arts">Dramatic Arts</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/middle-eastern-studies">Middle Eastern Studies</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-2">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/general-education-1">General Education</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/earth-and-planetary-sciences">Earth and Planetary Sciences</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/mind-brain-and-behavior">Mind, Brain, and Behavior</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-3">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/graduate-seminars-general-education-and-undergraduate-education">Graduate Seminars in General Education and in Undergraduate Education</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/east-asian-languages-and-civilizations">East Asian Languages and Civilizations</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/molecular-and-cellular-biology">Molecular and Cellular Biology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-4">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/core-curriculum-1">Core Curriculum</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/economics">Economics</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/music">Music</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-5">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/freshman-seminars-and-house-seminars">Freshman Seminars and House Seminars</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/education">Education</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/near-eastern-languages-and-civilizations">Near Eastern Languages and Civilizations</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-6">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/african-and-african-american-studies">African and African American Studies</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/engineering-sciences">Engineering Sciences</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/neurobiology">Neurobiology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-7">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/african-studies">African Studies</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/english">English</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/oceanography">Oceanography</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-8">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/american-studies">American Studies</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/environmental-science-and-public-policy">Environmental Science and Public Policy</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/organismic-and-evolutionary-biology">Organismic and Evolutionary Biology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-9">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/anthropology">Anthropology</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/ethnicity-migration-rights">Ethnicity, Migration, Rights</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/philosophy">Philosophy</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-10">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/applied-computation">Applied Computation</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/ethnic-studies">Ethnic Studies</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/physical-sciences">Physical Sciences</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-11">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/applied-mathematics">Applied Mathematics</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/european-studies">European Studies</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/physics">Physics</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-12">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/applied-physics">Applied Physics</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/expository-writing">Expository Writing</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/political-economy-and-government">Political Economy and Government</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-13">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/archaeology">Archaeology</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/film-and-visual-studies">Film and Visual Studies</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/psychology">Psychology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-14">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/architecture-landscape-architecture-and-urban-planning">Architecture, Landscape Architecture and Urban Planning</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/folklore-and-mythology">Folklore and Mythology</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/public-policy">Public Policy</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-15">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/arts-and-humanities">Arts and Humanities</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/germanic-languages-and-literatures">Germanic Languages and Literatures</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/study-religion">The Study of Religion</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-16">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/asian-studies-programs">Asian Studies Programs</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/global-health-and-health-policy">Global Health and Health Policy</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/romance-languages-and-literatures">Romance Languages and Literatures</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-17">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/astronomy">Astronomy</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/government">Government</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/rotc">ROTC</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-18">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/biological-sciences-dental-medicine">Biological Sciences in Dental Medicine</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/health-policy">Health Policy</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/russia-eastern-europe-and-central-asia">Russia, Eastern Europe, and Central Asia</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-19">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/biological-sciences-public-health">Biological Sciences in Public Health</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/history">History</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/slavic-languages-and-literatures">Slavic Languages and Literatures</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-20">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/biomedical-engineering">Biomedical Engineering</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/history-and-literature">History and Literature</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/social-policy">Social Policy</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-21">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/biophysics">Biophysics</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/history-american-civilization">History of American Civilization</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/social-studies">Social Studies</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-22">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/biostatistics">Biostatistics</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/history-art-and-architecture">History of Art and Architecture</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/sociology">Sociology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-23">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/business-studies">Business Studies</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/history-science">History of Science</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/south-asian-studies">South Asian Studies</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-24">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/celtic-languages-and-literatures">Celtic Languages and Literatures</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/human-evolutionary-biology">Human Evolutionary Biology</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/special-concentrations">Special Concentrations</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-25">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/chemical-and-physical-biology">Chemical and Physical Biology</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/inner-asian-and-altaic-studies">Inner Asian and Altaic Studies</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/statistics">Statistics</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-26">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/chemical-biology">Chemical Biology</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/latin-american-and-iberian-studies">Latin American and Iberian Studies</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/stem-cell-and-regenerative-biology">Stem Cell and Regenerative Biology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-27">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/chemical-physics">Chemical Physics</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/life-sciences">Life Sciences</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/systems-biology">Systems Biology</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-28">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/chemistry-and-chemical-biology">Chemistry and Chemical Biology</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/linguistics">Linguistics</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/ukrainian-studies">Ukrainian Studies</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-29">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/classics">The Classics</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/mathematics">Mathematics</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/visual-and-environmental-studies">Visual and Environmental Studies</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-30">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/comparative-literature">Comparative Literature</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/medical-sciences">Medical Sciences</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/women-gender-and-sexuality">Women, Gender, and Sexuality</a></span>  </div>          </td>
+              </tr>
+          <tr class="row-31 row-last">
+                  <td class="col-1 col-first">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/computer-science">Computer Science</a></span>  </div>          </td>
+                  <td class="col-2">
+              
+  <div class="views-field views-field-title">        <span class="field-content"><a href="/courses-exams/courses-instruction/medieval-studies">Medieval Studies</a></span>  </div>          </td>
+                  <td class="col-3 col-last">
+                      </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>    </div>
+  </div>
+</div>      </div>
+</div>  </div>
+</div></section>    
+  
+      <footer id="section-footer" class="section section-footer">
+  <div id="zone-footer-wrapper" class="zone-wrapper zone-footer-wrapper clearfix">  
+  <div id="zone-footer" class="zone zone-footer clearfix container-12">
+    <div class="grid-12 region region-footer-first" id="region-footer-first">
+  <div class="region-inner region-footer-first-inner">
+    <div class="block block-nodeblock block-47 block-nodeblock-47 odd block-without-title" id="block-nodeblock-47">
+  <div class="block-inner clearfix">
+                
+    <div class="content clearfix">
+      <div id="node-47" class="node node-custom-block clearfix" about="/footer" typeof="sioc:Item foaf:Document" class="node node-custom-block node-published node-not-promoted node-not-sticky author-wds odd clearfix" id="node-custom-block-47">
+
+  
+      
+  
+  <div class="content" class="content clearfix">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Copyright © 2012 <a href="http://www.harvard.edu/">The President &amp; Fellows of Harvard College</a> | <a href="/privacy-statement">Privacy Statement</a> | <a href="/about-us/contact-us">Contact Us</a> </p>
+ </div></div></div>  </div>
+
+  
+  
+</div>
+    </div>
+  </div>
+</div>  </div>
+</div>  </div>
+</div></footer>  </div>  </body>
+</html>
