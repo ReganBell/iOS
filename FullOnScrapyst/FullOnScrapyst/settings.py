@@ -12,6 +12,8 @@ BOT_NAME = 'FullOnScrapyst'
 
 SPIDER_MODULES = ['FullOnScrapyst.spiders']
 NEWSPIDER_MODULE = 'FullOnScrapyst.spiders'
+FEED_FORMAT = 'json'
+ITEM_PIPELINES = {'FullOnScrapyst.pipelines.FullOnScrapystPipeline': 300}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'FullOnScrapyst (+http://www.yourdomain.com)'

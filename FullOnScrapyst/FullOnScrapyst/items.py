@@ -7,8 +7,12 @@
 
 import scrapy
 
-
-class FullOnScrapystItem(scrapy.Item):
+class Course(scrapy.Item):
     # define the fields for your item here like:
-    name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    enrollment = scrapy.Field()
+    answers = scrapy.Field()
+    comments = scrapy.Field()
+    faculty = scrapy.Field()
+    term = scrapy.Field()
+    year = scrapy.Field()

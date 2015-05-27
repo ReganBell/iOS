@@ -41,6 +41,7 @@
 @property (nonatomic, retain) NSString * comments;
 @property (nonatomic, retain) Course *course;
 @property (nonatomic, retain) NSSet *facultyReports;
+
 @end
 
 @interface QReport (CoreDataGeneratedAccessors)

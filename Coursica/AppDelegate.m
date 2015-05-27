@@ -43,6 +43,9 @@
 //    NSError *error;
 //
     
+    NSString *resultsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"real_results.json"];
+    NSData *rawData = [NSData dataWithContentsOfFile:resultsPath];
+    NSDictionary *scrapedQResults = [NSJSONSerialization JSONObjectWithData:rawData options:NSJSONReadingAllowFragments error:nil];
     
 //    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
 //    [request setPropertiesToFetch:@[@"longField", @"title"]];
