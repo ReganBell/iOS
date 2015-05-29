@@ -164,15 +164,15 @@
         newCourse.courseDescription = purifiedDescriptionString;
         newCourse.notes = courseDict[@"notes"];
         
-        NSDictionary *types = @{@"difficulty":@"qDifficulty", @"workload":@"qWorkload", @"overall":@"qOverall"};
-        for (NSString *scoreType in types) {
-            
-            // Q Data is stored as the number of votes people gave each category, 1 through 5
-            // So we have to do a weighted average to calculate the Q score for each category
-            QScore *score = [scoresDict objectForKey:[NSString stringWithFormat:@"%d - %@", newCourse.catalogNumber.intValue, scoreType]];
-            NSNumber *average = [NSNumber numberWithDouble:(score.one.doubleValue + score.two.doubleValue * 2 + score.three.doubleValue * 3 + score.four.doubleValue * 4 + score.five.doubleValue * 5) / (score.one.doubleValue + score.two.doubleValue + score.three.doubleValue + score.four.doubleValue + score.five.doubleValue)];
-            [newCourse setValue:average forKey:[types objectForKey:scoreType]];
-        }
+//        NSDictionary *types = @{@"difficulty":@"qDifficulty", @"workload":@"qWorkload", @"overall":@"qOverall"};
+//        for (NSString *scoreType in types) {
+//            
+//            // Q Data is stored as the number of votes people gave each category, 1 through 5
+//            // So we have to do a weighted average to calculate the Q score for each category
+//            QScore *score = [scoresDict objectForKey:[NSString stringWithFormat:@"%d - %@", newCourse.catalogNumber.intValue, scoreType]];
+//            NSNumber *average = [NSNumber numberWithDouble:(score.one.doubleValue + score.two.doubleValue * 2 + score.three.doubleValue * 3 + score.four.doubleValue * 4 + score.five.doubleValue * 5) / (score.one.doubleValue + score.two.doubleValue + score.three.doubleValue + score.four.doubleValue + score.five.doubleValue)];
+//            [newCourse setValue:average forKey:[types objectForKey:scoreType]];
+//        }
         
         int genEdsFound = 0;
         NSNumber *fieldGenEd = nil;

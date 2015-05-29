@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Course;
+@class Course, QReport;
 
 @interface Course : NSManagedObject {
     
@@ -80,5 +80,7 @@
 
 + (void)updateCourses:(NSArray*)serverCourses;
 + (void)updateQData;
+
+- (QReport*)mostRecentReport;
 
 @end

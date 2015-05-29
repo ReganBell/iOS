@@ -51,15 +51,12 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
-//    NSManagedObjectContext *context = [self managedObjectContext];
-//    
-////    FullOnScrapist *scrapist = [FullOnScrapist new];
-////    [scrapist scrapeSearchResultsPage];
-//    
-//    NSError *error;
-//
+    NSFetchRequest *reportsFetch = [NSFetchRequest fetchRequestWithEntityName:@"QReport"];
+    NSUInteger count = [[self managedObjectContext] countForFetchRequest:reportsFetch error:nil];
+    for (QReport *report in [[self managedObjectContext] executeFetchRequest:reportsFetch error:nil]) {
+        [[self managedObjectContext] deleteObject:report];
+    }
     
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
     [fetch setPropertiesToFetch:@[@"first", @"last"]];
@@ -72,10 +69,10 @@
     
     NSFetchRequest *courseFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
     NSArray *allCourses = [[self managedObjectContext] executeFetchRequest:courseFetch error:nil];
-    NSMutableDictionary *courseDict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *allCourseDict = [NSMutableDictionary dictionary];
     for (Course *course in allCourses) {
         NSString *key = course.displayTitle;
-        courseDict[key] = course;
+        allCourseDict[key] = course;
     }
     
     NSEntityDescription *reportEntity = [NSEntityDescription entityForName:@"QReport" inManagedObjectContext:[self managedObjectContext]];
@@ -106,7 +103,9 @@
             QReport *newReport = [[QReport alloc] initWithEntity:reportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
             newReport.term = [term isEqualToString:@"fall"] ? @1 : @2;  //@1 for fall, @2 for spring
             newReport.year = year;
-            newReport.course = courseDict[courseTitle];
+            Course *course = allCourseDict[courseTitle];
+            [course addqReportsObject:newReport];
+            
             if (!newReport.course) {
                 NSLog(@"Could not find course: %@ in allCourses", courseTitle);
                 continue;
@@ -122,12 +121,12 @@
             if (!rawComments) {
                 [self dataErrorForKey:@"comments" title:courseTitle term:term year:year];
             }
-            NSMutableArray *cleanComments = [NSMutableArray array];
+            NSMutableString *commentsString = [NSMutableString string];
             for (NSString *rawComment in rawComments) {
                 NSString *cleanComment = [rawComment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                [cleanComments addObject:cleanComment];
+                [commentsString appendFormat:@"%@,", cleanComment];
             }
-            newReport.comments = cleanComments;
+            newReport.comments = commentsString;
             
             NSDictionary *answersDict = reportDict[@"answers"];
             
@@ -143,6 +142,13 @@
                     [self dataErrorForKey:[NSString stringWithFormat:@"%@-response", keyword] title:courseTitle term:term year:year];
                     continue;
                 }
+                
+                NSArray *breakdown = responseDict[@"breakdown"];
+                NSString *breakdownString = [breakdown componentsJoinedByString:@","];
+                if (breakdownString) {
+                    [newReport setValue:breakdownString forKey:[NSString stringWithFormat:@"%@Breakdown", keyword]];
+                } else
+                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-breakdown", keyword] title:courseTitle term:term year:year];
                 
                 NSNumber *mean = responseDict[@"mean"];
                 if (mean) {
@@ -192,84 +198,20 @@
                     
                     NSNumber *mean = responseDict[@"mean"];
                     if (mean) {
-                        [newReport setValue:mean forKey:keyword];
+                        [facultyReport setValue:mean forKey:keyword];
                     } else
                         [self dataErrorForKey:[NSString stringWithFormat:@"%@-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
                     
-                    NSNumber *median = responseDict[@"median"];
-                    if (median) {
-                        [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Median", keyword]];
-                    } else
-                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-median-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
-                    
                     NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
                     if (baseline) {
-                        [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
+                        [facultyReport setValue:baseline forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
                     } else
                         [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
                 }            }
         }
     }
     
-//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
-//    [request setPropertiesToFetch:@[@"longField", @"title"]];
-////    request.predicate = [NSPredicate predicateWithFormat:@"graduate = %@", @NO];
-//    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:nil];
-    
-//    float fac = 0;
-//    float total = 0;
-//    
-//    for (Course *course in array) {
-//        
-//        // Formats information from Faculty object for the view
-//        if (![course.faculty count] == 0)
-//        {
-//            fac++;
-//            // Lists faculty names
-//            for (Faculty *faculty in course.faculty)
-//            {
-//                NSLog(@"%@ %@", faculty.first, faculty.last);
-//            }
-//        }
-//        else
-//        {
-//            NSLog(@"No faculty for: %@", course.title);
-//        }
-//        total++;
-//    }
-//    
-//    NSLog(@"Faculty for %f/%f = %f", fac, total, fac/total);
-    
-//
-//    [context save:nil];
-//    
-//    NSString *search = @"nazi cinema";
-//    [[SearchManager sharedSearchManager] coursesForSearch:@"nazi cinema"];
-    
-//    NSArray *unsorted = [set allObjects];
-//    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES];
-//    
-//    NSLog(@"%@", [unsorted sortedArrayUsingDescriptors:@[descriptor]]);
-    
-    // Only parse CSV files if we have no Q data
-//    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
-//    NSUInteger count = [context countForFetchRequest:request error:nil];
-//    if (count > 0) {
-//        return YES;
-//    }
-    
-    // Start CSV parsing operations, using CHCSVParser objects wrapped up in QDataParserDelegate objects
-//    QDataParserDelegate *commentDelegate = [[QDataParserDelegate alloc] init];
-//    [commentDelegate updateQDataInMode:kModeComment];
-//    
-//    QDataParserDelegate *difficultyDelegate = [[QDataParserDelegate alloc] init];
-//    [difficultyDelegate updateQDataInMode:kModeScoreDifficulty];
-//    
-//    QDataParserDelegate *overallDelegate = [[QDataParserDelegate alloc] init];
-//    [overallDelegate updateQDataInMode:kModeScoreOverall];
-//    
-//    QDataParserDelegate *workloadDelegate = [[QDataParserDelegate alloc] init];
-//    [workloadDelegate updateQDataInMode:KModeScoreWorkload];
+    [[self managedObjectContext] save:nil];
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
@@ -392,7 +334,7 @@
     if (!coordinator) {
         return nil;
     }
-    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+    _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     return _managedObjectContext;
 }

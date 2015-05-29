@@ -16,11 +16,12 @@
 #import "QScore.h"
 #import "CommentsViewController.h"
 #import "UILabel+HeightCalculation.h"
+#import "QReport.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
 
-@interface DetailViewController ()
+@interface DetailViewController () <GKBarGraphDataSource>
 
 // References to the UI elements used in the controller's view
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -85,7 +86,6 @@
     
     self.descriptionLabel.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];
     self.descriptionLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
-    
     
     NSMutableString *facultyString = [NSMutableString new];
     
@@ -156,7 +156,6 @@
             [meetingString appendFormat:@"%@, ", dayString];
         }
         meetingString = [[meetingString substringToIndex:[meetingString length] - 2] mutableCopy];
-        
         
         for (Meeting *meeting in sortedMeetingTimes)
         {
@@ -249,9 +248,6 @@
     
     NSString *tempLocationString = [NSString stringWithFormat:@"%@", locationString];
     NSMutableAttributedString *locationLabel = [[NSMutableAttributedString alloc] initWithString:tempLocationString];
-    
-    
-    
     
     
     self.courseInstructorLabel.attributedText = instructorLabel;
@@ -383,8 +379,6 @@
 //    
 //    [self.view setNeedsLayout];
     
-    
-    
 //     Retrieves Q scores for course
 //    NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];
 //    NSMutableDictionary *qScoresDict = [NSMutableDictionary new];
@@ -453,12 +447,9 @@
     
     self.view.backgroundColor = [UIColor gk_cloudsColor];
     
-    //self.labels = @[[self.overallScore.one stringValue], [self.overallScore.two stringValue], [self.overallScore.three stringValue], [self.overallScore.four stringValue], [self.overallScore.five stringValue]];
-    self.labels = @[@"1", @"3", @"4", @"5", @"6"];
-    
-    NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
-    NSInteger largest = 5;
-    NSString *largestBar;
+//    NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
+//    NSInteger largest = 5;
+//    NSString *largestBar;
     // Adjusts percentages for graph from Q data so the largest
     // Answer (the largest bar) will completely fill the bar, like CS50 courses online
 //    for (NSString *property in properties)
@@ -470,22 +461,8 @@
 //            largest = [tempNum intValue];
 //        }
 //    }
-    
-    // Calculates ratio to proportion all the scores
-    NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
-    
-//    self.data = @[[NSNumber numberWithDouble:self.overallScore.one.doubleValue*ratio.doubleValue],
-//                  [NSNumber numberWithDouble:self.overallScore.two.doubleValue*ratio.doubleValue],
-//                  [NSNumber numberWithDouble:self.overallScore.three.doubleValue*ratio.doubleValue],
-//                  [NSNumber numberWithDouble:self.overallScore.four.doubleValue*ratio.doubleValue],
-//                  [NSNumber numberWithDouble:self.overallScore.five.doubleValue*ratio.doubleValue]
-//                  ];
-    self.data = @[[NSNumber numberWithDouble:2.0*ratio.doubleValue],
-                  [NSNumber numberWithDouble:3.0*ratio.doubleValue],
-                  [NSNumber numberWithDouble:4.0*ratio.doubleValue],
-                  [NSNumber numberWithDouble:1.0*ratio.doubleValue],
-                  [NSNumber numberWithDouble:5.0*ratio.doubleValue]
-                  ];
+
+    [self updateGraphWithBreakdown:[self.course.mostRecentReport.overallBreakdown componentsSeparatedByString:@","]];
     
     self.graphView.barWidth = 28;
     self.graphView.barHeight = 150;
@@ -513,7 +490,35 @@
         j++;
     }
     
-    [self selectButton:self.qScoreButtons[1] inArray:self.qScoreLabels];
+//    [self selectButton:self.qScoreButtons[1] inArray:self.qScoreLabels];
+}
+
+- (void)updateGraphWithBreakdown:(NSArray*)breakdown {
+    
+    if (!breakdown.count) {
+        return;
+    }
+    
+    self.labels = [NSArray arrayWithArray:breakdown];
+    
+    NSMutableArray *data = [NSMutableArray array];
+    
+    double largest = 0;
+    for (NSString *valueString in breakdown) {
+        NSInteger doubleValue = valueString.doubleValue;
+        if (doubleValue > largest)
+            largest = doubleValue;
+    }
+    
+    // Calculates ratio to proportion all the scores
+    double ratio = 100.0/largest;
+    
+    for (NSString *valueString in breakdown) {
+        NSInteger doubleValue = valueString.doubleValue;
+        [data addObject:@(doubleValue*ratio)];
+    }
+    
+    self.data = [NSArray arrayWithArray:data];
 }
 
 - (void)qScoreButtonPressed:(UIButton*)senderButton {
@@ -528,7 +533,6 @@
 }
 
 - (void)selectButton:(UIButton*)button inArray:(NSArray*)array {
-    
     
     if (button.selected == NO)
     {
@@ -657,17 +661,12 @@
 }
 
 - (NSNumber *)valueForBarAtIndex:(NSInteger)index {
-    return [self.data objectAtIndex:index];
+    NSString *valueString = self.data[index];
+    return @(valueString.intValue);
 }
 
 - (UIColor *)colorForBarAtIndex:(NSInteger)index {
-    id colors = @[[UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1],
-                  [UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1],
-                  [UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1],
-                  [UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1],
-                  [UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1]
-                  ];
-    return [colors objectAtIndex:index];
+    return [UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1];
 }
 
 //- (UIColor *)colorForBarBackgroundAtIndex:(NSInteger)index {

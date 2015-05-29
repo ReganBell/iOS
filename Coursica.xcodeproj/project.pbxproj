@@ -172,6 +172,7 @@
 		59F9AAF31AC0E62A0040659C /* httpHeadersLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = httpHeadersLog; sourceTree = "<group>"; };
 		59F9AAF51AC0E88C0040659C /* ScrapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrapeViewController.h; sourceTree = "<group>"; };
 		59F9AAF61AC0E88C0040659C /* ScrapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrapeViewController.m; sourceTree = "<group>"; };
+		59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 16.xcdatamodel"; sourceTree = "<group>"; };
 		DB15AF7ACAD399D3133E341B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -830,6 +831,7 @@
 		596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */,
 				59E661DB1B07142600200FAE /* Coursica 15.xcdatamodel */,
 				59E661DA1B0288F700200FAE /* Coursica 14.xcdatamodel */,
 				5926C2E11AE5800800342A5A /* Coursica 11.xcdatamodel */,
@@ -845,7 +847,7 @@
 				59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */,
 				596076B71A1000710038D4F4 /* Coursica.xcdatamodel */,
 			);
-			currentVersion = 59E661DB1B07142600200FAE /* Coursica 15.xcdatamodel */;
+			currentVersion = 59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */;
 			path = Coursica.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

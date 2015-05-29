@@ -44,14 +44,7 @@
     NSError *error = nil;
     self.allCourses = [context executeFetchRequest:coursesFetch error:&error];
     for (Course *course in self.allCourses) {
-        // So we can rank classes by their actual numeric value, not by string comparison ("131" shouldn't come before "14")
-        NSScanner *numberScanner = [NSScanner scannerWithString:course.number];
-        NSInteger decimalNumber = -1;
-        BOOL success = [numberScanner scanInteger:&decimalNumber];
-        if (success) {
-            course.decimalNumber = @(decimalNumber);
-        } else
-            course.decimalNumber = @(-1);
+
         [self addCourseToSearchIndex:course];
     }
     [self calculateIDFs];
