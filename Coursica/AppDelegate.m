@@ -22,15 +22,33 @@
 #import "Faculty.h"
 #import "ScrapeViewController.h"
 #import "QReport.h"
+#import "QFacultyReport.h"
 
 @interface AppDelegate () <LoginViewControllerDelegate>
 
 @property (strong, nonatomic) MMDrawerController *drawerController;
+@property (strong, nonatomic) NSMutableDictionary *dataErrors;
 
 @end
 
 @implementation AppDelegate
 
+
+- (void)dataErrorForKey:(NSString*)key title:(NSString*)title term:(NSString*)term year:(NSString*)year {
+    
+    if (!self.dataErrors) {
+        self.dataErrors = [NSMutableDictionary dictionary];
+    }
+    
+    NSNumber *errors = self.dataErrors[key];
+    if (!errors) {
+        errors = @1;
+    } else
+        errors = @(errors.intValue + 1);
+    self.dataErrors[key] = errors;
+    
+    NSLog(@"Error no. %d! No data found for key: %@  course: %@ term: %@, year: %@", errors.intValue, key, title, term, year);
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -43,9 +61,155 @@
 //    NSError *error;
 //
     
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
+    [fetch setPropertiesToFetch:@[@"first", @"last"]];
+    NSArray *allFaculty = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
+    NSMutableDictionary *facultyDict = [NSMutableDictionary dictionary];
+    for (Faculty *faculty in allFaculty) {
+        NSString *key = [NSString stringWithFormat:@"%@ %@", faculty.first, faculty.last];
+        facultyDict[key] = faculty;
+    }
+    
+    NSFetchRequest *courseFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    NSArray *allCourses = [[self managedObjectContext] executeFetchRequest:courseFetch error:nil];
+    NSMutableDictionary *courseDict = [NSMutableDictionary dictionary];
+    for (Course *course in allCourses) {
+        NSString *key = course.displayTitle;
+        courseDict[key] = course;
+    }
+    
+    NSEntityDescription *reportEntity = [NSEntityDescription entityForName:@"QReport" inManagedObjectContext:[self managedObjectContext]];
+    NSEntityDescription *facultyReportEntity = [NSEntityDescription entityForName:@"QFacultyReport" inManagedObjectContext:[self managedObjectContext]];
+    
     NSString *resultsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"real_results.json"];
     NSData *rawData = [NSData dataWithContentsOfFile:resultsPath];
     NSDictionary *scrapedQResults = [NSJSONSerialization JSONObjectWithData:rawData options:NSJSONReadingAllowFragments error:nil];
+    for (NSString *courseTitle in scrapedQResults) {
+        NSDictionary *courseDict = scrapedQResults[courseTitle];
+        for (NSString *termYear in courseDict) {
+            NSDictionary *reportDict = courseDict[termYear];
+            if (!reportDict) {
+                [self dataErrorForKey:termYear title:courseTitle term:@"" year:@""];
+                continue;
+            }
+            
+            NSString *term = reportDict[@"term"];
+            if (!term) {
+                [self dataErrorForKey:@"term" title:courseTitle term:@"" year:@""];
+                continue;
+            }
+            NSString *year = reportDict[@"year"];
+            if (!year) {
+                [self dataErrorForKey:@"year" title:courseTitle term:term year:@""];
+                continue;
+            }
+            QReport *newReport = [[QReport alloc] initWithEntity:reportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
+            newReport.term = [term isEqualToString:@"fall"] ? @1 : @2;  //@1 for fall, @2 for spring
+            newReport.year = year;
+            newReport.course = courseDict[courseTitle];
+            if (!newReport.course) {
+                NSLog(@"Could not find course: %@ in allCourses", courseTitle);
+                continue;
+            }
+            
+            NSString *enrollmentString = reportDict[@"enrollment"];
+            if (!enrollmentString.length) {
+                [self dataErrorForKey:@"enrollment" title:courseTitle term:term year:year];
+            }
+            newReport.enrollment = @(enrollmentString.intValue);
+            
+            NSArray *rawComments = reportDict[@"comments"];
+            if (!rawComments) {
+                [self dataErrorForKey:@"comments" title:courseTitle term:term year:year];
+            }
+            NSMutableArray *cleanComments = [NSMutableArray array];
+            for (NSString *rawComment in rawComments) {
+                NSString *cleanComment = [rawComment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                [cleanComments addObject:cleanComment];
+            }
+            newReport.comments = cleanComments;
+            
+            NSDictionary *answersDict = reportDict[@"answers"];
+            
+            for (NSString *keyword in @[@"overall", @"materials", @"assignments", @"feedback", @"section", @"workload", @"recommend"]) {
+                
+                NSDictionary *responseDict = nil;
+                for (NSString *key in answersDict) {
+                    if ([key.lowercaseString containsString:keyword]) {
+                        responseDict = answersDict[key];
+                    }
+                }
+                if (!responseDict) {
+                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-response", keyword] title:courseTitle term:term year:year];
+                    continue;
+                }
+                
+                NSNumber *mean = responseDict[@"mean"];
+                if (mean) {
+                    [newReport setValue:mean forKey:keyword];
+                } else
+                    [self dataErrorForKey:keyword title:courseTitle term:term year:year];
+                
+                NSNumber *median = responseDict[@"median"];
+                if (median) {
+                    [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Median", keyword]];
+                } else
+                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-median", keyword] title:courseTitle term:term year:year];
+                
+                NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
+                if (baseline) {
+                    [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
+                } else
+                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline", keyword] title:courseTitle term:term year:year];
+            }
+            
+            NSDictionary *instructorsDict = reportDict[@"faculty"];
+            for (NSString *facultyString in instructorsDict) {
+                NSDictionary *instructorDict = instructorsDict[facultyString];
+                QFacultyReport *facultyReport = [[QFacultyReport alloc] initWithEntity:facultyReportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
+                facultyReport.report = newReport;
+                NSArray *components = [facultyString componentsSeparatedByString:@", "];
+                NSString *last = components[0];
+                NSString *first = components[1];
+                Faculty *faculty = facultyDict[[NSString stringWithFormat:@"%@ %@", first, last]];
+                if (faculty) {
+                    facultyReport.faculty = faculty;
+                } else {
+                    
+                }
+                for (NSString *keyword in @[@"overall", @"lectures", @"accessible", @"enthusiasm", @"discussion", @"feedback", @"timely"]) {
+                    
+                    NSDictionary *responseDict = nil;
+                    for (NSString *key in instructorDict) {
+                        if ([key.lowercaseString containsString:keyword]) {
+                            responseDict = instructorDict[key];
+                        }
+                    }
+                    if (!responseDict) {
+                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-response-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+                        continue;
+                    }
+                    
+                    NSNumber *mean = responseDict[@"mean"];
+                    if (mean) {
+                        [newReport setValue:mean forKey:keyword];
+                    } else
+                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+                    
+                    NSNumber *median = responseDict[@"median"];
+                    if (median) {
+                        [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Median", keyword]];
+                    } else
+                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-median-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+                    
+                    NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
+                    if (baseline) {
+                        [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
+                    } else
+                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+                }            }
+        }
+    }
     
 //    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
 //    [request setPropertiesToFetch:@[@"longField", @"title"]];
