@@ -21,10 +21,6 @@
 		59002FBE1B1AB0120096A92E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FBD1B1AB0120096A92E /* libsqlite3.dylib */; };
 		59002FC01B1AB0400096A92E /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FBF1B1AB0400096A92E /* Accounts.framework */; };
 		59002FC21B1AB0440096A92E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FC11B1AB0440096A92E /* Social.framework */; };
-		5901858A1A3E4447008884EF /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185831A3E4447008884EF /* TFHpple.m */; };
-		5901858B1A3E4447008884EF /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185851A3E4447008884EF /* TFHppleElement.m */; };
-		5901858C1A3E4447008884EF /* FullOnScrapist.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185871A3E4447008884EF /* FullOnScrapist.m */; };
-		5901858D1A3E4447008884EF /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 590185891A3E4447008884EF /* XPathQuery.m */; };
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
 		5926C2DD1AE57B1000342A5A /* QReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5926C2DC1AE57B1000342A5A /* QReport.m */; };
@@ -32,14 +28,8 @@
 		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
 		594E93E21A68D1B7003DB4E7 /* LongFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93E11A68D1B7003DB4E7 /* LongFields */; };
 		5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 5953AB8C1B158C0700C8FFA9 /* real_results.json */; };
-		595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575EF1A2E71F8000ABAD8 /* Qcomments.csv */; };
-		595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F11A2E7201000ABAD8 /* QCourseOverall.csv */; };
-		595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F31A2E7214000ABAD8 /* QDifficulty.csv */; };
-		595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F41A2E7214000ABAD8 /* Qinstructors.csv */; };
-		595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */ = {isa = PBXBuildFile; fileRef = 595575F51A2E7214000ABAD8 /* QWorkload.csv */; };
 		595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FA1A2E74B9000ABAD8 /* QComment.m */; };
 		595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FD1A2E74B9000ABAD8 /* QScore.m */; };
-		595576011A2E79BF000ABAD8 /* QDataParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */; };
 		596076B21A1000710038D4F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B11A1000710038D4F4 /* main.m */; };
 		596076B51A1000710038D4F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B41A1000710038D4F4 /* AppDelegate.m */; };
 		596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */; };
@@ -70,10 +60,7 @@
 		59E661D51B01769300200FAE /* DoubleSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E661D41B01769300200FAE /* DoubleSliderView.m */; };
 		59E661D91B01A72A00200FAE /* FadeOut.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E661D81B01A72A00200FAE /* FadeOut.png */; };
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
-		59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */ = {isa = PBXBuildFile; fileRef = 59F51C6B1A254E3D0025E021 /* SampleAPIResponse */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
-		59F9AAF41AC0E62A0040659C /* httpHeadersLog in Resources */ = {isa = PBXBuildFile; fileRef = 59F9AAF31AC0E62A0040659C /* httpHeadersLog */; };
-		59F9AAF71AC0E88C0040659C /* ScrapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F9AAF61AC0E88C0040659C /* ScrapeViewController.m */; };
 		98953491A049209DE0D8879E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB15AF7ACAD399D3133E341B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -104,14 +91,6 @@
 		59002FBD1B1AB0120096A92E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		59002FBF1B1AB0400096A92E /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		59002FC11B1AB0440096A92E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		590185821A3E4447008884EF /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
-		590185831A3E4447008884EF /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
-		590185841A3E4447008884EF /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
-		590185851A3E4447008884EF /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
-		590185861A3E4447008884EF /* FullOnScrapist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullOnScrapist.h; sourceTree = "<group>"; };
-		590185871A3E4447008884EF /* FullOnScrapist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullOnScrapist.m; sourceTree = "<group>"; usesTabs = 0; };
-		590185881A3E4447008884EF /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
-		590185891A3E4447008884EF /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
 		5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 10.xcdatamodel"; sourceTree = "<group>"; };
@@ -125,17 +104,10 @@
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
 		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
 		5953AB8C1B158C0700C8FFA9 /* real_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = real_results.json; sourceTree = "<group>"; };
-		595575EF1A2E71F8000ABAD8 /* Qcomments.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qcomments.csv; sourceTree = "<group>"; };
-		595575F11A2E7201000ABAD8 /* QCourseOverall.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QCourseOverall.csv; sourceTree = "<group>"; };
-		595575F31A2E7214000ABAD8 /* QDifficulty.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QDifficulty.csv; sourceTree = "<group>"; };
-		595575F41A2E7214000ABAD8 /* Qinstructors.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Qinstructors.csv; sourceTree = "<group>"; };
-		595575F51A2E7214000ABAD8 /* QWorkload.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = QWorkload.csv; sourceTree = "<group>"; };
 		595575F91A2E74B9000ABAD8 /* QComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QComment.h; sourceTree = "<group>"; };
 		595575FA1A2E74B9000ABAD8 /* QComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QComment.m; sourceTree = "<group>"; };
 		595575FC1A2E74B9000ABAD8 /* QScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QScore.h; sourceTree = "<group>"; };
 		595575FD1A2E74B9000ABAD8 /* QScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QScore.m; sourceTree = "<group>"; };
-		595575FF1A2E79BE000ABAD8 /* QDataParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDataParserDelegate.h; sourceTree = "<group>"; };
-		595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDataParserDelegate.m; sourceTree = "<group>"; };
 		596076AC1A1000700038D4F4 /* Coursica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coursica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596076B01A1000700038D4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596076B11A1000710038D4F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -192,12 +164,8 @@
 		59E661DB1B07142600200FAE /* Coursica 15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 15.xcdatamodel"; sourceTree = "<group>"; };
 		59F51C681A2545DF0025E021 /* FiltersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiltersViewController.h; sourceTree = "<group>"; };
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
-		59F51C6B1A254E3D0025E021 /* SampleAPIResponse */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleAPIResponse; sourceTree = "<group>"; };
 		59F51C6D1A2572C00025E021 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		59F51C6E1A2572C00025E021 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		59F9AAF31AC0E62A0040659C /* httpHeadersLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = httpHeadersLog; sourceTree = "<group>"; };
-		59F9AAF51AC0E88C0040659C /* ScrapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrapeViewController.h; sourceTree = "<group>"; };
-		59F9AAF61AC0E88C0040659C /* ScrapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrapeViewController.m; sourceTree = "<group>"; };
 		59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 16.xcdatamodel"; sourceTree = "<group>"; };
 		DB15AF7ACAD399D3133E341B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -236,53 +204,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5901857D1A3E4447008884EF /* Scrape */ = {
-			isa = PBXGroup;
-			children = (
-				5901857E1A3E4447008884EF /* hpple */,
-				590185821A3E4447008884EF /* TFHpple.h */,
-				590185831A3E4447008884EF /* TFHpple.m */,
-				590185841A3E4447008884EF /* TFHppleElement.h */,
-				590185851A3E4447008884EF /* TFHppleElement.m */,
-				590185861A3E4447008884EF /* FullOnScrapist.h */,
-				590185871A3E4447008884EF /* FullOnScrapist.m */,
-				590185881A3E4447008884EF /* XPathQuery.h */,
-				590185891A3E4447008884EF /* XPathQuery.m */,
-			);
-			path = Scrape;
-			sourceTree = "<group>";
-		};
-		5901857E1A3E4447008884EF /* hpple */ = {
-			isa = PBXGroup;
-			children = (
-				5901857F1A3E4447008884EF /* Classes */,
-				590185801A3E4447008884EF /* UnitTesting */,
-			);
-			path = hpple;
-			sourceTree = "<group>";
-		};
-		5901857F1A3E4447008884EF /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		590185801A3E4447008884EF /* UnitTesting */ = {
-			isa = PBXGroup;
-			children = (
-				590185811A3E4447008884EF /* TestData */,
-			);
-			path = UnitTesting;
-			sourceTree = "<group>";
-		};
-		590185811A3E4447008884EF /* TestData */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TestData;
-			sourceTree = "<group>";
-		};
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
@@ -306,42 +227,19 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
-				5901857D1A3E4447008884EF /* Scrape */,
-				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
-				59B9D57E1AF6CA260006A57B /* Gen Ed Icons */,
-				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
 				59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */,
 				59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */,
 				59D4A0461A347F98003FD743 /* NavigationController.h */,
 				59D4A0471A347F98003FD743 /* NavigationController.m */,
-				59D51FB81A9D66A2006F7850 /* Q Data CSV Files */,
 				596076B31A1000710038D4F4 /* AppDelegate.h */,
 				596076B41A1000710038D4F4 /* AppDelegate.m */,
-				59F9AAF31AC0E62A0040659C /* httpHeadersLog */,
-				59DCAEC11A75D6E800929151 /* SearchManager.h */,
-				59DCAEC21A75D6E800929151 /* SearchManager.m */,
+				5988650F1B239CAD0078B06F /* Search */,
 				594E93DF1A68D197003DB4E7 /* ShortFields */,
 				594E93E11A68D1B7003DB4E7 /* LongFields */,
-				595575FF1A2E79BE000ABAD8 /* QDataParserDelegate.h */,
-				595576001A2E79BF000ABAD8 /* QDataParserDelegate.m */,
-				596076B91A1000710038D4F4 /* CoursesViewController.h */,
-				596076BA1A1000710038D4F4 /* CoursesViewController.m */,
-				59F9AAF51AC0E88C0040659C /* ScrapeViewController.h */,
-				59F9AAF61AC0E88C0040659C /* ScrapeViewController.m */,
-				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
-				59F51C6E1A2572C00025E021 /* DetailViewController.m */,
-				2DE095481A71583C00FD524A /* LoginViewController.h */,
-				2DE095491A71589200FD524A /* LoginViewController.m */,
-				59F51C6B1A254E3D0025E021 /* SampleAPIResponse */,
-				59E661D31B01769300200FAE /* DoubleSliderView.h */,
-				59E661D41B01769300200FAE /* DoubleSliderView.m */,
-				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
-				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
-				59E661D81B01A72A00200FAE /* FadeOut.png */,
-				5975FD361AE0C9F200180AEC /* jharvard_dark.png */,
-				5902E6251A347E9600A38C11 /* SmallSearch.png */,
-				5902E61D1A3475DE00A38C11 /* NavBarBg.png */,
-				59E661CE1B01476200200FAE /* SliderTab.png */,
+				5988650E1B239C970078B06F /* Courses */,
+				5988650D1B239C900078B06F /* Detail */,
+				5988650C1B239C840078B06F /* Login */,
+				5988650B1B239C5C0078B06F /* Filters */,
 				5953AB8C1B158C0700C8FFA9 /* real_results.json */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
@@ -356,6 +254,10 @@
 		596076AF1A1000700038D4F4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5975FD361AE0C9F200180AEC /* jharvard_dark.png */,
+				5902E6251A347E9600A38C11 /* SmallSearch.png */,
+				5902E61D1A3475DE00A38C11 /* NavBarBg.png */,
+				59B9D57E1AF6CA260006A57B /* Gen Ed Icons */,
 				596076B01A1000700038D4F4 /* Info.plist */,
 				596076B11A1000710038D4F4 /* main.m */,
 			);
@@ -377,6 +279,65 @@
 				596076CD1A1000710038D4F4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5988650B1B239C5C0078B06F /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				59E661D31B01769300200FAE /* DoubleSliderView.h */,
+				59E661D41B01769300200FAE /* DoubleSliderView.m */,
+				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
+				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
+				59E661D81B01A72A00200FAE /* FadeOut.png */,
+				59E661CE1B01476200200FAE /* SliderTab.png */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		5988650C1B239C840078B06F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2DE095481A71583C00FD524A /* LoginViewController.h */,
+				2DE095491A71589200FD524A /* LoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		5988650D1B239C900078B06F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				598865101B239CC10078B06F /* Comments */,
+				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
+				59F51C6E1A2572C00025E021 /* DetailViewController.m */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
+		5988650E1B239C970078B06F /* Courses */ = {
+			isa = PBXGroup;
+			children = (
+				596076B91A1000710038D4F4 /* CoursesViewController.h */,
+				596076BA1A1000710038D4F4 /* CoursesViewController.m */,
+			);
+			name = Courses;
+			sourceTree = "<group>";
+		};
+		5988650F1B239CAD0078B06F /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				59DCAEC11A75D6E800929151 /* SearchManager.h */,
+				59DCAEC21A75D6E800929151 /* SearchManager.m */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		598865101B239CC10078B06F /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
+				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
+			);
+			name = Comments;
 			sourceTree = "<group>";
 		};
 		598CAB391A22C7F2008D0142 /* Model */ = {
@@ -415,18 +376,6 @@
 				59B9D5861AF6CA3F0006A57B /* Easel.png */,
 			);
 			name = "Gen Ed Icons";
-			sourceTree = "<group>";
-		};
-		59D51FB81A9D66A2006F7850 /* Q Data CSV Files */ = {
-			isa = PBXGroup;
-			children = (
-				595575EF1A2E71F8000ABAD8 /* Qcomments.csv */,
-				595575F11A2E7201000ABAD8 /* QCourseOverall.csv */,
-				595575F31A2E7214000ABAD8 /* QDifficulty.csv */,
-				595575F41A2E7214000ABAD8 /* Qinstructors.csv */,
-				595575F51A2E7214000ABAD8 /* QWorkload.csv */,
-			);
-			name = "Q Data CSV Files";
 			sourceTree = "<group>";
 		};
 		86036A9F276FF8D80D013832 /* Pods */ = {
@@ -548,8 +497,6 @@
 				59E661CF1B01476200200FAE /* SliderTab.png in Resources */,
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
 				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
-				595575F81A2E7214000ABAD8 /* QWorkload.csv in Resources */,
-				59F51C6C1A254E3D0025E021 /* SampleAPIResponse in Resources */,
 				59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */,
@@ -558,14 +505,9 @@
 				59B9D58A1AF6CA3F0006A57B /* USA.png in Resources */,
 				594E93E21A68D1B7003DB4E7 /* LongFields in Resources */,
 				5975FD371AE0C9F200180AEC /* jharvard_dark.png in Resources */,
-				59F9AAF41AC0E62A0040659C /* httpHeadersLog in Resources */,
-				595575F71A2E7214000ABAD8 /* Qinstructors.csv in Resources */,
-				595575F21A2E7201000ABAD8 /* QCourseOverall.csv in Resources */,
 				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
 				5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */,
 				59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */,
-				595575F61A2E7214000ABAD8 /* QDifficulty.csv in Resources */,
-				595575F01A2E71F8000ABAD8 /* Qcomments.csv in Resources */,
 				59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
 				5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */,
@@ -624,22 +566,16 @@
 				5926C2DD1AE57B1000342A5A /* QReport.m in Sources */,
 				59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
-				5901858D1A3E4447008884EF /* XPathQuery.m in Sources */,
 				5926C2E01AE57B1100342A5A /* QFacultyReport.m in Sources */,
-				59F9AAF71AC0E88C0040659C /* ScrapeViewController.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
 				598CAB351A22C7EC008D0142 /* Location.m in Sources */,
-				595576011A2E79BF000ABAD8 /* QDataParserDelegate.m in Sources */,
 				598CAB321A22C7EC008D0142 /* Meeting.m in Sources */,
-				5901858B1A3E4447008884EF /* TFHppleElement.m in Sources */,
 				59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */,
 				59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */,
 				596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */,
 				2DE0954A1A71589200FD524A /* LoginViewController.m in Sources */,
 				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
-				5901858C1A3E4447008884EF /* FullOnScrapist.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
-				5901858A1A3E4447008884EF /* TFHpple.m in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
