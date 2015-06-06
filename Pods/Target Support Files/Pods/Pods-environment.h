@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_CHCSVParser 1
 #define COCOAPODS_VERSION_PATCH_CHCSVParser 0
 
+// Firebase
+#define COCOAPODS_POD_AVAILABLE_Firebase
+#define COCOAPODS_VERSION_MAJOR_Firebase 2
+#define COCOAPODS_VERSION_MINOR_Firebase 3
+#define COCOAPODS_VERSION_PATCH_Firebase 1
+
 // FrameAccessor
 #define COCOAPODS_POD_AVAILABLE_FrameAccessor
 #define COCOAPODS_VERSION_MAJOR_FrameAccessor 1

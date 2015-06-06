@@ -23,6 +23,7 @@
 #import "ScrapeViewController.h"
 #import "QReport.h"
 #import "QFacultyReport.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate () <LoginViewControllerDelegate>
 
@@ -52,8 +53,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+//    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"90HBwxg6buByKw7MKrwS6503CrjmZ1QlnsPPMvNY"
+                  clientKey:@"AHhRu1tDs4PXTk2xbRfxa43psk6ucr8qe8NNDAgs"];
+    
+    // [Optional] Track statistics around application opens.
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     NSFetchRequest *reportsFetch = [NSFetchRequest fetchRequestWithEntityName:@"QReport"];
-    NSUInteger count = [[self managedObjectContext] countForFetchRequest:reportsFetch error:nil];
     for (QReport *report in [[self managedObjectContext] executeFetchRequest:reportsFetch error:nil]) {
         [[self managedObjectContext] deleteObject:report];
     }
@@ -75,143 +84,196 @@
         allCourseDict[key] = course;
     }
     
-    NSEntityDescription *reportEntity = [NSEntityDescription entityForName:@"QReport" inManagedObjectContext:[self managedObjectContext]];
-    NSEntityDescription *facultyReportEntity = [NSEntityDescription entityForName:@"QFacultyReport" inManagedObjectContext:[self managedObjectContext]];
+//    NSEntityDescription *reportEntity = [NSEntityDescription entityForName:@"QReport" inManagedObjectContext:[self managedObjectContext]];
+//    NSEntityDescription *facultyReportEntity = [NSEntityDescription entityForName:@"QFacultyReport" inManagedObjectContext:[self managedObjectContext]];
+//    
+//    NSString *resultsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"real_results.json"];
+//    NSData *rawData = [NSData dataWithContentsOfFile:resultsPath];
+//    NSDictionary *scrapedQResults = [NSJSONSerialization JSONObjectWithData:rawData options:NSJSONReadingAllowFragments error:nil];
+//    NSMutableArray *parseObjects = [NSMutableArray array];
+//    for (NSString *courseTitle in scrapedQResults) {
+//        NSDictionary *courseDict = scrapedQResults[courseTitle];
+//        for (NSString *termYear in courseDict) {
+//            NSDictionary *reportDict = courseDict[termYear];
+//            if (!reportDict) {
+//                [self dataErrorForKey:termYear title:courseTitle term:@"" year:@""];
+//                continue;
+//            }
+//            
+//            NSString *term = reportDict[@"term"];
+//            if (!term) {
+//                [self dataErrorForKey:@"term" title:courseTitle term:@"" year:@""];
+//                continue;
+//            }
+//            NSString *year = reportDict[@"year"];
+//            if (!year) {
+//                [self dataErrorForKey:@"year" title:courseTitle term:term year:@""];
+//                continue;
+//            }
+//            QReport *newReport = [[QReport alloc] initWithEntity:reportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
+//            newReport.term = [term isEqualToString:@"fall"] ? @1 : @2;  //@1 for fall, @2 for spring
+//            newReport.year = year;
+//            Course *courseObject = allCourseDict[courseTitle];
+//            [courseObject addqReportsObject:newReport];
+//            
+//            if (!newReport.course) {
+//                NSLog(@"Could not find course: %@ in allCourses", courseTitle);
+//                continue;
+//            }
+//            
+//            PFObject *report = [PFObject objectWithClassName:@"QReport"];
+//            PFObject *course = [PFObject objectWithClassName:@"Course"];
+//            PFRelation *reports = [course relationForKey:@"reports"];
+//            course[@"title"] = courseTitle;
+//            
+//            report[@"term"] = term;
+//            report[@"year"] = year;
+//            
+//            NSString *enrollmentString = reportDict[@"enrollment"];
+//            if (!enrollmentString.length) {
+//                [self dataErrorForKey:@"enrollment" title:courseTitle term:term year:year];
+//            }
+//            newReport.enrollment = @(enrollmentString.intValue);
+//            report[@"enrollment"] = @(enrollmentString.intValue);
+//            
+//            NSArray *rawComments = reportDict[@"comments"];
+//            if (!rawComments) {
+//                [self dataErrorForKey:@"comments" title:courseTitle term:term year:year];
+//            }
+//            NSMutableArray *commentsArray = [NSMutableArray array];
+//            for (NSString *rawComment in rawComments) {
+//                NSString *cleanComment = [rawComment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                [commentsArray addObject:cleanComment];
+//            }
+//            report[@"comments"] = commentsArray;
+//            PFRelation *responses = [report relationForKey:@"responses"];
+//            
+//            NSDictionary *answersDict = reportDict[@"answers"];
+//            
+//            for (NSString *keyword in @[@"overall", @"materials", @"assignments", @"feedback", @"section", @"workload", @"recommend"]) {
+//                
+//                NSDictionary *responseDict = nil;
+//                for (NSString *key in answersDict) {
+//                    if ([key.lowercaseString containsString:keyword]) {
+//                        responseDict = answersDict[key];
+//                    }
+//                }
+//                if (!responseDict) {
+//                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-response", keyword] title:courseTitle term:term year:year];
+//                    continue;
+//                }
+//                
+//                PFObject *response = [PFObject objectWithClassName:@"QResponse"];
+//                response[@"type"] = keyword;
+//                
+//                NSArray *breakdown = responseDict[@"breakdown"];
+//                response[@"breakdown"] = breakdown;
+//                NSString *breakdownString = [breakdown componentsJoinedByString:@","];
+//                if (breakdownString) {
+//                    [newReport setValue:breakdownString forKey:[NSString stringWithFormat:@"%@Breakdown", keyword]];
+//                } else
+//                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-breakdown", keyword] title:courseTitle term:term year:year];
+//                
+//                NSNumber *mean = responseDict[@"mean"];
+//                response[@"mean"] = mean;
+//                if (mean) {
+//                    [newReport setValue:mean forKey:keyword];
+//                } else
+//                    [self dataErrorForKey:keyword title:courseTitle term:term year:year];
+//                
+//                NSNumber *median = responseDict[@"median"];
+//                response[@"median"] = median;
+//                if (median) {
+//                    [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Median", keyword]];
+//                } else
+//                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-median", keyword] title:courseTitle term:term year:year];
+//                
+//                NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
+//                if (baseline) {
+//                    response[@"baseline"] = baseline;
+//                    [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
+//                } else
+//                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline", keyword] title:courseTitle term:term year:year];
+//                
+//                [response saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+//                    [responses addObject:response];
+//                    [report saveEventually];
+//                }];
+//            }
+//            
+//            PFRelation *facultyReports = [report relationForKey:@"facultyReports"];
+//            NSDictionary *instructorsDict = reportDict[@"faculty"];
+//            for (NSString *facultyString in instructorsDict) {
+//                NSDictionary *instructorDict = instructorsDict[facultyString];
+////                QFacultyReport *facultyReport = [[QFacultyReport alloc] initWithEntity:facultyReportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
+////                facultyReport.report = newReport;
+//                NSArray *components = [facultyString componentsSeparatedByString:@", "];
+//                NSString *last = components[0];
+//                NSString *first = components[1];
+////                Faculty *faculty = facultyDict[[NSString stringWithFormat:@"%@ %@", first, last]];
+////                if (faculty) {
+////                    facultyReport.faculty = faculty;
+////                } else {
+////                    
+////                }
+//                PFObject *faculty = [PFObject objectWithClassName:@"Faculty"];
+//                faculty[@"first"] = first;
+//                faculty[@"last"] = last;
+//                PFObject *facultyReport = [PFObject objectWithClassName:@"FacultyReport"];
+//                PFRelation *facultyRelation = [facultyReport relationForKey:@"faculty"];
+//                PFRelation *responses = [facultyReport relationForKey:@"responses"];
+//                
+//                for (NSString *keyword in @[@"overall", @"lectures", @"accessible", @"enthusiasm", @"discussion", @"feedback", @"timely"]) {
+//                    
+//                    NSDictionary *responseDict = nil;
+//                    for (NSString *key in instructorDict) {
+//                        if ([key.lowercaseString containsString:keyword]) {
+//                            responseDict = instructorDict[key];
+//                        }
+//                    }
+//                    if (!responseDict) {
+//                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-response-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+//                        continue;
+//                    }
+//                    PFObject *response = [PFObject objectWithClassName:@"QResponse"];
+//                    response[@"type"] = keyword;
+//                    
+//                    response[@"breakdown"] = responseDict[@"breakdown"];
+//                    
+//                    NSNumber *mean = responseDict[@"mean"];
+//                    response[@"mean"] = mean;
+//                    if (mean) {
+//                        [facultyReport setValue:mean forKey:keyword];
+//                    } else
+//                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+//                    
+//                    NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
+//                    if (baseline) {
+//                        [facultyReport setValue:baseline forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
+//                        response[@"baseline"] = baseline;
+//                    } else
+//                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
+//                    
+//                    [response saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+//                        [responses addObject:response];
+//                        [faculty saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+//                            [facultyRelation addObject:faculty];
+//                            [facultyReport saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+//                                [facultyReports addObject:facultyReport];
+//                                [report saveEventually];
+//                            }];
+//                        }];
+//                    }];
+//                }
+//            }
+//            [report saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+//                [reports addObject:report];
+//                [course saveInBackground];
+//            }];
+//        }
+//    }
     
-    NSString *resultsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"real_results.json"];
-    NSData *rawData = [NSData dataWithContentsOfFile:resultsPath];
-    NSDictionary *scrapedQResults = [NSJSONSerialization JSONObjectWithData:rawData options:NSJSONReadingAllowFragments error:nil];
-    for (NSString *courseTitle in scrapedQResults) {
-        NSDictionary *courseDict = scrapedQResults[courseTitle];
-        for (NSString *termYear in courseDict) {
-            NSDictionary *reportDict = courseDict[termYear];
-            if (!reportDict) {
-                [self dataErrorForKey:termYear title:courseTitle term:@"" year:@""];
-                continue;
-            }
-            
-            NSString *term = reportDict[@"term"];
-            if (!term) {
-                [self dataErrorForKey:@"term" title:courseTitle term:@"" year:@""];
-                continue;
-            }
-            NSString *year = reportDict[@"year"];
-            if (!year) {
-                [self dataErrorForKey:@"year" title:courseTitle term:term year:@""];
-                continue;
-            }
-            QReport *newReport = [[QReport alloc] initWithEntity:reportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
-            newReport.term = [term isEqualToString:@"fall"] ? @1 : @2;  //@1 for fall, @2 for spring
-            newReport.year = year;
-            Course *course = allCourseDict[courseTitle];
-            [course addqReportsObject:newReport];
-            
-            if (!newReport.course) {
-                NSLog(@"Could not find course: %@ in allCourses", courseTitle);
-                continue;
-            }
-            
-            NSString *enrollmentString = reportDict[@"enrollment"];
-            if (!enrollmentString.length) {
-                [self dataErrorForKey:@"enrollment" title:courseTitle term:term year:year];
-            }
-            newReport.enrollment = @(enrollmentString.intValue);
-            
-            NSArray *rawComments = reportDict[@"comments"];
-            if (!rawComments) {
-                [self dataErrorForKey:@"comments" title:courseTitle term:term year:year];
-            }
-            NSMutableString *commentsString = [NSMutableString string];
-            for (NSString *rawComment in rawComments) {
-                NSString *cleanComment = [rawComment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                [commentsString appendFormat:@"%@,", cleanComment];
-            }
-            newReport.comments = commentsString;
-            
-            NSDictionary *answersDict = reportDict[@"answers"];
-            
-            for (NSString *keyword in @[@"overall", @"materials", @"assignments", @"feedback", @"section", @"workload", @"recommend"]) {
-                
-                NSDictionary *responseDict = nil;
-                for (NSString *key in answersDict) {
-                    if ([key.lowercaseString containsString:keyword]) {
-                        responseDict = answersDict[key];
-                    }
-                }
-                if (!responseDict) {
-                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-response", keyword] title:courseTitle term:term year:year];
-                    continue;
-                }
-                
-                NSArray *breakdown = responseDict[@"breakdown"];
-                NSString *breakdownString = [breakdown componentsJoinedByString:@","];
-                if (breakdownString) {
-                    [newReport setValue:breakdownString forKey:[NSString stringWithFormat:@"%@Breakdown", keyword]];
-                } else
-                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-breakdown", keyword] title:courseTitle term:term year:year];
-                
-                NSNumber *mean = responseDict[@"mean"];
-                if (mean) {
-                    [newReport setValue:mean forKey:keyword];
-                } else
-                    [self dataErrorForKey:keyword title:courseTitle term:term year:year];
-                
-                NSNumber *median = responseDict[@"median"];
-                if (median) {
-                    [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Median", keyword]];
-                } else
-                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-median", keyword] title:courseTitle term:term year:year];
-                
-                NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
-                if (baseline) {
-                    [newReport setValue:median forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
-                } else
-                    [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline", keyword] title:courseTitle term:term year:year];
-            }
-            
-            NSDictionary *instructorsDict = reportDict[@"faculty"];
-            for (NSString *facultyString in instructorsDict) {
-                NSDictionary *instructorDict = instructorsDict[facultyString];
-                QFacultyReport *facultyReport = [[QFacultyReport alloc] initWithEntity:facultyReportEntity insertIntoManagedObjectContext:[self managedObjectContext]];
-                facultyReport.report = newReport;
-                NSArray *components = [facultyString componentsSeparatedByString:@", "];
-                NSString *last = components[0];
-                NSString *first = components[1];
-                Faculty *faculty = facultyDict[[NSString stringWithFormat:@"%@ %@", first, last]];
-                if (faculty) {
-                    facultyReport.faculty = faculty;
-                } else {
-                    
-                }
-                for (NSString *keyword in @[@"overall", @"lectures", @"accessible", @"enthusiasm", @"discussion", @"feedback", @"timely"]) {
-                    
-                    NSDictionary *responseDict = nil;
-                    for (NSString *key in instructorDict) {
-                        if ([key.lowercaseString containsString:keyword]) {
-                            responseDict = instructorDict[key];
-                        }
-                    }
-                    if (!responseDict) {
-                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-response-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
-                        continue;
-                    }
-                    
-                    NSNumber *mean = responseDict[@"mean"];
-                    if (mean) {
-                        [facultyReport setValue:mean forKey:keyword];
-                    } else
-                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
-                    
-                    NSNumber *baseline = responseDict[@"baselines"][@"single_term"][@"dept"];
-                    if (baseline) {
-                        [facultyReport setValue:baseline forKey:[NSString stringWithFormat:@"%@Baseline", keyword]];
-                    } else
-                        [self dataErrorForKey:[NSString stringWithFormat:@"%@-baseline-%@ %@", keyword, first, last] title:courseTitle term:term year:year];
-                }            }
-        }
-    }
-    
-    [[self managedObjectContext] save:nil];
+//    [[self managedObjectContext] save:nil];
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     

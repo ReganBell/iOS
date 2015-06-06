@@ -70,6 +70,14 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>https://www.firebase.com/terms/terms-of-service.html</string>
+			<key>Title</key>
+			<string>Firebase</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Copyright (c) 2012 Alexey Denisov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

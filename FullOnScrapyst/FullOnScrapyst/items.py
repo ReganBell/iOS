@@ -11,7 +11,7 @@ class Course(scrapy.Item):
     # define the fields for your item here like:
     title = scrapy.Field()
     enrollment = scrapy.Field()
-    answers = scrapy.Field()
+    responses = scrapy.Field()
     comments = scrapy.Field()
     faculty = scrapy.Field()
     term = scrapy.Field()

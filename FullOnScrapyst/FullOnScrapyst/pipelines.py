@@ -8,19 +8,25 @@
 from scrapy.exceptions import DropItem
 import json
 
+
 def merge(a, b, path=None):
+
     if path is None: path = []
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
-                merge(a[key], b[key], path + [str(key)])
+                    merge(a[key], b[key], path + [str(key)])
             elif a[key] == b[key]:
-                pass # same leaf value
+                pass  # same leaf value
             else:
-                raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
+                    print 'Merging:'
+                    print json.dumps(a)
+                    print json.dumps(b)
+                    print 'Conflict at ' + key + ' values: ' + str(a[key]) + ' ' + str(b[key])
         else:
             a[key] = b[key]
     return a
+
 
 class FullOnScrapystPipeline(object):
 
@@ -28,6 +34,8 @@ class FullOnScrapystPipeline(object):
 
     def process_item(self, item, spider):
         title = item['title']
+        for i, forbidden in enumerate(['.', '#', '$', '/', '[', ']']):
+            title = title.replace(forbidden, '&' + str(i) + '&')
         item_term_year = item['term'] + item['year']
         item_dict = dict(item)
         if title in self.finished_items:
@@ -42,7 +50,7 @@ class FullOnScrapystPipeline(object):
         return item
 
     def close_spider(self, spider):
-        with open('real_results.json', 'w') as f:
+        with open('test_results.json', 'w') as f:
             json.dump(self.finished_items, f)
 
 

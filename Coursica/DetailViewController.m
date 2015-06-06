@@ -17,6 +17,7 @@
 #import "CommentsViewController.h"
 #import "UILabel+HeightCalculation.h"
 #import "QReport.h"
+#import <Firebase/Firebase.h>
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
@@ -67,6 +68,12 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    Firebase *root = [[Firebase alloc] initWithUrl:@"glaring-heat-9505.firebaseIO.com/MODGRK 100: Advanced Modern Greek: Introduction to Modern Greek Literature"];
+    
+    [root observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        
+    }];
     
     // Sets title bar appearance for the view
     CGRect frame = CGRectMake(0, 0, 0, 0);
