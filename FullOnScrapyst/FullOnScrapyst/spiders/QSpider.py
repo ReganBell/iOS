@@ -236,7 +236,8 @@ class QSpider(scrapy.Spider):
             else:
                 median = median
             x += n
-        mean = w_sum / float(sum(breakdown))
+        breakdown_sum = float(sum(breakdown))
+        mean = w_sum / breakdown_sum if breakdown_sum > 0 else 0
 
         title = row.xpath('./td[1]/strong/text()').extract()[0]
         title = firebase_sanitize(title)

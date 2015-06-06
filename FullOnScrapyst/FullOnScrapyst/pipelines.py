@@ -50,7 +50,7 @@ class FullOnScrapystPipeline(object):
         return item
 
     def close_spider(self, spider):
-        with open('test_results.json', 'w') as f:
+        with open('final_results.json', 'w') as f:
             json.dump(self.finished_items, f)
 
 
