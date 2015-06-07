@@ -12,7 +12,6 @@
 #import "Meeting.h"
 #import "Location.h"
 #import "AppDelegate.h"
-#import "CHCSVParser.h"
 #import "QScore.h"
 #import "SearchManager.h"
 #import "QReport.h"
@@ -49,8 +48,8 @@
         
         if (!mostRecent)
             _qOverall = nil;
-        else
-            _qOverall = mostRecent.overall;
+//        else
+//            _qOverall = mostRecent.overall;
     }
     
     return _qOverall;
@@ -64,8 +63,8 @@
         
         if (!mostRecent)
             _qWorkload = nil;
-        else
-            _qWorkload = mostRecent.workload;
+//        else
+//            _qWorkload = mostRecent.workload;
     }
     
     return _qWorkload;

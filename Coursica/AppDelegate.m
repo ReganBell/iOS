@@ -8,26 +8,19 @@
 //
 
 #import "AppDelegate.h"
-#import "MMDrawerController.h"
 #import "CoursesViewController.h"
 #import "FiltersViewController.h"
 #import "LoginViewController.h"
 #import "NavigationController.h"
-#import "CHCSVParser.h"
-#import "QDataParserDelegate.h"
 #import "Course.h"
 #import "QScore.h"
-#import "FullOnScrapist.h"
 #import "SearchManager.h"
 #import "Faculty.h"
-#import "ScrapeViewController.h"
 #import "QReport.h"
 #import "QFacultyReport.h"
-#import <Parse/Parse.h>
 
 @interface AppDelegate () <LoginViewControllerDelegate>
 
-@property (strong, nonatomic) MMDrawerController *drawerController;
 @property (strong, nonatomic) NSMutableDictionary *dataErrors;
 
 @end
@@ -53,19 +46,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    [Parse enableLocalDatastore];
-    
-    // Initialize Parse.
-    [Parse setApplicationId:@"90HBwxg6buByKw7MKrwS6503CrjmZ1QlnsPPMvNY"
-                  clientKey:@"AHhRu1tDs4PXTk2xbRfxa43psk6ucr8qe8NNDAgs"];
-    
-    // [Optional] Track statistics around application opens.
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
-    NSFetchRequest *reportsFetch = [NSFetchRequest fetchRequestWithEntityName:@"QReport"];
-    for (QReport *report in [[self managedObjectContext] executeFetchRequest:reportsFetch error:nil]) {
-        [[self managedObjectContext] deleteObject:report];
-    }
+//    NSFetchRequest *reportsFetch = [NSFetchRequest fetchRequestWithEntityName:@"QReport"];
+//    for (QReport *report in [[self managedObjectContext] executeFetchRequest:reportsFetch error:nil]) {
+//        [[self managedObjectContext] deleteObject:report];
+//    }
     
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
     [fetch setPropertiesToFetch:@[@"first", @"last"]];
@@ -279,9 +263,9 @@
     
     // Build inverted index for search
     // We might want to save this into NSUserDefaults
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [SearchManager sharedSearchManager];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [SearchManager sharedSearchManager];
+//    });
     // Set up scraping view controller; comment out for standard login flow
     
 //    ScrapeViewController *scrapeController = [main instantiateViewControllerWithIdentifier:@"scrapeController"];

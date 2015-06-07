@@ -25,6 +25,9 @@ PODS:
   - GraphKit (1.0.0):
     - FrameAccessor (~> 1.3.2)
     - MKFoundationKit/NSArray (~> 1.2.2)
+  - Mantle (2.0.2):
+    - Mantle/extobjc (= 2.0.2)
+  - Mantle/extobjc (2.0.2)
   - MKFoundationKit/NSArray (1.2.3)
   - MWFeedParser/NSString+HTML (1.0.1)
   - NMRangeSlider (1.1.1)
@@ -33,6 +36,7 @@ DEPENDENCIES:
   - AFNetworking
   - Firebase (>= 2.3.1)
   - GraphKit (~> 1.0.0)
+  - Mantle
   - MWFeedParser/NSString+HTML
   - NMRangeSlider (~> 1.1.1)
 
@@ -41,6 +45,7 @@ SPEC CHECKSUMS:
   Firebase: 462795adf92029ddb97777660627f5dd4fd59876
   FrameAccessor: 0f7ba6ce37be9a5d0302a27c731dca70af8d438b
   GraphKit: 40acc1796d5e1738675ef0fa0343d7ccf2d69cf1
+  Mantle: 967fd31ea0220890b2e76589198996b534bb3fb1
   MKFoundationKit: 882d74557944790d4d9e172961ed71d6a66804b7
   MWFeedParser: 2cf646014c1baf6ad1b08c480b40a08180079247
   NMRangeSlider: 307aa02651d6cc547ce8faffeb69e90080ec8476

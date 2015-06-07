@@ -7,45 +7,36 @@
 //
 
 #import "QReport.h"
-#import "Course.h"
-
+#import "QResponse.h"
 
 @implementation QReport
 
-@dynamic term;
-@dynamic url;
-@dynamic year;
-@dynamic enrollment;
-@dynamic overall;
-@dynamic overallBaseline;
-@dynamic overallBreakdown;
-@dynamic overallMedian;
-@dynamic materials;
-@dynamic materialsBaseline;
-@dynamic materialsBreakdown;
-@dynamic materialsMedian;
-@dynamic assignments;
-@dynamic assignmentsBaseline;
-@dynamic assignmentsBreakdown;
-@dynamic assignmentsMedian;
-@dynamic feedback;
-@dynamic feedbackBaseline;
-@dynamic feedbackMedian;
-@dynamic feedbackBreakdown;
-@dynamic section;
-@dynamic sectionBaseline;
-@dynamic sectionBreakdown;
-@dynamic sectionMedian;
-@dynamic workload;
-@dynamic workloadBaseline;
-@dynamic workloadBreakdown;
-@dynamic workloadMedian;
-@dynamic recommend;
-@dynamic recommendBaseline;
-@dynamic recommendBreakdown;
-@dynamic recommendMedian;
-@dynamic comments;
-@dynamic course;
-@dynamic facultyReports;
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    
+    return @{@"enrollment": @"enrollment",
+             @"responses": @"responses",
+             @"term": @"term",
+             @"year": @"year"};
+}
+
++ (NSValueTransformer*)responsesJSONTransformer {
+    
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        
+        NSDictionary *rawDictionary = (NSDictionary*)value;
+        NSMutableDictionary *responsesDictionary = [NSMutableDictionary dictionary];
+        
+        [rawDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSString *title = (NSString*)key;
+            NSDictionary *responseDictionary = (NSDictionary*)obj;
+            NSError *error = nil;
+            QResponse *response = [MTLJSONAdapter modelOfClass:[QResponse class] fromJSONDictionary:responseDictionary error:&error];
+            response.title = title;
+            responsesDictionary[title] = response;
+        }];
+        
+        return responsesDictionary;
+    }];
+}
 
 @end

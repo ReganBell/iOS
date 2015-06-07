@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'regan'
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 import scrapy
 import urllib
@@ -7,13 +10,10 @@ import urlparse
 import re
 from scrapy.shell import inspect_response
 from ..items import Course
-# import sys
-# reload(sys)
-# sys.setdefaultencoding("utf-8")
-
 
 def firebase_sanitize(string):
-    for i, forbidden in enumerate(['.', '#', '$', '/', '[', ']']):
+    string = string.decode('utf-8')
+    for i, forbidden in enumerate(['.', '#', '$', '/', '[', ']', '\n', '\r', '’',]):
             string = string.replace(forbidden, '&' + str(i) + '&')
     return string
 
@@ -79,7 +79,7 @@ class QSpider(scrapy.Spider):
         requests = []
         self.count += len(course_links)
         print "Scraping %d courses -- total %d" % (len(course_links), self.count)
-        #DEBUG MODE:
+        # DEBUG MODE:
         # if self.count > len(course_links) * 5:
         #     return
         for course_link in course_links:

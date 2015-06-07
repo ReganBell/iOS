@@ -1,5 +1,6 @@
 platform :ios, '7.0'
 
+pod 'Mantle'
 pod 'AFNetworking'
 pod 'GraphKit', '~> 1.0.0'
 pod 'NMRangeSlider', '~> 1.1.1'

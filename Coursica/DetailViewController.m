@@ -18,13 +18,16 @@
 #import "UILabel+HeightCalculation.h"
 #import "QReport.h"
 #import <Firebase/Firebase.h>
+#import "NSString+FirebaseEncode.h"
+#import "QFacultyReport.h"
+#import "Mantle.h"
+#import "QResponse.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
 
 @interface DetailViewController () <GKBarGraphDataSource>
 
-// References to the UI elements used in the controller's view
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
@@ -58,6 +61,8 @@
 @property (nonatomic, weak) IBOutlet GKBarGraph *graphView;
 @property (nonatomic, assign) BOOL green;
 
+@property (strong, nonatomic) QReport *report;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *notesHeightConstraint;
 
@@ -69,13 +74,32 @@
     
     [super viewDidLoad];
     
-    Firebase *root = [[Firebase alloc] initWithUrl:@"glaring-heat-9505.firebaseIO.com/MODGRK 100: Advanced Modern Greek: Introduction to Modern Greek Literature"];
+    [self layoutCourseInfoCard];
+    [self layoutNavigationBarTitle];
+    [self pullCourseData];
+}
+
+- (void)pullCourseData {
+    
+    NSString *encoded = [self.course.displayTitle stringEncodedAsFirebaseKey];
+    NSString *urlString = [NSString stringWithFormat:@"glaring-heat-9505.firebaseIO.com/%@", encoded];
+    Firebase *root = [[Firebase alloc] initWithUrl:urlString];
     
     [root observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
-        
+        NSError *error = nil;
+        for (NSDictionary *reportDictionary in [snapshot.value allValues]) {
+            QReport *report = [MTLJSONAdapter modelOfClass:[QReport class] fromJSONDictionary:reportDictionary error:&error];
+            if (error) {
+                NSLog(@"%@", error);
+            } else {
+                [self updateUIWithQReport:report];
+            }
+        }
     }];
+}
+
+- (void)layoutNavigationBarTitle {
     
-    // Sets title bar appearance for the view
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
@@ -84,12 +108,12 @@
     label.textColor = [UIColor whiteColor];
     [label sizeToFit];
     self.navigationItem.titleView = label;
+}
+
+- (void)layoutCourseInfoCard {
     
     self.titleLabel.text = self.course.title;
     self.titleLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
-
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    NSManagedObjectContext *context = [delegate managedObjectContext];
     
     self.descriptionLabel.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];
     self.descriptionLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
@@ -281,68 +305,68 @@
     }
     else
     {
-    switch ([self.course.genEdOne intValue]) {
-        case 1:
-            genEdString = @"Aesthetic and Interpretive Understanding";
-            break;
-        case 2:
-            genEdString = @"Culture and Belief";
-            break;
-        case 3:
-            genEdString = @"Empirical and Mathematical Reasoning";
-            break;
-        case 4:
-            genEdString = @"Ethical Reasoning";
-            break;
-        case 5:
-            genEdString = @"Science of Living Systems";
-            break;
-        case 6:
-            genEdString = @"Science of the Physical Universe";
-            break;
-        case 7:
-            genEdString = @"Societies of the World";
-            break;
-        case 8:
-            genEdString = @"United States in the World";
-            break;
-            
-        default:
-            break;
-    }
-    // Checks if the courses satisfies a second gen. ed. requirement
-    if ([self.course.genEdTwo intValue] != 0)
-    {
-        switch ([self.course.genEdTwo intValue]) {
+        switch ([self.course.genEdOne intValue]) {
             case 1:
-                genEdString = [genEdString stringByAppendingString:@", Aesthetic and Interpretive Understanding"];
+                genEdString = @"Aesthetic and Interpretive Understanding";
                 break;
             case 2:
-                genEdString = [genEdString stringByAppendingString:@", Culture and Belief"];
+                genEdString = @"Culture and Belief";
                 break;
             case 3:
-                genEdString = [genEdString stringByAppendingString:@", Empirical and Mathematical Reasoning"];
+                genEdString = @"Empirical and Mathematical Reasoning";
                 break;
             case 4:
-                genEdString = [genEdString stringByAppendingString:@", Ethical Reasoning"];
+                genEdString = @"Ethical Reasoning";
                 break;
             case 5:
-                genEdString = [genEdString stringByAppendingString:@", Science of Living Systems"];
+                genEdString = @"Science of Living Systems";
                 break;
             case 6:
-                genEdString = [genEdString stringByAppendingString:@", Science of the Physical Universe"];
+                genEdString = @"Science of the Physical Universe";
                 break;
             case 7:
-                genEdString = [genEdString stringByAppendingString:@", Societies of the World"];
+                genEdString = @"Societies of the World";
                 break;
             case 8:
-                genEdString = [genEdString stringByAppendingString:@", United States in the World"];
+                genEdString = @"United States in the World";
                 break;
                 
             default:
                 break;
         }
-    }
+        // Checks if the courses satisfies a second gen. ed. requirement
+        if ([self.course.genEdTwo intValue] != 0)
+        {
+            switch ([self.course.genEdTwo intValue]) {
+                case 1:
+                    genEdString = [genEdString stringByAppendingString:@", Aesthetic and Interpretive Understanding"];
+                    break;
+                case 2:
+                    genEdString = [genEdString stringByAppendingString:@", Culture and Belief"];
+                    break;
+                case 3:
+                    genEdString = [genEdString stringByAppendingString:@", Empirical and Mathematical Reasoning"];
+                    break;
+                case 4:
+                    genEdString = [genEdString stringByAppendingString:@", Ethical Reasoning"];
+                    break;
+                case 5:
+                    genEdString = [genEdString stringByAppendingString:@", Science of Living Systems"];
+                    break;
+                case 6:
+                    genEdString = [genEdString stringByAppendingString:@", Science of the Physical Universe"];
+                    break;
+                case 7:
+                    genEdString = [genEdString stringByAppendingString:@", Societies of the World"];
+                    break;
+                case 8:
+                    genEdString = [genEdString stringByAppendingString:@", United States in the World"];
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
     }
     // Says if no Gen. Ed. fulfillments were found
     if (!genEdString) {
@@ -355,17 +379,17 @@
     [notesLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,7)];
     [notesLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(7, self.course.notes.length)];
     
-//    NSString *tempCatNumString = [NSString stringWithFormat:@"Catalog Number: %@", [self.course.catalogNumber stringValue]];
-//    NSMutableAttributedString *catNumLabel = [[NSMutableAttributedString alloc] initWithString:tempCatNumString];
-//    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,16)];
-//    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(16, [self.course.catalogNumber stringValue].length)];
-//    
-//    
+    //    NSString *tempCatNumString = [NSString stringWithFormat:@"Catalog Number: %@", [self.course.catalogNumber stringValue]];
+    //    NSMutableAttributedString *catNumLabel = [[NSMutableAttributedString alloc] initWithString:tempCatNumString];
+    //    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0,16)];
+    //    [catNumLabel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(16, [self.course.catalogNumber stringValue].length)];
+    //
+    //
     NSString *tempGenEdString = [NSString stringWithFormat:@"%@", genEdString];
     NSMutableAttributedString *genEdLabel = [[NSMutableAttributedString alloc] initWithString:tempGenEdString];
-
-//    self.notesLabel.attributedText = notesLabel;
-//    self.catalogNumLabel.attributedText = catNumLabel;
+    
+    //    self.notesLabel.attributedText = notesLabel;
+    //    self.catalogNumLabel.attributedText = catNumLabel;
     self.satisfiesLabel.attributedText = genEdLabel;
     
     
@@ -373,79 +397,23 @@
     
     self.courseLocationLabel.attributedText = locationLabel;
     
-    
-   // FIGURING OUT HOW TO AUTO EXTEND/SHRINK INFOVIEW
-//    CGFloat satisfiesBottom = self.satisfiesLabel.frame.origin.y + self.satisfiesLabel.frame.size.height;
-//    
-//    CGRect newFrame = self.infoView.frame;
-//    newFrame.size.height = satisfiesBottom + 10;
-//    
-//    //CGRect textViewFrame = CGRectMake (0, 0, 144, 132);
-//    [self.infoView setFrame:newFrame];
-//    
-//    
-//    [self.view setNeedsLayout];
-    
-//     Retrieves Q scores for course
-//    NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];
-//    NSMutableDictionary *qScoresDict = [NSMutableDictionary new];
-//    for (NSString *type in qTypes) {
-//        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
-//        request.predicate = [NSPredicate predicateWithFormat:@"catalogNumber = %@ AND type = %@", self.course.catalogNumber, type];
-//        NSArray *result = [context executeFetchRequest:request error:nil];
-//        if (result.count == 0)
-//            return;
-//        
-//        QScore *score = result[0];
-//        [qScoresDict setObject:score forKey:type];
-//    }
-    
-//     Sets the controller's Q score variables
-    //self.overallScore = qScoresDict[@"overall"];
-    
-//    self.overallScore =  [[QScore alloc] init];
-//    self.overallScore.one = @1;
-//    self.overallScore.two = @2;
-//    self.overallScore.three = @3;
-//    self.overallScore.four = @4;
-//    self.overallScore.five = @5;
-//    
-//    self.difficultyScore = [[QScore alloc] init];
-//    self.difficultyScore.one = @4;
-//    self.difficultyScore.two = @2;
-//    self.difficultyScore.three = @7;
-//    self.difficultyScore.four = @4;
-//    self.difficultyScore.five = @1;
-//    
-//    self.workloadScore = [[QScore alloc] init];
-//    self.workloadScore.one = @0;
-//    self.workloadScore.two = @2;
-//    self.workloadScore.three = @4;
-//    self.workloadScore.four = @3;
-//    self.workloadScore.five = @4;
-//    
-//    
-//    self.course.qOverall = @4.2;
-//    self.course.qDifficulty = @3.5;
-//    self.course.qWorkload = @2.1;
+}
 
+- (void)updateUIWithQReport:(QReport*)report {
     
-    //NSString *tempOverallString = [NSString stringWithFormat:@"Q Overall/n%0.2f", [self.course.qOverall doubleValue]];
-    NSString *tempOverallString = [NSString stringWithFormat:@"Q Overall\n4.2"];
-    NSMutableAttributedString *overallLabel = [[NSMutableAttributedString alloc] initWithString:tempOverallString];
+    self.report = report;
     
-    //NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty/n%0.2f", [self.course.qDifficulty doubleValue]];
-    NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty\n3.4"];
-    NSMutableAttributedString *difficultyLabel = [[NSMutableAttributedString alloc] initWithString:tempDifficultyString];
+    QResponse *overallResponse = report.responses[@"Course Overall"];
+    if (overallResponse) {
+        NSString *overallString = [NSString stringWithFormat:@"Q Overall %0.2f", overallResponse.mean.doubleValue];
+        self.overallLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:overallString];
+    }
     
-    //NSString *tempWorkloadString = [NSString stringWithFormat:@"Workload/n%0.2f", [self.course.qWorkload doubleValue]];
-    NSString *tempWorkloadString = [NSString stringWithFormat:@"Workload\n2.4"];
-    NSMutableAttributedString *workloadLabel = [[NSMutableAttributedString alloc] initWithString:tempWorkloadString];
-    
-    self.overallLabel.attributedText = overallLabel;
-    self.difficultyLabel.attributedText = difficultyLabel;
-    self.workloadLabel.attributedText = workloadLabel;
-    
+    QResponse *workloadResponse = report.responses[@"Workload (hours per week)"];
+    if (workloadResponse) {
+        NSString *workloadString = [NSString stringWithFormat:@"Workload %0.2f", workloadResponse.mean.doubleValue];
+        self.workloadLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:workloadString];
+    }
     
     // Sets all the information for the Q score bar graph
     // From example of how to implement the graph on the graph's Github repository
@@ -454,22 +422,7 @@
     
     self.view.backgroundColor = [UIColor gk_cloudsColor];
     
-//    NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
-//    NSInteger largest = 5;
-//    NSString *largestBar;
-    // Adjusts percentages for graph from Q data so the largest
-    // Answer (the largest bar) will completely fill the bar, like CS50 courses online
-//    for (NSString *property in properties)
-//    {
-//        if([[self.overallScore valueForKey:property] intValue] > largest)
-//        {
-//            largestBar = property;
-//            NSNumber *tempNum = [self.overallScore valueForKey:property];
-//            largest = [tempNum intValue];
-//        }
-//    }
-
-    [self updateGraphWithBreakdown:[self.course.mostRecentReport.overallBreakdown componentsSeparatedByString:@","]];
+    [self updateGraphWithBreakdown:overallResponse.breakdown];
     
     self.graphView.barWidth = 28;
     self.graphView.barHeight = 150;
@@ -485,9 +438,6 @@
     float height = [UILabel heightForString:self.descriptionLabel.text width:self.descriptionLabel.bounds.size.width - 40 font:self.descriptionLabel.font];
     self.descriptionHeightConstraint.constant = height;
     
-    //height = [UILabel heightForString:tempNotesString width:self.notesLabel.bounds.size.width - 60 font:self.notesLabel.font];
-    //self.notesHeightConstraint.constant = height;
-    
     [self.view setNeedsLayout];
     
     int j = 0;
@@ -496,8 +446,6 @@
         qScoreButton.tag = j;
         j++;
     }
-    
-//    [self selectButton:self.qScoreButtons[1] inArray:self.qScoreLabels];
 }
 
 - (void)updateGraphWithBreakdown:(NSArray*)breakdown {
@@ -506,7 +454,7 @@
         return;
     }
     
-    self.labels = [NSArray arrayWithArray:breakdown];
+    self.labels = breakdown;
     
     NSMutableArray *data = [NSMutableArray array];
     
@@ -556,81 +504,15 @@
         
         switch (button.tag) {
             case 0:
-                [self updateGraph:0];
                 break;
             case 1:
-                [self updateGraph:1];
                 break;
             case 2:
-                [self updateGraph:2];
                 break;
             default:
                 break;
         }
     }
-}
-
-- (void)updateGraph:(NSInteger)data {
-    
-    if (data == 0) {
-        self.labels = @[@"1", @"3", @"4", @"5", @"5"];
-        
-        NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
-        NSInteger largest = 5;
-        NSString *largestBar;
-        NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
-        self.data = @[[NSNumber numberWithDouble:1.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:3.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:4.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:5.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:5.0*ratio.doubleValue]
-                      ];
-        
-    }
-    else if (data == 1)
-    {
-        self.labels = @[@"2", @"3", @"4", @"1", @"5"];
-        
-        NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
-        NSInteger largest = 5;
-        NSString *largestBar;
-        NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
-        self.data = @[[NSNumber numberWithDouble:2.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:3.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:4.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:1.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:5.0*ratio.doubleValue]
-                      ];
-    }
-    else
-    {
-        self.labels = @[@"4", @"3", @"2", @"5", @"2"];
-        
-        NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
-        NSInteger largest = 5;
-        NSString *largestBar;
-        NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
-        self.data = @[[NSNumber numberWithDouble:4.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:3.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:2.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:5.0*ratio.doubleValue],
-                      [NSNumber numberWithDouble:2.0*ratio.doubleValue]
-                      ];
-    }
-    
-    
-//    self.graphView.barWidth = 28;
-//    self.graphView.barHeight = 150;
-//    self.graphView.marginBar = 16;
-//    self.graphView.animationDuration = 2.0;
-    
-    self.graphView.dataSource = self;
-    
-    [self.graphView draw];
-    
-    self.green = YES;
-        
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -641,9 +523,14 @@
 
 - (IBAction)viewCommentsButtonClicked:(id)sender {
     
+    if (!self.report.comments.count) {
+        [self.viewCommentsButton setTitle:@"No comments reported :(" forState:UIControlStateNormal];
+        return;
+    }
+    
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     CommentsViewController *controller = [main instantiateViewControllerWithIdentifier:@"comments"];
-    controller.course = self.course;
+    controller.report = self.report;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -676,10 +563,6 @@
     return [UIColor colorWithRed:31.0/255.0 green:148.0/255.0 blue:255.0/255.0 alpha:1];
 }
 
-//- (UIColor *)colorForBarBackgroundAtIndex:(NSInteger)index {
-//    return [UIColor redColor];
-//}
-
 - (CFTimeInterval)animationDurationForBarAtIndex:(NSInteger)index {
     CGFloat percentage = [[self valueForBarAtIndex:index] doubleValue];
     percentage = (percentage / 100);
@@ -687,20 +570,8 @@
 }
 
 - (NSString *)titleForBarAtIndex:(NSInteger)index {
-    return [self.labels objectAtIndex:index];
+    NSNumber *value = self.labels[index];
+    return value.stringValue;
 }
-
-
-/*
-#pragma mark - Navigation
- 
- 
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

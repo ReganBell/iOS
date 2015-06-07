@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class Course;
+@class QReport;
 
 @interface CommentsViewController : UIViewController
 
-@property (strong, nonatomic) Course *course;
+@property (strong, nonatomic) QReport *report;
 
 @end
