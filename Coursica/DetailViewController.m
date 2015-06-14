@@ -29,6 +29,14 @@
 
 @interface DetailViewController () <GKBarGraphDataSource>
 
+@property (nonatomic, strong) IBOutletCollection(UIView) NSArray *cards;
+@property (weak, nonatomic) IBOutlet UIView *infoView;
+@property (weak, nonatomic) IBOutlet UIView *QScoreView;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+
+// References to the UI elements used in the controller's view
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
@@ -36,17 +44,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseMeetingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *courseLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *courseInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *satisfiesLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *overallLabel;
 @property (weak, nonatomic) IBOutlet UILabel *difficultyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *workloadLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *notesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *catalogNumLabel;
-@property (weak, nonatomic) IBOutlet UILabel *satisfiesLabel;
-
-@property (weak, nonatomic) IBOutlet UIView *infoView;
-@property (weak, nonatomic) IBOutlet UIView *QScoreView;
 
 @property (strong, nonatomic) QScore *overallScore;
 @property (strong, nonatomic) QScore *difficultyScore;
@@ -101,6 +103,7 @@
 
 - (void)layoutNavigationBarTitle {
     
+    // Sets title bar appearance for the view
     CGRect frame = CGRectMake(0, 0, 0, 0);
     UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.backgroundColor = [UIColor clearColor];
@@ -144,6 +147,20 @@
     
     self.titleLabel.text = self.course.title;
     self.titleLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
+
+    
+    //self.courseMeetingLabel
+    //[label setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:13]];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    for (UIView *card in self.cards) {
+        card.layer.cornerRadius = 4.0f;
+        card.clipsToBounds = YES;
+    }
+    
+    self.viewCommentsButton.layer.cornerRadius = 4.0f;
     
     self.descriptionLabel.text = [NSString stringWithFormat:@"%@", self.course.courseDescription];
     self.descriptionLabel.textColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
@@ -165,7 +182,6 @@
         // If no faculty listed, then faculty is TBD
         [facultyString appendString:@"TBD"];
     }
-    
     
     // Gives location of the course
     NSMutableString *locationString = [NSMutableString new];
@@ -193,12 +209,11 @@
     self.courseMeetingLabel.attributedText = [self meetingStringForCourse:self.course];
     //CGFloat width =  [self.courseMeetingLabel.text sizeWithAttributes:[UIFont fontWithName:@"AvenirNext-Bold" size:13]].width;
     
-    UIFont *font = [UIFont fontWithName:@"AvenirNext-Bold" size:13];
-    NSDictionary *userAttributes = @{NSFontAttributeName: font,
-                                     NSForegroundColorAttributeName: [UIColor blackColor]};
+    NSDictionary *userAttributes =
+        @{NSFontAttributeName: [UIFont fontWithName:@"AvenirNext-Bold" size:13],
+          NSForegroundColorAttributeName: [UIColor blackColor]};
     const CGSize textSize = [self.courseMeetingLabel.text sizeWithAttributes: userAttributes];
     CGFloat textWidth = textSize.width;
-    
     
     self.courseMeetingLabel.frame = CGRectMake(self.courseMeetingLabel.frame.origin.x, self.courseMeetingLabel.frame.origin.y, textWidth+2.0, self.courseMeetingLabel.frame.size.height);
     
@@ -206,12 +221,10 @@
     
     // Gets Gen. Ed. requirements of the course from numerical gen. ed. listings
     NSString *genEdString;
-    if ([self.course.genEdOne intValue] == 0)
-    {
+    if ([self.course.genEdOne intValue] == 0) {
         genEdString = @"None";
     }
-    else
-    {
+    else {
         switch ([self.course.genEdOne intValue]) {
             case 1:
                 genEdString = @"Aesthetic and Interpretive Understanding";
@@ -237,11 +250,10 @@
             case 8:
                 genEdString = @"United States in the World";
                 break;
-                
             default:
                 break;
         }
-        // Checks if the courses satisfies a second gen. ed. requirement
+    // Checks if the courses satisfies a second gen. ed. requirement
         if ([self.course.genEdTwo intValue] != 0)
         {
             switch ([self.course.genEdTwo intValue]) {
@@ -269,7 +281,6 @@
                 case 8:
                     genEdString = [genEdString stringByAppendingString:@", United States in the World"];
                     break;
-                    
                 default:
                     break;
             }
@@ -309,6 +320,63 @@
 - (void)updateUIWithQReport:(QReport*)report {
     
     self.report = report;
+//     Retrieves Q scores for course
+//    NSArray *qTypes = @[@"difficulty", @"workload", @"overall"];
+//    NSMutableDictionary *qScoresDict = [NSMutableDictionary new];
+//    for (NSString *type in qTypes) {
+//        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"QScore"];
+//        request.predicate = [NSPredicate predicateWithFormat:@"catalogNumber = %@ AND type = %@", self.course.catalogNumber, type];
+//        NSArray *result = [context executeFetchRequest:request error:nil];
+//        if (result.count == 0)
+//            return;
+//        
+//        QScore *score = result[0];
+//        [qScoresDict setObject:score forKey:type];
+//    }
+    
+//     Sets the controller's Q score variables
+    //self.overallScore = qScoresDict[@"overall"];
+    
+//    self.overallScore =  [[QScore alloc] init];
+//    self.overallScore.one = @1;
+//    self.overallScore.two = @2;
+//    self.overallScore.three = @3;
+//    self.overallScore.four = @4;
+//    self.overallScore.five = @5;
+//    
+//    self.difficultyScore = [[QScore alloc] init];
+//    self.difficultyScore.one = @4;
+//    self.difficultyScore.two = @2;
+//    self.difficultyScore.three = @7;
+//    self.difficultyScore.four = @4;
+//    self.difficultyScore.five = @1;
+//    
+//    self.workloadScore = [[QScore alloc] init];
+//    self.workloadScore.one = @0;
+//    self.workloadScore.two = @2;
+//    self.workloadScore.three = @4;
+//    self.workloadScore.four = @3;
+//    self.workloadScore.five = @4;
+//    
+//    
+//    self.course.qOverall = @4.2;
+//    self.course.qDifficulty = @3.5;
+//    self.course.qWorkload = @2.1;
+
+    
+    NSString *tempOverallString = [NSString stringWithFormat:@"Q Overall/n%0.2f", [self.course.qOverall doubleValue]];
+    NSMutableAttributedString *overallLabel = [[NSMutableAttributedString alloc] initWithString:tempOverallString];
+    
+    //NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty/n%0.2f", [self.course.qDifficulty doubleValue]];
+    NSString *tempDifficultyString = [NSString stringWithFormat:@"Difficulty\n3.4"];
+    NSMutableAttributedString *difficultyLabel = [[NSMutableAttributedString alloc] initWithString:tempDifficultyString];
+    
+    NSString *tempWorkloadString = [NSString stringWithFormat:@"Workload/n%0.2f", [self.course.qWorkload doubleValue]];
+    NSMutableAttributedString *workloadLabel = [[NSMutableAttributedString alloc] initWithString:tempWorkloadString];
+    
+    self.overallLabel.attributedText = overallLabel;
+    self.difficultyLabel.attributedText = difficultyLabel;
+    self.workloadLabel.attributedText = workloadLabel;
     
     QResponse *overallResponse = report.responses[@"Course Overall"];
     if (overallResponse) {
@@ -381,6 +449,24 @@
     }
     
     self.data = [NSArray arrayWithArray:data];
+    
+    [self selectButton:self.qScoreButtons[1] inArray:self.qScoreLabels];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self.scrollView setContentSize:self.contentView.frame.size];
+    
+    CGFloat satisfiesBottom = self.satisfiesLabel.frame.origin.y + self.satisfiesLabel.frame.size.height;
+    
+    CGRect newFrame = self.infoView.frame;
+    newFrame.size.height = satisfiesBottom + 10;
+    
+    [self.infoView setFrame:newFrame];
+    CGRect newQScoreFrame = self.QScoreView.frame;
+    newQScoreFrame.origin.y = satisfiesBottom + 30;
+    [self.QScoreView setFrame:newQScoreFrame];
 }
 
 - (void)qScoreButtonPressed:(UIButton*)senderButton {
@@ -420,6 +506,58 @@
                 break;
         }
     }
+}
+
+- (void)updateGraph:(NSInteger)data {
+    
+    if (data == 0) {
+        self.labels = @[@"1", @"3", @"4", @"5", @"5"];
+        
+        NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
+        NSInteger largest = 5;
+        NSString *largestBar;
+        NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
+        self.data = @[[NSNumber numberWithDouble:1.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:3.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:4.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:5.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:5.0*ratio.doubleValue]
+                      ];
+        
+    }
+    else if (data == 1)
+    {
+        self.labels = @[@"2", @"3", @"4", @"1", @"5"];
+        
+        NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
+        NSInteger largest = 5;
+        NSString *largestBar;
+        NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
+        self.data = @[[NSNumber numberWithDouble:2.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:3.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:4.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:1.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:5.0*ratio.doubleValue]
+                      ];
+    }
+    else
+    {
+        self.labels = @[@"4", @"3", @"2", @"5", @"2"];
+        
+        NSArray *properties = @[@"one", @"two", @"three", @"four", @"five"];
+        NSInteger largest = 5;
+        NSString *largestBar;
+        NSNumber *ratio = [NSNumber numberWithDouble:((double)100/(double)largest)];
+        self.data = @[[NSNumber numberWithDouble:4.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:3.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:2.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:5.0*ratio.doubleValue],
+                      [NSNumber numberWithDouble:2.0*ratio.doubleValue]
+                      ];
+    }
+    
+    self.graphView.dataSource = self;
+    [self.graphView draw];
 }
 
 - (void)didReceiveMemoryWarning {

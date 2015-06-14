@@ -195,7 +195,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "481"
             endingLineNumber = "481"
-            landmarkName = "-titleForBarAtIndex:"
+            landmarkName = "-updateUIWithQReport:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
