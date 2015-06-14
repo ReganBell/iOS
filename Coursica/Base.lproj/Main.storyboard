@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -1776,6 +1776,39 @@
             </objects>
             <point key="canvasLocation" x="271" y="400"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="ZFg-sY-3dT">
+            <objects>
+                <viewController storyboardIdentifier="mapController" id="OEq-FK-8gM" customClass="MapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ud8-qB-kp4"/>
+                        <viewControllerLayoutGuide type="bottom" id="aVJ-dm-nB1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Y34-fd-o2G">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cT-Un-Lal">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="5cT-Un-Lal" secondAttribute="centerX" id="3he-nE-1Ms"/>
+                            <constraint firstItem="5cT-Un-Lal" firstAttribute="width" secondItem="Y34-fd-o2G" secondAttribute="width" id="5y1-z7-7Il"/>
+                            <constraint firstItem="aVJ-dm-nB1" firstAttribute="top" secondItem="5cT-Un-Lal" secondAttribute="bottom" id="Kri-gJ-X4w"/>
+                            <constraint firstItem="5cT-Un-Lal" firstAttribute="top" secondItem="Ud8-qB-kp4" secondAttribute="bottom" id="iFv-9S-LMx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="5cT-Un-Lal" id="F4M-KX-AEM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xP1-52-gI4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1149" y="-400"/>
+        </scene>
         <!--Detail View Controller-->
         <scene sceneID="F2u-1i-Q28">
             <objects>
@@ -1818,7 +1851,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nof-BI-rET" userLabel="InfoView">
                                                 <rect key="frame" x="10" y="10" width="480" height="416"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Course title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKU-dT-ecA">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Course title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKU-dT-ecA">
                                                         <rect key="frame" x="20" y="10" width="420" height="24"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
                                                         <color key="textColor" red="0.1215686275" green="0.58039215690000001" blue="1" alpha="1" colorSpace="deviceRGB"/>
@@ -1887,7 +1920,7 @@
                                                             </mask>
                                                         </variation>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aus-WB-r0n">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aus-WB-r0n" customClass="TTTAttributedLabel">
                                                         <rect key="frame" x="76" y="123" width="390" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="394" id="mXB-Ec-5s2"/>
@@ -1948,7 +1981,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bo-7R-GqJ">
                                                         <rect key="frame" x="182" y="100" width="11" height="18"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="13"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEw-U9-qI6">
@@ -1956,7 +1989,7 @@
                                                         <attributedString key="attributedText">
                                                             <fragment content="Gen Ed Label">
                                                                 <attributes>
-                                                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <font key="NSFont" size="13" name="AvenirNext-Bold"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                                 </attributes>
@@ -1967,7 +2000,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpf-dB-Mn3" userLabel="Course Instructors">
                                                         <rect key="frame" x="77" y="72" width="383" height="18"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="13"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -2064,7 +2097,7 @@
                                                         <attributedString key="attributedText">
                                                             <fragment content="Workload">
                                                                 <attributes>
-                                                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <font key="NSFont" size="13" name="AvenirNext-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                                 </attributes>
@@ -2107,7 +2140,7 @@
                                                         <attributedString key="attributedText">
                                                             <fragment content="Q Overall">
                                                                 <attributes>
-                                                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <font key="NSFont" size="13" name="AvenirNext-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                                 </attributes>
@@ -2131,7 +2164,7 @@
                                                         <attributedString key="attributedText">
                                                             <fragment content="Difficulty">
                                                                 <attributes>
-                                                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <font key="NSFont" size="13" name="AvenirNext-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                                 </attributes>
@@ -2269,7 +2302,7 @@
                                                 </variation>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.90980392156862744" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="Nof-BI-rET" firstAttribute="leading" secondItem="DIR-rK-S7S" secondAttribute="leading" constant="10" id="4ws-Jw-Ku4"/>
                                             <constraint firstItem="Nof-BI-rET" firstAttribute="top" secondItem="DIR-rK-S7S" secondAttribute="top" constant="10" id="Jjw-TJ-Iz0"/>
@@ -2285,7 +2318,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.90980392156862744" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="DIR-rK-S7S" firstAttribute="top" secondItem="roh-qg-d3q" secondAttribute="top" id="7yj-CL-rWQ"/>
                                     <constraint firstAttribute="bottom" secondItem="DIR-rK-S7S" secondAttribute="bottom" constant="-400" id="HN3-0i-AxD"/>

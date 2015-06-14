@@ -24,6 +24,8 @@
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
 		5926C2DD1AE57B1000342A5A /* QReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5926C2DC1AE57B1000342A5A /* QReport.m */; };
+		5933DDEE1B2E187700F95394 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 5933DDED1B2E187700F95394 /* Podfile */; };
+		5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5933DDF01B2E1BF500F95394 /* MapViewController.m */; };
 		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
 		594E93E21A68D1B7003DB4E7 /* LongFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93E11A68D1B7003DB4E7 /* LongFields */; };
 		5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 5953AB8C1B158C0700C8FFA9 /* real_results.json */; };
@@ -102,6 +104,9 @@
 		5926C2E11AE5800800342A5A /* Coursica 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 11.xcdatamodel"; sourceTree = "<group>"; };
 		5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 12.xcdatamodel"; sourceTree = "<group>"; };
 		592939001A479315004C4303 /* Coursica 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 5.xcdatamodel"; sourceTree = "<group>"; };
+		5933DDED1B2E187700F95394 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		5933DDEF1B2E1BF500F95394 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = Coursica/MapViewController.h; sourceTree = "<group>"; };
+		5933DDF01B2E1BF500F95394 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = Coursica/MapViewController.m; sourceTree = "<group>"; };
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
 		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
 		5953AB8C1B158C0700C8FFA9 /* real_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = real_results.json; sourceTree = "<group>"; };
@@ -216,6 +221,7 @@
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
+				5933DDED1B2E187700F95394 /* Podfile */,
 				596076AE1A1000700038D4F4 /* Coursica */,
 				596076CB1A1000710038D4F4 /* CoursicaTests */,
 				596076AD1A1000700038D4F4 /* Products */,
@@ -253,6 +259,8 @@
 				5988650B1B239C5C0078B06F /* Filters */,
 				5953AB8C1B158C0700C8FFA9 /* real_results.json */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
+				5933DDEF1B2E1BF500F95394 /* MapViewController.h */,
+				5933DDF01B2E1BF500F95394 /* MapViewController.m */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
 				596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */,
@@ -518,6 +526,7 @@
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
 				59E661D91B01A72A00200FAE /* FadeOut.png in Resources */,
 				59B9D58A1AF6CA3F0006A57B /* USA.png in Resources */,
+				5933DDEE1B2E187700F95394 /* Podfile in Resources */,
 				594E93E21A68D1B7003DB4E7 /* LongFields in Resources */,
 				5975FD371AE0C9F200180AEC /* jharvard_dark.png in Resources */,
 				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
@@ -580,6 +589,7 @@
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
 				5926C2DD1AE57B1000342A5A /* QReport.m in Sources */,
 				59E8B7351B23AEAE000F8855 /* QBaseline.m in Sources */,
+				5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */,
 				59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				59E8B7321B23AD79000F8855 /* QFacultyReport.m in Sources */,
