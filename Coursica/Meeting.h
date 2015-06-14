@@ -21,4 +21,8 @@
 @property (nonatomic, retain) NSString * endTime;
 @property (nonatomic, retain) Course *course;
 
++ (NSString*)standardTimeFromMilitaryTime:(NSString*)militaryTimeString;
++ (NSString*)abbreviatedStringForDayNumber:(NSNumber*)dayNumber;
+- (NSString*)displayString;
+
 @end

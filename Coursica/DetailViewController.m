@@ -22,6 +22,7 @@
 #import "QFacultyReport.h"
 #import "Mantle.h"
 #import "QResponse.h"
+#import "Meeting.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
@@ -110,6 +111,35 @@
     self.navigationItem.titleView = label;
 }
 
+- (NSAttributedString*)meetingStringForCourse:(Course*)course {
+    
+    NSMutableString *meetingString = [NSMutableString new];
+    
+    // Sorts days so they can be printed in order in label
+    if (![course.meetings count] == 0)
+    {
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES];
+        NSArray *sortedMeetingTimes = [course.meetings sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+        
+        for (Meeting *meeting in sortedMeetingTimes)
+        {
+            [meetingString appendFormat:@"%@, ", [Meeting abbreviatedStringForDayNumber:meeting.day]];
+        }
+        if (meetingString.length >= 2) {
+            meetingString = [[meetingString substringToIndex:meetingString.length - 2] mutableCopy];
+        }
+        
+        Meeting *meeting = sortedMeetingTimes.lastObject;
+        [meetingString appendFormat:@" from %@", meeting.displayString];
+    }
+    else
+    {
+        [meetingString appendString:@"TBD"];
+    }
+
+    return [[NSAttributedString alloc] initWithString:meetingString];
+}
+
 - (void)layoutCourseInfoCard {
     
     self.titleLabel.text = self.course.title;
@@ -136,124 +166,6 @@
         [facultyString appendString:@"TBD"];
     }
     
-    NSMutableString *meetingString = [NSMutableString new];
-    
-    // Formats the course meeting time for use in the view
-    // Sorts days so they can be printed in order in label
-    if (![self.course.meetings count] == 0)
-    {
-        NSString *dayString;
-        NSString *startTime;
-        NSString *endTime;
-        // Sorts set of course meeting days
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
-            if ([obj1 intValue] > [obj2 intValue])
-                return NSOrderedDescending;
-            else if ([obj1 intValue] < [obj2 intValue])
-                return NSOrderedAscending;
-            else
-                return NSOrderedSame;
-        }];
-        NSArray *sortedMeetingTimes = [self.course.meetings sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-        
-        // Turns number day into abbreviation
-        for (Meeting *meeting in sortedMeetingTimes)
-        {
-            
-            switch ([meeting.day intValue])
-            {
-                case 0:
-                    dayString = @"Sun";
-                    break;
-                case 1:
-                    dayString = @"Mon";
-                    break;
-                case 2:
-                    dayString = @"Tues";
-                    break;
-                case 3:
-                    dayString = @"Wed";
-                    break;
-                case 4:
-                    dayString = @"Thurs";
-                    break;
-                case 5:
-                    dayString = @"Fri";
-                    break;
-                default:
-                    dayString = @"Sat";
-                    break;
-            }
-            [meetingString appendFormat:@"%@, ", dayString];
-        }
-        meetingString = [[meetingString substringToIndex:[meetingString length] - 2] mutableCopy];
-        
-        for (Meeting *meeting in sortedMeetingTimes)
-        {
-            // Converts course times from military to standard time
-            startTime = meeting.beginTime;
-            NSString *startHour = [startTime componentsSeparatedByString:@":"][0];
-            NSString *startMin = [startTime componentsSeparatedByString:@":"][1];
-            if ([startHour intValue] > 12)
-            {
-                int newStartHour = [startHour intValue] - 12;
-                if ([startMin intValue] == 0)
-                {
-                    startTime = [NSString stringWithFormat:@"%d", newStartHour];
-                }
-                else
-                {
-                    startTime = [NSString stringWithFormat:@"%d:%d", newStartHour, [startMin intValue]];
-                }
-            }
-            else
-            {
-                if ([startMin intValue] == 0)
-                {
-                    startTime = [NSString stringWithFormat:@"%d", [startHour intValue]];
-                }
-                else
-                {
-                    startTime = [NSString stringWithFormat:@"%d:%d", [startHour intValue], [startMin intValue]];
-                }
-            }
-            
-            endTime = meeting.endTime;
-            NSString *endHour = [endTime componentsSeparatedByString:@":"][0];
-            NSString *endMin = [endTime componentsSeparatedByString:@":"][1];
-            if ([endHour intValue] > 12)
-            {
-                int newEndHour = [endHour intValue] - 12;
-                if ([endMin intValue] == 0)
-                {
-                    endTime = [NSString stringWithFormat:@"%d", newEndHour];
-                }
-                else
-                {
-                    endTime = [NSString stringWithFormat:@"%d:%d", newEndHour, [endMin intValue]];
-                }
-            }
-            else
-            {
-                if ([endMin intValue] == 0)
-                {
-                    endTime = [NSString stringWithFormat:@"%d", [endHour intValue]];
-                }
-                else
-                {
-                    endTime = [NSString stringWithFormat:@"%d:%d", [endHour intValue], [endMin intValue]];
-                }
-                endTime = [endTime substringToIndex:[endTime length] - 3];
-            }
-            
-        }
-        
-        [meetingString appendFormat:@" from %@-%@", startTime, endTime];
-    }
-    else
-    {
-        [meetingString appendString:@"TBD"];
-    }
     
     // Gives location of the course
     NSMutableString *locationString = [NSMutableString new];
@@ -273,17 +185,12 @@
     NSString *instructorString = [NSString stringWithFormat:@"%@", facultyString];
     NSMutableAttributedString *instructorLabel = [[NSMutableAttributedString alloc] initWithString:instructorString];
     
-    // More text coloring scheme work
-    NSString *tempMeetingString = [NSString stringWithFormat:@"%@", meetingString];
-    NSMutableAttributedString *meetingLabel = [[NSMutableAttributedString alloc] initWithString:tempMeetingString];
-    
     NSString *tempLocationString = [NSString stringWithFormat:@"%@", locationString];
     NSMutableAttributedString *locationLabel = [[NSMutableAttributedString alloc] initWithString:tempLocationString];
     
-    
     self.courseInstructorLabel.attributedText = instructorLabel;
     
-    self.courseMeetingLabel.attributedText = meetingLabel;
+    self.courseMeetingLabel.attributedText = [self meetingStringForCourse:self.course];
     //CGFloat width =  [self.courseMeetingLabel.text sizeWithAttributes:[UIFont fontWithName:@"AvenirNext-Bold" size:13]].width;
     
     UIFont *font = [UIFont fontWithName:@"AvenirNext-Bold" size:13];
