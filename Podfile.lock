@@ -30,7 +30,6 @@ PODS:
   - Mantle/extobjc (2.0.2)
   - MKFoundationKit/NSArray (1.2.3)
   - MWFeedParser/NSString+HTML (1.0.1)
-  - NMRangeSlider (1.1.1)
   - TTTAttributedLabel (1.13.3)
 
 DEPENDENCIES:
@@ -39,7 +38,6 @@ DEPENDENCIES:
   - GraphKit
   - Mantle
   - MWFeedParser/NSString+HTML
-  - NMRangeSlider
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
@@ -50,7 +48,6 @@ SPEC CHECKSUMS:
   Mantle: 967fd31ea0220890b2e76589198996b534bb3fb1
   MKFoundationKit: 882d74557944790d4d9e172961ed71d6a66804b7
   MWFeedParser: 2cf646014c1baf6ad1b08c480b40a08180079247
-  NMRangeSlider: 307aa02651d6cc547ce8faffeb69e90080ec8476
   TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
 
 COCOAPODS: 0.37.2

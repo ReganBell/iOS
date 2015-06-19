@@ -84,8 +84,8 @@
         // 25 spacing
         
         [self pinWidth:120.0 view:titleLabel];
-        [self pinWidth:50.0 view:leftScoreLabel];
-        [self pinWidth:50.0 view:leftScoreLabel];
+        [self pinWidth:51.0 view:leftScoreLabel];
+        [self pinWidth:53.0 view:rightScoreLabel];
         
         [self addConstraint:[NSLayoutConstraint constraintWithItem:leftScoreLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:overallSlider attribute:NSLayoutAttributeLeft multiplier:1.0 constant:10.0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:leftScoreLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:2.0]];

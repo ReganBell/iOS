@@ -347,14 +347,14 @@
     }
     
     // Uncomment to debug search
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+//    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+//    
+//    NSArray *sortedResults = [unsorted sortedArrayUsingDescriptors:@[descriptor]];
     
-    NSArray *sortedResults = [unsorted sortedArrayUsingDescriptors:@[descriptor]];
-    
-    for (NSDictionary *result in sortedResults) {
-        Course *course = result[@"course"];
-//        NSLog(@"\n%@ %@ - %@\n%@", course.shortField, course.number, course.title, result[@"score"]);
-    }
+//    for (NSDictionary *result in sortedResults) {
+//        Course *course = result[@"course"];
+////        NSLog(@"\n%@ %@ - %@\n%@", course.shortField, course.number, course.title, result[@"score"]);
+//    }
 }
 
 + (SearchManager *)sharedSearchManager {

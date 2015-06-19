@@ -39,6 +39,8 @@
 @dynamic decimalNumber;
 @dynamic qReports;
 @dynamic searchScore;
+@dynamic qOverall;
+@dynamic qWorkload;
 
 - (NSNumber *)qOverall {
     

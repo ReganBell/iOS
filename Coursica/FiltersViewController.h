@@ -23,16 +23,4 @@
 
 @property (weak, nonatomic) id<FiltersViewControllerDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-
-@property (weak, nonatomic) IBOutlet UIButton *applyFiltersButton;
-
-@property (weak, nonatomic) IBOutlet NMRangeSlider *standardSlider;
-
-@property (weak, nonatomic) IBOutlet NMRangeSlider *labelSlider;
-@property (weak, nonatomic) IBOutlet UILabel *lowerLabel;
-@property (weak, nonatomic) IBOutlet UILabel *upperLabel;
-
-- (NSPredicate*)filters;
-
 @end
