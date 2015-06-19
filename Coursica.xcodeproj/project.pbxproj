@@ -24,11 +24,16 @@
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
 		5926C2DD1AE57B1000342A5A /* QReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5926C2DC1AE57B1000342A5A /* QReport.m */; };
+		5933DDEE1B2E187700F95394 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 5933DDED1B2E187700F95394 /* Podfile */; };
+		5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5933DDF01B2E1BF500F95394 /* MapViewController.m */; };
+		594C88971B3004E4007F4DFD /* slider-default7-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */; };
+		594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */; };
 		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
 		594E93E21A68D1B7003DB4E7 /* LongFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93E11A68D1B7003DB4E7 /* LongFields */; };
 		5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 5953AB8C1B158C0700C8FFA9 /* real_results.json */; };
 		595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FA1A2E74B9000ABAD8 /* QComment.m */; };
 		595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FD1A2E74B9000ABAD8 /* QScore.m */; };
+		595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 595CB1A21B2FFFA400E571C4 /* NMRangeSlider.m */; };
 		596076B21A1000710038D4F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B11A1000710038D4F4 /* main.m */; };
 		596076B51A1000710038D4F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B41A1000710038D4F4 /* AppDelegate.m */; };
 		596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */; };
@@ -44,6 +49,7 @@
 		598CAB351A22C7EC008D0142 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB341A22C7EC008D0142 /* Location.m */; };
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
 		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
+		59A2EDBC1B33E13D00B22558 /* slider-blue-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */; };
 		59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D57F1AF6CA3F0006A57B /* DNA.png */; };
 		59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5801AF6CA3F0006A57B /* judge1.png */; };
 		59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5811AF6CA3F0006A57B /* telescope7.png */; };
@@ -56,7 +62,6 @@
 		59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04A1A34877D003FD743 /* CommentsViewController.m */; };
 		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
 		59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DCAEC21A75D6E800929151 /* SearchManager.m */; };
-		59E661CF1B01476200200FAE /* SliderTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E661CE1B01476200200FAE /* SliderTab.png */; };
 		59E661D51B01769300200FAE /* DoubleSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E661D41B01769300200FAE /* DoubleSliderView.m */; };
 		59E661D91B01A72A00200FAE /* FadeOut.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E661D81B01A72A00200FAE /* FadeOut.png */; };
 		59E8B72F1B23AAA6000F8855 /* QResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E8B72E1B23AAA6000F8855 /* QResponse.m */; };
@@ -102,6 +107,11 @@
 		5926C2E11AE5800800342A5A /* Coursica 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 11.xcdatamodel"; sourceTree = "<group>"; };
 		5926C2E21AE58F8A00342A5A /* Coursica 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 12.xcdatamodel"; sourceTree = "<group>"; };
 		592939001A479315004C4303 /* Coursica 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 5.xcdatamodel"; sourceTree = "<group>"; };
+		5933DDED1B2E187700F95394 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		5933DDEF1B2E1BF500F95394 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = Coursica/MapViewController.h; sourceTree = "<group>"; };
+		5933DDF01B2E1BF500F95394 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = Coursica/MapViewController.m; sourceTree = "<group>"; };
+		594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground.png"; sourceTree = "<group>"; };
+		594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground@2x.png"; sourceTree = "<group>"; };
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
 		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
 		5953AB8C1B158C0700C8FFA9 /* real_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = real_results.json; sourceTree = "<group>"; };
@@ -109,6 +119,8 @@
 		595575FA1A2E74B9000ABAD8 /* QComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QComment.m; sourceTree = "<group>"; };
 		595575FC1A2E74B9000ABAD8 /* QScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QScore.h; sourceTree = "<group>"; };
 		595575FD1A2E74B9000ABAD8 /* QScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QScore.m; sourceTree = "<group>"; };
+		595CB1A11B2FFFA400E571C4 /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
+		595CB1A21B2FFFA400E571C4 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		596076AC1A1000700038D4F4 /* Coursica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coursica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596076B01A1000700038D4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596076B11A1000710038D4F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -138,6 +150,7 @@
 		598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		598CAB8A1A23CB57008D0142 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 6.xcdatamodel"; sourceTree = "<group>"; };
+		59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-blue-track@2x.png"; sourceTree = "<group>"; };
 		59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 7.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D51A76C49E0046BE2F /* Coursica 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 8.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D61A76CDCF0046BE2F /* Coursica 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 9.xcdatamodel"; sourceTree = "<group>"; };
@@ -159,7 +172,6 @@
 		59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HeightCalculation.m"; sourceTree = "<group>"; };
 		59DCAEC11A75D6E800929151 /* SearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchManager.h; sourceTree = "<group>"; };
 		59DCAEC21A75D6E800929151 /* SearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchManager.m; sourceTree = "<group>"; };
-		59E661CE1B01476200200FAE /* SliderTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SliderTab.png; sourceTree = "<group>"; };
 		59E661D31B01769300200FAE /* DoubleSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleSliderView.h; sourceTree = "<group>"; };
 		59E661D41B01769300200FAE /* DoubleSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubleSliderView.m; sourceTree = "<group>"; };
 		59E661D81B01A72A00200FAE /* FadeOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FadeOut.png; sourceTree = "<group>"; };
@@ -216,6 +228,7 @@
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
+				5933DDED1B2E187700F95394 /* Podfile */,
 				596076AE1A1000700038D4F4 /* Coursica */,
 				596076CB1A1000710038D4F4 /* CoursicaTests */,
 				596076AD1A1000700038D4F4 /* Products */,
@@ -253,6 +266,8 @@
 				5988650B1B239C5C0078B06F /* Filters */,
 				5953AB8C1B158C0700C8FFA9 /* real_results.json */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
+				5933DDEF1B2E1BF500F95394 /* MapViewController.h */,
+				5933DDF01B2E1BF500F95394 /* MapViewController.m */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
 				596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */,
@@ -295,12 +310,16 @@
 		5988650B1B239C5C0078B06F /* Filters */ = {
 			isa = PBXGroup;
 			children = (
+				595CB1A11B2FFFA400E571C4 /* NMRangeSlider.h */,
+				595CB1A21B2FFFA400E571C4 /* NMRangeSlider.m */,
+				594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */,
+				594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */,
+				59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */,
 				59E661D31B01769300200FAE /* DoubleSliderView.h */,
 				59E661D41B01769300200FAE /* DoubleSliderView.m */,
 				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
 				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
 				59E661D81B01A72A00200FAE /* FadeOut.png */,
-				59E661CE1B01476200200FAE /* SliderTab.png */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -509,7 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */,
-				59E661CF1B01476200200FAE /* SliderTab.png in Resources */,
+				594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */,
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
 				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
 				59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */,
@@ -517,12 +536,15 @@
 				59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
 				59E661D91B01A72A00200FAE /* FadeOut.png in Resources */,
+				594C88971B3004E4007F4DFD /* slider-default7-trackBackground.png in Resources */,
 				59B9D58A1AF6CA3F0006A57B /* USA.png in Resources */,
+				5933DDEE1B2E187700F95394 /* Podfile in Resources */,
 				594E93E21A68D1B7003DB4E7 /* LongFields in Resources */,
 				5975FD371AE0C9F200180AEC /* jharvard_dark.png in Resources */,
 				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
 				5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */,
 				59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */,
+				59A2EDBC1B33E13D00B22558 /* slider-blue-track@2x.png in Resources */,
 				59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
 				5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */,
@@ -580,6 +602,7 @@
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
 				5926C2DD1AE57B1000342A5A /* QReport.m in Sources */,
 				59E8B7351B23AEAE000F8855 /* QBaseline.m in Sources */,
+				5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */,
 				59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				59E8B7321B23AD79000F8855 /* QFacultyReport.m in Sources */,
@@ -594,6 +617,7 @@
 				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
+				595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				598865161B23A3C50078B06F /* NSString+FirebaseEncode.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
@@ -743,7 +767,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = Coursica/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -768,7 +792,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = Coursica/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

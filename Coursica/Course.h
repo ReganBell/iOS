@@ -83,4 +83,9 @@
 
 - (QReport*)mostRecentReport;
 
+- (NSAttributedString*)meetingDisplayString;
+- (NSAttributedString*)facultyDisplayString;
+- (NSString*)locationDisplayString;
+- (NSAttributedString*)genEdDisplayString;
+
 @end

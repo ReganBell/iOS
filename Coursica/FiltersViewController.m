@@ -141,7 +141,7 @@
     [self selectButton:self.termBarButtons.lastObject inArray:self.termBarLabels];
     [self selectButton:self.gradBarButtons.lastObject inArray:self.gradBarLabels];
 
-    [self.contentView addSubview:self.genEdBarView];
+    [self.scrollView addSubview:self.genEdBarView];
     [self configureSliders];
 }
 
@@ -214,11 +214,11 @@
 - (DoubleSliderView*)configureSliderWithTitle:(NSString*)title font:(UIFont*)font textColor:(UIColor*)textColor {
     
     DoubleSliderView *sliderView = [[DoubleSliderView alloc] initWithTitle:title font:font textColor:textColor];
-    [self.contentView addSubview:sliderView];
+    [self.scrollView addSubview:sliderView];
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeLeft multiplier:1 constant:18]];
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeRight multiplier:1 constant:-18]];
-    [sliderView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:50.0]];
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeLeft multiplier:1 constant:18]];
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeRight multiplier:1 constant:-18]];
+    [sliderView addConstraint:[NSLayoutConstraint constraintWithItem:sliderView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:52.0]];
     
     return sliderView;
 }
@@ -231,12 +231,12 @@
     DoubleSliderView *overall = [self configureSliderWithTitle:@"Overall Q Score" font:font textColor:textColor];
     self.qOverallSlider = overall.slider;
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:overall attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:overall attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *workload = [self configureSliderWithTitle:@"Workload" font:font textColor:textColor];
     self.qWorkloadSlider = workload.slider;
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }
 
 @end

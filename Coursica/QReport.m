@@ -12,11 +12,7 @@
 @implementation QReport
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    
-    return @{@"enrollment": @"enrollment",
-             @"responses": @"responses",
-             @"term": @"term",
-             @"year": @"year"};
+    return [NSDictionary mtl_identityPropertyMapWithModel:self];
 }
 
 + (NSValueTransformer*)responsesJSONTransformer {

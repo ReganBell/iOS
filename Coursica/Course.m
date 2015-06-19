@@ -39,6 +39,8 @@
 @dynamic decimalNumber;
 @dynamic qReports;
 @dynamic searchScore;
+@dynamic qOverall;
+@dynamic qWorkload;
 
 - (NSNumber *)qOverall {
     
@@ -260,6 +262,91 @@
     if (error) {
         NSLog(@"Error saving context: %@", error);
     }
+}
+
+- (NSAttributedString*)meetingDisplayString {
+    
+    if (!self.meetings.count) {
+        return [[NSAttributedString alloc] initWithString:@"TBD"];
+    }
+    // Sorts days so they can be printed in order in label
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:YES];
+    NSArray *sortedMeetingTimes = [self.meetings sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSMutableArray *meetingStrings = [NSMutableArray array];
+    for (Meeting *meeting in sortedMeetingTimes)
+    {
+        [meetingStrings addObject:[Meeting abbreviatedStringForDayNumber:meeting.day]];
+    }
+    NSString *dayString = [meetingStrings componentsJoinedByString:@", "];
+
+    Meeting *lastMeeting = sortedMeetingTimes.lastObject;
+    NSString *meetingString = [dayString stringByAppendingFormat:@" from %@", lastMeeting.displayString];
+    
+    return [[NSAttributedString alloc] initWithString:meetingString];
+}
+
+- (NSAttributedString*)facultyDisplayString {
+    
+    if (!self.faculty.count) {
+        return [[NSAttributedString alloc] initWithString:@"TBD"];
+    }
+    
+    NSMutableArray *facultyStrings = [NSMutableArray array];
+    for (Faculty *faculty in self.faculty) {
+        [facultyStrings addObject:[NSString stringWithFormat:@"%@ %@", faculty.first, faculty.last]];
+    }
+    return [[NSAttributedString alloc] initWithString:[facultyStrings componentsJoinedByString:@", "]];
+}
+
+- (NSString *)locationDisplayString {
+    
+    if (!self.locations.count) {
+        return @"TBD";
+    }
+    
+    NSMutableSet *uniqueLocationStrings = [NSMutableSet set];
+    for (Location *location in self.locations) {
+        NSString *string = [NSString stringWithFormat:@"%@ %@", location.building, location.room];
+        [uniqueLocationStrings addObject:string];
+    }
+
+    return [uniqueLocationStrings.allObjects componentsJoinedByString:@", "];
+}
+
+- (NSString*)stringForGenEd:(NSNumber*)genEdNumber {
+    
+    switch (genEdNumber.intValue) {
+        case 1:
+            return @"Aesthetic and Interpretive Understanding";
+        case 2:
+            return @"Culture and Belief";
+        case 3:
+            return @"Empirical and Mathematical Reasoning";
+        case 4:
+            return @"Ethical Reasoning";
+        case 5:
+            return @"Science of Living Systems";
+        case 6:
+            return @"Science of the Physical Universe";
+        case 7:
+            return @"Societies of the World";
+        case 8:
+            return @"United States in the World";
+        default:
+            return nil;
+    }
+}
+
+- (NSAttributedString*)genEdDisplayString {
+    
+    NSString *genEdString = @"None";
+    if (self.genEdOne.intValue) {
+        genEdString = [self stringForGenEd:self.genEdOne];
+        if (self.genEdTwo.intValue) {
+            genEdString = [genEdString stringByAppendingFormat:@", %@", [self stringForGenEd:self.genEdTwo]];
+        }
+    }
+    return [[NSAttributedString alloc] initWithString:genEdString];
 }
 
 - (NSString *)displayTitle {

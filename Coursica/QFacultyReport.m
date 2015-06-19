@@ -7,9 +7,12 @@
 //
 
 #import "QFacultyReport.h"
-#import <Firebase/Firebase.h>
 
 @implementation QFacultyReport
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    
+    return [NSDictionary mtl_identityPropertyMapWithModel:self];
+}
 
 @end
