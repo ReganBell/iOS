@@ -88,7 +88,7 @@ typedef enum {
     [super viewDidLoad];
     
     [self layoutCourseInfoCard];
-    [self layoutNavigationBarTitle];
+    [self layoutNavigationBar];
     [self pullCourseData];
 }
 
@@ -122,7 +122,12 @@ typedef enum {
     }];
 }
 
-- (void)layoutNavigationBarTitle {
+- (void)addCourseButtonPressed {
+    
+    
+}
+
+- (void)layoutNavigationBar {
     
     // Sets title bar appearance for the view
     CGRect frame = CGRectMake(0, 0, 0, 0);
@@ -133,6 +138,9 @@ typedef enum {
     label.textColor = [UIColor whiteColor];
     [label sizeToFit];
     self.navigationItem.titleView = label;
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addCourseButtonPressed)];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)layoutCourseInfoCard {
