@@ -20,6 +20,7 @@
 @property (assign) NSInteger coursesCount;
 @property (strong, nonatomic) NSArray *allCourses;
 @property (strong, nonatomic) NSLinguisticTagger *sharedTagger;
+@property NSUInteger disagreements;
 
 @end
 
@@ -40,6 +41,8 @@
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
     NSFetchRequest *coursesFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    
+    self.disagreements = 0;
     
     NSError *error = nil;
     self.allCourses = [context executeFetchRequest:coursesFetch error:&error];
@@ -147,13 +150,90 @@
 
 - (void)addField:(NSString*)field toIndex:(NSMutableDictionary*)index fromCourse:(Course*)course ignoreStopWords:(BOOL)ignoreStopWords {
     
-    NSMutableArray *fieldTerms = [NSMutableArray array];
-    [field enumerateSubstringsInRange:NSMakeRange(0, field.length) options:NSStringEnumerationByWords usingBlock:^(NSString *token, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-        [fieldTerms addObject:token];
-    }];
-    for (NSString *unique in fieldTerms) {
+//    NSMutableArray *fieldTerms = [NSMutableArray array];
+//    [field enumerateSubstringsInRange:NSMakeRange(0, field.length) options:NSStringEnumerationByWords usingBlock:^(NSString *token, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+//        [fieldTerms addObject:token];
+//    }];
+//    
+//    if ([field isEqualToString:@"T cell sensitization and immunoregulation in ocular allo- and autoimmunity"]) {
+//        
+//    }
+    
+    NSMutableArray *fastFieldTerms = [NSMutableArray array];
+    NSMutableString *currentString = [NSMutableString string];
+    const char *primitiveField = field.UTF8String;
+    char primitiveBuffer[field.length];
+    char *primitiveString = &primitiveBuffer;
+    int tokenIndex = 0;
+    for (int i = 0; i < field.length; i++) {
+        char character = tolower(primitiveField[i]);
         
-        NSString *term = unique.lowercaseString;
+        if (character == ':' || character == ',' || character == '"' || character == '?' || character == '&' || character == '(' || character == ')'
+            || character == '!' || character == '\'') {
+            continue;
+        }
+        
+        if (character == '.' || character == ' ') {
+            if (i + 1 < field.length) {
+                char next = primitiveField[i+1];
+                if (next == ' ') {
+                    if (currentString.length) {
+                        [fastFieldTerms addObject:currentString];
+                    }
+                    currentString = [NSMutableString string];
+                    i++;
+                    continue;
+                }
+                if (next == '.') {
+                    continue;
+                }
+            }
+        }
+        
+        if (character == ' ' || character == '/' || character == '-') {
+            int length = tokenIndex;
+            char *token = calloc(length, 1);
+            strncpy(token, primitiveString, length);
+            NSString *tokenString = [NSString stringWithUTF8String:token];
+            if (tokenString.length) {
+                [fastFieldTerms addObject:tokenString];
+            }
+            free(token);
+            tokenIndex = 0;
+            continue;
+        }
+        primitiveString[tokenIndex] = character;
+        tokenIndex++;
+        
+        if (i == field.length - 1) {
+            int length = tokenIndex;
+            char *token = calloc(length, 1);
+            strncpy(token, primitiveString, length);
+            NSString *tokenString = [NSString stringWithUTF8String:token];
+            if (tokenString.length) {
+                [fastFieldTerms addObject:tokenString];
+            }
+            free(token);
+            tokenIndex = 0;
+        }
+    }
+    int length = tokenIndex;
+    if (length) {
+        char *token = calloc(length, 1);
+        strncpy(token, primitiveString, length);
+        [fastFieldTerms addObject:[NSString stringWithUTF8String:token]];
+    }
+
+//    if (![[fieldTerms componentsJoinedByString:@" "].lowercaseString isEqualToString:[fastFieldTerms componentsJoinedByString:@" "]]) {
+//        self.disagreements++;
+//        NSLog(@"%ld", self.disagreements);
+//        NSLog(@"%@", [fieldTerms componentsJoinedByString:@" "].lowercaseString);
+//        NSLog(@"%@", [fastFieldTerms componentsJoinedByString:@" "]);
+//    }
+    
+    for (NSString *unique in fastFieldTerms) {
+        
+        NSString *term = unique;
         // If term is a common word like "and", "the" we don't count it
         if ([self.stopWords containsObject:term] && ignoreStopWords) {
             continue;

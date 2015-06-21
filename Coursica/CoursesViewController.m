@@ -372,6 +372,7 @@
     }
     
     [self.tableView reloadData];
+    [self.tableView setContentOffset:CGPointMake(0, 0)];
 }
 
 - (NSFetchedResultsController*)fetchedResultsController {
