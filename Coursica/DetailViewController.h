@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) Course *course;
 
-@property (nonatomic, strong) NSArray *data;
-@property (nonatomic, strong) NSArray *labels;
+@property (nonatomic, readonly, strong) NSArray *data;
+@property (nonatomic, readonly, strong) NSArray *labels;
 
 @end

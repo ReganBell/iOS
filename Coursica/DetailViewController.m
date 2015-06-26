@@ -76,6 +76,9 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *notesHeightConstraint;
 
+@property (nonatomic, readwrite, strong) NSArray *data;
+@property (nonatomic, readwrite, strong) NSArray *labels;
+
 @end
 
 @implementation DetailViewController

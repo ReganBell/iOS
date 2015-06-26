@@ -48,7 +48,7 @@
     
     [super viewDidLoad];
     
-//    [self updateCoursesData];
+    [self updateCoursesData];
     [self layoutNavigationBar];
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -372,6 +372,7 @@
     }
     
     [self.tableView reloadData];
+    [self.tableView setContentOffset:CGPointMake(0, 0)];
 }
 
 - (NSFetchedResultsController*)fetchedResultsController {

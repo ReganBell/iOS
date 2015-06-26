@@ -45,8 +45,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJa-GI-LQK" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NVl-PG-6Tl">
-                                                <rect key="frame" x="87" y="19" width="417" height="107"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVl-PG-6Tl" userLabel="Term Select View">
+                                                <rect key="frame" x="10" y="10" width="580" height="107"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fall" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAz-Pd-ka7">
                                                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -267,6 +267,7 @@
                                                         <include reference="0CZ-Vc-ffC"/>
                                                     </mask>
                                                     <mask key="constraints">
+                                                        <exclude reference="jsU-8u-awA"/>
                                                         <include reference="vqx-TL-C1S"/>
                                                         <include reference="7Yu-zt-rIk"/>
                                                         <include reference="gsv-G0-Vhc"/>
@@ -296,7 +297,7 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhA-Py-MPS">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhA-Py-MPS" userLabel="Grad Select View">
                                                 <rect key="frame" x="87" y="19" width="417" height="107"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p7g-po-kt1" userLabel="Fall-Spring Divider">
@@ -543,7 +544,7 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZk-F8-pv9">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZk-F8-pv9" userLabel="Gen Ed View">
                                                 <rect key="frame" x="87" y="19" width="417" height="107"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhp-Bp-a9J" userLabel="A &amp; IU Button">
@@ -1273,7 +1274,7 @@
                                             <constraint firstItem="DhA-Py-MPS" firstAttribute="top" secondItem="NVl-PG-6Tl" secondAttribute="bottom" constant="290" id="szg-Zg-7G0">
                                                 <variation key="widthClass=compact" constant="10"/>
                                             </constraint>
-                                            <constraint firstItem="NVl-PG-6Tl" firstAttribute="top" secondItem="aJa-GI-LQK" secondAttribute="top" constant="19" id="uVV-rl-97y"/>
+                                            <constraint firstItem="NVl-PG-6Tl" firstAttribute="top" secondItem="aJa-GI-LQK" secondAttribute="top" constant="10" id="uVV-rl-97y"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="subviews">
@@ -1309,7 +1310,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="aJa-GI-LQK" secondAttribute="bottom" constant="400" id="1Hx-0k-qXd">
+                                    <constraint firstAttribute="bottom" secondItem="aJa-GI-LQK" secondAttribute="bottom" constant="-200" id="1Hx-0k-qXd">
                                         <variation key="widthClass=compact" constant="0.0"/>
                                     </constraint>
                                     <constraint firstAttribute="trailing" secondItem="aJa-GI-LQK" secondAttribute="trailing" id="hgW-wB-zlS"/>
@@ -1447,7 +1448,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="contentView" destination="aJa-GI-LQK" id="EWS-dp-9nN"/>
                         <outlet property="filterCoursesButton" destination="FUG-wN-FhU" id="Igr-kH-0js"/>
                         <outlet property="genEdBarView" destination="kZk-F8-pv9" id="tBD-Mq-Ez7"/>
                         <outlet property="scrollView" destination="Kej-Os-19P" id="51U-S0-ese"/>
