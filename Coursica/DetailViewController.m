@@ -76,8 +76,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *notesHeightConstraint;
 
-@property (nonatomic, strong) NSArray *data;
-@property (nonatomic, strong) NSArray *labels;
+@property (nonatomic, readwrite, strong) NSArray *data;
+@property (nonatomic, readwrite, strong) NSArray *labels;
 
 @end
 
@@ -163,8 +163,8 @@ typedef enum {
     if ([locationString isEqualToString:@"TBD"]) {
         self.courseLocationLabel.text = locationString;
     } else {
-        self.courseLocationLabel.text = [locationString stringByAppendingString:@" map"];
-        NSRange range = [self.courseLocationLabel.text rangeOfString:@" map"];
+        self.courseLocationLabel.text = [locationString stringByAppendingString:@" Map"];
+        NSRange range = [self.courseLocationLabel.text rangeOfString:@"Map"];
         Location *location = self.course.locations.anyObject;
         NSString *encodedSearch = [location.building stringByReplacingOccurrencesOfString:@" " withString:@"+"];
         NSString *mapURL = [NSString stringWithFormat:@"https://m.harvard.edu/map/map?search=Search&filter=%@&feed=*", encodedSearch];
@@ -254,6 +254,11 @@ typedef enum {
     CGRect newQScoreFrame = self.QScoreView.frame;
     newQScoreFrame.origin.y = satisfiesBottom + 30;
     [self.QScoreView setFrame:newQScoreFrame];
+    
+    CGRect viewCommentsButtonFrame = self.viewCommentsButton.frame;
+    viewCommentsButtonFrame.origin.y = newQScoreFrame.origin.y + newQScoreFrame.size.height + 10;
+    [self.viewCommentsButton setFrame:viewCommentsButtonFrame];
+    
 }
 
 - (void)qScoreButtonPressed:(UIButton*)senderButton {
