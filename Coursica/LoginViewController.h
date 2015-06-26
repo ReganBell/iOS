@@ -21,10 +21,4 @@
 
 @property (weak, nonatomic) id<LoginViewControllerDelegate> delegate;
 
-- (IBAction)onButtonFill:(id)sender;
-
-- (IBAction)onButtonChange:(id)sender;
-
-- (IBAction)onButtonReset:(id)sender;
-
 @end

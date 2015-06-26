@@ -18,10 +18,4 @@
 @property (nonatomic, strong) NSArray *data;
 @property (nonatomic, strong) NSArray *labels;
 
-- (IBAction)onButtonFill:(id)sender;
-
-- (IBAction)onButtonChange:(id)sender;
-
-- (IBAction)onButtonReset:(id)sender;
-
 @end
