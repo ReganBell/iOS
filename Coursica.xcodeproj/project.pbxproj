@@ -30,10 +30,10 @@
 		594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */; };
 		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
 		594E93E21A68D1B7003DB4E7 /* LongFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93E11A68D1B7003DB4E7 /* LongFields */; };
-		5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */ = {isa = PBXBuildFile; fileRef = 5953AB8C1B158C0700C8FFA9 /* real_results.json */; };
 		595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FA1A2E74B9000ABAD8 /* QComment.m */; };
 		595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 595575FD1A2E74B9000ABAD8 /* QScore.m */; };
 		595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 595CB1A21B2FFFA400E571C4 /* NMRangeSlider.m */; };
+		595D02EC1B38F5CF00E9B564 /* ListsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 595D02EB1B38F5CF00E9B564 /* ListsIcon.png */; };
 		596076B21A1000710038D4F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B11A1000710038D4F4 /* main.m */; };
 		596076B51A1000710038D4F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076B41A1000710038D4F4 /* AppDelegate.m */; };
 		596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */; };
@@ -58,6 +58,8 @@
 		59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5841AF6CA3F0006A57B /* Globe.png */; };
 		59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5851AF6CA3F0006A57B /* hinduism.png */; };
 		59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5861AF6CA3F0006A57B /* Easel.png */; };
+		59BA6ECF1B3B130300B62FCC /* ListIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59BA6ECE1B3B130300B62FCC /* ListIcon.png */; };
+		59CF58201B3BA82500FB21FC /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF581F1B3BA82500FB21FC /* ListsViewController.swift */; };
 		59D4A0481A347F98003FD743 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A0471A347F98003FD743 /* NavigationController.m */; };
 		59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04A1A34877D003FD743 /* CommentsViewController.m */; };
 		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
@@ -69,6 +71,7 @@
 		59E8B7351B23AEAE000F8855 /* QBaseline.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E8B7341B23AEAE000F8855 /* QBaseline.m */; };
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
+		59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FCC2C81B3BD5C7001A2337 /* List.swift */; };
 		98953491A049209DE0D8879E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB15AF7ACAD399D3133E341B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -114,13 +117,13 @@
 		594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground@2x.png"; sourceTree = "<group>"; };
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
 		594E93E11A68D1B7003DB4E7 /* LongFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LongFields; sourceTree = "<group>"; };
-		5953AB8C1B158C0700C8FFA9 /* real_results.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = real_results.json; sourceTree = "<group>"; };
 		595575F91A2E74B9000ABAD8 /* QComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QComment.h; sourceTree = "<group>"; };
 		595575FA1A2E74B9000ABAD8 /* QComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QComment.m; sourceTree = "<group>"; };
 		595575FC1A2E74B9000ABAD8 /* QScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QScore.h; sourceTree = "<group>"; };
 		595575FD1A2E74B9000ABAD8 /* QScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QScore.m; sourceTree = "<group>"; };
 		595CB1A11B2FFFA400E571C4 /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		595CB1A21B2FFFA400E571C4 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
+		595D02EB1B38F5CF00E9B564 /* ListsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ListsIcon.png; sourceTree = "<group>"; };
 		596076AC1A1000700038D4F4 /* Coursica.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coursica.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		596076B01A1000700038D4F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		596076B11A1000710038D4F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 		598CAB8A1A23CB57008D0142 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 6.xcdatamodel"; sourceTree = "<group>"; };
 		59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-blue-track@2x.png"; sourceTree = "<group>"; };
+		59A838A81B3775A6008B4551 /* Coursica-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Coursica-Bridging-Header.h"; sourceTree = "<group>"; };
 		59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 7.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D51A76C49E0046BE2F /* Coursica 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 8.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D61A76CDCF0046BE2F /* Coursica 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 9.xcdatamodel"; sourceTree = "<group>"; };
@@ -162,8 +166,10 @@
 		59B9D5841AF6CA3F0006A57B /* Globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Globe.png; sourceTree = "<group>"; };
 		59B9D5851AF6CA3F0006A57B /* hinduism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hinduism.png; sourceTree = "<group>"; };
 		59B9D5861AF6CA3F0006A57B /* Easel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Easel.png; sourceTree = "<group>"; };
+		59BA6ECE1B3B130300B62FCC /* ListIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ListIcon.png; sourceTree = "<group>"; };
 		59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 2.xcdatamodel"; sourceTree = "<group>"; };
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
+		59CF581F1B3BA82500FB21FC /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
 		59D4A0461A347F98003FD743 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		59D4A0471A347F98003FD743 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		59D4A0491A34877D003FD743 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
@@ -187,6 +193,7 @@
 		59F51C691A2545DF0025E021 /* FiltersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiltersViewController.m; sourceTree = "<group>"; };
 		59F51C6D1A2572C00025E021 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		59F51C6E1A2572C00025E021 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		59FCC2C81B3BD5C7001A2337 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 16.xcdatamodel"; sourceTree = "<group>"; };
 		DB15AF7ACAD399D3133E341B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -249,12 +256,15 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
+				59CF581F1B3BA82500FB21FC /* ListsViewController.swift */,
+				59FCC2C81B3BD5C7001A2337 /* List.swift */,
 				598865141B23A3C50078B06F /* NSString+FirebaseEncode.h */,
 				598865151B23A3C50078B06F /* NSString+FirebaseEncode.m */,
 				59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */,
 				59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */,
 				59D4A0461A347F98003FD743 /* NavigationController.h */,
 				59D4A0471A347F98003FD743 /* NavigationController.m */,
+				59A838A81B3775A6008B4551 /* Coursica-Bridging-Header.h */,
 				596076B31A1000710038D4F4 /* AppDelegate.h */,
 				596076B41A1000710038D4F4 /* AppDelegate.m */,
 				5988650F1B239CAD0078B06F /* Search */,
@@ -264,10 +274,7 @@
 				5988650D1B239C900078B06F /* Detail */,
 				5988650C1B239C840078B06F /* Login */,
 				5988650B1B239C5C0078B06F /* Filters */,
-				5953AB8C1B158C0700C8FFA9 /* real_results.json */,
 				596076BC1A1000710038D4F4 /* Main.storyboard */,
-				5933DDEF1B2E1BF500F95394 /* MapViewController.h */,
-				5933DDF01B2E1BF500F95394 /* MapViewController.m */,
 				596076BF1A1000710038D4F4 /* Images.xcassets */,
 				596076C11A1000710038D4F4 /* LaunchScreen.xib */,
 				596076B61A1000710038D4F4 /* Coursica.xcdatamodeld */,
@@ -280,6 +287,8 @@
 		596076AF1A1000700038D4F4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				595D02EB1B38F5CF00E9B564 /* ListsIcon.png */,
+				59BA6ECE1B3B130300B62FCC /* ListIcon.png */,
 				5975FD361AE0C9F200180AEC /* jharvard_dark.png */,
 				5902E6251A347E9600A38C11 /* SmallSearch.png */,
 				5902E61D1A3475DE00A38C11 /* NavBarBg.png */,
@@ -339,6 +348,8 @@
 				598865101B239CC10078B06F /* Comments */,
 				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
 				59F51C6E1A2572C00025E021 /* DetailViewController.m */,
+				5933DDEF1B2E1BF500F95394 /* MapViewController.h */,
+				5933DDF01B2E1BF500F95394 /* MapViewController.m */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -544,10 +555,11 @@
 				5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */,
 				5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */,
 				59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */,
+				595D02EC1B38F5CF00E9B564 /* ListsIcon.png in Resources */,
 				59A2EDBC1B33E13D00B22558 /* slider-blue-track@2x.png in Resources */,
 				59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */,
+				59BA6ECF1B3B130300B62FCC /* ListIcon.png in Resources */,
 				596076C01A1000710038D4F4 /* Images.xcassets in Resources */,
-				5953AB8D1B158C0700C8FFA9 /* real_results.json in Resources */,
 				594E93E01A68D197003DB4E7 /* ShortFields in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -612,12 +624,14 @@
 				59E8B72F1B23AAA6000F8855 /* QResponse.m in Sources */,
 				59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */,
 				59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */,
+				59CF58201B3BA82500FB21FC /* ListsViewController.swift in Sources */,
 				596076B81A1000710038D4F4 /* Coursica.xcdatamodeld in Sources */,
 				2DE0954A1A71589200FD524A /* LoginViewController.m in Sources */,
 				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */,
+				59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				598865161B23A3C50078B06F /* NSString+FirebaseEncode.m in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
@@ -754,6 +768,7 @@
 			baseConfigurationReference = F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -771,6 +786,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Coursica/Coursica-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -779,6 +796,7 @@
 			baseConfigurationReference = 042A5F06587ECF071CB434D7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -796,6 +814,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Coursica/Coursica-Bridging-Header.h";
 			};
 			name = Release;
 		};

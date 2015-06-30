@@ -130,7 +130,7 @@
         [self.usernameField resignFirstResponder];
         [self.passwordField resignFirstResponder];
         
-        [self.delegate userDidLogin];
+        [self.delegate userDidLoginWithHUID:self.usernameField.text];
     }
     return YES;
 }

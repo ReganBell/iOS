@@ -2382,6 +2382,52 @@
             </objects>
             <point key="canvasLocation" x="1108" y="262"/>
         </scene>
+        <!--Lists View Controller-->
+        <scene sceneID="T7A-Lv-c2m">
+            <objects>
+                <viewController storyboardIdentifier="listsController" id="A9m-II-SW9" customClass="ListsViewController" customModule="Coursica" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Nh-Hh-qfs"/>
+                        <viewControllerLayoutGuide type="bottom" id="srn-Tv-uWR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DKL-Yi-yud">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="lCM-OZ-sOP">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ekv-Bc-Iyj">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ekv-Bc-Iyj" id="OOH-bL-bcp">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="A9m-II-SW9" id="pnD-Db-r6e"/>
+                                    <outlet property="delegate" destination="A9m-II-SW9" id="Ahk-YK-plW"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lCM-OZ-sOP" firstAttribute="leading" secondItem="DKL-Yi-yud" secondAttribute="leadingMargin" constant="-16" id="BLa-e8-4tD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lCM-OZ-sOP" secondAttribute="trailing" constant="-16" id="dJu-0D-Uyu"/>
+                            <constraint firstItem="srn-Tv-uWR" firstAttribute="top" secondItem="lCM-OZ-sOP" secondAttribute="bottom" id="fR4-pb-GD2"/>
+                            <constraint firstItem="lCM-OZ-sOP" firstAttribute="top" secondItem="7Nh-Hh-qfs" secondAttribute="bottom" id="pUq-am-yPL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="lCM-OZ-sOP" id="GV9-26-3CC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uJw-8H-KTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-248" y="1144"/>
+        </scene>
         <!--Comments View Controller-->
         <scene sceneID="gr6-Kc-G4W">
             <objects>

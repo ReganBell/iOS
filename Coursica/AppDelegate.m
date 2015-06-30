@@ -18,6 +18,7 @@
 #import "Faculty.h"
 #import "QReport.h"
 #import "QFacultyReport.h"
+#import "ECSlidingViewController.h"
 
 @interface AppDelegate () <LoginViewControllerDelegate>
 
@@ -28,21 +29,21 @@
 @implementation AppDelegate
 
 
-- (void)dataErrorForKey:(NSString*)key title:(NSString*)title term:(NSString*)term year:(NSString*)year {
-    
-    if (!self.dataErrors) {
-        self.dataErrors = [NSMutableDictionary dictionary];
-    }
-    
-    NSNumber *errors = self.dataErrors[key];
-    if (!errors) {
-        errors = @1;
-    } else
-        errors = @(errors.intValue + 1);
-    self.dataErrors[key] = errors;
-    
-    NSLog(@"Error no. %d! No data found for key: %@  course: %@ term: %@, year: %@", errors.intValue, key, title, term, year);
-}
+//- (void)dataErrorForKey:(NSString*)key title:(NSString*)title term:(NSString*)term year:(NSString*)year {
+//    
+//    if (!self.dataErrors) {
+//        self.dataErrors = [NSMutableDictionary dictionary];
+//    }
+//    
+//    NSNumber *errors = self.dataErrors[key];
+//    if (!errors) {
+//        errors = @1;
+//    } else
+//        errors = @(errors.intValue + 1);
+//    self.dataErrors[key] = errors;
+//    
+//    NSLog(@"Error no. %d! No data found for key: %@  course: %@ term: %@, year: %@", errors.intValue, key, title, term, year);
+//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -51,22 +52,22 @@
 //        [[self managedObjectContext] deleteObject:report];
 //    }
     
-    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
-    [fetch setPropertiesToFetch:@[@"first", @"last"]];
-    NSArray *allFaculty = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-    NSMutableDictionary *facultyDict = [NSMutableDictionary dictionary];
-    for (Faculty *faculty in allFaculty) {
-        NSString *key = [NSString stringWithFormat:@"%@ %@", faculty.first, faculty.last];
-        facultyDict[key] = faculty;
-    }
-    
-    NSFetchRequest *courseFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
-    NSArray *allCourses = [[self managedObjectContext] executeFetchRequest:courseFetch error:nil];
-    NSMutableDictionary *allCourseDict = [NSMutableDictionary dictionary];
-    for (Course *course in allCourses) {
-        NSString *key = course.displayTitle;
-        allCourseDict[key] = course;
-    }
+//    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"Faculty"];
+//    [fetch setPropertiesToFetch:@[@"first", @"last"]];
+//    NSArray *allFaculty = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
+//    NSMutableDictionary *facultyDict = [NSMutableDictionary dictionary];
+//    for (Faculty *faculty in allFaculty) {
+//        NSString *key = [NSString stringWithFormat:@"%@ %@", faculty.first, faculty.last];
+//        facultyDict[key] = faculty;
+//    }
+//    
+//    NSFetchRequest *courseFetch = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+//    NSArray *allCourses = [[self managedObjectContext] executeFetchRequest:courseFetch error:nil];
+//    NSMutableDictionary *allCourseDict = [NSMutableDictionary dictionary];
+//    for (Course *course in allCourses) {
+//        NSString *key = course.displayTitle;
+//        allCourseDict[key] = course;
+//    }
     
 //    NSEntityDescription *reportEntity = [NSEntityDescription entityForName:@"QReport" inManagedObjectContext:[self managedObjectContext]];
 //    NSEntityDescription *facultyReportEntity = [NSEntityDescription entityForName:@"QFacultyReport" inManagedObjectContext:[self managedObjectContext]];
@@ -274,6 +275,12 @@
     
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     NavigationController *navigationController = [main instantiateViewControllerWithIdentifier:@"navigationController"];
+//    ListsTableViewController *listsController = [main instantiateViewControllerWithIdentifier:@"listsController"];
+//    ECSlidingViewController *slidingController = [ECSlidingViewController slidingWithTopViewController:navigationController];
+//    slidingController.underLeftViewController = listsController;
+//    [navigationController.view addGestureRecognizer:slidingController.panGesture];
+//    slidingController.anchorLeftRevealAmount = 250.0;
+    
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"])
@@ -286,8 +293,9 @@
     return YES;
 }
 
-- (void)userDidLogin {
+- (void)userDidLoginWithHUID:(NSString *)huid {
     
+    [[NSUserDefaults standardUserDefaults] setObject:huid forKey:@"huid"];
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
 }

@@ -13,7 +13,7 @@
 
 @protocol LoginViewControllerDelegate <NSObject>
 
-- (void)userDidLogin;
+- (void)userDidLoginWithHUID:(NSString*)huid;
 
 @end
 

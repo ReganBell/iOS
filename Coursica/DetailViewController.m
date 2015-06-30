@@ -25,6 +25,7 @@
 #import "Meeting.h"
 #import "TTTAttributedLabel.h"
 #import "MapViewController.h"
+#import "Coursica-Swift.h"
 
 typedef enum {
     
@@ -122,9 +123,27 @@ typedef enum {
     }];
 }
 
+- (void)addCourseToList:(NSString*)listName {
+    
+
+}
+
 - (void)addCourseButtonPressed {
     
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Add to Lists" message:@"Keep track of your courses with Lists. The more you add, the better course recommendations Coursica can give you." preferredStyle:UIAlertControllerStyleActionSheet];
     
+    for (NSDictionary *listDictionary in [List emptyListsDictionary]) {
+        NSString *listName = listDictionary.allKeys.firstObject;
+        UIAlertAction *action = [UIAlertAction actionWithTitle:listName style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [List addCourseToListWithName:listName course:self.course];
+        }];
+        [alertController addAction:action];
+    }
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)layoutNavigationBar {

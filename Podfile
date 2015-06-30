@@ -1,8 +1,11 @@
 platform :ios, '7.0'
 
+pod 'pop'
+pod 'PureLayout'
 pod 'Mantle'
 pod 'AFNetworking'
 pod 'GraphKit'
 pod 'MWFeedParser/NSString+HTML'
 pod 'Firebase'
 pod 'TTTAttributedLabel'
+pod 'ECSlidingViewController', '~> 2.0.3'

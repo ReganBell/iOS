@@ -15,18 +15,26 @@
 #import "FiltersViewController.h"
 #import "NavigationController.h"
 #import "SearchManager.h"
+#import "Coursica-Swift.h"
+#import <PureLayout/PureLayout.h>
+#import <pop/POP.h>
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate>
+@interface CoursesViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, ListsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSPredicate *filterPredicate;
 
+@property (strong, nonatomic) ListsViewController *listsController;
 @property (strong, nonatomic) FiltersViewController *filterController;
 @property (strong, nonatomic) UIView *navBarView;
 @property (strong, nonatomic) UIView *navBarRightButtonView;
+@property (strong, nonatomic) UIView *navBarLeftButtonView;
+
+@property (strong, nonatomic) UIButton *listsButton;
+@property (strong, nonatomic) NSLayoutConstraint *listsButtonCenterY;
 
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) NSLayoutConstraint *cancelButtonCenterY;
@@ -36,6 +44,11 @@
 
 @property (strong, nonatomic) UILabel *coursicaTitleLabel;
 @property (strong, nonatomic) NSLayoutConstraint *coursicaTitleCenterY;
+
+@property (strong, nonatomic) UILabel *listsTitleLabel;
+@property (strong, nonatomic) NSLayoutConstraint *listsTitleCenterY;
+@property (strong, nonatomic) UIButton *listsCancelButton;
+@property (strong, nonatomic) NSLayoutConstraint *listsCancelButtonCenterY;
 
 @property (strong, nonatomic) UITextField *searchBar;
 @property (strong, nonatomic) NSLayoutConstraint *searchBarCenterY;
@@ -89,12 +102,18 @@
 - (void)layoutNavigationBar {
     
     self.navigationItem.titleView = self.navBarView;
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat constant = screenWidth / 2 - 8;
-    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.coursicaTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.navBarView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:constant];
-    [self.navBarView addConstraint:centerX];
-    [self.navBarView layoutIfNeeded];
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navBarRightButtonView];
+}
+
+- (NSLayoutConstraint*)constraintWithAtribute:(NSLayoutAttribute)attribute inArray:(NSArray*)array {
+    
+    for (NSLayoutConstraint *constraint in array) {
+        if (constraint.firstAttribute == attribute) {
+            return constraint;
+        }
+    }
+    return nil;
 }
 
 - (UIView*)navBarRightButtonView {
@@ -106,16 +125,13 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
     [view addSubview:self.cancelButton];
     [view addSubview:self.searchButton];
-    NSLayoutConstraint *centerXCancel = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.cancelButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-    NSLayoutConstraint *centerXSearch = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.searchButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-    NSLayoutConstraint *centerYCancel = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.cancelButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
-    self.cancelButtonCenterY = centerYCancel;
-    NSLayoutConstraint *centerYSearch = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.searchButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
-    self.searchButtonCenterY = centerYSearch;
-    NSLayoutConstraint *searchHeight = [NSLayoutConstraint constraintWithItem:self.searchButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:24.0];
-    NSLayoutConstraint *searchWidth = [NSLayoutConstraint constraintWithItem:self.searchButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:24.0];
+    NSArray *cancelButtonConstraints = [self.cancelButton autoCenterInSuperview];
+    self.cancelButtonCenterY = [self constraintWithAtribute:NSLayoutAttributeCenterY inArray:cancelButtonConstraints];
+    NSArray *searchButtonConstraints = [self.searchButton autoCenterInSuperview];
+    self.searchButtonCenterY = [self constraintWithAtribute:NSLayoutAttributeCenterY inArray:searchButtonConstraints];
+    [self.searchButton autoSetDimension:ALDimensionHeight toSize:24];
+    [self.searchButton autoSetDimension:ALDimensionWidth toSize:24];
     
-    [view addConstraints:@[centerXCancel, centerXSearch, centerYCancel, centerYSearch, searchHeight, searchWidth]];
     self.cancelButton.alpha = 0.0;
     _navBarRightButtonView = view;
     
@@ -171,26 +187,75 @@
     frame.size = self.navigationController.navigationBar.frame.size;
     UIView *navBarView = [[UIView alloc] initWithFrame:frame];
     UITextField *searchBar = self.searchBar;
-    searchBar.alpha = 0.0;
+    searchBar.alpha = 0;
     navBarView.clipsToBounds = YES;
-    
     [navBarView addSubview:searchBar];
+    [searchBar autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:20];
+    [searchBar autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10];
+    [searchBar autoSetDimension:ALDimensionHeight toSize:29];
+    self.searchBarCenterY = [searchBar autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
+    
     UIView *coursicaTitleLabel =  self.coursicaTitleLabel;
     [navBarView addSubview:coursicaTitleLabel];
+    self.coursicaTitleCenterY = [coursicaTitleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat constant = screenWidth / 2 - 8;
+    [coursicaTitleLabel autoConstrainAttribute:ALAttributeVertical toAttribute:ALAttributeLeft ofView:navBarView withOffset:constant];
     
-    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:coursicaTitleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeCenterYWithinMargins multiplier:1.0 constant:0.0];
-    self.coursicaTitleCenterY = centerY;
-    [navBarView addConstraint:centerY];
+    UIView *listsTitleLabel = self.listsTitleLabel;
+    listsTitleLabel.alpha = 0;
+    [navBarView addSubview:listsTitleLabel];
+    [listsTitleLabel autoConstrainAttribute:ALAttributeVertical toAttribute:ALAttributeLeft ofView:navBarView withOffset:constant];
+    self.listsTitleCenterY = [listsTitleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
     
-    NSLayoutConstraint *rightSpacing = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeRightMargin relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-20];
-    NSLayoutConstraint *leftSpacing = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeLeftMargin relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:10];
-    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:29.0];
-    NSLayoutConstraint *center = [NSLayoutConstraint constraintWithItem:searchBar attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:navBarView attribute:NSLayoutAttributeCenterYWithinMargins multiplier:1.0 constant:0.0];
-    self.searchBarCenterY = center;
-    [navBarView addConstraints:@[rightSpacing, leftSpacing, height, center]];
+    UIButton *listsButton = self.listsButton;
+    [navBarView addSubview:listsButton];
+    [listsButton autoSetDimension:ALDimensionWidth toSize:27];
+    [listsButton autoSetDimension:ALDimensionHeight toSize:19];
+    [listsButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    self.listsButtonCenterY = [listsButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
+    
+    UIButton *listsCancelButton = self.listsCancelButton;
+    listsCancelButton.alpha = 0;
+    [navBarView addSubview:listsCancelButton];
+    [listsCancelButton autoSetDimension:ALDimensionWidth toSize:50];
+    [listsCancelButton autoSetDimension:ALDimensionHeight toSize:20];
+    [listsCancelButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    self.listsCancelButtonCenterY = [listsCancelButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
+
     _navBarView = navBarView;
     
     return _navBarView;
+}
+
+- (UIButton*)listsButton {
+    
+    if (_listsButton) {
+        return _listsButton;
+    }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 34, 24)];
+    [button setImage:[UIImage imageNamed:@"ListIcon"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(listsButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    _listsButton = button;
+    return _listsButton;
+}
+
+- (UIButton*)listsCancelButton {
+    
+    if (_listsCancelButton) {
+        return _listsCancelButton;
+    }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
+    [button setTitle:@"Cancel" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:14.0];
+    [button addTarget:self action:@selector(cancelListsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    _listsCancelButton = button;
+    return _listsCancelButton;
 }
 
 - (UIButton*)cancelButton {
@@ -217,7 +282,7 @@
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     [button setImage:[UIImage imageNamed:@"SmallSearch.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(showFilters) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(filtersButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     button.translatesAutoresizingMaskIntoConstraints = NO;
     _searchButton = button;
     return _searchButton;
@@ -240,6 +305,25 @@
     
     _coursicaTitleLabel = label;
     return _coursicaTitleLabel;
+}
+
+- (UILabel*)listsTitleLabel {
+    
+    if (_listsTitleLabel) {
+        return _listsTitleLabel;
+    }
+    
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:17];
+    label.text = @"Lists";
+    label.textColor = [UIColor whiteColor];
+    [label sizeToFit];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    _listsTitleLabel = label;
+    return _listsTitleLabel;
 }
 
 #pragma mark - Filters View Transition
@@ -288,6 +372,55 @@
     return _filterController;
 }
 
+- (void)setListsShowing:(BOOL)showing {
+    
+    NSArray *unhideViews, *hideViews, *moveInConstraints, *moveOutConstraints;
+    
+    if (showing) {
+        unhideViews = @[self.listsTitleLabel, self.listsCancelButton];
+        moveInConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY];
+        moveOutConstraints = @[self.searchButtonCenterY, self.coursicaTitleCenterY, self.listsButtonCenterY];
+        hideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
+    } else {
+        unhideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
+        moveInConstraints = @[self.coursicaTitleCenterY, self.searchButtonCenterY, self.listsButtonCenterY];
+        moveOutConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY];
+        hideViews = @[self.listsTitleLabel, self.listsCancelButton];
+    }
+    
+    for (NSLayoutConstraint *moveIn in moveInConstraints) {
+        POPBasicAnimation *moveInAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPLayoutConstraintConstant];
+        moveInAnim.toValue = @0;
+        moveInAnim.duration = 0.3;
+        [moveIn pop_addAnimation:moveInAnim forKey:@"moveIn"];
+    }
+    
+    for (NSLayoutConstraint *moveOut in moveOutConstraints) {
+        POPBasicAnimation *moveOutAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPLayoutConstraintConstant];
+        moveOutAnim.toValue = showing ? @(-20) : @(20);
+        moveOutAnim.duration = 0.3;
+        [moveOut pop_addAnimation:moveOutAnim forKey:@"moveIn"];
+    }
+    
+    for (UIView *unhide in unhideViews) {
+        POPBasicAnimation *unhideAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+        unhideAnim.toValue = @1;
+        unhideAnim.duration = 0.3;
+        [unhide pop_addAnimation:unhideAnim forKey:@"unhide"];
+    }
+    
+    for (UIView *hide in hideViews) {
+        POPBasicAnimation *hideAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+        hideAnim.toValue = @0;
+        hideAnim.duration = 0.3;
+        [hide pop_addAnimation:hideAnim forKey:@"hide"];
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.listsController.view.alpha = (showing) ? 1.0 : 0.0;
+    }];
+}
+
 - (void)setFiltersShowing:(BOOL)showing searchActive:(BOOL)searchActive {
     
     NSArray *unhideViews, *hideViews, *moveInConstraints, *moveOutConstraints;
@@ -296,24 +429,30 @@
         unhideViews = @[self.searchBar, self.cancelButton];
         moveInConstraints = @[self.searchBarCenterY, self.cancelButtonCenterY];
         //Order for moveOut matters, the first moves +20.0, the last -20.0
-        moveOutConstraints = @[self.searchButtonCenterY, self.coursicaTitleCenterY];
-        hideViews = @[self.coursicaTitleLabel, self.searchButton];
+        moveOutConstraints = @[self.searchButtonCenterY, self.coursicaTitleCenterY, self.listsButtonCenterY];
+        hideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
     } else {
-        unhideViews = @[self.coursicaTitleLabel, self.searchButton];
-        moveInConstraints = @[self.coursicaTitleCenterY, self.searchButtonCenterY];
+        unhideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
+        moveInConstraints = @[self.coursicaTitleCenterY, self.searchButtonCenterY, self.listsButtonCenterY];
         //Order for moveOut matters, the first moves +20.0, the last -20.0
         moveOutConstraints = @[self.searchBarCenterY, self.cancelButtonCenterY];
         hideViews = @[self.searchBar, self.cancelButton];
     }
     
     if (!searchActive) {
-        for (NSLayoutConstraint *moveIn in moveInConstraints)
-            moveIn.constant = 0.0;
+        for (NSLayoutConstraint *moveIn in moveInConstraints) {
+            POPBasicAnimation *moveInAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPLayoutConstraintConstant];
+            moveInAnim.toValue = @0;
+            moveInAnim.duration = 0.3;
+            [moveIn pop_addAnimation:moveInAnim forKey:@"moveIn"];
+        }
         
-        NSLayoutConstraint *firstOut = moveOutConstraints.firstObject;
-        firstOut.constant = 20.0;
-        NSLayoutConstraint *lastOut = moveOutConstraints.lastObject;
-        lastOut.constant = -20.0;
+        for (NSLayoutConstraint *moveOut in moveOutConstraints) {
+            POPBasicAnimation *moveOutAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPLayoutConstraintConstant];
+            moveOutAnim.toValue = showing ? @(-20) : @(20);
+            moveOutAnim.duration = 0.3;
+            [moveOut pop_addAnimation:moveOutAnim forKey:@"moveIn"];
+        }
     }
     
     if (!showing)
@@ -321,14 +460,42 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         if (!searchActive) {
-            for (UIView *hide in hideViews)
-                hide.alpha = 0.0;
-            for (UIView *unhide in unhideViews)
-                unhide.alpha = 1.0;
+            for (UIView *unhide in unhideViews) {
+                POPBasicAnimation *unhideAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+                unhideAnim.toValue = @1;
+                unhideAnim.duration = 0.3;
+                [unhide pop_addAnimation:unhideAnim forKey:@"unhide"];
+            }
+            
+            for (UIView *hide in hideViews) {
+                POPBasicAnimation *hideAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+                hideAnim.toValue = @0;
+                hideAnim.duration = 0.3;
+                [hide pop_addAnimation:hideAnim forKey:@"hide"];
+            }
             [self.navigationController.navigationBar layoutIfNeeded];
         }
         self.filterController.view.alpha = (showing) ? 1.0 : 0.0;
     }];
+}
+
+- (ListsViewController *)listsController {
+    
+    if (!_listsController) {
+        
+        UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        _listsController = [main instantiateViewControllerWithIdentifier:@"listsController"];
+        _listsController.delegate = self;
+        _listsController.view.alpha = 0.0;
+        [self.view addSubview:_listsController.view];
+    }
+    
+    return _listsController;
+}
+
+- (void)listsButtonPressed {
+    
+    [self setListsShowing:YES];
 }
 
 - (void)cancelFiltersButtonPressed:(UIButton*)sender {
@@ -339,7 +506,12 @@
     [self updateFetchWithPredicate:nil];
 }
 
-- (IBAction)showFilters{
+- (void)cancelListsButtonPressed:(UIButton*)sender {
+    
+    [self setListsShowing:NO];
+}
+
+- (IBAction)filtersButtonPressed {
     
     [self setFiltersShowing:YES searchActive:NO];
 }
@@ -478,7 +650,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
     Course *course = [self.fetchedResultsController objectAtIndexPath:indexPath];
