@@ -50,6 +50,7 @@
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
 		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
 		59A2EDBC1B33E13D00B22558 /* slider-blue-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */; };
+		59B0AEC21B43AEE40018AA85 /* TempCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B0AEC11B43AEE40018AA85 /* TempCourse.swift */; };
 		59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D57F1AF6CA3F0006A57B /* DNA.png */; };
 		59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5801AF6CA3F0006A57B /* judge1.png */; };
 		59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5811AF6CA3F0006A57B /* telescope7.png */; };
@@ -155,6 +156,7 @@
 		599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 6.xcdatamodel"; sourceTree = "<group>"; };
 		59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-blue-track@2x.png"; sourceTree = "<group>"; };
 		59A838A81B3775A6008B4551 /* Coursica-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Coursica-Bridging-Header.h"; sourceTree = "<group>"; };
+		59B0AEC11B43AEE40018AA85 /* TempCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempCourse.swift; sourceTree = "<group>"; };
 		59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 7.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D51A76C49E0046BE2F /* Coursica 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 8.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D61A76CDCF0046BE2F /* Coursica 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 9.xcdatamodel"; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			children = (
 				59CF581F1B3BA82500FB21FC /* ListsViewController.swift */,
 				59FCC2C81B3BD5C7001A2337 /* List.swift */,
+				59B0AEC11B43AEE40018AA85 /* TempCourse.swift */,
 				598865141B23A3C50078B06F /* NSString+FirebaseEncode.h */,
 				598865151B23A3C50078B06F /* NSString+FirebaseEncode.m */,
 				59D4A04C1A349291003FD743 /* UILabel+HeightCalculation.h */,
@@ -629,6 +632,7 @@
 				2DE0954A1A71589200FD524A /* LoginViewController.m in Sources */,
 				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
+				59B0AEC21B43AEE40018AA85 /* TempCourse.swift in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */,
 				59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */,

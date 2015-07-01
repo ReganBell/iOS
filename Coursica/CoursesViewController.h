@@ -12,6 +12,5 @@
 
 @interface CoursesViewController : UIViewController <FiltersViewControllerDelegate>
 
-
 @end
 

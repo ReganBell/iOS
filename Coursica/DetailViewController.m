@@ -22,7 +22,6 @@
 #import "QFacultyReport.h"
 #import "Mantle.h"
 #import "QResponse.h"
-#import "Meeting.h"
 #import "TTTAttributedLabel.h"
 #import "MapViewController.h"
 #import "Coursica-Swift.h"
@@ -84,6 +83,28 @@ typedef enum {
 
 @implementation DetailViewController
 
++ (instancetype)detailViewControllerWithTempCourse:(TempCourse *)tempCourse {
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"title = %@", tempCourse.title];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSError *error = nil;
+    NSArray *matches = [delegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (matches.count >= 1) {
+        return [self detailViewControllerWithCourse:matches.firstObject];
+    } else {
+        return nil;
+    }
+}
+
++ (instancetype)detailViewControllerWithCourse:(Course *)course {
+    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DetailViewController *detailViewController = [main instantiateViewControllerWithIdentifier:@"detailController"];
+    detailViewController.course = course;
+    return detailViewController;
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -132,8 +153,7 @@ typedef enum {
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Add to Lists" message:@"Keep track of your courses with Lists. The more you add, the better course recommendations Coursica can give you." preferredStyle:UIAlertControllerStyleActionSheet];
     
-    for (NSDictionary *listDictionary in [List emptyListsDictionary]) {
-        NSString *listName = listDictionary.allKeys.firstObject;
+    for (NSString *listName in [List listNames]) {
         UIAlertAction *action = [UIAlertAction actionWithTitle:listName style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [List addCourseToListWithName:listName course:self.course];
         }];

@@ -9,12 +9,12 @@
 import UIKit
 
 @objc protocol ListsViewControllerDelegate {
-    func didSelectList()
+    func didSelectTempCourse(tempCourse: TempCourse)
 }
 
 class ListsViewController: UIViewController {
     
-    var lists: [List] = List.testDictionary()
+    var lists: [List] = []
     @IBOutlet var tableView: UITableView?
     var delegate: ListsViewControllerDelegate?
     
@@ -29,15 +29,16 @@ class ListsViewController: UIViewController {
         label.textColor = UIColor.whiteColor()
         label.sizeToFit()
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        
-//        let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-//        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/zzzzz")
-//        firebaseRoot.observeSingleEventOfType(FEventType.Value, withBlock: { snapshot in
-//            if let value = snapshot.value {
-//                
-//                self.tableView?.reloadData()
-//            }
-//        })
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        weak var weakSelf = self
+        List.fetchListsForCurrentUserWithCompletion({lists in
+            if let lists = lists {
+                weakSelf!.lists = lists
+                weakSelf!.tableView!.reloadData()
+            }
+        })
     }
     
     func headerViewForList(list: List, tableView: UITableView) -> UIView {
@@ -54,9 +55,35 @@ class ListsViewController: UIViewController {
         headerLabel.autoCenterInSuperview()
         return headerView
     }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        self.tableView!.setEditing(editing, animated: animated)
+    }
 }
 
 extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            let list = lists[indexPath.section]
+            let tempCourse = list.courses[indexPath.row]
+            let shouldDeleteSection = list.removeTempCourse(tempCourse)
+            if shouldDeleteSection {
+                tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Automatic)
+            } else {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+        }
+    }
+    
+    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        List.moveCourseFromList(lists[sourceIndexPath.section], toList: lists[destinationIndexPath.section], tempCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return lists.count
@@ -76,6 +103,7 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.delegate!.didSelectTempCourse(lists[indexPath.section].courses[indexPath.row])
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

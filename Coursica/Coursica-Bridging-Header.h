@@ -6,3 +6,4 @@
 #import "Course.h"
 #import <PureLayout/PureLayout.h>
 #import "AppDelegate.h"
+#import "DetailViewController.h"

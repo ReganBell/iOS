@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GraphKit.h"
 
-@class Course;
+@class Course, TempCourse;
 
 @interface DetailViewController : UIViewController
 
 @property (strong, nonatomic) Course *course;
+
++ (instancetype)detailViewControllerWithCourse:(Course*)course;
++ (instancetype)detailViewControllerWithTempCourse:(TempCourse*)tempCourse;
 
 @end

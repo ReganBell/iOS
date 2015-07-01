@@ -49,6 +49,9 @@
 @property (strong, nonatomic) NSLayoutConstraint *listsTitleCenterY;
 @property (strong, nonatomic) UIButton *listsCancelButton;
 @property (strong, nonatomic) NSLayoutConstraint *listsCancelButtonCenterY;
+@property (strong, nonatomic) UIButton *listsEditButton;
+@property (strong, nonatomic) NSLayoutConstraint *listsEditButtonCenterY;
+
 
 @property (strong, nonatomic) UITextField *searchBar;
 @property (strong, nonatomic) NSLayoutConstraint *searchBarCenterY;
@@ -125,14 +128,18 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
     [view addSubview:self.cancelButton];
     [view addSubview:self.searchButton];
+    [view addSubview:self.listsEditButton];
     NSArray *cancelButtonConstraints = [self.cancelButton autoCenterInSuperview];
     self.cancelButtonCenterY = [self constraintWithAtribute:NSLayoutAttributeCenterY inArray:cancelButtonConstraints];
     NSArray *searchButtonConstraints = [self.searchButton autoCenterInSuperview];
     self.searchButtonCenterY = [self constraintWithAtribute:NSLayoutAttributeCenterY inArray:searchButtonConstraints];
+    NSArray *listsEditButtonConstraints = [self.listsEditButton autoCenterInSuperview];
+    self.listsEditButtonCenterY = [self constraintWithAtribute:NSLayoutAttributeCenterY inArray:listsEditButtonConstraints];
     [self.searchButton autoSetDimension:ALDimensionHeight toSize:24];
     [self.searchButton autoSetDimension:ALDimensionWidth toSize:24];
     
-    self.cancelButton.alpha = 0.0;
+    self.cancelButton.alpha = 0;
+    self.listsEditButton.alpha = 0;
     _navBarRightButtonView = view;
     
     return _navBarRightButtonView;
@@ -222,7 +229,7 @@
     [listsCancelButton autoSetDimension:ALDimensionHeight toSize:20];
     [listsCancelButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.listsCancelButtonCenterY = [listsCancelButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
-
+    
     _navBarView = navBarView;
     
     return _navBarView;
@@ -256,6 +263,22 @@
     button.translatesAutoresizingMaskIntoConstraints = NO;
     _listsCancelButton = button;
     return _listsCancelButton;
+}
+
+- (UIButton*)listsEditButton {
+    
+    if (_listsEditButton) {
+        return _listsEditButton;
+    }
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
+    [button setTitle:@"Edit" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:14.0];
+    [button addTarget:self action:@selector(editListsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    _listsEditButton = button;
+    return _listsEditButton;
 }
 
 - (UIButton*)cancelButton {
@@ -377,15 +400,15 @@
     NSArray *unhideViews, *hideViews, *moveInConstraints, *moveOutConstraints;
     
     if (showing) {
-        unhideViews = @[self.listsTitleLabel, self.listsCancelButton];
-        moveInConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY];
+        unhideViews = @[self.listsTitleLabel, self.listsCancelButton, self.listsEditButton];
+        moveInConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY, self.listsEditButtonCenterY];
         moveOutConstraints = @[self.searchButtonCenterY, self.coursicaTitleCenterY, self.listsButtonCenterY];
         hideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
     } else {
         unhideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
         moveInConstraints = @[self.coursicaTitleCenterY, self.searchButtonCenterY, self.listsButtonCenterY];
-        moveOutConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY];
-        hideViews = @[self.listsTitleLabel, self.listsCancelButton];
+        moveOutConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY, self.listsEditButtonCenterY];
+        hideViews = @[self.listsTitleLabel, self.listsCancelButton, self.listsEditButton];
     }
     
     for (NSLayoutConstraint *moveIn in moveInConstraints) {
@@ -415,6 +438,8 @@
         hideAnim.duration = 0.3;
         [hide pop_addAnimation:hideAnim forKey:@"hide"];
     }
+    
+    [self.listsController viewDidAppear:YES];
     
     [UIView animateWithDuration:0.3 animations:^{
         self.listsController.view.alpha = (showing) ? 1.0 : 0.0;
@@ -509,6 +534,13 @@
 - (void)cancelListsButtonPressed:(UIButton*)sender {
     
     [self setListsShowing:NO];
+}
+
+- (void)editListsButtonPressed:(UIButton*)sender {
+    
+    sender.selected = !sender.selected;
+    [sender setTitle:sender.selected ? @"Done" : @"Edit" forState:UIControlStateNormal];
+    [self.listsController setEditing:sender.selected animated:YES];
 }
 
 - (IBAction)filtersButtonPressed {
@@ -644,6 +676,14 @@
     [self.tableView endUpdates];
 }
 
+#pragma mark - Lists View Controller Delegate
+
+- (void)didSelectTempCourse:(TempCourse * __nonnull)tempCourse {
+    
+    DetailViewController *detailController = [DetailViewController detailViewControllerWithTempCourse:tempCourse];
+    [self.navigationController pushViewController:detailController animated:YES];
+}
+
 #pragma mark - Table View Data Source and Delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -676,9 +716,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    DetailViewController *detailController = [main instantiateViewControllerWithIdentifier:@"detailController"];
-    detailController.course = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Course *course = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    DetailViewController *detailController = [DetailViewController detailViewControllerWithCourse:course];
     [self.navigationController pushViewController:detailController animated:YES];
 }
 
