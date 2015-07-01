@@ -70,6 +70,7 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
             let tempCourse = list.courses[indexPath.row]
             let shouldDeleteSection = list.removeTempCourse(tempCourse)
             if shouldDeleteSection {
+                lists.removeAtIndex(indexPath.section)
                 tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Automatic)
             } else {
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -82,7 +83,11 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        List.moveCourseFromList(lists[sourceIndexPath.section], toList: lists[destinationIndexPath.section], tempCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
+        if sourceIndexPath.section != destinationIndexPath.section {
+            List.moveCourseFromList(lists[sourceIndexPath.section],
+                toList: lists[destinationIndexPath.section],
+                tempCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
