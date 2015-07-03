@@ -150,15 +150,6 @@
 
 - (void)addField:(NSString*)field toIndex:(NSMutableDictionary*)index fromCourse:(Course*)course ignoreStopWords:(BOOL)ignoreStopWords {
     
-//    NSMutableArray *fieldTerms = [NSMutableArray array];
-//    [field enumerateSubstringsInRange:NSMakeRange(0, field.length) options:NSStringEnumerationByWords usingBlock:^(NSString *token, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-//        [fieldTerms addObject:token];
-//    }];
-//    
-//    if ([field isEqualToString:@"T cell sensitization and immunoregulation in ocular allo- and autoimmunity"]) {
-//        
-//    }
-    
     NSMutableArray *fastFieldTerms = [NSMutableArray array];
     NSMutableString *currentString = [NSMutableString string];
     const char *primitiveField = field.UTF8String;

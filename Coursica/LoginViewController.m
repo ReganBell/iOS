@@ -10,10 +10,11 @@
 #import "AppDelegate.h"
 #import "CoursesViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AFNetworking.h"
 
 #define coursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface LoginViewController () <UIWebViewDelegate, UITextFieldDelegate>
+@interface LoginViewController () <UIWebViewDelegate, UITextFieldDelegate, NSURLSessionDataDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
@@ -33,6 +34,7 @@
 @property (nonatomic, assign) CGFloat titleTopSpaceInitial;
 @property (nonatomic, assign) CGFloat titleTopSpaceError;
 @property (assign) BOOL UIStateError;
+@property (assign) NSUInteger secondsWaitedByUser;
 
 @end
 
@@ -56,6 +58,7 @@
     self.UIStateError = NO;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://courses.cs50.net/classes/login"]];
     [self.secretWebView loadRequest:request];
+    self.secretWebView.hidden = YES;
     
     self.usernameField.layer.cornerRadius = 4.0f;
     self.passwordField.layer.cornerRadius = 4.0f;
@@ -129,7 +132,6 @@
         
         [self.usernameField resignFirstResponder];
         [self.passwordField resignFirstResponder];
-        
         [self.delegate userDidLoginWithHUID:self.usernameField.text];
     }
     return YES;
@@ -143,15 +145,6 @@
     } else if (self.PINSiteTried) {
         [self loginFailedWithMessage:@"Invalid HUID or password, try again."];
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)removeFailureUIState {
@@ -189,7 +182,7 @@
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
-
+    
     if (self.usernameField.text.length == 0) {
         [self loginFailedWithMessage:@"Your HUID is required to log in."];
         return;
@@ -201,10 +194,32 @@
     
     self.userDidSubmit = YES;
     [self.loginButton setTitle:@"Logging in..." forState:UIControlStateNormal];
+    self.secondsWaitedByUser = 0;
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateLoginButtonForProgress:) userInfo:nil repeats:YES];
     if (self.PINSiteLoaded) {
         [self tryUserCredentials];
     }
 }
+
+- (void)updateLoginButtonForProgress:(NSTimer*)waitingTimer {
+    
+    self.secondsWaitedByUser++;
+    
+    if (self.UIStateError) {
+        [waitingTimer invalidate];
+        return;
+    }
+    
+    if (self.secondsWaitedByUser >= 2) {
+        [self.loginButton setTitle:@"Still working..." forState:UIControlStateNormal];
+    } else if (self.secondsWaitedByUser >= 4) {
+        [self.loginButton setTitle:@"Almost there..." forState:UIControlStateNormal];
+    } else if (self.secondsWaitedByUser >= 6) {
+        [self.loginButton setTitle:@"Wait for it..." forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark - Keyboard
 
 - (void)registerKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -240,6 +255,15 @@
     [self.view layoutIfNeeded];
     
     [UIView commitAnimations];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

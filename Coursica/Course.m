@@ -330,6 +330,8 @@
             return @"Science of the Physical Universe";
         case 7:
             return @"Societies of the World";
+        case 8:
+            return @"Study of the Past";
         case 9:
             return @"United States in the World";
         default:

@@ -50,6 +50,7 @@
 		598CAB381A22C7EC008D0142 /* Faculty.m in Sources */ = {isa = PBXBuildFile; fileRef = 598CAB371A22C7EC008D0142 /* Faculty.m */; };
 		598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 598CAB8A1A23CB57008D0142 /* libxml2.dylib */; };
 		59A2EDBC1B33E13D00B22558 /* slider-blue-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */; };
+		59ABFA3C1B4727F1006349A6 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 59ABFA3B1B4727F1006349A6 /* CommentTableViewCell.m */; };
 		59B0AEC21B43AEE40018AA85 /* TempCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B0AEC11B43AEE40018AA85 /* TempCourse.swift */; };
 		59B9D5871AF6CA3F0006A57B /* DNA.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D57F1AF6CA3F0006A57B /* DNA.png */; };
 		59B9D5881AF6CA3F0006A57B /* judge1.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5801AF6CA3F0006A57B /* judge1.png */; };
@@ -156,6 +157,8 @@
 		599C8F331A71DB31000E061A /* Coursica 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 6.xcdatamodel"; sourceTree = "<group>"; };
 		59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-blue-track@2x.png"; sourceTree = "<group>"; };
 		59A838A81B3775A6008B4551 /* Coursica-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Coursica-Bridging-Header.h"; sourceTree = "<group>"; };
+		59ABFA3A1B4727F1006349A6 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
+		59ABFA3B1B4727F1006349A6 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
 		59B0AEC11B43AEE40018AA85 /* TempCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempCourse.swift; sourceTree = "<group>"; };
 		59B506D41A76C22D0046BE2F /* Coursica 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 7.xcdatamodel"; sourceTree = "<group>"; };
 		59B506D51A76C49E0046BE2F /* Coursica 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -378,6 +381,8 @@
 		598865101B239CC10078B06F /* Comments */ = {
 			isa = PBXGroup;
 			children = (
+				59ABFA3A1B4727F1006349A6 /* CommentTableViewCell.h */,
+				59ABFA3B1B4727F1006349A6 /* CommentTableViewCell.m */,
 				59D4A0491A34877D003FD743 /* CommentsViewController.h */,
 				59D4A04A1A34877D003FD743 /* CommentsViewController.m */,
 			);
@@ -504,6 +509,7 @@
 		596076A41A1000700038D4F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Prestige Worldwide";
 				TargetAttributes = {
@@ -618,6 +624,7 @@
 				5926C2DD1AE57B1000342A5A /* QReport.m in Sources */,
 				59E8B7351B23AEAE000F8855 /* QBaseline.m in Sources */,
 				5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */,
+				59ABFA3C1B4727F1006349A6 /* CommentTableViewCell.m in Sources */,
 				59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				59E8B7321B23AD79000F8855 /* QFacultyReport.m in Sources */,

@@ -47,8 +47,8 @@
 
 @property (strong, nonatomic) UILabel *listsTitleLabel;
 @property (strong, nonatomic) NSLayoutConstraint *listsTitleCenterY;
-@property (strong, nonatomic) UIButton *listsCancelButton;
-@property (strong, nonatomic) NSLayoutConstraint *listsCancelButtonCenterY;
+@property (strong, nonatomic) UIButton *listsBackButton;
+@property (strong, nonatomic) NSLayoutConstraint *listsBackButtonCenterY;
 @property (strong, nonatomic) UIButton *listsEditButton;
 @property (strong, nonatomic) NSLayoutConstraint *listsEditButtonCenterY;
 
@@ -63,6 +63,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.title = @"Courses";
     
     [self updateCoursesData];
     [self layoutNavigationBar];
@@ -222,13 +224,13 @@
     [listsButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.listsButtonCenterY = [listsButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
     
-    UIButton *listsCancelButton = self.listsCancelButton;
-    listsCancelButton.alpha = 0;
-    [navBarView addSubview:listsCancelButton];
-    [listsCancelButton autoSetDimension:ALDimensionWidth toSize:50];
-    [listsCancelButton autoSetDimension:ALDimensionHeight toSize:20];
-    [listsCancelButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.listsCancelButtonCenterY = [listsCancelButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
+    UIButton *listsBackButton = self.listsBackButton;
+    listsBackButton.alpha = 0;
+    [navBarView addSubview:listsBackButton];
+    [listsBackButton autoSetDimension:ALDimensionWidth toSize:50];
+    [listsBackButton autoSetDimension:ALDimensionHeight toSize:20];
+    [listsBackButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    self.listsBackButtonCenterY = [listsBackButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:navBarView];
     
     _navBarView = navBarView;
     
@@ -249,20 +251,20 @@
     return _listsButton;
 }
 
-- (UIButton*)listsCancelButton {
+- (UIButton*)listsBackButton {
     
-    if (_listsCancelButton) {
-        return _listsCancelButton;
+    if (_listsBackButton) {
+        return _listsBackButton;
     }
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
-    [button setTitle:@"Cancel" forState:UIControlStateNormal];
+    [button setTitle:@"Back" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont fontWithName:@"AvenirNext-DemiBold" size:14.0];
     [button addTarget:self action:@selector(cancelListsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     button.translatesAutoresizingMaskIntoConstraints = NO;
-    _listsCancelButton = button;
-    return _listsCancelButton;
+    _listsBackButton = button;
+    return _listsBackButton;
 }
 
 - (UIButton*)listsEditButton {
@@ -400,15 +402,15 @@
     NSArray *unhideViews, *hideViews, *moveInConstraints, *moveOutConstraints;
     
     if (showing) {
-        unhideViews = @[self.listsTitleLabel, self.listsCancelButton, self.listsEditButton];
-        moveInConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY, self.listsEditButtonCenterY];
+        unhideViews = @[self.listsTitleLabel, self.listsBackButton, self.listsEditButton];
+        moveInConstraints = @[self.listsTitleCenterY, self.listsBackButtonCenterY, self.listsEditButtonCenterY];
         moveOutConstraints = @[self.searchButtonCenterY, self.coursicaTitleCenterY, self.listsButtonCenterY];
         hideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
     } else {
         unhideViews = @[self.coursicaTitleLabel, self.searchButton, self.listsButton];
         moveInConstraints = @[self.coursicaTitleCenterY, self.searchButtonCenterY, self.listsButtonCenterY];
-        moveOutConstraints = @[self.listsTitleCenterY, self.listsCancelButtonCenterY, self.listsEditButtonCenterY];
-        hideViews = @[self.listsTitleLabel, self.listsCancelButton, self.listsEditButton];
+        moveOutConstraints = @[self.listsTitleCenterY, self.listsBackButtonCenterY, self.listsEditButtonCenterY];
+        hideViews = @[self.listsTitleLabel, self.listsBackButton, self.listsEditButton];
     }
     
     for (NSLayoutConstraint *moveIn in moveInConstraints) {

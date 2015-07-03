@@ -11,6 +11,7 @@ import re
 from scrapy.shell import inspect_response
 from ..items import Course
 
+
 def firebase_sanitize(string):
     string = string.decode('utf-8')
     for i, forbidden in enumerate(['.', '#', '$', '/', '[', ']', '\n', '\r', '’',]):
@@ -33,8 +34,8 @@ class QSpider(scrapy.Spider):
     def log_in(self, response):
         request = scrapy.FormRequest.from_response(response,
                                                    formdata={'username': '10907373',
-                                                           'password': 'Fogs79,obis',
-                                                           'compositeAuthenticationSourceType': 'PIN'},
+                                                             'password': 'Fogs79,obis',
+                                                             'compositeAuthenticationSourceType': 'PIN'},
                                                    callback=self.logged_in,
                                                    dont_filter=True)
         yield request
