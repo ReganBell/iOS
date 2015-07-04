@@ -31,15 +31,27 @@ extension FDataSnapshot {
         }
     }
     
+    init(CS50Dictionary: NSDictionary) {
+        
+        if let combined = CS50Dictionary["number"] as? String {
+            let halves = combined.componentsSeparatedByString(" ")
+            self.shortField = halves.first!
+            self.number = halves[1]
+        }
+        if let title = CS50Dictionary["title"] as? String {
+            self.title = title
+        }
+    }
+        
     init(snapshot: FDataSnapshot) {
         for field in snapshot.snapshotChildren() {
             switch field.key {
             case "number":
-                number = field.value as! String
+                self.number = field.value as! String
             case "shortField":
-                shortField = field.value as! String
+                self.shortField = field.value as! String
             case "title":
-                title = field.value as! String
+                self.title = field.value as! String
             default:
                 print("Unexpected course field type")
             }

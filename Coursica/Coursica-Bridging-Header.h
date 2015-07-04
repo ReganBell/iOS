@@ -7,3 +7,6 @@
 #import <PureLayout/PureLayout.h>
 #import "AppDelegate.h"
 #import "DetailViewController.h"
+#import <pop/POP.h>
+#import "AFNetworking.h"
+#import "NSString+FirebaseEncode.h"

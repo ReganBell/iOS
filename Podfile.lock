@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Alamofire (1.2.3)
   - ECSlidingViewController (2.0.3)
   - Firebase (2.3.1)
   - FrameAccessor (1.3.2)
@@ -37,6 +38,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - Alamofire (~> 1.2)
   - ECSlidingViewController (~> 2.0.3)
   - Firebase
   - GraphKit
@@ -48,6 +50,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
   Firebase: 462795adf92029ddb97777660627f5dd4fd59876
   FrameAccessor: 0f7ba6ce37be9a5d0302a27c731dca70af8d438b

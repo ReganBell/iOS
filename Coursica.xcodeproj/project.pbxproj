@@ -23,6 +23,7 @@
 		59002FC21B1AB0440096A92E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FC11B1AB0440096A92E /* Social.framework */; };
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5902E6261A347E9600A38C11 /* SmallSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E6251A347E9600A38C11 /* SmallSearch.png */; };
+		5919BB961B474F1800C81B2F /* LoginWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5919BB951B474F1800C81B2F /* LoginWebView.swift */; };
 		5926C2DD1AE57B1000342A5A /* QReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5926C2DC1AE57B1000342A5A /* QReport.m */; };
 		5933DDEE1B2E187700F95394 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 5933DDED1B2E187700F95394 /* Podfile */; };
 		5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5933DDF01B2E1BF500F95394 /* MapViewController.m */; };
@@ -74,7 +75,7 @@
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
 		59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FCC2C81B3BD5C7001A2337 /* List.swift */; };
-		98953491A049209DE0D8879E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB15AF7ACAD399D3133E341B /* libPods.a */; };
+		AE24189F87CF4909318EB936 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB48EF430C4FA26F5F553D2 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		59002FC11B1AB0440096A92E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5902E6251A347E9600A38C11 /* SmallSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallSearch.png; sourceTree = "<group>"; };
+		5919BB951B474F1800C81B2F /* LoginWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWebView.swift; sourceTree = "<group>"; };
 		5926C2DA1AE5583600342A5A /* Coursica 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 10.xcdatamodel"; sourceTree = "<group>"; };
 		5926C2DB1AE57B1000342A5A /* QReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QReport.h; sourceTree = "<group>"; };
 		5926C2DC1AE57B1000342A5A /* QReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QReport.m; sourceTree = "<group>"; };
@@ -200,7 +202,7 @@
 		59F51C6E1A2572C00025E021 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		59FCC2C81B3BD5C7001A2337 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 16.xcdatamodel"; sourceTree = "<group>"; };
-		DB15AF7ACAD399D3133E341B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAB48EF430C4FA26F5F553D2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,7 +225,7 @@
 				59002FAC1B1AAFD20096A92E /* CFNetwork.framework in Frameworks */,
 				59002FAA1B1AAF6D0096A92E /* AudioToolbox.framework in Frameworks */,
 				598CAB8B1A23CB57008D0142 /* libxml2.dylib in Frameworks */,
-				98953491A049209DE0D8879E /* libPods.a in Frameworks */,
+				AE24189F87CF4909318EB936 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +265,7 @@
 			children = (
 				59CF581F1B3BA82500FB21FC /* ListsViewController.swift */,
 				59FCC2C81B3BD5C7001A2337 /* List.swift */,
+				5919BB951B474F1800C81B2F /* LoginWebView.swift */,
 				59B0AEC11B43AEE40018AA85 /* TempCourse.swift */,
 				598865141B23A3C50078B06F /* NSString+FirebaseEncode.h */,
 				598865151B23A3C50078B06F /* NSString+FirebaseEncode.m */,
@@ -458,7 +461,7 @@
 				59002FA91B1AAF6D0096A92E /* AudioToolbox.framework */,
 				598CAB8A1A23CB57008D0142 /* libxml2.dylib */,
 				598CAB7E1A23CA05008D0142 /* libxml2.2.dylib */,
-				DB15AF7ACAD399D3133E341B /* libPods.a */,
+				EAB48EF430C4FA26F5F553D2 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				596076A91A1000700038D4F4 /* Frameworks */,
 				596076AA1A1000700038D4F4 /* Resources */,
 				F9D736DA3BB554BB680EB587 /* Copy Pods Resources */,
+				E99EDE08D670A9076F2735CA /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -598,6 +602,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		E99EDE08D670A9076F2735CA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F9D736DA3BB554BB680EB587 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -621,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */,
+				5919BB961B474F1800C81B2F /* LoginWebView.swift in Sources */,
 				5926C2DD1AE57B1000342A5A /* QReport.m in Sources */,
 				59E8B7351B23AEAE000F8855 /* QBaseline.m in Sources */,
 				5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */,

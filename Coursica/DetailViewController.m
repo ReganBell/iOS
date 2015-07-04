@@ -86,7 +86,9 @@ typedef enum {
 + (instancetype)detailViewControllerWithTempCourse:(TempCourse *)tempCourse {
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Course"];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"title = %@", tempCourse.title];
+    NSPredicate *numberPredicate = [NSPredicate predicateWithFormat:@"number = %@", tempCourse.number];
+    NSPredicate *shortFieldPredicate = [NSPredicate predicateWithFormat:@"shortField = %@", tempCourse.shortField];
+    fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[numberPredicate, shortFieldPredicate]];
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSError *error = nil;
     NSArray *matches = [delegate.managedObjectContext executeFetchRequest:fetchRequest error:&error];

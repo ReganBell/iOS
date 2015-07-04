@@ -159,7 +159,6 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.messageLabel.alpha = 0.0;
         [self.view layoutIfNeeded];
-        // Change to red failure color
         self.loginButton.backgroundColor = coursicaBlue;
     } completion:^(BOOL finished) {
         self.UIStateError = !finished;

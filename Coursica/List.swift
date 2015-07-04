@@ -8,14 +8,39 @@
 
 import UIKit
 
+extension String {
+    
+    func encodedAsFirebaseKey() -> String {
+        var string = self
+        for (i, forbidden) in enumerate([".", "#", "$", "/", "[", "]"]) {
+            string = string.stringByReplacingOccurrencesOfString(forbidden, withString: "&\(i)&")
+        }
+        return string
+    }
+}
+
 @objc class List {
     
     var name: String = ""
-    var courses: Array<TempCourse> = []
+    var courses: [TempCourse] = []
+    var id: String = ""
     
-    init(name: String, courses: Array<TempCourse>) {
+    init(name: String, courses: [TempCourse]) {
         self.name = name
         self.courses = courses
+    }
+    
+    func setCoursesFromJSON(JSON: NSDictionary) {
+        
+        if let courseDictionaries = JSON["list"] as? [NSDictionary] {
+            var tempCourses: [TempCourse] = []
+            for courseDict in courseDictionaries {
+                let tempCourse = TempCourse(CS50Dictionary: courseDict)
+                tempCourses.append(tempCourse)
+            }
+            self.courses = tempCourses
+            
+        }
     }
     
     class func listNames() -> [String] {
@@ -79,13 +104,17 @@ import UIKit
         })
     }
     
-    class func addTempCourseToListWithName(name: String, tempCourse: TempCourse) {
+    class func addTempCourseToListWithName(name: String, tempCourse: TempCourse, completionBlock: (NSError?) -> Void) {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/lists/\(name)")
-        let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle)
+        let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle.encodedAsFirebaseKey())
         let courseDict = ["title": tempCourse.title, "number": tempCourse.number, "shortField": tempCourse.shortField]
-        courseRef.setValue(courseDict)
+        courseRef.setValue(courseDict, withCompletionBlock: {error, firebase in completionBlock(error) })
+    }
+    
+    class func addTempCourseToListWithName(name: String, tempCourse: TempCourse) {
+        self.addTempCourseToListWithName(name, tempCourse: tempCourse, completionBlock: {error in })
     }
     
     class func addCourseToListWithName(name: String, course: Course) {
