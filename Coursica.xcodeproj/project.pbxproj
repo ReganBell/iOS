@@ -76,6 +76,7 @@
 		59F51C6A1A2545DF0025E021 /* FiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C691A2545DF0025E021 /* FiltersViewController.m */; };
 		59F51C6F1A2572C00025E021 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F51C6E1A2572C00025E021 /* DetailViewController.m */; };
 		59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FCC2C81B3BD5C7001A2337 /* List.swift */; };
+		59FF55CC1B4F6D5600915BF4 /* QBreakdownCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FF55CB1B4F6D5600915BF4 /* QBreakdownCardView.swift */; };
 		AE24189F87CF4909318EB936 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB48EF430C4FA26F5F553D2 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -205,6 +206,7 @@
 		59F51C6E1A2572C00025E021 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		59FCC2C81B3BD5C7001A2337 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		59FD1F551B18275500DF9B6F /* Coursica 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 16.xcdatamodel"; sourceTree = "<group>"; };
+		59FF55CB1B4F6D5600915BF4 /* QBreakdownCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBreakdownCardView.swift; sourceTree = "<group>"; };
 		EAB48EF430C4FA26F5F553D2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9609010D3C8F30A1BB61B4B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -370,6 +372,7 @@
 				598865101B239CC10078B06F /* Comments */,
 				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
 				59F51C6E1A2572C00025E021 /* DetailViewController.m */,
+				59FF55CB1B4F6D5600915BF4 /* QBreakdownCardView.swift */,
 				5933DDEF1B2E1BF500F95394 /* MapViewController.h */,
 				5933DDF01B2E1BF500F95394 /* MapViewController.m */,
 			);
@@ -674,6 +677,7 @@
 				59D4A04B1A34877D003FD743 /* CommentsViewController.m in Sources */,
 				598CAB381A22C7EC008D0142 /* Faculty.m in Sources */,
 				59B0AEC21B43AEE40018AA85 /* TempCourse.swift in Sources */,
+				59FF55CC1B4F6D5600915BF4 /* QBreakdownCardView.swift in Sources */,
 				596076BB1A1000710038D4F4 /* CoursesViewController.m in Sources */,
 				595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */,
 				59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */,

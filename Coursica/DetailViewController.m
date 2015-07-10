@@ -41,7 +41,7 @@ typedef enum {
 
 @property (nonatomic, strong) IBOutletCollection(UIView) NSArray *cards;
 @property (weak, nonatomic) IBOutlet UIView *infoView;
-@property (weak, nonatomic) IBOutlet UIView *QScoreView;
+@property (weak, nonatomic) IBOutlet QBreakdownCardView *QScoreView;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
@@ -116,6 +116,7 @@ typedef enum {
     [self layoutCourseInfoCard];
     [self layoutNavigationBar];
     [self pullCourseData];
+    [self.QScoreView updateWithDictionary:@{}];
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {

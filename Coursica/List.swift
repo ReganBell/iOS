@@ -68,7 +68,7 @@ extension String {
             return true //should delete List
         } else {
             self.courses = self.courses.filter({ course in course.title != tempCourse.title })
-            let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle)
+            let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle.encodedAsFirebaseKey())
             courseRef.removeValue()
             return false //should not delete List
         }
