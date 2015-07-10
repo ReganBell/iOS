@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DB252611B4EFA1700FA26E7 /* QBreakdownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */; };
 		2DE0954A1A71589200FD524A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE095491A71589200FD524A /* LoginViewController.m */; };
 		59002FAA1B1AAF6D0096A92E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FA91B1AAF6D0096A92E /* AudioToolbox.framework */; };
 		59002FAC1B1AAFD20096A92E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FAB1B1AAFD20096A92E /* CFNetwork.framework */; };
@@ -90,6 +91,8 @@
 
 /* Begin PBXFileReference section */
 		042A5F06587ECF071CB434D7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2DB2525F1B4EFA1700FA26E7 /* QBreakdownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBreakdownViewController.h; sourceTree = "<group>"; };
+		2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBreakdownViewController.m; sourceTree = "<group>"; };
 		2DE095481A71583C00FD524A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		2DE095491A71589200FD524A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		59002FA91B1AAF6D0096A92E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -239,6 +242,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DB2525E1B4EFA0300FA26E7 /* Breakdown */ = {
+			isa = PBXGroup;
+			children = (
+				2DB2525F1B4EFA1700FA26E7 /* QBreakdownViewController.h */,
+				2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */,
+			);
+			name = Breakdown;
+			sourceTree = "<group>";
+		};
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +366,7 @@
 		5988650D1B239C900078B06F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				2DB2525E1B4EFA0300FA26E7 /* Breakdown */,
 				598865101B239CC10078B06F /* Comments */,
 				59F51C6D1A2572C00025E021 /* DetailViewController.h */,
 				59F51C6E1A2572C00025E021 /* DetailViewController.m */,
@@ -646,6 +659,7 @@
 				5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */,
 				59ABFA3C1B4727F1006349A6 /* CommentTableViewCell.m in Sources */,
 				59DCAEC31A75D6E800929151 /* SearchManager.m in Sources */,
+				2DB252611B4EFA1700FA26E7 /* QBreakdownViewController.m in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				59E8B7321B23AD79000F8855 /* QFacultyReport.m in Sources */,
 				596076B51A1000710038D4F4 /* AppDelegate.m in Sources */,
@@ -752,6 +766,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -790,7 +805,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Release;
 		};
@@ -893,7 +908,7 @@
 				596076D11A1000710038D4F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		596076D21A1000710038D4F4 /* Build configuration list for PBXNativeTarget "Coursica" */ = {
 			isa = XCConfigurationList;
@@ -902,7 +917,7 @@
 				596076D41A1000710038D4F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		596076D51A1000710038D4F4 /* Build configuration list for PBXNativeTarget "CoursicaTests" */ = {
 			isa = XCConfigurationList;
@@ -911,7 +926,7 @@
 				596076D71A1000710038D4F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

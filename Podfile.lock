@@ -44,7 +44,7 @@ DEPENDENCIES:
   - GraphKit
   - Mantle
   - MWFeedParser/NSString+HTML
-  - pop
+  - pop (~> 1.0)
   - PureLayout
   - TTTAttributedLabel
 

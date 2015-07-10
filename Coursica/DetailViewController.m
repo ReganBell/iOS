@@ -15,6 +15,7 @@
 #import "GraphKit.h"
 #import "QScore.h"
 #import "CommentsViewController.h"
+#import "QBreakdownViewController.h"
 #import "UILabel+HeightCalculation.h"
 #import "QReport.h"
 #import <Firebase/Firebase.h>
@@ -65,6 +66,7 @@ typedef enum {
 @property (nonatomic, strong) IBOutletCollection(UIButton) NSArray *qScoreButtons;
 @property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *qScoreLabels;
 
+@property (weak, nonatomic) IBOutlet UIButton *viewQBreakdownButton;
 @property (weak, nonatomic) IBOutlet UIButton *viewCommentsButton;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *graphControl;
@@ -194,6 +196,7 @@ typedef enum {
         card.clipsToBounds = YES;
     }
     
+    self.viewQBreakdownButton.layer.cornerRadius = 4.0f;
     self.viewCommentsButton.layer.cornerRadius = 4.0f;
     
     self.descriptionLabel.text = self.course.courseDescription;
@@ -305,7 +308,7 @@ typedef enum {
     [self.QScoreView setFrame:newQScoreFrame];
     
     CGRect viewCommentsButtonFrame = self.viewCommentsButton.frame;
-    viewCommentsButtonFrame.origin.y = newQScoreFrame.origin.y + newQScoreFrame.size.height + 10;
+    viewCommentsButtonFrame.origin.y = newQScoreFrame.origin.y + newQScoreFrame.size.height + 40;
     [self.viewCommentsButton setFrame:viewCommentsButtonFrame];
     
 }
@@ -344,6 +347,15 @@ typedef enum {
     if (response) {
         [self updateGraphWithBreakdown:response.breakdown];
     }
+}
+
+- (IBAction)viewQBreakdownButtonClicked:(id)sender {
+    
+    UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    QBreakdownViewController *controller = [main instantiateViewControllerWithIdentifier:@"qbreakdown"];
+    controller.report = self.report;
+    controller.course = self.course;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)viewCommentsButtonClicked:(id)sender {
