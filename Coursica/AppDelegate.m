@@ -41,12 +41,12 @@
     
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"])
-    {
-        LoginViewController *loginController = [main instantiateViewControllerWithIdentifier:@"loginController"];
-        loginController.delegate = self;
-        [navigationController presentViewController:loginController animated:NO completion:nil];
-    }
+//    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"loggedIn"])
+//    {
+//        LoginViewController *loginController = [main instantiateViewControllerWithIdentifier:@"loginController"];
+//        loginController.delegate = self;
+//        [navigationController presentViewController:loginController animated:NO completion:nil];
+//    }
 
     return YES;
 }

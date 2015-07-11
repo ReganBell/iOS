@@ -116,7 +116,7 @@ typedef enum {
     [self layoutCourseInfoCard];
     [self layoutNavigationBar];
     [self pullCourseData];
-    [self.QScoreView updateWithDictionary:@{}];
+    [self.QScoreView updateWithDictionary:@{@"responses": @{}}];
 }
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
@@ -143,7 +143,7 @@ typedef enum {
             if (error) {
                 NSLog(@"%@", error);
             } else {
-                [self updateUIWithQReport:report];
+//                [self.QScoreView updateWithDictionary:report.dictionaryValue];
             }
         }
     }];
