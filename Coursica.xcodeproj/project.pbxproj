@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2DB252611B4EFA1700FA26E7 /* QBreakdownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */; };
 		2DE0954A1A71589200FD524A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE095491A71589200FD524A /* LoginViewController.m */; };
+		2DE7AB9B1B572B5A007401C6 /* AnimationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE7AB9A1B572B5A007401C6 /* AnimationBarView.swift */; };
 		59002FAA1B1AAF6D0096A92E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FA91B1AAF6D0096A92E /* AudioToolbox.framework */; };
 		59002FAC1B1AAFD20096A92E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FAB1B1AAFD20096A92E /* CFNetwork.framework */; };
 		59002FAE1B1AAFD90096A92E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FAD1B1AAFD90096A92E /* CoreGraphics.framework */; };
@@ -96,6 +97,7 @@
 		2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBreakdownViewController.m; sourceTree = "<group>"; };
 		2DE095481A71583C00FD524A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		2DE095491A71589200FD524A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		2DE7AB9A1B572B5A007401C6 /* AnimationBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationBarView.swift; sourceTree = "<group>"; };
 		59002FA91B1AAF6D0096A92E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		59002FAB1B1AAFD20096A92E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		59002FAD1B1AAFD90096A92E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -249,6 +251,7 @@
 			children = (
 				2DB2525F1B4EFA1700FA26E7 /* QBreakdownViewController.h */,
 				2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */,
+				2DE7AB9A1B572B5A007401C6 /* AnimationBarView.swift */,
 			);
 			name = Breakdown;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,
 				598865161B23A3C50078B06F /* NSString+FirebaseEncode.m in Sources */,
+				2DE7AB9B1B572B5A007401C6 /* AnimationBarView.swift in Sources */,
 				596076B21A1000710038D4F4 /* main.m in Sources */,
 				598CAB2F1A22C7EA008D0142 /* Course.m in Sources */,
 				59E661D51B01769300200FAE /* DoubleSliderView.m in Sources */,

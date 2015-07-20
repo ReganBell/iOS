@@ -308,8 +308,12 @@ typedef enum {
     newQScoreFrame.origin.y = satisfiesBottom + 30;
     [self.QScoreView setFrame:newQScoreFrame];
     
+    CGRect viewBreakdownButtonFrame = self.viewQBreakdownButton.frame;
+    viewBreakdownButtonFrame.origin.y = newQScoreFrame.origin.y + newQScoreFrame.size.height + 0;
+    [self.viewCommentsButton setFrame:viewBreakdownButtonFrame];
+    
     CGRect viewCommentsButtonFrame = self.viewCommentsButton.frame;
-    viewCommentsButtonFrame.origin.y = newQScoreFrame.origin.y + newQScoreFrame.size.height + 40;
+    viewCommentsButtonFrame.origin.y = viewBreakdownButtonFrame.origin.y + viewBreakdownButtonFrame.size.height + 90;
     [self.viewCommentsButton setFrame:viewCommentsButtonFrame];
     
 }
