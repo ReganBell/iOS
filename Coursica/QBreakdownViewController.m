@@ -6,20 +6,45 @@
 //  Copyright (c) 2015 Prestige Worldwide. All rights reserved.
 //
 
-#import "QBreakdownViewController.h"
+#import "DetailViewController.h"
+#import "Course.h"
 #import "AppDelegate.h"
+#import "Faculty.h"
+#import "Location.h"
+#import "Meeting.h"
+#import "QScore.h"
+#import "CommentsViewController.h"
+#import "QBreakdownViewController.h"
 #import "UILabel+HeightCalculation.h"
 #import "QReport.h"
+#import <Firebase/Firebase.h>
+#import "NSString+FirebaseEncode.h"
+#import "QFacultyReport.h"
+#import "Mantle.h"
 #import "QResponse.h"
-#import "Course.h"
-#import "CommentTableViewCell.h"
 #import "TTTAttributedLabel.h"
+#import "MapViewController.h"
+#import "Coursica-Swift.h"
 #import <pop/POPAnimation.h>
 
 @interface QBreakdownViewController () <NSFetchedResultsControllerDelegate, TTTAttributedLabelDelegate>
 
 @property (nonatomic, strong) IBOutletCollection(UIView) NSArray *cards;
 @property (weak, nonatomic) IBOutlet UIView *generalView;
+@property (weak, nonatomic) IBOutlet UIView *courseView;
+@property (weak, nonatomic) IBOutlet UIView *instructorView;
+
+@property (weak, nonatomic) IBOutlet AnimationBarView *assignmentsAnimBarView;
+@property (weak, nonatomic) IBOutlet AnimationBarView *feedbackAnimBarView;
+@property (weak, nonatomic) IBOutlet AnimationBarView *materialsAnimBarView;
+@property (weak, nonatomic) IBOutlet AnimationBarView *sectionsAnimBarView;
+
+@property (weak, nonatomic) IBOutlet AnimationBarView *overallAnimBarView;
+@property (weak, nonatomic) IBOutlet AnimationBarView *lecturesAnimBarView;
+@property (weak, nonatomic) IBOutlet AnimationBarView *accessiblityAnimBarView;
+@property (weak, nonatomic) IBOutlet AnimationBarView *enthusiasmAnimBarView;
+
+@property (nonatomic, strong) IBOutletCollection(AnimationBarView) NSArray *animationBars;
 
 @property (weak, nonatomic) IBOutlet UILabel *recommendScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *workloadHoursLabel;
@@ -39,7 +64,10 @@
     [super viewDidLoad];
     [self layoutCourseInfoCard];
     [self layoutNavigationBar];
-    [self pullBreakdownData];
+    //[self pullBreakdownData];
+    for (AnimationBarView *bar in self.animationBars) {
+        [bar updateWithDictionary:@{}];
+    }
     
 }
 
@@ -67,14 +95,8 @@
 
 - (void)pullBreakdownData {
 
-    NSLog(@"Dictionary: %@", [self.report.responses description]);
+    //NSLog(@"Dictionary: %@", [self.report.responses description]);
     
-    for(NSString *key in [self.report.responses allKeys]) {
-        NSLog(@"%@", self.report);
-        //if ([key isEqualToString:@"Would You Recommend"])
-            //NSLog(@"FOUND IT");
-    }
-
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setRoundingMode:NSNumberFormatterRoundHalfUp];
     [formatter setMaximumFractionDigits:1];

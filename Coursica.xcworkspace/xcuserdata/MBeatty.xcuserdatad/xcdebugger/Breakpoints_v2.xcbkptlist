@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/DetailViewController.m"
-            timestampString = "439650069.816617"
+            timestampString = "458168314.850947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "-pullCourseData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/DetailViewController.m"
-            timestampString = "439650069.816617"
+            timestampString = "458168314.850947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "-addCourseButtonPressed"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -81,6 +81,38 @@
             endingLineNumber = "49"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CoursesViewController listsTitleCenterY]"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/CoursesViewController.m"
+                  timestampString = "458699095.824991"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CoursesViewController setListsTitleCenterY:]"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/CoursesViewController.m"
+                  timestampString = "458699095.825225"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "10">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,60 +170,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/DetailViewController.m"
-            timestampString = "439645980.243619"
+            timestampString = "458168314.850947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "qScoreButtons"
+            landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/DetailViewController.m"
-            timestampString = "439650069.816617"
+            timestampString = "458168314.850947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Coursica/DetailViewController.m"
-            timestampString = "439645454.164495"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Coursica/DetailViewController.m"
-            timestampString = "439645546.567615"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "-layoutNavigationBar"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -202,13 +202,109 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/DetailViewController.m"
-            timestampString = "439646745.795752"
+            timestampString = "458168314.850947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "overallLabel"
+            landmarkType = "19">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DetailViewController overallLabel]"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/DetailViewController.m"
+                  timestampString = "458690005.037305"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DetailViewController setOverallLabel:]"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/DetailViewController.m"
+                  timestampString = "458690005.037502"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/DetailViewController.m"
+            timestampString = "458168314.850947"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "satisfiesLabel"
+            landmarkType = "19">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DetailViewController satisfiesLabel]"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/DetailViewController.m"
+                  timestampString = "458168315.497957"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DetailViewController setSatisfiesLabel:]"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/DetailViewController.m"
+                  timestampString = "458168315.498115"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/DetailViewController.m"
+            timestampString = "458168314.850947"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "descriptionHeightConstraint"
+            landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -225,34 +321,255 @@
             endingLineNumber = "184"
             landmarkName = "+purifyString:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/QBreakdownViewController.m"
+            timestampString = "458698736.883278"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "-pullBreakdownData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/QBreakdownViewController.m"
+            timestampString = "458698736.883278"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "-layoutNavigationBar"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/QBreakdownAnimBar.swift"
+            timestampString = "458688156.859276"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "layoutSubviews()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "UIViewAlertForUnsatisfiableConstraints"
+            moduleName = "">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/QBreakdownViewController.m"
+            timestampString = "458698736.883278"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "assignmentsAnimBarView"
+            landmarkType = "19">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/QBreakdownViewController.m"
+            timestampString = "458698718.662959"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "@interface QBreakdownViewController()"
+            landmarkType = "2">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/AnimationBarView.swift"
+            timestampString = "458699061.362686"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "AnimationBarView"
+            landmarkType = "3">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "+[Course updateCourses:]"
+                  symbolName = "Coursica.AnimationBarView.percentileGraphView.getter : ObjectiveC.UIView"
                   moduleName = "Coursica"
-                  urlString = "file:///Users/MBeatty/Dev/coursica/Coursica/Course.m"
-                  timestampString = "450816533.709223"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.829599"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "184"
-                  endingLineNumber = "184"
-                  offsetFromSymbolStart = "11940">
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "29">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "+[Course updateCourses:]"
+                  symbolName = "Coursica.AnimationBarView.percentileGraphView.setter : ObjectiveC.UIView"
                   moduleName = "Coursica"
-                  urlString = "file:///Users/MBeatty/Dev/coursica/Coursica/Course.m"
-                  timestampString = "450816533.709407"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.829758"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "184"
-                  endingLineNumber = "184"
-                  offsetFromSymbolStart = "12098">
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "9">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Coursica.AnimationBarView.percentileGraphView.materializeForSet : ObjectiveC.UIView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.829907"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "13">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Coursica.AnimationBarView.init (Coursica.AnimationBarView.Type)(frame : C.CGRect) -&gt; Coursica.AnimationBarView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.830063"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "62">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Coursica.AnimationBarView.__allocating_init (Coursica.AnimationBarView.Type)(frame : C.CGRect) -&gt; Coursica.AnimationBarView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.830209"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "113">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "@objc Coursica.AnimationBarView.init (Coursica.AnimationBarView.Type)(frame : C.CGRect) -&gt; Coursica.AnimationBarView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.830355"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Coursica.AnimationBarView.__allocating_init (Coursica.AnimationBarView.Type)(coder : ObjectiveC.NSCoder) -&gt; Coursica.AnimationBarView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.83051"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "86">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Coursica.AnimationBarView.init (Coursica.AnimationBarView.Type)(coder : ObjectiveC.NSCoder) -&gt; Coursica.AnimationBarView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.830678"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "@objc Coursica.AnimationBarView.init (Coursica.AnimationBarView.Type)(coder : ObjectiveC.NSCoder) -&gt; Coursica.AnimationBarView"
+                  moduleName = "Coursica"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbeatty/Desktop/Dev/coursica/Coursica/AnimationBarView.swift"
+                  timestampString = "458699095.83083"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "43">
                </Location>
             </Locations>
          </BreakpointContent>
