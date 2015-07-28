@@ -20,7 +20,7 @@ let importButtonWidth: CGFloat = 212
 
 class ListsViewController: UIViewController {
     
-    var lists: [List] = []
+    var lists: [CourseList] = []
     @IBOutlet var tableView: UITableView?
     var delegate: ListsViewControllerDelegate?
     var promptLabel: UILabel?
@@ -54,7 +54,7 @@ class ListsViewController: UIViewController {
     func refreshLists() {
         
         weak var weakSelf = self
-        List.fetchListsForCurrentUserWithCompletion({lists in
+        CourseList.fetchListsForCurrentUserWithCompletion({lists in
             if let lists = lists {
                 weakSelf!.lists = lists
                 weakSelf!.tableView!.reloadData()
@@ -169,7 +169,7 @@ class ListsViewController: UIViewController {
         })
     }
     
-    func headerViewForList(list: List, tableView: UITableView) -> UIView {
+    func headerViewForList(list: CourseList, tableView: UITableView) -> UIView {
         
         var headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
         var headerLabel = UILabel(frame: CGRectZero)
@@ -200,12 +200,12 @@ class ListsViewController: UIViewController {
 
 extension ListsViewController: LoginWebViewDelegate {
     
-    func didDownloadList(list: List) {
+    func didDownloadList(list: CourseList) {
         coursesToAdd += list.courses.count
         listsAdded += 1
         
         for tempCourse in list.courses {
-            List.addTempCourseToListWithName(list.name, tempCourse: tempCourse, completionBlock: {error in
+            CourseList.addTempCourseToListWithName(list.name, tempCourse: tempCourse, completionBlock: {error in
                 if error != nil {
                     println(error)
                 } else {
@@ -226,7 +226,7 @@ extension ListsViewController: LoginWebViewDelegate {
         }
     }
     
-    func didLoadCS50CoursesSuccessfullyWithLists(lists: [List]) {
+    func didLoadCS50CoursesSuccessfullyWithLists(lists: [CourseList]) {
         
         self.listsToAdd = lists.count
         
@@ -294,7 +294,7 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         if sourceIndexPath.section != destinationIndexPath.section {
-            List.moveCourseFromList(lists[sourceIndexPath.section],
+            CourseList.moveCourseFromList(lists[sourceIndexPath.section],
                 toList: lists[destinationIndexPath.section],
                 tempCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
         }
