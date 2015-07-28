@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class CourseList {
+class CourseList {
     
     var name: String = ""
     var courses: [TempCourse] = []

@@ -47,8 +47,8 @@ class CS50Parser {
     
     func graduateFromCourseNumber(number: String) -> Bool {
         
-        let regex = NSRegularExpression(pattern: "[0-9]+", options: NSRegularExpressionOptions.allZeros, error: NSErrorPointer())
-        let range = regex!.rangeOfFirstMatchInString(number, options: NSMatchingOptions.allZeros, range: NSMakeRange(0, count(number)))
+        let regex = NSRegularExpression(pattern: "[0-9]+", options: NSRegularExpressionOptions(), error: nil)
+        let range = regex!.rangeOfFirstMatchInString(number, options: NSMatchingOptions(), range: NSMakeRange(0, count(number)))
         if range.location != NSNotFound {
             let match = (number as NSString).substringWithRange(range)
             if let numberDouble = NSNumberFormatter().numberFromString(match)?.doubleValue {

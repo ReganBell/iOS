@@ -40,12 +40,11 @@ class Display: NSObject {
             if course!.locations.count == 0 {
                 return "TBD"
             } else {
-                var string = ""
-                for location in course!.locations {
-                    let locationString = location.building + " " + location.room
-                    string += (string.isEmpty ? "":", ") + locationString
+                if let first = course?.locations.first {
+                    return "\(first.building) \(first.room)"
+                } else {
+                    return "TBD"
                 }
-                return string
             }
         }
     }
@@ -73,7 +72,7 @@ class Display: NSObject {
                 var string = ""
                 for meeting in meetings {
                     if !meeting.day.isEmpty {
-                        string += (string.isEmpty ? "":", ") + self.abbreviatedString(meeting.day) + "s"
+                        string += (string.isEmpty ? "":", ") + self.abbreviatedString(meeting.day)
                     }
                 }
                 let last = meetings.last! as Meeting
@@ -91,13 +90,13 @@ class Display: NSObject {
     
     func abbreviatedString(dayNumber: String) -> String {
         switch dayNumber {
-            case "0": return "Sunday"
-            case "1": return "Monday"
-            case "2": return "Tuesday"
-            case "3": return "Wednesday"
-            case "4": return "Thursday"
-            case "5": return "Friday"
-            case "6": return "Saturday"
+            case "0": return "Sun"
+            case "1": return "Mon"
+            case "2": return "Tues"
+            case "3": return "Wed"
+            case "4": return "Thur"
+            case "5": return "Fri"
+            case "6": return "Sat"
             default: return ""
     }
     }

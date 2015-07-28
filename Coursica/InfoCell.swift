@@ -22,6 +22,8 @@ class InfoCell: UITableViewCell {
         backgroundView.layer.cornerRadius = 4
         self.contentView.addSubview(backgroundView)
         
+        let maxDisplayLabelWidth = UIScreen.mainScreen().bounds.size.width - 10 - 22 - 10 - 35
+        
         titleLabel = self.label(course.title)
         titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 17)
         titleLabel.textAlignment = .Center
@@ -60,6 +62,7 @@ class InfoCell: UITableViewCell {
         let instructorDisplayLabel = self.label(course.display.faculty)
         instructorDisplayLabel.font = bold
         instructorDisplayLabel.textAlignment = .Left
+        instructorDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
         backgroundView.addSubview(instructorDisplayLabel)
         constrain(instructorDisplayLabel, instructorLabel, {display, label in
             display.left == label.right + 6
@@ -79,6 +82,7 @@ class InfoCell: UITableViewCell {
         })
         
         let meetsDisplayLabel = self.label("")
+        meetsDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
         let meets = course.display.meetings + " in " + course.display.locations
         let attributedMeets = NSMutableAttributedString(string: meets)
         attributedMeets.addAttribute(NSFontAttributeName, value: bold!, range: NSMakeRange(0, count(meets)))
@@ -109,6 +113,7 @@ class InfoCell: UITableViewCell {
         let satisfiesDisplayLabel = self.label(course.display.genEds)
         satisfiesDisplayLabel.font = bold
         satisfiesDisplayLabel.textAlignment = .Left
+        satisfiesDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
         backgroundView.addSubview(satisfiesDisplayLabel)
         constrain(satisfiesDisplayLabel, satisfiesLabel, {display, label in
             display.left == label.right + 6
@@ -131,6 +136,7 @@ class InfoCell: UITableViewCell {
             })
             
             let enrollmentDisplayLabel = self.label("")
+            enrollmentDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
             let enrollment = "\(course.enrollment)" + " " + course.display.enrollmentSource
             let attributedEnrollment = NSMutableAttributedString(string: enrollment)
             attributedEnrollment.addAttribute(NSFontAttributeName, value: bold!, range: NSMakeRange(0, count(enrollment)))

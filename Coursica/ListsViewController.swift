@@ -6,15 +6,14 @@
 //  Copyright (c) 2015 Prestige Worldwide. All rights reserved.
 //
 
-import UIKit
-import Alamofire
-import PureLayout
+import Cartography
 import pop
+import Alamofire
 
 let coursicaBlue = UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0)
 let importButtonWidth: CGFloat = 212
 
-@objc protocol ListsViewControllerDelegate {
+protocol ListsViewControllerDelegate {
     func didSelectTempCourse(tempCourse: TempCourse)
 }
 
@@ -37,7 +36,7 @@ class ListsViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        var label = UILabel()
+        let label = UILabel()
         label.backgroundColor = UIColor.clearColor()
         label.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
         label.text = "Lists"
@@ -73,8 +72,10 @@ class ListsViewController: UIViewController {
         promptLabel.sizeToFit()
         promptLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         footerView.addSubview(promptLabel)
-        promptLabel.autoPinEdgeToSuperviewEdge(ALEdge.Top)
-        promptLabel.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
+        constrain(promptLabel, {prompt in
+            prompt.top == prompt.superview!.top
+            prompt.centerX == prompt.superview!.centerX
+        })
         self.promptLabel = promptLabel
         
         let passwordField = UITextField(frame: CGRect(x: 0, y: 0, width: importButtonWidth, height: 41))
@@ -84,11 +85,14 @@ class ListsViewController: UIViewController {
         passwordField.backgroundColor = UIColor.whiteColor()
         passwordField.secureTextEntry = true
         footerView.addSubview(passwordField)
-        passwordField.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
-        passwordField.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Bottom, ofView: promptLabel, withOffset: 10)
-        passwordField.autoSetDimension(ALDimension.Width, toSize: importButtonWidth)
-        passwordField.autoSetDimension(ALDimension.Height, toSize: 41)
+        constrain(passwordField, promptLabel, {passwordField, prompt in
+            passwordField.centerX == passwordField.superview!.centerX
+            passwordField.top == prompt.bottom + 10
+            passwordField.width == importButtonWidth
+            passwordField.height == 41
+        })
         passwordField.addTarget(self, action: "passwordDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        self.passwordField = passwordField
         
         let leftInsetView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 41))
         leftInsetView.backgroundColor = passwordField.backgroundColor;
@@ -103,9 +107,7 @@ class ListsViewController: UIViewController {
         rightInsetView.backgroundColor = coursicaBlue
         passwordField.rightViewMode = UITextFieldViewMode.Always
         passwordField.rightView = rightInsetView
-        self.importSubmitButton = rightInsetView
-        
-        self.passwordField = passwordField
+        importSubmitButton = rightInsetView
         
         let importButton = UIButton(frame: CGRect(x: 0, y: 0, width: importButtonWidth, height: 41))
         importButton.setTitle("Tap to Import", forState: UIControlState.Normal)
@@ -114,10 +116,6 @@ class ListsViewController: UIViewController {
         importButton.layer.cornerRadius = 4.0
         importButton.addTarget(self, action: "importButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         footerView.addSubview(importButton)
-        importButton.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
-        importButton.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Bottom, ofView: promptLabel, withOffset: 10)
-        importButton.autoSetDimension(ALDimension.Width, toSize: importButtonWidth)
-        importButton.autoSetDimension(ALDimension.Height, toSize: 41)
 
         let progressBarBackground = UIView(frame: CGRect(x: 0, y: 0, width: importButtonWidth, height: 41))
         progressBarBackground.backgroundColor = UIColor.whiteColor()
@@ -125,22 +123,27 @@ class ListsViewController: UIViewController {
         progressBarBackground.clipsToBounds = true
         progressBarBackground.alpha = 0
         footerView.addSubview(progressBarBackground)
-        progressBarBackground.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
-        progressBarBackground.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Bottom, ofView: promptLabel, withOffset: 10)
-        progressBarBackground.autoSetDimension(ALDimension.Width, toSize: importButtonWidth)
-        progressBarBackground.autoSetDimension(ALDimension.Height, toSize: 41)
-        self.importProgressBarBackground = progressBarBackground
+        constrain(passwordField, importButton, progressBarBackground, {passwordField, importButton, progressBackground in
+            align(centerX: passwordField, importButton, progressBackground)
+            align(top: passwordField, importButton, progressBackground)
+            align(left: passwordField, importButton, progressBackground)
+            align(right: passwordField, importButton, progressBackground)
+            align(bottom: passwordField, importButton, progressBackground)
+        })
+        importProgressBarBackground = progressBarBackground
         
         let progressBar = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 41))
         progressBar.backgroundColor = coursicaBlue
         progressBarBackground.addSubview(progressBar)
-        progressBar.autoPinEdgeToSuperviewEdge(ALEdge.Leading)
-        progressBar.autoPinEdgeToSuperviewEdge(ALEdge.Top)
-        self.progressBarConstraint = progressBar.autoSetDimension(ALDimension.Width, toSize: 0)
-        progressBar.autoSetDimension(ALDimension.Height, toSize: 41)
+        constrain(progressBar, {progress in
+            progress.left == progress.superview!.left
+            progress.top == progress.superview!.top
+            self.progressBarConstraint = (progress.width == 0)
+            progress.height == progress.superview!.height
+        })
         self.importProgressBar = progressBar
         
-        tableView?.tableFooterView = footerView
+        tableView!.tableFooterView = footerView
     }
     
     func goButtonPressed(button: UIButton) {
@@ -159,7 +162,9 @@ class ListsViewController: UIViewController {
         let secretWebView = LoginWebView()
         secretWebView.loginDelegate = self
         self.view.insertSubview(secretWebView, atIndex: 0)
-        secretWebView.autoPinEdgesToSuperviewMargins()
+        constrain(secretWebView, {secret in
+            secret.edges == secret.superview!.edges
+        })
         secretWebView.loadLoginScreen()
         self.secretLoginWebView = secretWebView
         UIView.animateWithDuration(0.3, animations: {
@@ -171,14 +176,16 @@ class ListsViewController: UIViewController {
     
     func headerViewForList(list: CourseList, tableView: UITableView) -> UIView {
         
-        var headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
-        var headerLabel = UILabel(frame: CGRectZero)
+        let headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
+        let headerLabel = UILabel(frame: CGRectZero)
         headerLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
         headerLabel.text = list.name
         headerLabel.sizeToFit()
         headerLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         headerView.addSubview(headerLabel)
-        headerLabel.autoCenterInSuperview()
+        constrain(headerLabel, {header in
+            header.center == header.superview!.center
+        })
         return headerView
     }
     
@@ -207,7 +214,7 @@ extension ListsViewController: LoginWebViewDelegate {
         for tempCourse in list.courses {
             CourseList.addTempCourseToListWithName(list.name, tempCourse: tempCourse, completionBlock: {error in
                 if error != nil {
-                    println(error)
+                    print(error)
                 } else {
                     self.coursesAdded++
                     let maybePluralCourses = self.coursesAdded == 1 ? "course" : "courses"
@@ -322,27 +329,17 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell?
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-        }
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell ?? UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
         let course = self.lists[indexPath.section].courses[indexPath.row]
         
         let plain = "\(course.shortField) \(course.number) - \(course.title)"
         let boldRange = (plain as NSString).rangeOfString(course.title)
-        var fancy = NSMutableAttributedString(string: plain)
-        
+        let fancy = NSMutableAttributedString(string: plain)
         let regularFont = UIFont(name: "AvenirNext-Regular", size: 14)
         let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 17)
-        let regularColor = UIColor(white: 150/255.0, alpha: 1)
-        let boldColor = UIColor.blackColor()
-        let wholeRange = NSMakeRange(0, count(plain))
-        fancy.addAttribute(NSFontAttributeName, value: regularFont!, range: wholeRange)
-        fancy.addAttribute(NSForegroundColorAttributeName, value: regularColor, range: wholeRange)
-        fancy.addAttribute(NSFontAttributeName, value: boldFont!, range: boldRange)
-        fancy.addAttribute(NSForegroundColorAttributeName, value: boldColor, range: boldRange)
-        cell!.textLabel!.attributedText = fancy
-        return cell!;
+        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
+        fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
+        cell.textLabel!.attributedText = fancy
+        return cell as UITableViewCell
     }
 }

@@ -8,14 +8,21 @@
 
 import UIKit
 import Cartography
-import PureLayout
 import pop
 
 let percentileGraphInset: CGFloat = 10
 
+enum GraphViewTab: Int {
+    case Department = 1
+    case All = 2
+    case Size = 3
+}
+
 class BreakdownCell: UITableViewCell {
     
     var percentileGraphView = UIView()
+    var percentileLabel: UILabel!
+    var percentileCenterX: NSLayoutConstraint!
     var responses: NSDictionary = NSDictionary()
     var baselineButtons: [UIButton] = []
     var roundedBackgroundView: UIView!
@@ -29,6 +36,7 @@ class BreakdownCell: UITableViewCell {
     var circle: CAShapeLayer!
     var report: Report!
     var course: Course!
+    var selectedTab: GraphViewTab = .All
     
     func updateForNoBreakdownFound() {
         UIView.animateWithDuration(0.3, animations: {
@@ -171,14 +179,14 @@ class BreakdownCell: UITableViewCell {
         
         allButton = self.baselineButton("")
         allButton.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
-        allButton.tag = 0
+        allButton.tag = GraphViewTab.All.rawValue
         allButton.selected = true
         
         departmentButton = self.baselineButton("")
-        departmentButton.tag = 1
+        departmentButton.tag = GraphViewTab.Department.rawValue
         
         sizeButton = self.baselineButton("")
-        sizeButton.tag = 2
+        sizeButton.tag = GraphViewTab.Size.rawValue
         
         constrain(allButton, departmentButton, percentileGraphView, {all, department, graph in
             all.centerX == all.superview!.centerX
@@ -223,6 +231,19 @@ class BreakdownCell: UITableViewCell {
         circle.pop_addAnimation(strokeAnim, forKey: "strokeAnim")
     }
     
+    func arrayForCurrentGraphTab() -> [Double] {
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        switch self.selectedTab {
+        case .All:        return delegate.allScores
+        case .Department: return delegate.allDepartmentScores[course.shortField]!
+        case .Size:
+            for range in delegate.allSizeScores {
+                if range.contains(course.enrollment) {return range.scores}
+            }
+        }
+        return []
+    }
+    
     override func layoutSubviews() {
         
         super.layoutSubviews()
@@ -236,65 +257,76 @@ class BreakdownCell: UITableViewCell {
             subview.removeFromSuperview()
             delayTime = 0
         }
+        self.percentileLabel?.removeFromSuperview()
+        self.percentileLabel = nil
         
-        let graphWidth = UIScreen.mainScreen().bounds.size.width - percentileGraphInset * 2 - 40
-        var spacing: CGFloat = 0
-        var barWidth: CGFloat = 0
-        var barCountInt = 0
-        let barCounts: [CGFloat] = [20, 33, 50]
-        for barCount in barCounts {
-            barCountInt = Int(barCount)
-            barWidth = graphWidth / (barCount + barCount - 1)
-            spacing = barWidth
-            if barWidth < 10 {
+        let graphWidth = UIScreen.mainScreen().bounds.size.width - 40
+        if graphWidth == 0 {
+            return
+        }
+        var spacing: CGFloat = 7
+        var barWidth: CGFloat = 8
+        var barCountFloat = (graphWidth - barWidth) / (barWidth + spacing)
+        var barCountInt = Int(barCountFloat)
+        
+        var heights: [CGFloat] = []
+        var courseIndex = 0
+        
+        if course.overall == 0 {
+            return
+        }
+        
+        let sortedScores = self.arrayForCurrentGraphTab()
+        let index = find(sortedScores, course.overall)!
+        let percentileWidth = 2.0 / Double(barCountInt)
+        var scoreIndex = 0
+        var runningHeight: CGFloat = 0.0
+        for i in 1...barCountInt {
+            let maxScoreForCurrentWindow = 3.0 + percentileWidth * Double(i)
+            while sortedScores[scoreIndex] <= maxScoreForCurrentWindow {
+                runningHeight++
+                scoreIndex++
+                if scoreIndex == sortedScores.count {
+                    break
+                }
+            }
+            heights.append(runningHeight)
+            if scoreIndex == sortedScores.count {
                 break
             }
         }
-        
-        var heights: [CGFloat] = []
-        var currentIndex = 19
-        
-        if course.overall != 0 {
-            
-            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            let allPercentile = Double(find(delegate.allScores, course.overall)!) / Double(delegate.allScores.count)
-            let departmentPercentile = Double(find(delegate.allDepartmentScores[course.shortField]!, course.overall)!) / Double(delegate.allScores.count)
-            let barCountFloat = Double(barCountInt)
-            let percentileWidth = Double(2.0 / barCountFloat)
-            var scoreIndex = 0
-            for i in 1...barCountInt {
-                let maxScoreForCurrentWindow = 3.0 + percentileWidth * Double(i)
-                var windowCount: CGFloat = 0
-                while delegate.allDepartmentScores[course.shortField]![scoreIndex] <= maxScoreForCurrentWindow {
-                    windowCount++
-                    scoreIndex++
-                    if scoreIndex == delegate.allDepartmentScores[course.shortField]!.count {
-                        break
-                    }
-                }
-                heights.append(windowCount)
-            }
-            
-            currentIndex = Int(departmentPercentile * barCountFloat)
-            println("All: \(allPercentile * 100) Department: \(departmentPercentile * 100)")
-        }
-        
-        if heights.count == 0 {
-            heights = [1, 1, 2, 4, 5, 7, 10, 14, 20, 28, 40, 35, 31, 28, 22, 15, 13, 10, 8, 4, 2, 1]
-        }
+        let percentile = Double(index) / Double(sortedScores.count)
+        courseIndex = Int(percentile * Double(barCountInt))
         
         let tallestBar = maxElement(heights)
-        let scaleFactor = 40.0 / tallestBar
+        let scaleFactor = 120.0 / tallestBar
         heights = heights.map({height in return height * scaleFactor})
-        
 
-        for i in 0...barCountInt {
-            let height: CGFloat = heights[i % heights.count] * 3
+        let rawGraphWidth = (spacing + barWidth) * barCountFloat + barWidth
+        let roundedGraphWidth = (spacing + barWidth) * CGFloat(barCountInt) + barWidth
+        let initialOffset: CGFloat = (graphWidth - roundedGraphWidth) / 2
+        
+        var courseIndexBarView: UIView?
+        for (i, height) in enumerate(heights) {
             let bar = UIView(frame: CGRectMake(0, 0, barWidth, 0))
             bar.layer.cornerRadius = barWidth / 2
-            bar.backgroundColor = i == currentIndex ? UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0) : UIColor(white: 216/255.0, alpha: 1.0)
+            bar.backgroundColor = UIColor(white: 216/255.0, alpha: 1.0)
+            if i == courseIndex {
+                bar.backgroundColor = UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0)
+                courseIndexBarView = bar
+            }
+            
             self.percentileGraphView.addSubview(bar)
-            let heightConstraint = bar.autoSetDimension(ALDimension.Height, toSize: 0)
+            
+            var heightConstraint: NSLayoutConstraint!
+            let leadingSpacing = initialOffset + CGFloat(i) * (barWidth + spacing)
+            
+            constrain(bar, {bar in
+                heightConstraint = (bar.height == 0.1)
+                bar.width == barWidth
+                bar.left == bar.superview!.left + leadingSpacing
+                bar.bottom == bar.superview!.bottom
+            })
             
             let heightAnim = POPBasicAnimation(propertyNamed: kPOPLayoutConstraintConstant)
             heightAnim.fromValue = NSNumber(integer: 0)
@@ -303,13 +335,32 @@ class BreakdownCell: UITableViewCell {
             let delay: CFTimeInterval = Double(i) * delayTime
             heightAnim.beginTime = CACurrentMediaTime() + delay
             heightConstraint.pop_addAnimation(heightAnim, forKey: "heightAnim")
-            
-            bar.autoSetDimension(ALDimension.Width, toSize: barWidth)
-            let barOffset = CGFloat(i) * barWidth
-            let spacingOffset = CGFloat(i - 1) * barWidth
-            let leadingSpacing = barOffset + spacingOffset
-            bar.autoPinEdgeToSuperviewEdge(ALEdge.Leading, withInset: leadingSpacing)
-            bar.autoPinEdgeToSuperviewEdge(ALEdge.Bottom, withInset: 0)
+        }
+        
+        percentileLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        percentileLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        let percentileInt = Int(percentile * 100)
+        percentileLabel.text = "\(percentileInt)\(self.suffixForInt(percentileInt)) percentile"
+        percentileLabel.textAlignment = .Center
+        self.addSubview(percentileLabel)
+        constrain(percentileLabel, courseIndexBarView!, percentileGraphView, {percentile, bar, graph in
+            percentile.top == graph.bottom + 5
+            percentile.centerX == bar.centerX ~ 750
+            percentile.left >= graph.left
+            percentile.right <= graph.right
+        })
+    }
+    
+    func suffixForInt(int: Int) -> String {
+        switch int {
+        case 11, 12, 13: return "th"
+        default:
+            switch int % 10 {
+            case 1: return "st"
+            case 2: return "nd"
+            case 3: return "rd"
+            default: return "th"
+            }
         }
     }
     
@@ -328,7 +379,9 @@ class BreakdownCell: UITableViewCell {
             button.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
             self.layoutSubviews()
         }
-            
+        
+        self.selectedTab = GraphViewTab(rawValue: button.tag)!
+        
         switch button.tag {
         default:
             self.layoutSubviews()

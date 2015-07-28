@@ -16,7 +16,10 @@ class ReportParser: NSObject {
         } else {
             let reportDictionary = snapshot.value.allValues.first! as! NSDictionary
             let report = Report()
-            report.setFieldsWithList(["term", "year", "enrollment", "comments", "responses"], data: reportDictionary)
+            report.setFieldsWithList(["term", "year", "comments", "responses"], data: reportDictionary)
+            if let enrollment = reportDictionary["enrollment"] as? Int {
+                report.enrollment = enrollment
+            }
             if let responses = reportDictionary["responses"] as? NSDictionary {
                 for (key, value) in responses {
                     if let responseDict = (value as? NSDictionary) {

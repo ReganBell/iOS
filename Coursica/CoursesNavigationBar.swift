@@ -146,10 +146,10 @@ class CoursesNavigationBar: UIView {
         let style = bar.defaultTextAttributes[NSParagraphStyleAttributeName]?.mutableCopy() as! NSMutableParagraphStyle
         style.minimumLineHeight = bar.font.lineHeight - (bar.font.lineHeight - font.lineHeight) / 2.0
         let string = "Search for courses"
-        let placeholder = NSMutableAttributedString(string: string)
-        placeholder.addAttribute(NSForegroundColorAttributeName, value: UIColor(white: 1, alpha: 0.4), range: NSMakeRange(0, count(string)))
-        placeholder.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, count(string)))
-        placeholder.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, count(string)))
+        let placeholder = NSMutableAttributedString(string: string, attributes:
+            [NSForegroundColorAttributeName: UIColor(white: 1, alpha: 0.4),
+             NSFontAttributeName: font,
+             NSParagraphStyleAttributeName: style])
         bar.attributedPlaceholder = placeholder
         return bar
     }

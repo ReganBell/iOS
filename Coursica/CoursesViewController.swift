@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import PureLayout
 import pop
 import Cartography
 
@@ -222,22 +221,17 @@ extension CoursesViewController: UITextFieldDelegate {
 extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell?
-        if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        }
-        let course: Course = self.courses![indexPath.row]
-        if !course.title.isEmpty {
-            let boldRange = (course.display.title as NSString).rangeOfString(course.title)
-            let wholeRange = NSMakeRange(0, count(course.display.title))
-            let fancy = NSMutableAttributedString(string: course.display.title)
-            fancy.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-Regular", size: 14)!, range: wholeRange)
-            fancy.addAttribute(NSForegroundColorAttributeName, value: UIColor(white: 150/255.0, alpha: 1), range: wholeRange)
-            fancy.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBold", size: 17)!, range: boldRange)
-            fancy.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: boldRange)
-            cell?.textLabel?.attributedText = fancy
-        }
-        return cell!
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell ?? UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        let course = self.courses![indexPath.row]
+        let plain = course.display.title
+        let boldRange = (plain as NSString).rangeOfString(course.title)
+        let fancy = NSMutableAttributedString(string: plain)
+        let regularFont = UIFont(name: "AvenirNext-Regular", size: 14)
+        let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 17)
+        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
+        fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
+        cell.textLabel!.attributedText = fancy
+        return cell as UITableViewCell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

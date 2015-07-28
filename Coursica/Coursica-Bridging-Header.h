@@ -3,9 +3,7 @@
 //
 
 #import <Firebase/Firebase.h>
-#import <PureLayout/PureLayout.h>
 #import <pop/POP.h>
-#import "AFNetworking.h"
 #import "NSString+FirebaseEncode.h"
 #import "MapViewController.h"
 #import "CommentsViewController.h"

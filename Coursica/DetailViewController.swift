@@ -13,6 +13,8 @@ import Cartography
 class DetailViewController: CoursicaViewController {
     
     var course: Course!
+    var report: Report?
+    var reportLookupFailed: Bool = false
     
     var breakdownCell: BreakdownCell!
     
@@ -99,8 +101,10 @@ class DetailViewController: CoursicaViewController {
         weak var weakSelf = self
         root.observeSingleEventOfType(FEventType.Value, withBlock: {snapshot in
             if let report = ReportParser.reportFromSnapshot(snapshot) {
+                self.report = report
                 weakSelf?.breakdownCell.updateWithReport(report)
             } else {
+                self.reportLookupFailed = true
                 weakSelf?.breakdownCell.updateForNoBreakdownFound()
             }
         })
@@ -131,6 +135,11 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell()
             breakdownCell.initialLayoutWithCourse(course)
+            if let _ = report {
+                breakdownCell.updateWithReport(report!)
+            } else if reportLookupFailed {
+                breakdownCell.updateForNoBreakdownFound()
+            }
             return breakdownCell
         }
     }

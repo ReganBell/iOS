@@ -30,8 +30,8 @@ extension String {
     class func getCourses(completion: Void -> Void) {
         
         let path = NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")
-        let data = NSData(contentsOfFile: path!)
-        let qData = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.allZeros, error: NSErrorPointer()) as! NSDictionary
+        let data = NSData(contentsOfFile: path!)!
+        let qData = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(), error: nil) as! NSDictionary
         
         let parser = CS50Parser()
         

@@ -23,11 +23,11 @@ struct SearchHit {
 extension NSRegularExpression {
     
     convenience init?(pattern: String) {
-        self.init(pattern: pattern, options: NSRegularExpressionOptions.allZeros, error: NSErrorPointer())
+        self.init(pattern: pattern, options: NSRegularExpressionOptions(), error: nil)
     }
     
     func firstMatchInWholeString(string: String) -> String? {
-        let matches = self.matchesInString(string, options: NSMatchingOptions.allZeros, range: NSMakeRange(0, count(string)))
+        let matches = self.matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, count(string)))
         if let first = matches.first as? NSTextCheckingResult {
             return (string as NSString).substringWithRange(first.range)
         }
@@ -54,7 +54,7 @@ class Search: NSObject {
                 let shortFields = rawShortFields!.componentsSeparatedByString(",\n")
                 let longFields = rawLongFields!.componentsSeparatedByString(",\n")
                 for (index, longField) in enumerate(longFields) {
-                    let shortField = shortFields[index] as! String
+                    let shortField = shortFields[index] 
                     abbreviations[shortField.lowercaseString] = longField.lowercaseString;
                 }
                 let common =   ["cs":    "computer science",

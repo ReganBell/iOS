@@ -21,7 +21,7 @@ extension FDataSnapshot {
     }
 }
 
-@objc class TempCourse {
+class TempCourse {
     var number: String = ""
     var shortField: String = ""
     var title: String = ""
@@ -53,7 +53,7 @@ extension FDataSnapshot {
             case "title":
                 self.title = field.value as! String
             default:
-                print("Unexpected course field type")
+                print("Unexpected course field type", appendNewline: false)
             }
         }
     }

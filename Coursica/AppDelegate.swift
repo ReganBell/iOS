@@ -44,15 +44,36 @@ extension String {
     }
 }
 
+class SizeRange {
+    
+    var start: Int
+    var end: Int
+    var scores: [Double] = []
+    init(start: Int, end: Int) {
+        self.start = start
+        self.end = end
+    }
+    func contains(n: Int) -> Bool { return n >= start && n <= end }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var allDepartmentScores: Dictionary<String, [Double]>!
     var allScores: [Double]!
+    let range = Range<Int>(start: 0, end: 10)
+    var allSizeScores: [SizeRange] =
+        [SizeRange(start: 1, end: 10),
+         SizeRange(start: 11, end: 25),
+         SizeRange(start: 26, end: 50),
+         SizeRange(start: 51, end: 100),
+         SizeRange(start: 101, end: 200),
+         SizeRange(start: 201, end: 500),
+         SizeRange(start: 501, end: 10000)]
     
     func coursesJSONFromDisk() -> NSDictionary {
-        let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")!)
-        return NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: NSErrorPointer()) as! NSDictionary
+        let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")!)!
+        return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as! NSDictionary
     }
     
     func calculatePercentiles() {
@@ -65,11 +86,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 var departmentScores = allDepartmentScores[course.shortField] ?? []
                 departmentScores.append(course.overall)
                 allDepartmentScores.updateValue(departmentScores, forKey: course.shortField)
+                if course.enrollment != 0 {
+                    for range in allSizeScores {
+                        if range.contains(course.enrollment) {
+                            range.scores.append(course.overall)
+                            break
+                        }
+                   }
+                }
             }
         }
-        allScores.sort(<)
+        allScores = sorted(allScores, <)
+        var sortedDepartmentScores = Dictionary<String, [Double]>()
         for (department, var array) in allDepartmentScores {
-            array.sort(<)
+            sortedDepartmentScores[department] = sorted(array, <)
+        }
+        allDepartmentScores = sortedDepartmentScores
+        var scoresBySize: [((Int, Int), [Double])] = []
+        for range in allSizeScores {
+            range.scores.sort(<)
         }
     }
     
