@@ -8,17 +8,6 @@
 
 import UIKit
 
-extension String {
-    
-    func encodedAsFirebaseKey() -> String {
-        var string = self
-        for (i, forbidden) in enumerate([".", "#", "$", "/", "[", "]"]) {
-            string = string.stringByReplacingOccurrencesOfString(forbidden, withString: "&\(i)&")
-        }
-        return string
-    }
-}
-
 @objc class CourseList {
     
     var name: String = ""
