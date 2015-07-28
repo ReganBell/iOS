@@ -17,7 +17,7 @@ extension Object {
         }
         self.setFieldsWithMap(map, data: data)
     }
-    
+        
     func setFieldsWithMap(map: [String: String], data: NSDictionary) {
         
         for (dataKey, objectKey) in map {

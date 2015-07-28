@@ -16,6 +16,7 @@ class Course: Object {
     dynamic var examGroup = ""
     dynamic var term = ""
     dynamic var enrollment = 0
+    dynamic var enrollmentSource = ""
     
     dynamic var longField = ""
     dynamic var shortField = ""
@@ -77,11 +78,36 @@ class Meeting: Object {
     var display: Display { get { return Display(meeting: self) }}
 }
 
-class QReport: Object {
+class Report: Object {
     
     dynamic var term = ""
     dynamic var year = ""
     dynamic var enrollment = 0
     dynamic var comments: [String] = []
-    dynamic var responses: NSDictionary?
+    let responses = List<Response>()
+}
+
+class Response: Object {
+    
+    dynamic var question = ""
+    dynamic var breakdown = Breakdown()
+    dynamic var baselineSingleTerm = Baseline()
+    dynamic var baselineThreeYears = Baseline()
+    dynamic var mean = 0.0
+    dynamic var median = 0
+}
+
+class Breakdown: Object {
+    dynamic var one = 0
+    dynamic var two = 0
+    dynamic var three = 0
+    dynamic var four = 0
+    dynamic var five = 0
+}
+
+class Baseline: Object {
+    dynamic var department = 0.0
+    dynamic var division = 0.0
+    dynamic var group = 0.0
+    dynamic var size = 0.0
 }
