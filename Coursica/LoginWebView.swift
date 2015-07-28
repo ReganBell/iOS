@@ -15,7 +15,7 @@ enum LoginErrorType {
 protocol LoginWebViewDelegate {
     
     func didLoginSuccessfullyWithHUID(huid: String)
-    func didLoadCS50CoursesSuccessfullyWithLists(lists: [List])
+    func didLoadCS50CoursesSuccessfullyWithLists(lists: [CourseList])
     func didFailWithError(error: LoginErrorType)
 }
 
@@ -59,11 +59,11 @@ class LoginWebView: UIWebView {
         let namesString = self.stringByEvaluatingJavaScriptFromString("var lists = document.getElementsByClassName('list-link'); var names = new Array(lists.length); for (i = 1; i < names.length; i++) { names[i] = lists[i].getElementsByClassName('list-name')[0].innerText} names.toString()")
         let listNames = ("Starred Courses" + namesString!).componentsSeparatedByString(",")
         
-        var activeLists: [List] = []
+        var activeLists: [CourseList] = []
         for (index, listId) in enumerate(listIDs) {
             if let intValue = listCounts[index].toInt() {
                 if intValue > 0 {
-                    let newList = List(name: listNames[index], courses: [])
+                    let newList = CourseList(name: listNames[index], courses: [])
                     newList.id = listId
                     activeLists.append(newList)
                 }
