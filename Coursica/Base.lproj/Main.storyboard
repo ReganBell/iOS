@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -136,6 +136,9 @@
                                                         <state key="normal">
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <variation key="widthClass=compact" misplaced="YES">
+                                                            <rect key="frame" x="254" y="0.0" width="127" height="50"/>
+                                                        </variation>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="20W-YL-8Xs" userLabel="Fall-Spring Divider">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -423,6 +426,9 @@
                                                         <state key="normal">
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <variation key="widthClass=compact" misplaced="YES">
+                                                            <rect key="frame" x="254" y="0.0" width="127" height="50"/>
+                                                        </variation>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1496,22 +1502,6 @@
             </objects>
             <point key="canvasLocation" x="261" y="-1048"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="B9y-3L-jXF">
-            <objects>
-                <navigationController storyboardIdentifier="navigationController" id="Z6k-Ox-CIW" customClass="NavigationController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JUd-Gi-Sap">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="yP4-4F-8uc"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iUl-4C-E5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-657" y="3"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="rtQ-fD-XxH">
             <objects>
@@ -1737,44 +1727,6 @@
             </objects>
             <point key="canvasLocation" x="18" y="-380"/>
         </scene>
-        <!--Coursica-->
-        <scene sceneID="ufC-wZ-h7g">
-            <objects>
-                <viewController storyboardIdentifier="coursesController" title="Coursica" id="vXZ-lx-hvc" customClass="CoursesViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ktz-Ds-B7z">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="jel-9R-6Nl"/>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="tQ6-kY-ywh"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ktz-Ds-B7z" secondAttribute="bottom" id="Ds7-V8-YYd"/>
-                            <constraint firstItem="ktz-Ds-B7z" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Fg5-51-h37"/>
-                            <constraint firstAttribute="trailing" secondItem="ktz-Ds-B7z" secondAttribute="trailing" id="TLk-t7-hUT"/>
-                            <constraint firstItem="ktz-Ds-B7z" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="oUr-yi-F4S"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Coursica" id="CbC-up-yeh"/>
-                    <connections>
-                        <outlet property="tableView" destination="ktz-Ds-B7z" id="FVU-Ra-JHI"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="271" y="400"/>
-        </scene>
         <!--Map View Controller-->
         <scene sceneID="ZFg-sY-3dT">
             <objects>
@@ -1811,7 +1763,7 @@
         <!--Detail View Controller-->
         <scene sceneID="F2u-1i-Q28">
             <objects>
-                <viewController storyboardIdentifier="detailController" id="Zzk-RS-XFe" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detailController" id="Zzk-RS-XFe" customClass="DetailViewController" customModule="Coursica" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JfF-9p-XGl"/>
                         <viewControllerLayoutGuide type="bottom" id="lEm-uy-bKP"/>
@@ -1820,11 +1772,11 @@
                         <rect key="frame" x="-2" y="0.0" width="500" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="roh-qg-d3q">
-                                <rect key="frame" x="0.0" y="0.0" width="500" height="550"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roh-qg-d3q">
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIR-rK-S7S" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="700"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DIR-rK-S7S" userLabel="ContentView">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="800"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsr-eW-Q7c" userLabel="Breakdown Button">
                                                 <rect key="frame" x="10" y="810" width="480" height="32"/>
@@ -1962,7 +1914,7 @@
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWj-pw-LzC">
-                                                        <rect key="frame" x="22" y="151" width="52" height="18"/>
+                                                        <rect key="frame" x="23" y="151" width="52" height="18"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Satisfies:">
                                                                 <attributes>
@@ -2105,7 +2057,7 @@
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lNn-qj-uaC" userLabel="QScoreView" customClass="QBreakdownCardView" customModule="Coursica" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lNn-qj-uaC" userLabel="Q Breakdown View" customClass="QBreakdownCardView" customModule="Coursica" customModuleProvider="target">
                                                 <rect key="frame" x="10" y="436" width="480" height="320"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -2182,21 +2134,23 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="500" height="600"/>
                     <connections>
-                        <outlet property="QScoreView" destination="lNn-qj-uaC" id="YuX-Kk-yxQ"/>
                         <outlet property="contentView" destination="DIR-rK-S7S" id="Z5m-1C-aMN"/>
                         <outlet property="courseInstructorLabel" destination="mpf-dB-Mn3" id="Rkg-kF-f8D"/>
                         <outlet property="courseLocationLabel" destination="aus-WB-r0n" id="na6-YZ-51Y"/>
                         <outlet property="courseMeetingLabel" destination="ALK-cE-d9u" id="HLZ-ah-17o"/>
-                        <outlet property="descriptionHeightConstraint" destination="zLL-TK-5LO" id="r6U-ee-rsd"/>
                         <outlet property="descriptionLabel" destination="Mzw-Af-wEh" id="PZl-0G-Vzi"/>
                         <outlet property="infoView" destination="Nof-BI-rET" id="Y82-os-L5a"/>
+                        <outlet property="qBreakdownView" destination="lNn-qj-uaC" id="IJR-c6-1UH"/>
                         <outlet property="satisfiesLabel" destination="hEw-U9-qI6" id="hHL-kZ-Ayx"/>
                         <outlet property="scrollView" destination="roh-qg-d3q" id="Qjp-jb-XDz"/>
                         <outlet property="titleLabel" destination="rKU-dT-ecA" id="5ZE-oh-bs3"/>
+<<<<<<< HEAD
                         <outlet property="viewCommentsButton" destination="2IT-eA-wtq" id="1my-Rn-mc8"/>
                         <outlet property="viewQBreakdownButton" destination="zsr-eW-Q7c" id="INU-eZ-XUB"/>
                         <outletCollection property="cards" destination="Nof-BI-rET" id="1u3-HI-kHL"/>
                         <outletCollection property="cards" destination="lNn-qj-uaC" id="YYC-Bd-wvq"/>
+=======
+>>>>>>> 4123308... swift rewrite progress
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJH-dL-eob" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2316,7 +2270,7 @@
         <!--Breakdown View Controller-->
         <scene sceneID="jO2-zq-5WP">
             <objects>
-                <viewController storyboardIdentifier="qbreakdown" id="Zcp-Od-Hjw" customClass="QBreakdownViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="qbreakdown" id="Zcp-Od-Hjw" customClass="QBreakdownViewController" customModule="Coursica" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DN9-TW-fI8"/>
                         <viewControllerLayoutGuide type="bottom" id="r5d-Em-ESE"/>
