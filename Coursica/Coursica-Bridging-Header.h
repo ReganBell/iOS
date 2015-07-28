@@ -3,10 +3,12 @@
 //
 
 #import <Firebase/Firebase.h>
-#import "Course.h"
 #import <PureLayout/PureLayout.h>
-#import "AppDelegate.h"
-#import "DetailViewController.h"
 #import <pop/POP.h>
 #import "AFNetworking.h"
 #import "NSString+FirebaseEncode.h"
+#import "MapViewController.h"
+#import "CommentsViewController.h"
+#import "FastTokenizer.h"
+#import "FiltersViewController.h"
+#import "LoginViewController.h"
