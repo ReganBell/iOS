@@ -47,8 +47,10 @@ class Search: NSObject {
         get {
             if self._commonAbbreviations == nil {
                 var abbreviations: [String: String] = Dictionary<String, String>()
-                let rawShortFields = NSString(contentsOfFile: "ShortFields", encoding: NSUTF8StringEncoding, error: NSErrorPointer())
-                let rawLongFields = NSString(contentsOfFile: "LongFields", encoding: NSUTF8StringEncoding, error: NSErrorPointer())
+                let shortFieldPath = NSBundle.mainBundle().pathForResource("ShortFields", ofType: "")
+                let rawShortFields = NSString(contentsOfFile: shortFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+                let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
+                let rawLongFields = NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
                 let shortFields = rawShortFields!.componentsSeparatedByString(",\n")
                 let longFields = rawLongFields!.componentsSeparatedByString(",\n")
                 for (index, longField) in enumerate(longFields) {
@@ -89,10 +91,10 @@ class Search: NSObject {
         }
     }
     
-    func buildIndex(courses: [Course]) {
-        
-        for course in courses {
-            
+    func buildIndex(courses: Results<Course>) {
+        courseCount = Double(courses.count)
+        for i in 0...courses.count - 1 {
+            let course = courses[i]
             titleIndex.addField(course.title, fromCourse: course)
             fieldIndex.addField(course.longField, fromCourse: course)
             if course.integerNumber > 0 {
@@ -104,6 +106,9 @@ class Search: NSObject {
     }
     
     func assignScoresForSearch(search: String) {
+        if titleIndex.terms.count == 0 {
+            self.buildIndex(Realm().objects(Course))
+        }
         self.clearSearchScores()
         let searchTerms = self.explodeSearch(search)
         //TODO: do a weaker match for word stems using NSLinguisticTagger
@@ -114,13 +119,15 @@ class Search: NSObject {
         } else {
             weights = [(titleIndex, 0.3), (fieldIndex, 0.3), (numberIndex, 0.3)]
         }
-        weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight, results: results) })
-        //Debug search with: print("\(results)")
+        Realm().write { () -> Void in
+            weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight, results: results) })
+            //Debug search with: print("\(results)")
+        }
     }
     
     func searchIndex(index: Index, terms: [String], zoneWeight: Double, var results: [SearchHit]) {
         for term in terms {
-            if let entry = index.terms[term] {
+            if let entry = index.terms[term.lowercaseString] {
                 let maxIDF = log(self.courseCount / 1.0)
                 let normalizeFactor = 1.0 / maxIDF
                 let normalizedScore = entry.idf * normalizeFactor
@@ -142,6 +149,7 @@ class Search: NSObject {
             if let squish = NSRegularExpression(pattern: "[a-zA-Z]+[0-9]+")?.firstMatchInWholeString(term) {
                 let word = NSRegularExpression(pattern: "[a-zA-Z]+")!.firstMatchInWholeString(squish)
                 let rest = term.stringByReplacingOccurrencesOfString(word!, withString: "")
+                searchTerms.removeAtIndex(index)
                 searchTerms.extend([word!, rest])
                 count++
                 index--
@@ -151,7 +159,7 @@ class Search: NSObject {
                 searchTerms.removeAtIndex(index)
                 count--
                 for newTerm in newTerms {
-                    searchTerms .insert(newTerm, atIndex: index)
+                    searchTerms.insert(newTerm, atIndex: index)
                     index++
                     count++
                 }
@@ -162,8 +170,10 @@ class Search: NSObject {
     
     func clearSearchScores() {
         let courses = Realm().objects(Course)
-        for course in courses {
-            course.searchScore = 0
+        Realm().write {
+            for course in courses {
+                course.searchScore = 0
+            }
         }
     }
 }
