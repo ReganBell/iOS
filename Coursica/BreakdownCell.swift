@@ -71,8 +71,8 @@ class BreakdownCell: UITableViewCell {
         self.startCircleAnimation()
 
         var buttonViews: [UIView] = []
-        for (index, tuple) in enumerate([("Workload", workload), ("Instructor", instructor), ("Section", section)]) {
-            let (title, response) = tuple
+        var index = 0
+        for (title, response) in [("Workload", workload), ("Instructor", instructor), ("Section", section)] {
             let mean = response?.mean
             if mean == nil {
                 continue
@@ -101,10 +101,11 @@ class BreakdownCell: UITableViewCell {
             roundedBackgroundView.addSubview(backgroundView)
             constrain(backgroundView, {background in
                 background.top == background.superview!.top + (33 + 25 * CGFloat(index))
-                background.right == background.superview!.right - 20
+                background.right == background.superview!.right - 40
                 background.width == 110
                 background.height == 22
             })
+            index++
         }
 
         allButton.setTitle("all courses", forState: .Normal)
@@ -247,6 +248,7 @@ class BreakdownCell: UITableViewCell {
     override func layoutSubviews() {
         
         super.layoutSubviews()
+        return
         
         if report == nil {
             return

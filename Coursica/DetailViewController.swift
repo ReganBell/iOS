@@ -133,7 +133,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             cell.updateWithCourse(course)
             return cell
         } else {
-            breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell()
+            breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
             breakdownCell.initialLayoutWithCourse(course)
             if let _ = report {
                 breakdownCell.updateWithReport(report!)
