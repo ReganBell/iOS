@@ -7,8 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "AppDelegate.h"
-#import "CoursesViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AFNetworking.h"
 
@@ -133,6 +131,7 @@
         [self.usernameField resignFirstResponder];
         [self.passwordField resignFirstResponder];
         [self.delegate userDidLoginWithHUID:self.usernameField.text];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     return YES;
 }

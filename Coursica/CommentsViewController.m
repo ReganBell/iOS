@@ -7,12 +7,11 @@
 //
 
 #import "CommentsViewController.h"
-#import "AppDelegate.h"
 #import "UILabel+HeightCalculation.h"
 #import "QReport.h"
 #import "CommentTableViewCell.h"
 
-@interface CommentsViewController () <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface CommentsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

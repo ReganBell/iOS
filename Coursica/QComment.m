@@ -7,8 +7,6 @@
 //
 
 #import "QComment.h"
-#import "Course.h"
-
 
 @implementation QComment
 

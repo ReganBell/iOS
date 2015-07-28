@@ -7,8 +7,6 @@
 //
 
 #import "QScore.h"
-#import "Course.h"
-
 
 @implementation QScore
 

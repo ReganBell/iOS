@@ -34,8 +34,6 @@ class FullOnScrapystPipeline(object):
 
     def process_item(self, item, spider):
         title = item['title']
-        for i, forbidden in enumerate(['.', '#', '$', '/', '[', ']']):
-            title = title.replace(forbidden, '&' + str(i) + '&')
         item_term_year = item['term'] + item['year']
         item_dict = dict(item)
         if title in self.finished_items:
