@@ -209,12 +209,12 @@
         return;
     }
     
-    if (self.secondsWaitedByUser >= 2) {
-        [self.loginButton setTitle:@"Still working..." forState:UIControlStateNormal];
+    if (self.secondsWaitedByUser >= 6) {
+        [self.loginButton setTitle:@"Wait for it..." forState:UIControlStateNormal];
     } else if (self.secondsWaitedByUser >= 4) {
         [self.loginButton setTitle:@"Almost there..." forState:UIControlStateNormal];
-    } else if (self.secondsWaitedByUser >= 6) {
-        [self.loginButton setTitle:@"Wait for it..." forState:UIControlStateNormal];
+    } else if (self.secondsWaitedByUser >= 2) {
+        [self.loginButton setTitle:@"Still working..." forState:UIControlStateNormal];
     }
 }
 
