@@ -6,18 +6,17 @@
 //  Copyright (c) 2015 Prestige Worldwide. All rights reserved.
 //
 
-import UIKit
+import RealmSwift
 import TTTAttributedLabel
+import Cartography
 
 class DetailViewController: CoursicaViewController {
     
-    var report: QReport!
     var course: Course!
     
-    @IBOutlet var infoView: UIView!
-    @IBOutlet var qBreakdownView: QBreakdownCardView!
+    var breakdownCell: BreakdownCell!
     
-    @IBOutlet var scrollView: UIScrollView!
+    var tableView = UITableView()
     @IBOutlet var contentView: UIView!
     
     @IBOutlet var titleLabel: UILabel!
@@ -28,12 +27,40 @@ class DetailViewController: CoursicaViewController {
     @IBOutlet var courseInfoLabel: UILabel!
     @IBOutlet var satisfiesLabel: UILabel!
     
+    class func detailViewControllerWithTempCourse(tempCourse: TempCourse) -> DetailViewController {
+        let course = Realm().objects(Course).filter("number = '\(tempCourse.number)' AND shortField = '\(tempCourse.shortField)'").first!
+        return self.detailViewControllerWithCourse(course)
+    }
+    
+    class func detailViewControllerWithCourse(course: Course) -> DetailViewController {
+        let controller = DetailViewController()
+        controller.course = course
+        return controller
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.layoutCourseInfoCard()
-        self.configureLocationLabel()
-        self.getCourseData()
-        self.qBreakdownView.updateWithDictionary(NSDictionary(dictionary: ["responses": NSDictionary()]))
+        let enrollment = course.enrollment
+        let overall = course.overall
+        let workload = course.workload
+        
+        tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
+        tableView.allowsSelection = false
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .None
+        self.view.addSubview(tableView)
+        constrain(self.view, tableView, {view, scrollView in
+            scrollView.edges == view.edges
+        })
+        self.view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        
+        self.setNavigationBarTitle("\(course.shortField) \(course.number)")
+//        self.configureLocationLabel()
+        self.getReportFromServer()
+//        self.breakdownView.updateWithDictionary(NSDictionary(dictionary: ["responses": NSDictionary()]))
     }
     
     func layoutCourseInfoCard() {
@@ -66,30 +93,50 @@ class DetailViewController: CoursicaViewController {
         }
     }
     
-    func getCourseData() {
-        let root = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(self.course.display.title.stringEncodedAsFirebaseKey())")
-        root.observeSingleEventOfType(FEventType.Value, withBlock: { snapshot in
-            if snapshot.value is NSNull {
-                return
+    func getReportFromServer() {
+        let urlString = "glaring-heat-9505.firebaseIO.com/\(self.course.display.serverTitle)"
+        let root = Firebase(url: urlString)
+        weak var weakSelf = self
+        root.observeSingleEventOfType(FEventType.Value, withBlock: {snapshot in
+            if let report = ReportParser.reportFromSnapshot(snapshot) {
+                weakSelf?.breakdownCell.updateWithReport(report)
             } else {
-                for reportDictionary in snapshot.value.allValues {
-                    let report = QReport()
-                    report.setFieldsWithList(["term", "year", "enrollment", "comments", "responses"], data: reportDictionary as! NSDictionary)
-                    self.report = report
-                }
+                weakSelf?.breakdownCell.updateForNoBreakdownFound()
             }
         })
     }
     
     func viewCommentsButtonClicked(button: UIButton) {
+//        
+//        if report.comments.count > 0 {
+//            let commentsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("commentsController") as! CommentsViewController
+//            self.navigationController?.pushViewController(commentsController, animated: true)
+//        } else {
+////            [self.viewCommentsButton setTitle:@"No comments reported :(" forState:UIControlStateNormal];
+//        }
         
-        if report.comments.count > 0 {
-            let commentsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("commentsController") as! CommentsViewController
-            self.navigationController?.pushViewController(commentsController, animated: true)
+    }
+}
+
+extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("info") as? InfoCell ?? InfoCell()
+            cell.updateWithCourse(course)
+            return cell
         } else {
-//            [self.viewCommentsButton setTitle:@"No comments reported :(" forState:UIControlStateNormal];
+            breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell()
+            breakdownCell.initialLayoutWithCourse(course)
+            return breakdownCell
         }
-        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
     }
 }
 
