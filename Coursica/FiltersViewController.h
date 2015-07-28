@@ -15,7 +15,6 @@
 
 - (void)filtersDidChange;
 - (void)keyboardShouldDismiss;
-- (void)dismissFiltersViewController;
 
 @end
 

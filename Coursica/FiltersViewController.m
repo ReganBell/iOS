@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "DoubleSliderView.h"
 #import "QReport.h"
-#import "AppDelegate.h"
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 #define UnselectedGray [UIColor colorWithRed:217/255.0 green:215/255.0 blue:215/255.0 alpha:1.0]
@@ -34,7 +33,7 @@
 
 @property (weak, nonatomic) NMRangeSlider *qOverallSlider;
 @property (weak, nonatomic) NMRangeSlider *qWorkloadSlider;
-@property (weak, nonatomic) NMRangeSlider *qDifficultySlider;
+@property (weak, nonatomic) NMRangeSlider *enrollmentSlider;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -66,6 +65,9 @@
 
     [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
     [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
+    
+    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment >= %f", self.enrollmentSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment <= %f", self.enrollmentSlider.upperValue]];
     
     switch (self.selectedTermIndex) {
         case 0:
@@ -198,16 +200,16 @@
         iconView.tintColor = newColor;
     }];
 }
-
-- (IBAction)applyFiltersButtonPressed:(id)sender {
-    
-    [self.delegate dismissFiltersViewController];
-}
-
-- (IBAction)cancelButtonPressed:(id)sender {
-    
-    [self.delegate dismissFiltersViewController];
-}
+//
+//- (IBAction)applyFiltersButtonPressed:(id)sender {
+//    
+//    [self.delegate dismissFiltersViewController];
+//}
+//
+//- (IBAction)cancelButtonPressed:(id)sender {
+//    
+//    [self.delegate dismissFiltersViewController];
+//}
 
 #pragma mark - Programmatic Sliders
 
@@ -237,6 +239,11 @@
     self.qWorkloadSlider = workload.slider;
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
+    
+    DoubleSliderView *enrollment = [self configureSliderWithTitle:@"Enrollment" font:font textColor:textColor];
+    self.enrollmentSlider = enrollment.slider;
+    
+    [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:enrollment attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workload attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }
 
 @end
