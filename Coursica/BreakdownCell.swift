@@ -25,6 +25,7 @@ protocol BreakdownCellDelegate {
 
 class BreakdownCell: UITableViewCell {
     
+    var graphHasDoneInitialLoad: Bool = false
     var percentileGraphView = UIView()
     var percentileLabel: UILabel!
     var percentileCenterX: NSLayoutConstraint!
@@ -71,10 +72,10 @@ class BreakdownCell: UITableViewCell {
             }
         }
 
-        overallLabel.text = "Overall"
-        let score = overall?.mean ?? 4.5
-        overallNumberLabel.text = NSString(format: "%.1f", score) as String
-        self.startCircleAnimation()
+//        overallLabel.text = "Overall"
+//        let score = overall?.mean ?? 4.5
+//        overallNumberLabel.text = NSString(format: "%.1f", score) as String
+//        self.startCircleAnimation()
 
         var buttonViews: [UIView] = []
         var index = 0
@@ -105,9 +106,10 @@ class BreakdownCell: UITableViewCell {
                 title.width == 80
             })
             roundedBackgroundView.addSubview(backgroundView)
-            constrain(backgroundView, {background in
+            constrain(backgroundView, circleView, {background, circle in
                 background.top == background.superview!.top + (33 + 25 * CGFloat(index))
-                background.right == background.superview!.right - 40
+                background.right == background.superview!.right - 40 ~ 750
+                background.left >= circle.right + 10
                 background.width == 110
                 background.height == 22
             })
@@ -200,16 +202,13 @@ class BreakdownCell: UITableViewCell {
             all.centerX == all.superview!.centerX
             all.top == graph.bottom + 30
             all.height == 20
-            all.width == 90
-            department.right == all.left - 20
+            department.centerX == all.superview!.right * 0.20
             department.top == graph.bottom + 30
             department.height == 20
-            department.width == 90
         })
         constrain(allButton, sizeButton, percentileGraphView, {all, size, graph in
-            size.left == all.right + 20
+            size.centerX == all.superview!.right * 0.80
             size.top == graph.bottom + 30
-            size.width == 90
             size.height == 20
         })
         
@@ -269,74 +268,62 @@ class BreakdownCell: UITableViewCell {
         return []
     }
     
-    override func layoutSubviews() {
-        
-        super.layoutSubviews()
-        return
-        
-        if report == nil {
-            return
-        }
-        
-        var delayTime: CFTimeInterval = 0.05
+    func eraseGraph() {
         for subview in self.percentileGraphView.subviews {
             subview.removeFromSuperview()
-            delayTime = 0
         }
         self.percentileLabel?.removeFromSuperview()
         self.percentileLabel = nil
+    }
+    
+    
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
         
         let graphWidth = UIScreen.mainScreen().bounds.size.width - 40
-        if graphWidth == 0 {
+        if report == nil || course.overall == 0 || graphWidth == 0 {
             return
         }
+        
+        self.eraseGraph()
+        
         var spacing: CGFloat = 7
         var barWidth: CGFloat = 8
         var barCountFloat = (graphWidth - barWidth) / (barWidth + spacing)
         var barCountInt = Int(barCountFloat)
         
         var heights: [CGFloat] = []
-        var courseIndex = 0
-        
-        if course.overall == 0 {
-            return
-        }
         
         let sortedScores = self.arrayForCurrentGraphTab()
         let index = find(sortedScores, course.overall)!
         let percentileWidth = 2.0 / Double(barCountInt)
         var scoreIndex = 0
-        var runningHeight: CGFloat = 0.0
+        var runningHeight: CGFloat = 1.0
         for i in 1...barCountInt {
             let maxScoreForCurrentWindow = 3.0 + percentileWidth * Double(i)
-            while sortedScores[scoreIndex] <= maxScoreForCurrentWindow {
+            while scoreIndex != sortedScores.count && sortedScores[scoreIndex] <= maxScoreForCurrentWindow {
                 runningHeight++
                 scoreIndex++
-                if scoreIndex == sortedScores.count {
-                    break
-                }
             }
             heights.append(runningHeight)
-            if scoreIndex == sortedScores.count {
-                break
-            }
         }
         let percentile = Double(index) / Double(sortedScores.count)
-        courseIndex = Int(percentile * Double(barCountInt))
         
-        let tallestBar = maxElement(heights)
-        let scaleFactor = 120.0 / tallestBar
+        let scaleFactor = 120.0 / maxElement(heights)
         heights = heights.map({height in return height * scaleFactor})
 
         let rawGraphWidth = (spacing + barWidth) * barCountFloat + barWidth
         let roundedGraphWidth = (spacing + barWidth) * CGFloat(barCountInt) + barWidth
-        let initialOffset: CGFloat = (graphWidth - roundedGraphWidth) / 2
+        let initialOffset: CGFloat = (rawGraphWidth - roundedGraphWidth) / 2 + 8
         
         var courseIndexBarView: UIView?
         for (i, height) in enumerate(heights) {
             let bar = UIView(frame: CGRectMake(0, 0, barWidth, 0))
             bar.layer.cornerRadius = barWidth / 2
             bar.backgroundColor = UIColor(white: 216/255.0, alpha: 1.0)
+            
+            let courseIndex = Int(percentile * Double(barCountInt))
             if i == courseIndex {
                 bar.backgroundColor = UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0)
                 courseIndexBarView = bar
@@ -357,8 +344,9 @@ class BreakdownCell: UITableViewCell {
             let heightAnim = POPBasicAnimation(propertyNamed: kPOPLayoutConstraintConstant)
             heightAnim.fromValue = NSNumber(integer: 0)
             heightAnim.toValue = NSNumber(float: Float(height))
-            heightAnim.duration = delayTime == 0 ? 0.5 : 1
-            let delay: CFTimeInterval = Double(i) * delayTime
+            let delaySpacing: CFTimeInterval = self.graphHasDoneInitialLoad ? 0 : 0.05
+            heightAnim.duration = self.graphHasDoneInitialLoad ? 0.5 : 1
+            let delay: CFTimeInterval = Double(i) * delaySpacing
             heightAnim.beginTime = CACurrentMediaTime() + delay
             heightConstraint.pop_addAnimation(heightAnim, forKey: "heightAnim")
         }
@@ -368,11 +356,11 @@ class BreakdownCell: UITableViewCell {
         let percentileInt = Int(percentile * 100)
         percentileLabel.text = "\(percentileInt)\(self.suffixForInt(percentileInt)) percentile"
         percentileLabel.textAlignment = .Center
-        self.addSubview(percentileLabel)
+        roundedBackgroundView.addSubview(percentileLabel)
         constrain(percentileLabel, courseIndexBarView!, percentileGraphView, {percentile, bar, graph in
             percentile.top == graph.bottom + 5
             percentile.centerX == bar.centerX ~ 750
-            percentile.left >= graph.left
+            percentile.left == graph.left
             percentile.right <= graph.right
         })
     }
@@ -403,7 +391,6 @@ class BreakdownCell: UITableViewCell {
                 otherButton.selected = false
             }
             button.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
-            self.layoutSubviews()
         }
         
         self.selectedTab = GraphViewTab(rawValue: button.tag)!

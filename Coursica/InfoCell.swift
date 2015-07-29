@@ -162,7 +162,7 @@ class InfoCell: UITableViewCell {
             background.top == cell.top + 10
             background.left == cell.left + 10
             background.right == cell.right - 10
-            background.bottom == cell.bottom - 15
+            background.bottom == cell.bottom - 10
         })
     }
     
