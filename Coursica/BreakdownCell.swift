@@ -18,6 +18,11 @@ enum GraphViewTab: Int {
     case Size = 3
 }
 
+protocol BreakdownCellDelegate {
+    
+    func viewDetailedBreakdownPressed()
+}
+
 class BreakdownCell: UITableViewCell {
     
     var percentileGraphView = UIView()
@@ -37,6 +42,7 @@ class BreakdownCell: UITableViewCell {
     var report: Report!
     var course: Course!
     var selectedTab: GraphViewTab = .All
+    var delegate: BreakdownCellDelegate!
     
     func updateForNoBreakdownFound() {
         UIView.animateWithDuration(0.3, animations: {
@@ -123,6 +129,7 @@ class BreakdownCell: UITableViewCell {
         roundedBackgroundView.backgroundColor = UIColor.whiteColor()
         self.contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         roundedBackgroundView.layer.cornerRadius = 4
+        roundedBackgroundView.clipsToBounds = true
         self.contentView.addSubview(roundedBackgroundView)
         
         noDataAvailableLabel = UILabel()
@@ -204,7 +211,6 @@ class BreakdownCell: UITableViewCell {
             size.top == graph.bottom + 30
             size.width == 90
             size.height == 20
-            size.bottom == size.superview!.bottom - 20
         })
         
         self.baselineButtons = [allButton, departmentButton, sizeButton]
@@ -222,6 +228,24 @@ class BreakdownCell: UITableViewCell {
             overallNumberLabel.text = NSString(format: "%.1f", score) as String
             self.startCircleAnimation()
         }
+        
+        let breakdownButton = UIButton()
+        breakdownButton.backgroundColor = coursicaBlue
+        breakdownButton.setTitle("View detailed breakdown", forState: .Normal)
+        breakdownButton.addTarget(self, action: "breakdownButtonPressed:", forControlEvents: .TouchUpInside)
+        breakdownButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
+        roundedBackgroundView.addSubview(breakdownButton)
+        constrain(sizeButton, roundedBackgroundView, breakdownButton, {size, background, breakdown in
+            breakdown.top == size.bottom + 20
+            breakdown.left == background.left
+            breakdown.right == background.right
+            breakdown.height == 44
+            breakdown.bottom == background.bottom
+        })
+    }
+    
+    func breakdownButtonPressed(button: UIButton) {
+        self.delegate.viewDetailedBreakdownPressed()
     }
     
     func startCircleAnimation() {

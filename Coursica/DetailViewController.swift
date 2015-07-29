@@ -122,6 +122,15 @@ class DetailViewController: CoursicaViewController {
     }
 }
 
+extension DetailViewController: BreakdownCellDelegate {
+    
+    func viewDetailedBreakdownPressed() {
+        let breakdownController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("QBreakdownViewController") as! QBreakdownViewController
+//        breakdownController.course = self.course
+        self.navigationController?.pushViewController(breakdownController, animated: true)
+    }
+}
+
 extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -134,6 +143,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
+            breakdownCell.delegate = self
             breakdownCell.initialLayoutWithCourse(course)
             if let _ = report {
                 breakdownCell.updateWithReport(report!)

@@ -1775,7 +1775,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roh-qg-d3q">
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="600"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DIR-rK-S7S" userLabel="ContentView">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIR-rK-S7S" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="500" height="800"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsr-eW-Q7c" userLabel="Breakdown Button">
@@ -2144,13 +2144,10 @@
                         <outlet property="satisfiesLabel" destination="hEw-U9-qI6" id="hHL-kZ-Ayx"/>
                         <outlet property="scrollView" destination="roh-qg-d3q" id="Qjp-jb-XDz"/>
                         <outlet property="titleLabel" destination="rKU-dT-ecA" id="5ZE-oh-bs3"/>
-<<<<<<< HEAD
                         <outlet property="viewCommentsButton" destination="2IT-eA-wtq" id="1my-Rn-mc8"/>
                         <outlet property="viewQBreakdownButton" destination="zsr-eW-Q7c" id="INU-eZ-XUB"/>
                         <outletCollection property="cards" destination="Nof-BI-rET" id="1u3-HI-kHL"/>
                         <outletCollection property="cards" destination="lNn-qj-uaC" id="YYC-Bd-wvq"/>
-=======
->>>>>>> 4123308... swift rewrite progress
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jJH-dL-eob" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2270,7 +2267,7 @@
         <!--Breakdown View Controller-->
         <scene sceneID="jO2-zq-5WP">
             <objects>
-                <viewController storyboardIdentifier="qbreakdown" id="Zcp-Od-Hjw" customClass="QBreakdownViewController" customModule="Coursica" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QBreakdownViewController" id="Zcp-Od-Hjw" customClass="QBreakdownViewController" customModule="Coursica" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DN9-TW-fI8"/>
                         <viewControllerLayoutGuide type="bottom" id="r5d-Em-ESE"/>
@@ -2306,7 +2303,7 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mostly Taken As:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jk-EX-YyU">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Mostly Taken As:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jk-EX-YyU">
                                                         <rect key="frame" x="10" y="122" width="118" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="118" id="wbM-Xt-E7U"/>
@@ -2315,7 +2312,7 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enrollment: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0Z-ut-olV">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Enrollment: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0Z-ut-olV">
                                                         <rect key="frame" x="10" y="155" width="84" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="84" id="f0U-ww-OtN"/>
@@ -2324,7 +2321,7 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average Workload Hours:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vwZ-xq-0Wk">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Average Workload Hours:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vwZ-xq-0Wk">
                                                         <rect key="frame" x="10" y="89" width="181" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="181" id="iiT-gn-dTo"/>
@@ -2342,7 +2339,7 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qta-2x-sEz" userLabel="Workload Hours Score">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qta-2x-sEz" userLabel="Workload Hours Score">
                                                         <rect key="frame" x="510" y="89" width="50" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="XKC-Ga-5hv"/>
@@ -2351,7 +2348,7 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boj-ZT-6J4" userLabel="Enrollment #">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boj-ZT-6J4" userLabel="Enrollment #">
                                                         <rect key="frame" x="510" y="155" width="50" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="jyO-AS-Bid"/>
@@ -2360,7 +2357,7 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dx-kK-tbM" userLabel="Taken As Result">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="N/A" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dx-kK-tbM" userLabel="Taken As Result">
                                                         <rect key="frame" x="510" y="122" width="50" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="133-Ia-3Iz"/>
@@ -2762,10 +2759,12 @@
                     <connections>
                         <outlet property="accessiblityAnimBarView" destination="UHx-jz-ixb" id="Iaj-vD-8nP"/>
                         <outlet property="assignmentsAnimBarView" destination="5ee-bj-k8G" id="IHP-G2-E2X"/>
+                        <outlet property="courseView" destination="xNL-Sj-zse" id="NnR-rh-u8P"/>
                         <outlet property="enrollmentLabel" destination="boj-ZT-6J4" id="Dnv-QO-21K"/>
                         <outlet property="enthusiasmAnimBarView" destination="Jqs-un-5Q4" id="s7G-Xj-z3P"/>
                         <outlet property="feedbackAnimBarView" destination="ZMF-Oy-NOs" id="PGH-Jf-T2i"/>
                         <outlet property="generalView" destination="aB7-VA-4AC" id="KE3-3C-ATM"/>
+                        <outlet property="instructorView" destination="1ta-KM-QjG" id="qll-bZ-RNz"/>
                         <outlet property="lecturesAnimBarView" destination="5qt-7c-t8j" id="QQl-OU-OXn"/>
                         <outlet property="materialsAnimBarView" destination="iK2-ck-wZp" id="NGe-Nk-9V6"/>
                         <outlet property="mostlyTakenAsLabel" destination="8dx-kK-tbM" id="GXx-e3-f2K"/>
@@ -2773,17 +2772,6 @@
                         <outlet property="recommendScoreLabel" destination="0lS-ms-qEL" id="I1h-oj-WiC"/>
                         <outlet property="sectionsAnimBarView" destination="de1-Qn-qa7" id="FRJ-gy-37e"/>
                         <outlet property="workloadHoursLabel" destination="qta-2x-sEz" id="ZLY-dG-zTl"/>
-                        <outletCollection property="cards" destination="aB7-VA-4AC" id="UlR-XV-dxg"/>
-                        <outletCollection property="cards" destination="xNL-Sj-zse" id="EP5-se-Goz"/>
-                        <outletCollection property="cards" destination="1ta-KM-QjG" id="U5a-ib-Puc"/>
-                        <outletCollection property="animationBars" destination="5ee-bj-k8G" id="8nc-m0-yWU"/>
-                        <outletCollection property="animationBars" destination="ZMF-Oy-NOs" id="Jbz-pk-Q3H"/>
-                        <outletCollection property="animationBars" destination="iK2-ck-wZp" id="aKm-wK-vpb"/>
-                        <outletCollection property="animationBars" destination="de1-Qn-qa7" id="LQ6-V6-aBf"/>
-                        <outletCollection property="animationBars" destination="Jqs-un-5Q4" id="WUJ-u0-MNz"/>
-                        <outletCollection property="animationBars" destination="UHx-jz-ixb" id="4vd-SP-DJ2"/>
-                        <outletCollection property="animationBars" destination="iaP-3F-2Dc" id="hjm-Np-MnS"/>
-                        <outletCollection property="animationBars" destination="5qt-7c-t8j" id="Cie-Cu-KYS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iMt-it-4Rp" userLabel="First Responder" sceneMemberID="firstResponder"/>

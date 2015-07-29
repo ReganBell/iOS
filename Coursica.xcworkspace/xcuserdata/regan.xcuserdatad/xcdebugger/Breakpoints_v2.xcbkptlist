@@ -139,28 +139,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/BreakdownCell.swift"
-            timestampString = "459761456.934434"
+            timestampString = "459800385.598307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "layoutSubviews()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Coursica/BreakdownCell.swift"
-            timestampString = "459760779.951494"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "updateWithReport(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

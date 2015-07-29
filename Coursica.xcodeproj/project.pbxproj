@@ -262,8 +262,7 @@
 		2DB2525E1B4EFA0300FA26E7 /* Breakdown */ = {
 			isa = PBXGroup;
 			children = (
-				2DB2525F1B4EFA1700FA26E7 /* QBreakdownViewController.h */,
-				2DB252601B4EFA1700FA26E7 /* QBreakdownViewController.m */,
+				5957457F1B54DEE6006D3FF1 /* QBreakdownViewController.swift */,
 				2DE7AB9A1B572B5A007401C6 /* AnimationBarView.swift */,
 			);
 			name = Breakdown;
@@ -295,7 +294,6 @@
 			children = (
 				599648AB1B5B43CA00015D02 /* NavigationController.swift */,
 				599648A91B5B426000015D02 /* AppDelegate.swift */,
-				5957457F1B54DEE6006D3FF1 /* QBreakdownViewController.swift */,
 				595745811B54DF33006D3FF1 /* CoursicaViewController.swift */,
 				59BC6E4C1B5361550027AA95 /* Model */,
 				59CF581F1B3BA82500FB21FC /* ListsViewController.swift */,
@@ -726,7 +724,6 @@
 				59EBD0051B5CC84A0055C42C /* InfoCell.swift in Sources */,
 				598865161B23A3C50078B06F /* NSString+FirebaseEncode.m in Sources */,
 				2DE7AB9B1B572B5A007401C6 /* AnimationBarView.swift in Sources */,
-				596076B21A1000710038D4F4 /* main.m in Sources */,
 				59E661D51B01769300200FAE /* DoubleSliderView.m in Sources */,
 				59700C8C1B54977F00BE07D5 /* Display.swift in Sources */,
 			);

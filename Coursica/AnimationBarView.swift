@@ -6,8 +6,7 @@
 //  Copyright (c) 2015 Prestige Worldwide. All rights reserved.
 //
 
-import UIKit
-import PureLayout
+import Cartography
 import pop
 
 let barInset: CGFloat = 0
@@ -43,17 +42,20 @@ class AnimationBarView: UIView {
         bar.backgroundColor = color
         self.animationBar.addSubview(bar)
         
-        let widthConstraint = bar.autoSetDimension(ALDimension.Width, toSize: 0)
+        var widthConstraint: NSLayoutConstraint!
+        constrain(bar, {bar in
+            widthConstraint = (bar.width == 0)
+            bar.left == bar.superview!.left
+            bar.bottom == bar.superview!.bottom
+            bar.height == barHeight
+        })
+
         let widthAnim = POPBasicAnimation(propertyNamed: kPOPLayoutConstraintConstant)
         widthAnim.fromValue = NSNumber(integer: 0)
         widthAnim.toValue = NSNumber(float: Float(self.width))
         widthAnim.duration = 4
         widthAnim.beginTime = CACurrentMediaTime() + delayTime
         widthConstraint.pop_addAnimation(widthAnim, forKey: "widthAnim")
-        
-        bar.autoSetDimension(ALDimension.Height, toSize: barHeight)
-        bar.autoPinEdgeToSuperviewEdge(ALEdge.Leading, withInset: 0)
-        bar.autoPinEdgeToSuperviewEdge(ALEdge.Bottom, withInset: 0)
     }
     
     func updateWithDictionary(dictionary: NSDictionary) {
@@ -63,9 +65,16 @@ class AnimationBarView: UIView {
         
         self.addSubview(animationBar)
         
+        constrain(animationBar, {animationBar in
+            let superview = animationBar.superview!
+            animationBar.top == superview.top
+            animationBar.left == superview.left + 2
+            animationBar.right == superview.right - 2
+            animationBar.bottom == superview.bottom - 2
+        })
 
-        animationBar.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2), excludingEdge: ALEdge.Top)
-        animationBar.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: superview, withOffset: 0)
+//        animationBar.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2), excludingEdge: ALEdge.Top)
+//        animationBar.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: superview, withOffset: 0)
         
 //        var label = UILabel(frame: CGRectMake(0, 0, 40, 20))
 //        label.center = CGPointMake(160, 284)
