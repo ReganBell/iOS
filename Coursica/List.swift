@@ -19,7 +19,7 @@ extension String {
     }
 }
 
-@objc class List {
+@objc class CourseList {
     
     var name: String = ""
     var courses: [TempCourse] = []
@@ -51,12 +51,12 @@ extension String {
                 "Courses I've Disliked"]
     }
     
-    class func emptyListsDictionary() -> [List] {
-        return [List(name: "Courses I've Taken", courses: []),
-                List(name: "Courses I'm Taking", courses: []),
-                List(name: "Courses I'm Shopping", courses: []),
-                List(name: "Courses I've Liked", courses: []),
-                List(name: "Courses I've Disliked", courses: [])]
+    class func emptyListsDictionary() -> [CourseList] {
+        return [CourseList(name: "Courses I've Taken", courses: []),
+                CourseList(name: "Courses I'm Taking", courses: []),
+                CourseList(name: "Courses I'm Shopping", courses: []),
+                CourseList(name: "Courses I've Liked", courses: []),
+                CourseList(name: "Courses I've Disliked", courses: [])]
     }
     
     func removeTempCourse(tempCourse: TempCourse) -> Bool {
@@ -74,14 +74,14 @@ extension String {
         }
     }
     
-    class func moveCourseFromList(fromList: List, toList: List, tempCourse: TempCourse) {
+    class func moveCourseFromList(fromList: CourseList, toList: CourseList, tempCourse: TempCourse) {
     
         fromList.removeTempCourse(tempCourse)
         toList.courses.append(tempCourse)
         self.addTempCourseToListWithName(toList.name, tempCourse: tempCourse)
     }
 
-    class func fetchListsForCurrentUserWithCompletion(completionBlock: [List]? -> Void) {
+    class func fetchListsForCurrentUserWithCompletion(completionBlock: [CourseList]? -> Void) {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/lists")
@@ -91,14 +91,14 @@ extension String {
                 completionBlock(nil)
                 return
             }
-            var lists: [List] = []
+            var lists: [CourseList] = []
             for list in snapshot.snapshotChildren() {
                 let name = list.key
                 var courses: [TempCourse] = []
                 for course in list.snapshotChildren() {
                     courses.append(TempCourse(snapshot: course))
                 }
-                lists.append(List(name: name, courses: courses))
+                lists.append(CourseList(name: name, courses: courses))
             }
             completionBlock(lists)
         })
