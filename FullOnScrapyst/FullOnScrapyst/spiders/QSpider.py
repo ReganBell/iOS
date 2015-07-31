@@ -38,6 +38,11 @@ class QSpider(scrapy.Spider):
                                                              'compositeAuthenticationSourceType': 'PIN'},
                                                    callback=self.logged_in,
                                                    dont_filter=True)
+        print request
+        print request.meta
+        print request.headers
+        print request.body
+        print request.cookies
         yield request
 
     def logged_in(self, response):

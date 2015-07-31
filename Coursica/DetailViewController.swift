@@ -125,7 +125,10 @@ class DetailViewController: CoursicaViewController {
 extension DetailViewController: BreakdownCellDelegate {
     
     func viewDetailedBreakdownPressed() {
-        let breakdownController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("QBreakdownViewController") as! QBreakdownViewController
+//        let breakdownController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("QBreakdownViewController") as! QBreakdownViewController
+        let breakdownController = BreakdownViewController()
+        breakdownController.report = report!
+        breakdownController.course = course
 //        breakdownController.course = self.course
         self.navigationController?.pushViewController(breakdownController, animated: true)
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class Key {
     var term: String = ""
@@ -148,6 +149,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        
+        let urlString = "https://www.pin1.harvard.edu/cas/login;jsessionid=22B73CF4A780B532491C7F324A10E338?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Flist%253F"
+        
+        var parameters: [String: String] = Dictionary<String, String>()
+        
+//        let request = Alamofire.request(.POST, urlString, parameters: nil, encoding: ParameterEncoding.URL, headers: nil).responseString { _, _, string, _ in
+//            
+//            if let xmlString = string {
+//                let htmlData = xmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+//                let document = TFHpple(HTMLData: htmlData)
+//                for node in document.searchWithXPathQuery("//input") {
+//                    if let element = node as? TFHppleElement {
+//                        if let name = element.attributes["name"] {
+//                            if let value = element.attributes["value"] {
+//                                parameters[name as! String] = value as! String
+//                                println("\(name): \(value)")
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                let additional = [
+//                    "username": "10907373",
+//                    "password": "Fogs79,obis",
+//                    "compositeAuthenticationSourceType": "PIN"]
+//                
+//                for (key, value) in additional {
+//                    parameters.updateValue(value, forKey: key)
+//                }
+//                
+//                let request2 = Alamofire.request(.POST, urlString, parameters: parameters, encoding: ParameterEncoding.URL, headers: nil).responseString { _, _, string, _ in
+//                        println(string! as NSString)
+//                    }.resume()
+//            }
+//        }
+//        request.resume()
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

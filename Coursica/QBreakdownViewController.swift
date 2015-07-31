@@ -10,6 +10,8 @@ import UIKit
 
 class QBreakdownViewController: CoursicaViewController {
     
+    var tableView: UITableView!
+    
     @IBOutlet var generalView: UIView!
     @IBOutlet var courseView: UIView!
     @IBOutlet var instructorView: UIView!
