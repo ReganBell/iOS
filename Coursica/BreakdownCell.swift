@@ -25,6 +25,7 @@ protocol BreakdownCellDelegate {
 
 class BreakdownCell: UITableViewCell {
     
+    var graphHasDoneInitialLoad: Bool = false
     var percentileGraphView = UIView()
     var percentileLabel: UILabel!
     var percentileCenterX: NSLayoutConstraint!
@@ -38,10 +39,11 @@ class BreakdownCell: UITableViewCell {
     var allButton: UIButton!
     var departmentButton: UIButton!
     var sizeButton: UIButton!
+    var breakdownButton = UIButton()
     var circle: CAShapeLayer!
     var report: Report!
     var course: Course!
-    var selectedTab: GraphViewTab = .All
+    var selectedTab: GraphViewTab = .Size
     var delegate: BreakdownCellDelegate!
     
     func updateForNoBreakdownFound() {
@@ -52,33 +54,24 @@ class BreakdownCell: UITableViewCell {
     
     func updateWithReport(report: Report) {
         self.report = report
-        var overall: Response?
         var workload: Response?
         var instructor: Response?
-        var section: Response?
         for response in report.responses {
-            if response.question == "Course Overall" {
-                overall = response
-            }
             if response.question == "Workload (hours per week)" {
                 workload = response
             }
-            if response.question == "Instructor" {
-                instructor = response
-            }
-            if response.question == "Section" {
-                section = response
+        }
+        if let facultyReport = report.facultyReports.first {
+            for response in facultyReport.responses {
+                if response.question == "Instructor Overall" {
+                    instructor = response
+                }
             }
         }
-
-        overallLabel.text = "Overall"
-        let score = overall?.mean ?? 4.5
-        overallNumberLabel.text = NSString(format: "%.1f", score) as String
-        self.startCircleAnimation()
-
+        
         var buttonViews: [UIView] = []
         var index = 0
-        for (title, response) in [("Workload", workload), ("Instructor", instructor), ("Section", section)] {
+        for (title, response) in [("Workload", workload), ("Instructor", instructor)] {
             let mean = response?.mean
             if mean == nil {
                 continue
@@ -105,9 +98,10 @@ class BreakdownCell: UITableViewCell {
                 title.width == 80
             })
             roundedBackgroundView.addSubview(backgroundView)
-            constrain(backgroundView, {background in
+            constrain(backgroundView, circleView, {background, circle in
                 background.top == background.superview!.top + (33 + 25 * CGFloat(index))
-                background.right == background.superview!.right - 40
+                background.right == background.superview!.right - 40 ~ 750
+                background.left >= circle.right + 10
                 background.width == 110
                 background.height == 22
             })
@@ -117,6 +111,7 @@ class BreakdownCell: UITableViewCell {
         allButton.setTitle("all courses", forState: .Normal)
         departmentButton.setTitle("department", forState: .Normal)
         sizeButton.setTitle("size", forState: .Normal)
+        breakdownButton.hidden = false
         self.layoutSubviews()
     }
     
@@ -149,7 +144,6 @@ class BreakdownCell: UITableViewCell {
         circle = CAShapeLayer()
         circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: radius, height: radius), cornerRadius: 120).CGPath
         circle.fillColor = UIColor.clearColor().CGColor
-        circle.strokeColor = UIColor(red: 31/255.0, green: 1, blue: 170/255.0, alpha: 1).CGColor
         circle.lineWidth = 8
         circle.strokeEnd = 0
         circleView.layer.addSublayer(circle)
@@ -186,31 +180,27 @@ class BreakdownCell: UITableViewCell {
         })
         
         allButton = self.baselineButton("")
-        allButton.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
         allButton.tag = GraphViewTab.All.rawValue
-        allButton.selected = true
-        
         departmentButton = self.baselineButton("")
         departmentButton.tag = GraphViewTab.Department.rawValue
-        
         sizeButton = self.baselineButton("")
         sizeButton.tag = GraphViewTab.Size.rawValue
         
-        constrain(allButton, departmentButton, percentileGraphView, {all, department, graph in
-            all.centerX == all.superview!.centerX
-            all.top == graph.bottom + 30
-            all.height == 20
-            all.width == 90
-            department.right == all.left - 20
+        sizeButton.selected = true
+        sizeButton.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
+        
+        constrain(sizeButton, departmentButton, percentileGraphView, {size, department, graph in
+            size.centerX == size.superview!.centerX
+            size.top == graph.bottom + 30
+            size.height == 20
+            department.centerX == size.superview!.right * 0.20
             department.top == graph.bottom + 30
             department.height == 20
-            department.width == 90
         })
-        constrain(allButton, sizeButton, percentileGraphView, {all, size, graph in
-            size.left == all.right + 20
-            size.top == graph.bottom + 30
-            size.width == 90
-            size.height == 20
+        constrain(sizeButton, allButton, percentileGraphView, {size, all, graph in
+            all.centerX == size.superview!.right * 0.80
+            all.top == graph.bottom + 30
+            all.height == 20
         })
         
         self.baselineButtons = [allButton, departmentButton, sizeButton]
@@ -225,11 +215,11 @@ class BreakdownCell: UITableViewCell {
         if course.overall != 0 {
             overallLabel.text = "Overall"
             let score = course.overall
+
             overallNumberLabel.text = NSString(format: "%.1f", score) as String
-            self.startCircleAnimation()
         }
         
-        let breakdownButton = UIButton()
+        breakdownButton.hidden = true
         breakdownButton.backgroundColor = coursicaBlue
         breakdownButton.setTitle("View detailed breakdown", forState: .Normal)
         breakdownButton.addTarget(self, action: "breakdownButtonPressed:", forControlEvents: .TouchUpInside)
@@ -248,11 +238,23 @@ class BreakdownCell: UITableViewCell {
         self.delegate.viewDetailedBreakdownPressed()
     }
     
-    func startCircleAnimation() {
+    func colorForPercentile(percentile: Int) -> UIColor {
+        switch percentile {
+        case 80...1000: return coursicaBlue
+        case 65...79:   return UIColor(red: 31/255.0,  green: 1, blue: 170/255.0,alpha: 1)
+        case 48...65:   return UIColor(red: 120/255.0, green: 1, blue: 31/255.0, alpha: 1)
+        case 30...47:   return UIColor(red: 242/255.0, green: 1, blue: 31/255.0, alpha: 1)
+        case 15...30:   return UIColor(red: 1, green: 130/225.0, blue: 31/255.0, alpha: 1)
+        default:        return UIColor(red: 1, green: 83/255.0,  blue: 31/255.0, alpha: 1)
+        }
+    }
+    
+    func startCircleAnimation(percentile: Int) {
         let strokeAnim = POPBasicAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
         strokeAnim.fromValue = NSNumber(integer: 0)
         strokeAnim.toValue = NSNumber(integer: 1)
         strokeAnim.duration = 2
+        circle.strokeColor = self.colorForPercentile(percentile).CGColor
         circle.pop_addAnimation(strokeAnim, forKey: "strokeAnim")
     }
     
@@ -269,76 +271,64 @@ class BreakdownCell: UITableViewCell {
         return []
     }
     
-    override func layoutSubviews() {
-        
-        super.layoutSubviews()
-        return
-        
-        if report == nil {
-            return
-        }
-        
-        var delayTime: CFTimeInterval = 0.05
+    func eraseGraph() {
         for subview in self.percentileGraphView.subviews {
             subview.removeFromSuperview()
-            delayTime = 0
         }
         self.percentileLabel?.removeFromSuperview()
         self.percentileLabel = nil
+    }
+    
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
         
         let graphWidth = UIScreen.mainScreen().bounds.size.width - 40
-        if graphWidth == 0 {
+        if course.overall == 0 || graphWidth == 0 {
             return
         }
+        
+        self.eraseGraph()
+        
         var spacing: CGFloat = 7
         var barWidth: CGFloat = 8
         var barCountFloat = (graphWidth - barWidth) / (barWidth + spacing)
         var barCountInt = Int(barCountFloat)
         
         var heights: [CGFloat] = []
-        var courseIndex = 0
-        
-        if course.overall == 0 {
-            return
-        }
         
         let sortedScores = self.arrayForCurrentGraphTab()
         let index = find(sortedScores, course.overall)!
         let percentileWidth = 2.0 / Double(barCountInt)
         var scoreIndex = 0
-        var runningHeight: CGFloat = 0.0
+        var runningHeight: CGFloat = 1.0
         for i in 1...barCountInt {
             let maxScoreForCurrentWindow = 3.0 + percentileWidth * Double(i)
-            while sortedScores[scoreIndex] <= maxScoreForCurrentWindow {
+            while scoreIndex != sortedScores.count && sortedScores[scoreIndex] <= maxScoreForCurrentWindow {
                 runningHeight++
                 scoreIndex++
-                if scoreIndex == sortedScores.count {
-                    break
-                }
             }
             heights.append(runningHeight)
-            if scoreIndex == sortedScores.count {
-                break
-            }
         }
         let percentile = Double(index) / Double(sortedScores.count)
-        courseIndex = Int(percentile * Double(barCountInt))
+        let percentileInt = Int(percentile * 100)
         
-        let tallestBar = maxElement(heights)
-        let scaleFactor = 120.0 / tallestBar
+        let scaleFactor = 120.0 / maxElement(heights)
         heights = heights.map({height in return height * scaleFactor})
 
         let rawGraphWidth = (spacing + barWidth) * barCountFloat + barWidth
         let roundedGraphWidth = (spacing + barWidth) * CGFloat(barCountInt) + barWidth
-        let initialOffset: CGFloat = (graphWidth - roundedGraphWidth) / 2
+        let initialOffset: CGFloat = (rawGraphWidth - roundedGraphWidth) / 2 + 8
         
         var courseIndexBarView: UIView?
         for (i, height) in enumerate(heights) {
             let bar = UIView(frame: CGRectMake(0, 0, barWidth, 0))
             bar.layer.cornerRadius = barWidth / 2
             bar.backgroundColor = UIColor(white: 216/255.0, alpha: 1.0)
+            
+            let courseIndex = Int(percentile * Double(barCountInt))
             if i == courseIndex {
-                bar.backgroundColor = UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0)
+                bar.backgroundColor = self.colorForPercentile(percentileInt)
                 courseIndexBarView = bar
             }
             
@@ -357,22 +347,23 @@ class BreakdownCell: UITableViewCell {
             let heightAnim = POPBasicAnimation(propertyNamed: kPOPLayoutConstraintConstant)
             heightAnim.fromValue = NSNumber(integer: 0)
             heightAnim.toValue = NSNumber(float: Float(height))
-            heightAnim.duration = delayTime == 0 ? 0.5 : 1
-            let delay: CFTimeInterval = Double(i) * delayTime
+            let delaySpacing: CFTimeInterval = self.graphHasDoneInitialLoad ? 0 : 0.05
+            heightAnim.duration = self.graphHasDoneInitialLoad ? 0.5 : 1
+            let delay: CFTimeInterval = Double(i) * delaySpacing
             heightAnim.beginTime = CACurrentMediaTime() + delay
             heightConstraint.pop_addAnimation(heightAnim, forKey: "heightAnim")
         }
         
         percentileLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         percentileLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        let percentileInt = Int(percentile * 100)
         percentileLabel.text = "\(percentileInt)\(self.suffixForInt(percentileInt)) percentile"
         percentileLabel.textAlignment = .Center
-        self.addSubview(percentileLabel)
+        self.startCircleAnimation(percentileInt)
+        roundedBackgroundView.addSubview(percentileLabel)
         constrain(percentileLabel, courseIndexBarView!, percentileGraphView, {percentile, bar, graph in
             percentile.top == graph.bottom + 5
             percentile.centerX == bar.centerX ~ 750
-            percentile.left >= graph.left
+            percentile.left == graph.left
             percentile.right <= graph.right
         })
     }
@@ -403,7 +394,6 @@ class BreakdownCell: UITableViewCell {
                 otherButton.selected = false
             }
             button.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
-            self.layoutSubviews()
         }
         
         self.selectedTab = GraphViewTab(rawValue: button.tag)!

@@ -14,24 +14,46 @@ class ReportParser: NSObject {
         if snapshot.value is NSNull {
             return nil
         } else {
-            let reportDictionary = snapshot.value.allValues.first! as! NSDictionary
-            let report = Report()
-            report.setFieldsWithList(["term", "year", "comments", "responses"], data: reportDictionary)
-            if let enrollment = reportDictionary["enrollment"] as? Int {
-                report.enrollment = enrollment
+            return self.reportFromDictionary(snapshot.value.allValues.first! as! NSDictionary)
+        }
+    }
+    
+    class func reportFromDictionary(reportDictionary: NSDictionary) -> Report? {
+        
+        let report = Report()
+        report.setFieldsWithList(["term", "year"], data: reportDictionary)
+        if let comments = reportDictionary["comments"] as? NSArray {
+            var reportComments: [String] = []
+            for entry in comments {
+                if let comment = entry as? String {
+                    reportComments.append(comment)
+                }
             }
-            if let responses = reportDictionary["responses"] as? NSDictionary {
-                for (key, value) in responses {
-                    if let responseDict = (value as? NSDictionary) {
-                        if let question = key as? String {
-                            let response = ResponseParser.responseFromDictionary(responseDict)
-                            response.question = question
-                            report.responses.append(response)
-                        }
+            report.comments = reportComments
+        }
+        if let enrollment = reportDictionary["enrollment"] as? Int {
+            report.enrollment = enrollment
+        }
+        if let responses = reportDictionary["responses"] as? NSDictionary {
+            for (key, value) in responses {
+                if let responseDict = (value as? NSDictionary) {
+                    if let question = key as? String {
+                        let response = ResponseParser.responseFromDictionary(responseDict)
+                        response.question = question
+                        report.responses.append(response)
                     }
                 }
             }
-            return report
         }
+        if let facultyReports = reportDictionary["faculty"] as? NSDictionary {
+            for (key, value) in facultyReports {
+                if let facultyDict = (value as? NSDictionary) {
+                    let facultyReport = FacultyReportParser.facultyReportFromDictionary(facultyDict)
+                    facultyReport.name = key as! String
+                    report.facultyReports.append(facultyReport)
+                }
+            }
+        }
+        return report
     }
 }

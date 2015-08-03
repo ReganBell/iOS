@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class Key {
     var term: String = ""
@@ -70,17 +71,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          SizeRange(start: 101, end: 200),
          SizeRange(start: 201, end: 500),
          SizeRange(start: 501, end: 10000)]
+    var facultyScores: [String: [Double]] = Dictionary<String, [Double]>()
+    var facultyAverages: [String: Double] = Dictionary<String, Double>()
     
     func coursesJSONFromDisk() -> NSDictionary {
         let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")!)!
         return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as! NSDictionary
     }
     
-    func calculatePercentiles() {
-        let allCourses = Realm().objects(Course)
+    func calculatePercentiles(courses: Results<Course>) {
         allDepartmentScores = Dictionary<String, [Double]>()
         allScores = []
-        for course in allCourses {
+        for course in courses {
             if course.overall != 0 {
                 allScores.append(course.overall)
                 var departmentScores = allDepartmentScores[course.shortField] ?? []
@@ -114,6 +116,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let courses = Realm().objects(Course)
         if courses.count != 0 {
             for course in courses {
+//                if course.title == "Introduction to Computer Science I" {
+//                    courseDict["COMPSCI 50: Introduction to Computer Science I"] = course
+//                    continue
+//                }
                 courseDict[course.display.serverTitle] = course
             }
             Realm().write {
@@ -123,12 +129,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         mostRecent = Key.compare(Key(string: id as! String), b: mostRecent)
                     }
                     let mostRecentReport = (value as! NSDictionary)[mostRecent.string] as! NSDictionary
-//                    println("trying to match \(key)")
+                    let report = ReportParser.reportFromDictionary(mostRecentReport)
+                    for faculty in report!.facultyReports {
+                        for response in faculty.responses {
+                            if let scores = self.facultyScores[response.question] {
+                                self.facultyScores[response.question] = scores + [response.mean]
+                            } else {
+                                self.facultyScores[response.question] = [response.mean]
+                            }
+                        }
+                    }
+                    
                     if let course = courseDict[(key as! String)] {
                         if let enrollmentString = mostRecentReport["enrollment"] as? NSString {
                             course.enrollment = enrollmentString.integerValue
                             course.enrollmentSource = mostRecent.string
                         }
+
                         if let responses = mostRecentReport["responses"] as? NSDictionary {
                             if let overall = responses["Course Overall"] as? NSDictionary {
                                 if let meanString = overall["mean"] as? NSNumber {
@@ -143,11 +160,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                     }
                 }
+                for (question, scores) in self.facultyScores {
+                    self.facultyAverages[question] = self.averageOf(scores)
+                }
             }
         }
     }
     
+    func averageOf(numbers: [Double]) -> Double {
+        if numbers.count == 0 {
+            return 0
+        }
+        
+        var sum = 0.0
+        for number in numbers {
+            sum += number
+        }
+        
+        return sum / Double(numbers.count)
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        
+        Realm.defaultPath = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+        
+        let courses = Realm().objects(Course)
+        self.calculatePercentiles(courses)
+        Search.shared.buildIndex(courses)
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -156,8 +195,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.navigationBar.tintColor = UIColor.whiteColor()
         navigationController.navigationBar.opaque = true
         navigationController.navigationBar.translucent = false
-        self.extractQData()
-        self.calculatePercentiles()
+//        self.extractQData()
+//        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
+        
         
         self.window!.rootViewController = navigationController
         self.window!.makeKeyAndVisible()
@@ -172,9 +212,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: LoginViewControllerDelegate {
     
-    func userDidLoginWithHUID(huid: String!) {
+    func userDidLoginWithHUID(HUID: String) {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(huid, forKey: "huid")
+        defaults.setObject(HUID, forKey: "huid")
         defaults.setBool(true, forKey: "loggedIn")
     }
 }

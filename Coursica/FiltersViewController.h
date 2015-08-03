@@ -21,5 +21,6 @@
 @interface FiltersViewController : UIViewController
 
 @property (weak, nonatomic) id<FiltersViewControllerDelegate> delegate;
+- (NSPredicate *)filters;
 
 @end

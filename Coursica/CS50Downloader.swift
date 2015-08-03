@@ -54,12 +54,13 @@ extension String {
                                              "prerequisites": "prerequisitesString"]
                 if let shortField = serverCourse["field"] as? String {
                     course.shortField = shortField
-                    if let longField = longFields[shortField] {
+                    if let longField = longFields[shortField.lowercaseString] {
                         course.longField = longField
                     }
                 }
                 course.setFieldsWithMap(basicKeyMapping, data: serverCourse)
                 course.integerNumber = parser.integerNumberFromNumberString(course.number)
+                println(course.integerNumber)
                 for genEdName in parser.genEdsForShortField(course.shortField, notes: course.notes) {
                     course.genEds.append(GenEd(name: genEdName))
                 }

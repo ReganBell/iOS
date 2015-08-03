@@ -6,8 +6,7 @@
 #import <pop/POP.h>
 #import "NSString+FirebaseEncode.h"
 #import "MapViewController.h"
-#import "CommentsViewController.h"
 #import "FastTokenizer.h"
 #import "FiltersViewController.h"
-#import "LoginViewController.h"
-#import "QBreakdownViewController.h"
+#import "TFHpple.h"
+#import "CommentTableViewCell.h"

@@ -60,39 +60,7 @@ class DetailViewController: CoursicaViewController {
         self.view.setTranslatesAutoresizingMaskIntoConstraints(true)
         
         self.setNavigationBarTitle("\(course.shortField) \(course.number)")
-//        self.configureLocationLabel()
         self.getReportFromServer()
-//        self.breakdownView.updateWithDictionary(NSDictionary(dictionary: ["responses": NSDictionary()]))
-    }
-    
-    func layoutCourseInfoCard() {
-        self.titleLabel.text = self.course.title
-        self.titleLabel.textColor = UIColor.blackColor()
-        
-        self.descriptionLabel.text = self.course.courseDescription
-        self.descriptionLabel.textColor = UIColor.blackColor()
-        
-        self.configureLocationLabel()
-        self.courseInstructorLabel.attributedText = NSAttributedString(string: self.course.display.faculty)
-        self.courseMeetingLabel.attributedText = NSAttributedString(string: self.course.display.meetings)
-        self.satisfiesLabel.attributedText = NSAttributedString(string: self.course.display.genEds)
-    }
-    
-    func configureLocationLabel() {
-        
-        self.courseLocationLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
-        self.courseLocationLabel.delegate = self
-        let locationString = self.course.display.locations
-        if locationString == "TBD" {
-            self.courseLocationLabel.text = locationString
-        } else {
-            self.courseLocationLabel.text = locationString + " Map"
-            let range = (self.courseLocationLabel.text! as NSString).rangeOfString("Map")
-            let location = self.course.locations.first!
-            let encodedSearch = location.building.stringByReplacingOccurrencesOfString(" ", withString: "+")
-            let mapURL = NSURL(string: "https://m.harvard.edu/map/map?search=Search&filter=\(encodedSearch)&feed=*")
-            self.courseLocationLabel.addLinkToURL(mapURL!, withRange: range)
-        }
     }
     
     func getReportFromServer() {
@@ -109,24 +77,14 @@ class DetailViewController: CoursicaViewController {
             }
         })
     }
-    
-    func viewCommentsButtonClicked(button: UIButton) {
-//        
-//        if report.comments.count > 0 {
-//            let commentsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("commentsController") as! CommentsViewController
-//            self.navigationController?.pushViewController(commentsController, animated: true)
-//        } else {
-////            [self.viewCommentsButton setTitle:@"No comments reported :(" forState:UIControlStateNormal];
-//        }
-        
-    }
 }
 
 extension DetailViewController: BreakdownCellDelegate {
     
     func viewDetailedBreakdownPressed() {
-        let breakdownController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("QBreakdownViewController") as! QBreakdownViewController
-//        breakdownController.course = self.course
+        let breakdownController = BreakdownViewController()
+        breakdownController.report = report!
+        breakdownController.course = course
         self.navigationController?.pushViewController(breakdownController, animated: true)
     }
 }
@@ -141,7 +99,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCellWithIdentifier("info") as? InfoCell ?? InfoCell()
             cell.updateWithCourse(course)
             return cell
-        } else {
+        } else if indexPath.row == 1 {
             breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
             breakdownCell.delegate = self
             breakdownCell.initialLayoutWithCourse(course)
@@ -151,11 +109,30 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
                 breakdownCell.updateForNoBreakdownFound()
             }
             return breakdownCell
+        } else {
+            let commentsCell = CommentsCell()
+            commentsCell.layoutForReport(report)
+            commentsCell.delegate = self
+            return commentsCell
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
+    }
+}
+
+extension DetailViewController: CommentsCellDelegate {
+    
+    func viewCommentsButtonPressed(commentsCell: CommentsCell) {
+
+        if report?.comments.count > 0 {
+            let commentsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("commentsController") as! CommentsViewController
+            commentsController.report = report
+            self.navigationController?.pushViewController(commentsController, animated: true)
+        } else {
+            commentsCell.viewCommentsButton.setTitle("No comments found", forState: .Normal)
+        }
     }
 }
 

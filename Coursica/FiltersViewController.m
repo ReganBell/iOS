@@ -50,42 +50,42 @@
     
     NSMutableArray *predicates = [NSMutableArray new];
 
-    switch (self.selectedGradIndex) {
-        case 0:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
-            break;
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
-        default:
-            break;
-    }
+//    switch (self.selectedGradIndex) {
+//        case 0:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
+//            break;
+//        case 1:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
+//        default:
+//            break;
+//    }
     
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"overall >= %f", self.qOverallSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"overall <= %f", self.qOverallSlider.upperValue]];
 
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
-    
-    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment >= %f", self.enrollmentSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment <= %f", self.enrollmentSlider.upperValue]];
-    
-    switch (self.selectedTermIndex) {
-        case 0:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
-            break;
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
-        default:
-            break;
-    }
-
-    for (UIButton *button in self.genEdButtons) {
-
-        if (button.selected) {
-            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
-            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
-        }
-    }
+    [predicates addObject:[NSPredicate predicateWithFormat:@"workload >= %f", self.qWorkloadSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"workload <= %f", self.qWorkloadSlider.upperValue]];
+//
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment >= %d", (int)self.enrollmentSlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment <= %d", (int)self.enrollmentSlider.upperValue]];
+//    
+//    switch (self.selectedTermIndex) {
+//        case 0:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
+//            break;
+//        case 1:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
+//        default:
+//            break;
+//    }
+//
+//    for (UIButton *button in self.genEdButtons) {
+//
+//        if (button.selected) {
+//            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
+//        }
+//    }
 
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
 }
@@ -231,17 +231,26 @@
     UIColor *textColor = [UIColor colorWithWhite:155/255.0 alpha:1.0];
     
     DoubleSliderView *overall = [self configureSliderWithTitle:@"Overall Q Score" font:font textColor:textColor];
+    overall.shouldFormatForFloatValue = YES;
+    [overall valueChanged:overall.slider];
     self.qOverallSlider = overall.slider;
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:overall attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *workload = [self configureSliderWithTitle:@"Workload" font:font textColor:textColor];
+    workload.shouldFormatForFloatValue = YES;
+    [workload valueChanged:workload.slider];
     self.qWorkloadSlider = workload.slider;
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *enrollment = [self configureSliderWithTitle:@"Enrollment" font:font textColor:textColor];
     self.enrollmentSlider = enrollment.slider;
+    enrollment.shouldFormatForFloatValue = NO;
+    self.enrollmentSlider.minimumValue = 1;
+    self.enrollmentSlider.maximumValue = 250;
+    self.enrollmentSlider.upperValue = 250;
+    [enrollment valueChanged:self.enrollmentSlider];
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:enrollment attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workload attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }
