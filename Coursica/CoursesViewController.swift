@@ -158,6 +158,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func updatePredicate(filter: NSPredicate?, search: NSPredicate?) {
         var predicates = [NSPredicate(format: "bracketed = %@", NSNumber(bool: false))]
+
         for optional in [filter, search] {
             if let predicate = optional {
                 predicates.append(predicate)
@@ -174,13 +175,12 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func filtersDidChange() {
         
-        if count(navigationBar.searchBar.text) < 0 {
-            navigationBar.searchBar.resignFirstResponder()
-            return
+        if !navigationBar.searchBar.text.isEmpty {
+            Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
+            self.updatePredicate(filtersController.filters(), search: NSPredicate(format: "searchScore > %f", 0.05))
+        } else {
+            self.updatePredicate(filtersController.filters(), search: nil)
         }
-        
-        Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
-        self.updatePredicate(nil, search: NSPredicate(format: "searchScore > %f", 0.05))
         self.setFiltersShowing(false, searchActive: true)
     }
     

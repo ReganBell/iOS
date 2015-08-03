@@ -59,6 +59,12 @@ class LoginViewController: CoursicaViewController {
         usernameField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
         passwordField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0)
         
+        usernameField.returnKeyType = .Next
+        passwordField.returnKeyType = .Go
+        
+        usernameField.delegate = self
+        passwordField.delegate = self
+        
         loginButton.layer.cornerRadius = 2
         loginButton.clipsToBounds = true
         
@@ -106,7 +112,7 @@ class LoginViewController: CoursicaViewController {
         })
     }
     
-    @IBAction func loginButtonPressed(button: UIButton) {
+    @IBAction func loginButtonPressed(button: UIButton?) {
         if (usernameField.text.isEmpty) {
             self.displayErrorMessage("Your HUID is required to log in.")
         }
@@ -152,6 +158,18 @@ class LoginViewController: CoursicaViewController {
         UIView.setAnimationBeginsFromCurrentState(true)
         self.view.layoutIfNeeded()
         UIView.commitAnimations()
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.returnKeyType == .Next {
+            passwordField.becomeFirstResponder()
+        } else {
+            self.loginButtonPressed(nil)
+        }
+        return true
     }
 }
 

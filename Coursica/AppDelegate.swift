@@ -79,11 +79,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as! NSDictionary
     }
     
-    func calculatePercentiles() {
-        let allCourses = Realm().objects(Course)
+    func calculatePercentiles(courses: Results<Course>) {
         allDepartmentScores = Dictionary<String, [Double]>()
         allScores = []
-        for course in allCourses {
+        for course in courses {
             if course.overall != 0 {
                 allScores.append(course.overall)
                 var departmentScores = allDepartmentScores[course.shortField] ?? []
@@ -117,6 +116,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let courses = Realm().objects(Course)
         if courses.count != 0 {
             for course in courses {
+//                if course.title == "Introduction to Computer Science I" {
+//                    courseDict["COMPSCI 50: Introduction to Computer Science I"] = course
+//                    continue
+//                }
                 courseDict[course.display.serverTitle] = course
             }
             Realm().write {
@@ -137,7 +140,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                     }
                     
-//                    println("trying to match \(key)")
                     if let course = courseDict[(key as! String)] {
                         if let enrollmentString = mostRecentReport["enrollment"] as? NSString {
                             course.enrollment = enrollmentString.integerValue
@@ -180,6 +182,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
+        Realm.defaultPath = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+        
+        let courses = Realm().objects(Course)
+        self.calculatePercentiles(courses)
+        Search.shared.buildIndex(courses)
+        
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = NavigationController(rootViewController: CoursesViewController())
@@ -187,8 +195,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.navigationBar.tintColor = UIColor.whiteColor()
         navigationController.navigationBar.opaque = true
         navigationController.navigationBar.translucent = false
-        self.extractQData()
-        self.calculatePercentiles()
+//        self.extractQData()
+//        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
+        
         
         self.window!.rootViewController = navigationController
         self.window!.makeKeyAndVisible()

@@ -50,42 +50,42 @@
     
     NSMutableArray *predicates = [NSMutableArray new];
 
-    switch (self.selectedGradIndex) {
-        case 0:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
-            break;
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
-        default:
-            break;
-    }
+//    switch (self.selectedGradIndex) {
+//        case 0:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:NO]]];
+//            break;
+//        case 1:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"graduate = %@", [NSNumber numberWithBool:YES]]];
+//        default:
+//            break;
+//    }
     
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall >= %f", self.qOverallSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qOverall <= %f", self.qOverallSlider.upperValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"overall >= %f", self.qOverallSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"overall <= %f", self.qOverallSlider.upperValue]];
 
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload >= %f", self.qWorkloadSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"qWorkload <= %f", self.qWorkloadSlider.upperValue]];
-    
-    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment >= %f", self.enrollmentSlider.lowerValue]];
-    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment <= %f", self.enrollmentSlider.upperValue]];
-    
-    switch (self.selectedTermIndex) {
-        case 0:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
-            break;
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
-        default:
-            break;
-    }
-
-    for (UIButton *button in self.genEdButtons) {
-
-        if (button.selected) {
-            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
-            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
-        }
-    }
+    [predicates addObject:[NSPredicate predicateWithFormat:@"workload >= %f", self.qWorkloadSlider.lowerValue]];
+    [predicates addObject:[NSPredicate predicateWithFormat:@"workload <= %f", self.qWorkloadSlider.upperValue]];
+//
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment >= %d", (int)self.enrollmentSlider.lowerValue]];
+//    [predicates addObject:[NSPredicate predicateWithFormat:@"enrollment <= %d", (int)self.enrollmentSlider.upperValue]];
+//    
+//    switch (self.selectedTermIndex) {
+//        case 0:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"FALL"]];
+//            break;
+//        case 1:
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"term = %@", @"SPRING"]];
+//        default:
+//            break;
+//    }
+//
+//    for (UIButton *button in self.genEdButtons) {
+//
+//        if (button.selected) {
+//            NSNumber *index = [NSNumber numberWithInteger:button.tag + 1];
+//            [predicates addObject:[NSPredicate predicateWithFormat:@"genEdOne = %@ OR genEdTwo = %@", index, index]];
+//        }
+//    }
 
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
 }

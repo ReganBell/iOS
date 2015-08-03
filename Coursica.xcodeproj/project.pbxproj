@@ -39,6 +39,7 @@
 		5937474F1B6ECDF5002C1BEC /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5937474E1B6ECDF5002C1BEC /* CommentsCell.swift */; };
 		593747511B6ED2A5002C1BEC /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593747501B6ED2A5002C1BEC /* CommentsViewController.swift */; };
 		593747531B6EDA8A002C1BEC /* DoubleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */; };
+		593747551B6EF3BC002C1BEC /* seed.realm in Resources */ = {isa = PBXBuildFile; fileRef = 593747541B6EF3A5002C1BEC /* seed.realm */; };
 		5942844B1B5E1915004EABC6 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942844A1B5E1915004EABC6 /* FiltersViewController.swift */; };
 		594C88971B3004E4007F4DFD /* slider-default7-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */; };
 		594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */; };
@@ -154,6 +155,7 @@
 		5937474E1B6ECDF5002C1BEC /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		593747501B6ED2A5002C1BEC /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSliderView.swift; sourceTree = "<group>"; };
+		593747541B6EF3A5002C1BEC /* seed.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.realm; sourceTree = "<group>"; };
 		5942844A1B5E1915004EABC6 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground.png"; sourceTree = "<group>"; };
 		594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground@2x.png"; sourceTree = "<group>"; };
@@ -326,11 +328,11 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
+				593747541B6EF3A5002C1BEC /* seed.realm */,
 				599648AB1B5B43CA00015D02 /* NavigationController.swift */,
 				599648A91B5B426000015D02 /* AppDelegate.swift */,
 				595745811B54DF33006D3FF1 /* CoursicaViewController.swift */,
 				5988650C1B239C840078B06F /* Login */,
-				590B6C4D1B69B3B400B23C31 /* Hpple */,
 				59BC6E4C1B5361550027AA95 /* Model */,
 				59CF581F1B3BA82500FB21FC /* ListsViewController.swift */,
 				59FCC2C81B3BD5C7001A2337 /* List.swift */,
@@ -410,6 +412,7 @@
 		5988650C1B239C840078B06F /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				590B6C4D1B69B3B400B23C31 /* Hpple */,
 				593747481B6E9551002C1BEC /* Login.swift */,
 				5937474A1B6E9AD8002C1BEC /* LoginViewController.swift */,
 			);
@@ -635,6 +638,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				593747551B6EF3BC002C1BEC /* seed.realm in Resources */,
 				59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */,
 				594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */,
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
