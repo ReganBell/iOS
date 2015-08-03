@@ -29,9 +29,13 @@ class Index: NSObject {
             if stopWords.contains(token) {
                 continue
             } else {
+                if token == "10" {
+                    
+                }
                 if let termEntry = terms[token] {
                     termEntry.n++
                     termEntry.courses.append(course)
+                    terms[token] = termEntry
                 } else {
                     let termEntry = Entry()
                     termEntry.n = 1

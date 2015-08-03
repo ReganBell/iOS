@@ -85,6 +85,13 @@ class Report: Object {
     dynamic var enrollment = 0
     dynamic var comments: [String] = []
     let responses = List<Response>()
+    let facultyReports = List<FacultyReport>()
+}
+
+class FacultyReport: Object {
+    
+    dynamic var name = ""
+    let responses = List<Response>()
 }
 
 class Response: Object {

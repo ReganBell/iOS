@@ -11,14 +11,6 @@
 
 #define CoursicaBlue [UIColor colorWithRed:31/255.0 green:148/255.0 blue:255/255.0 alpha:1.0]
 
-@interface DoubleSliderView ()
-
-@property (weak, nonatomic) UILabel *leftScoreLabel;
-@property (weak, nonatomic) UILabel *rightScoreLabel;
-@property (weak, nonatomic) UILabel *titleLabel;
-
-@end
-
 @implementation DoubleSliderView
 
 - (UILabel*)titleLabelWithTitle:(NSString*)title {
@@ -109,16 +101,19 @@
 
 - (void)valueChanged:(NMRangeSlider*)slider {
     
-    self.leftScoreLabel.text = [NSString stringWithFormat:@"%.1f", slider.lowerValue];
-    self.rightScoreLabel.text = [NSString stringWithFormat:@"%.1f", slider.upperValue];
+    if (self.shouldFormatForFloatValue) {
+        self.leftScoreLabel.text = [NSString stringWithFormat:@"%.1f", slider.lowerValue];
+        self.rightScoreLabel.text = [NSString stringWithFormat:@"%.1f", slider.upperValue];
+    } else {
+        self.leftScoreLabel.text = [NSString stringWithFormat:@"%d", (int)slider.lowerValue];
+        int upperIntValue = (int)slider.upperValue;
+        if (upperIntValue == 250) {
+            self.rightScoreLabel.text = [NSString stringWithFormat:@"250+"];
+        } else {
+            self.rightScoreLabel.text = [NSString stringWithFormat:@"%d", upperIntValue];
+        }
+    }
+    
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

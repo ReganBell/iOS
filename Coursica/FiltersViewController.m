@@ -231,17 +231,26 @@
     UIColor *textColor = [UIColor colorWithWhite:155/255.0 alpha:1.0];
     
     DoubleSliderView *overall = [self configureSliderWithTitle:@"Overall Q Score" font:font textColor:textColor];
+    overall.shouldFormatForFloatValue = YES;
+    [overall valueChanged:overall.slider];
     self.qOverallSlider = overall.slider;
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:overall attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.genEdBarView attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *workload = [self configureSliderWithTitle:@"Workload" font:font textColor:textColor];
+    workload.shouldFormatForFloatValue = YES;
+    [workload valueChanged:workload.slider];
     self.qWorkloadSlider = workload.slider;
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:workload attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:overall attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
     
     DoubleSliderView *enrollment = [self configureSliderWithTitle:@"Enrollment" font:font textColor:textColor];
     self.enrollmentSlider = enrollment.slider;
+    enrollment.shouldFormatForFloatValue = NO;
+    self.enrollmentSlider.minimumValue = 1;
+    self.enrollmentSlider.maximumValue = 250;
+    self.enrollmentSlider.upperValue = 250;
+    [enrollment valueChanged:self.enrollmentSlider];
     
     [self.scrollView addConstraint:[NSLayoutConstraint constraintWithItem:enrollment attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:workload attribute:NSLayoutAttributeBottom multiplier:1 constant:16]];
 }

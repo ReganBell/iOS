@@ -17,6 +17,8 @@ class BreakdownViewController: CoursicaViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setNavigationBarTitle("\(course.shortField) \(course.number)")
+        
         tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -39,19 +41,20 @@ extension BreakdownViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        if indexPath.row == 0 {
-//            let cell = tableView.dequeueReusableCellWithIdentifier("info") as? InfoCell ?? InfoCell()
-//            cell.updateWithCourse(course)
-//            return cell
-//        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("course") as? CourseCell ?? CourseCell(style: .Default, reuseIdentifier: "course")
+        if indexPath.row == 0 {
+            let cell = CourseCell(style: .Default, reuseIdentifier: "course")
             cell.layoutWithReport(report)
             return cell
-//        }
+        } else {
+            let cell = InstructorCell(style: .Default, reuseIdentifier: "instructor")
+            let facultyReport = report.facultyReports[indexPath.row - 1]
+            cell.layoutWithReport(facultyReport)
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 1 + report.facultyReports.count
     }
 
 }

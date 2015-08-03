@@ -13,6 +13,23 @@ class InfoCell: UITableViewCell {
     
     var titleLabel: UILabel!
     var descriptionLabel: UILabel!
+    
+//    func configureLocationLabel() {
+//        
+//        self.courseLocationLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+//        self.courseLocationLabel.delegate = self
+//        let locationString = self.course.display.locations
+//        if locationString == "TBD" {
+//            self.courseLocationLabel.text = locationString
+//        } else {
+//            self.courseLocationLabel.text = locationString + " Map"
+//            let range = (self.courseLocationLabel.text! as NSString).rangeOfString("Map")
+//            let location = self.course.locations.first!
+//            let encodedSearch = location.building.stringByReplacingOccurrencesOfString(" ", withString: "+")
+//            let mapURL = NSURL(string: "https://m.harvard.edu/map/map?search=Search&filter=\(encodedSearch)&feed=*")
+//            self.courseLocationLabel.addLinkToURL(mapURL!, withRange: range)
+//        }
+//    }
 
     func updateWithCourse(course: Course) {
         

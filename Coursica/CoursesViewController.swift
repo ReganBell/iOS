@@ -202,7 +202,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
 extension CoursesViewController: ListsViewControllerDelegate {
     
     func didSelectTempCourse(tempCourse: TempCourse) {
-        self.navigationController?.pushViewController(DetailViewController() , animated: true)
+        self.navigationController?.pushViewController(DetailViewController.detailViewControllerWithTempCourse(tempCourse) , animated: true)
     }
 }
 

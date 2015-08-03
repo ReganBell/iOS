@@ -8,11 +8,20 @@
 
 import Cartography
 
-class CourseCell: UITableViewCell {
+let greenColor = UIColor(red:31/255.0, green:148/255.0, blue:100/255.0, alpha:1.0)
+let yellowColor = UIColor(red:1, green:213/255.0, blue:31/255.0, alpha:1.0)
+let redColor = UIColor(red:219/255.0, green:32/255.0, blue:35/255.0, alpha:1.0)
 
+class CourseCell: UITableViewCell {
+    
     var roundedBackgroundView = UIView()
     var titleLabel: UILabel!
-    var responseViews: [UIView] = []
+    var responseViews: [ResponseBarView] = []
+    var allButton: UIButton!
+    var departmentButton: UIButton!
+    var sizeButton: UIButton!
+    var baselineButtons: [UIButton]!
+    var selectedTab: GraphViewTab = .All
     
     func layoutWithReport(report: Report) {
         
@@ -22,17 +31,31 @@ class CourseCell: UITableViewCell {
         roundedBackgroundView.clipsToBounds = true
         self.contentView.addSubview(roundedBackgroundView)
         
-        titleLabel = self.label("Course Breakdown")
-        titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+        titleLabel = self.label("Course")
+        titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 16)
         titleLabel.textAlignment = .Center
-        let width = UIScreen.mainScreen().bounds.size.width
-        titleLabel.preferredMaxLayoutWidth = width - 60
         roundedBackgroundView.addSubview(titleLabel)
         
-        for (index, question) in enumerate(["Workload (hours per week)", "Assignments", "Feedback", "Materials", "Section", "Would You Recommend"]) {
+        constrain(titleLabel, {title in
+            title.width == 100
+            title.centerX == title.superview!.centerX
+            title.top == title.superview!.top + 10
+            title.height == 20
+        })
+        
+        let map = [("Workload (hours per week)",  "Workload"),
+                   ("Assignments",                "Assignments"),
+                   ("Feedback",                   "Feedback"),
+                   ("Materials",                  "Materials"),
+                   ("Section",                    "Section"),
+                   ("Would You Recommend",        "Recommend")]
+        
+        for (index, pair) in enumerate(map) {
             for response in report.responses {
-                if response.question == question {
-                    let responseView = ResponseBarView(response: response)
+                println(response.question)
+                let (questionKey, questionDisplay) = pair
+                if response.question == questionKey {
+                    let responseView = ResponseBarView(response: response, title: questionDisplay)
                     responseView.response = response
                     responseView.delayTime = CFTimeInterval(index) * 0.1
                     roundedBackgroundView.addSubview(responseView)
@@ -42,20 +65,37 @@ class CourseCell: UITableViewCell {
             }
         }
         
-        if responseViews.count != 0 {
-            constrain([titleLabel] + responseViews, replace: ConstraintGroup(), {views in
-                let background = views.last!.superview!
-                let title = views.first!
-                let responseViews: [LayoutProxy] = Array(views[1..<views.count])
-                for (index, view) in enumerate(responseViews) {
-                    view.left == background.left + 10
-                    view.right == background.right - 10
-                    (index == 0) ? view.top == title.bottom + 10 : view.top == responseViews[index - 1].bottom + 10
-                }
-                let last = views.last!
-                last.bottom == background.bottom - 10
-            })
+        if responseViews.count == 0 {
+            return
         }
+        
+        constrain([titleLabel] + responseViews, replace: ConstraintGroup(), {views in
+            let background = views.last!.superview!
+            let title = views.first!
+            let responseViews: [LayoutProxy] = Array(views[1..<views.count])
+            for (index, view) in enumerate(responseViews) {
+                view.left == background.left + 10
+                view.right == background.right - 10
+                (index == 0) ? view.top == title.bottom + 20 : view.top == responseViews[index - 1].bottom + 10
+            }
+        })
+        
+        let aboveAverageLegend = self.legendView(greenColor, title: "Better than similar courses")
+        let averageLegend = self.legendView(yellowColor, title: "Close to similar courses")
+        let belowAverageLegend = self.legendView(redColor, title: "Worse than similar courses")
+        
+        constrain([responseViews.last!] + [aboveAverageLegend, averageLegend, belowAverageLegend], replace: ConstraintGroup(), {views in
+            let background = views.last!.superview!
+            let lastResponseView = views.first!
+            let legendViews: [LayoutProxy] = Array(views[1..<views.count])
+            for (index, view) in enumerate(legendViews) {
+                view.width == 220
+                view.centerX == background.centerX + 10
+                (index == 0) ? view.top == lastResponseView.bottom + 25 : view.top == legendViews[index - 1].bottom + 10
+            }
+            let lastLegendView = legendViews.last!
+            lastLegendView.bottom == background.bottom - 25
+        })
         
         constrain(roundedBackgroundView, self.contentView, {background, cell in
             background.top == cell.top + 10
@@ -64,6 +104,38 @@ class CourseCell: UITableViewCell {
             background.bottom == cell.bottom - 10
         })
     }
+    
+    func legendView(color: UIColor, title: String) -> UIView {
+        
+        let containerView = UIView()
+        containerView.backgroundColor = UIColor.whiteColor()
+        containerView.opaque = true
+        roundedBackgroundView.addSubview(containerView)
+        
+        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
+        circleView.backgroundColor = color
+        circleView.layer.cornerRadius = 8
+        containerView.addSubview(circleView)
+        
+        let titleLabel = self.label(title)
+        titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
+        titleLabel.backgroundColor = UIColor.whiteColor()
+        containerView.addSubview(titleLabel)
+        
+        constrain(containerView, circleView, titleLabel, {container, circle, title in
+            circle.left == container.left
+            circle.width == 16
+            circle.height == 16
+            circle.top == container.top
+            circle.bottom == container.bottom
+            title.top == container.top
+            title.height == 16
+            title.left == circle.right + 10
+            title.right == container.right
+        })
+        return containerView
+    }
+    
     
     func label(text: String) -> UILabel {
         let label = UILabel()

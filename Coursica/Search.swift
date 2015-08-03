@@ -10,14 +10,27 @@ import RealmSwift
 
 let stopWords: Set<String> =  ["I","a","about","an","are","as","at","be","by","com","for","from","how","in","is","it","of","on","or","that","the","this","to","was","what","when","where","who","will","with","the","www"]
 
-enum IndexType {
-    case Title, Field, Number
+enum IndexType: String {
+    case Title = "Title"
+    case Field = "Field"
+    case Number = "Number"
 }
 
-struct SearchHit {
+class SearchHit: Printable {
     var term = ""
     var course: Course?
     var scoreAdd = 0.0
+    var index = ""
+    var description : String {
+        return "\nin \(index) \"\(term)\" \(course!.title) \(scoreAdd)"
+    }
+    init(term: String, course: Course, scoreAdd: Double, index: String) {
+        self.term = term
+        self.course = course
+        self.scoreAdd = scoreAdd
+        self.index = index
+    }
+
 }
 
 extension NSRegularExpression {
@@ -38,6 +51,7 @@ extension NSRegularExpression {
 class Search: NSObject {
     
     static let shared = Search()
+    var results: [SearchHit] = []
     var courseCount = 0.0
     var titleIndex = Index(type: .Title)
     var fieldIndex = Index(type: .Field)
@@ -93,12 +107,13 @@ class Search: NSObject {
     
     func buildIndex(courses: Results<Course>) {
         courseCount = Double(courses.count)
-        for i in 0...courses.count - 1 {
-            let course = courses[i]
+        for course in courses {
+            let longField = course.longField
             titleIndex.addField(course.title, fromCourse: course)
             fieldIndex.addField(course.longField, fromCourse: course)
-            if course.integerNumber > 0 {
-                numberIndex.addField("\(course.integerNumber)", fromCourse: course)
+            let integerString = "\(course.integerNumber)"
+            if course.integerNumber > 0 && integerString != course.number {
+                numberIndex.addField(integerString, fromCourse: course)
             }
             numberIndex.addField(course.number, fromCourse: course)
         }
@@ -112,7 +127,7 @@ class Search: NSObject {
         self.clearSearchScores()
         let searchTerms = self.explodeSearch(search)
         //TODO: do a weaker match for word stems using NSLinguisticTagger
-        var results: [SearchHit] = []
+        results  = []
         var weights: [(Index, Double)]
         if let numbers = NSRegularExpression(pattern: "[0-9]+")?.firstMatchInWholeString(search) {
             weights = [(titleIndex, 0.3), (fieldIndex, 0.6), (numberIndex, 0.6)]
@@ -120,12 +135,15 @@ class Search: NSObject {
             weights = [(titleIndex, 0.3), (fieldIndex, 0.3), (numberIndex, 0.3)]
         }
         Realm().write { () -> Void in
-            weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight, results: results) })
-            //Debug search with: print("\(results)")
+            weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight) })
+            println(self.results)
+            //Debug search with: println(results)
         }
     }
     
-    func searchIndex(index: Index, terms: [String], zoneWeight: Double, var results: [SearchHit]) {
+    func searchIndex(index: Index, terms: [String], zoneWeight: Double) {
+        let indexName = index.type.rawValue
+        let termss = index.terms
         for term in terms {
             if let entry = index.terms[term.lowercaseString] {
                 let maxIDF = log(self.courseCount / 1.0)
@@ -134,7 +152,7 @@ class Search: NSObject {
                 let zonedScore = zoneWeight * normalizedScore
                 for course in entry.courses {
                     course.searchScore += zonedScore
-                    results.append(SearchHit(term: term, course: course, scoreAdd: zonedScore))
+                    results.append(SearchHit(term: term, course: course, scoreAdd: zonedScore, index: index.type.rawValue))
                 }
             }
         }

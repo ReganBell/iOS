@@ -71,6 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          SizeRange(start: 101, end: 200),
          SizeRange(start: 201, end: 500),
          SizeRange(start: 501, end: 10000)]
+    var facultyScores: [String: [Double]] = Dictionary<String, [Double]>()
+    var facultyAverages: [String: Double] = Dictionary<String, Double>()
     
     func coursesJSONFromDisk() -> NSDictionary {
         let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")!)!
@@ -124,12 +126,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         mostRecent = Key.compare(Key(string: id as! String), b: mostRecent)
                     }
                     let mostRecentReport = (value as! NSDictionary)[mostRecent.string] as! NSDictionary
+                    let report = ReportParser.reportFromDictionary(mostRecentReport)
+                    for faculty in report!.facultyReports {
+                        for response in faculty.responses {
+                            if let scores = self.facultyScores[response.question] {
+                                self.facultyScores[response.question] = scores + [response.mean]
+                            } else {
+                                self.facultyScores[response.question] = [response.mean]
+                            }
+                        }
+                    }
+                    
 //                    println("trying to match \(key)")
                     if let course = courseDict[(key as! String)] {
                         if let enrollmentString = mostRecentReport["enrollment"] as? NSString {
                             course.enrollment = enrollmentString.integerValue
                             course.enrollmentSource = mostRecent.string
                         }
+
                         if let responses = mostRecentReport["responses"] as? NSDictionary {
                             if let overall = responses["Course Overall"] as? NSDictionary {
                                 if let meanString = overall["mean"] as? NSNumber {
@@ -144,47 +158,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         }
                     }
                 }
+                for (question, scores) in self.facultyScores {
+                    self.facultyAverages[question] = self.averageOf(scores)
+                }
             }
         }
     }
     
+    func averageOf(numbers: [Double]) -> Double {
+        if numbers.count == 0 {
+            return 0
+        }
+        
+        var sum = 0.0
+        for number in numbers {
+            sum += number
+        }
+        
+        return sum / Double(numbers.count)
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        
-        let urlString = "https://www.pin1.harvard.edu/cas/login;jsessionid=22B73CF4A780B532491C7F324A10E338?service=https%3A%2F%2Fwww.pin1.harvard.edu%2Fpin%2Fauthenticate%3F__authen_application%3DFAS_CS_COURSE_EVAL_REPORTS%26original_request%3D%252Fcourse_evaluation_reports%252Ffas%252Flist%253F"
-        
-        var parameters: [String: String] = Dictionary<String, String>()
-        
-//        let request = Alamofire.request(.POST, urlString, parameters: nil, encoding: ParameterEncoding.URL, headers: nil).responseString { _, _, string, _ in
-//            
-//            if let xmlString = string {
-//                let htmlData = xmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-//                let document = TFHpple(HTMLData: htmlData)
-//                for node in document.searchWithXPathQuery("//input") {
-//                    if let element = node as? TFHppleElement {
-//                        if let name = element.attributes["name"] {
-//                            if let value = element.attributes["value"] {
-//                                parameters[name as! String] = value as! String
-//                                println("\(name): \(value)")
-//                            }
-//                        }
-//                    }
-//                }
-//                
-//                let additional = [
-//                    "username": "10907373",
-//                    "password": "Fogs79,obis",
-//                    "compositeAuthenticationSourceType": "PIN"]
-//                
-//                for (key, value) in additional {
-//                    parameters.updateValue(value, forKey: key)
-//                }
-//                
-//                let request2 = Alamofire.request(.POST, urlString, parameters: parameters, encoding: ParameterEncoding.URL, headers: nil).responseString { _, _, string, _ in
-//                        println(string! as NSString)
-//                    }.resume()
-//            }
-//        }
-//        request.resume()
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -209,9 +203,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: LoginViewControllerDelegate {
     
-    func userDidLoginWithHUID(huid: String!) {
+    func userDidLoginWithHUID(HUID: String) {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(huid, forKey: "huid")
+        defaults.setObject(HUID, forKey: "huid")
         defaults.setBool(true, forKey: "loggedIn")
     }
 }

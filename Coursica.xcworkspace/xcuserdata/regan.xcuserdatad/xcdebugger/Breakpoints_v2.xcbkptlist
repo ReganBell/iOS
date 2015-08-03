@@ -91,11 +91,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/AppDelegate.swift"
-            timestampString = "459882289.612749"
+            timestampString = "460240657.776767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "extractQData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -107,11 +107,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/AppDelegate.swift"
-            timestampString = "459882289.612749"
+            timestampString = "460240657.776767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "extractQData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -123,11 +123,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/AppDelegate.swift"
-            timestampString = "459882289.612749"
+            timestampString = "460240657.776767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "extractQData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -145,6 +145,54 @@
             startingLineNumber = "58"
             endingLineNumber = "58"
             landmarkName = "-initFromXMLString:encoding:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/ResponseBarView.swift"
+            timestampString = "460247176.708449"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "layoutSubviews()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/Search.swift"
+            timestampString = "460254567.673179"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "searchIndex(_:terms:zoneWeight:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Coursica/FiltersViewController.m"
+            timestampString = "460254667.936441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-filters"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
