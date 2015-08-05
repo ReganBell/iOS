@@ -52,7 +52,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     }
     
     func createListsController() -> ListsViewController {
-        let listsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("listsController") as! ListsViewController
+        let listsController = ListsViewController()
         listsController.delegate = self
         listsController.view.alpha = 0
         containerView.addSubview(listsController.view)
@@ -80,6 +80,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         containerView.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .None
         constrain(tableView, {tableView in
             tableView.edges == tableView.superview!.edges
         })
@@ -220,9 +221,21 @@ extension CoursesViewController: UITextFieldDelegate {
 
 extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func colorForPercentile(percentile: Int) -> UIColor {
+        switch percentile {
+        case 80...1000: return coursicaBlue
+        case 65...79:   return UIColor(red: 31/255.0,  green: 1, blue: 170/255.0,alpha: 1)
+        case 48...65:   return UIColor(red: 120/255.0, green: 1, blue: 31/255.0, alpha: 1)
+        case 30...47:   return UIColor(red: 242/255.0, green: 1, blue: 31/255.0, alpha: 1)
+        case 15...30:   return UIColor(red: 1, green: 130/225.0, blue: 31/255.0, alpha: 1)
+        case -1:        return UIColor(white: 241/255.0, alpha: 1)
+        default:        return UIColor(red: 1, green: 83/255.0,  blue: 31/255.0, alpha: 1)
+        }
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell ?? UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-        let course = self.courses![indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? CourseTableViewCell ?? CourseTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        let course = courses![indexPath.row]
         let plain = course.display.title
         let boldRange = (plain as NSString).rangeOfString(course.title)
         let fancy = NSMutableAttributedString(string: plain)
@@ -231,6 +244,7 @@ extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
         fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
         fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
         cell.textLabel!.attributedText = fancy
+        cell.colorBarView.backgroundColor = self.colorForPercentile(course.percentileSize)
         return cell as UITableViewCell
     }
     

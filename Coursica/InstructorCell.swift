@@ -7,6 +7,7 @@
 //
 
 import Cartography
+import RealmSwift
 
 class InstructorCell: UITableViewCell {
     
@@ -50,22 +51,19 @@ class InstructorCell: UITableViewCell {
         
         for (index, pair) in enumerate(map) {
             for response in report.responses {
-                println(response.question)
                 let (questionKey, questionDisplay) = pair
-                if response.question == questionKey {
-                    if let average = (UIApplication.sharedApplication().delegate as! AppDelegate).facultyAverages[questionKey] {
-                        let baseline = Baseline()
-                        baseline.group = average
-                        baseline.size = average
-                        response.baselineSingleTerm = baseline
-                    }
-                    let responseView = ResponseBarView(response: response, title: questionDisplay)
-                    responseView.response = response
-                    responseView.delayTime = CFTimeInterval(index) * 0.1
-                    roundedBackgroundView.addSubview(responseView)
-                    responseViews.append(responseView)
-                    break
+                if let average = Realm().objects(FacultyAverage).filter("question = %@", questionKey).first {
+                    let baseline = Baseline()
+                    baseline.group = average.score
+                    baseline.size = average.score
+                    response.baselineSingleTerm = baseline
                 }
+                let responseView = ResponseBarView(response: response, title: questionDisplay)
+                responseView.response = response
+                responseView.delayTime = CFTimeInterval(index) * 0.1
+                roundedBackgroundView.addSubview(responseView)
+                responseViews.append(responseView)
+                break
             }
         }
 

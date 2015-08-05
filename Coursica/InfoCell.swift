@@ -39,7 +39,12 @@ class InfoCell: UITableViewCell {
         backgroundView.layer.cornerRadius = 4
         self.contentView.addSubview(backgroundView)
         
-        let maxDisplayLabelWidth = UIScreen.mainScreen().bounds.size.width - 10 - 22 - 10 - 35
+        let cardMargin: CGFloat = 10
+        let leftLabelMargin: CGFloat = 16
+        let rightLabelMargin: CGFloat = 10
+        let labelWidth: CGFloat = 70
+        let labelDisplaySpacing: CGFloat = 6
+        let maxDisplayLabelWidth = UIScreen.mainScreen().bounds.size.width - cardMargin - leftLabelMargin - labelWidth - labelDisplaySpacing - rightLabelMargin - cardMargin
         
         titleLabel = self.label(course.title)
         titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 17)
@@ -57,22 +62,22 @@ class InfoCell: UITableViewCell {
             title.left == view.left + 20
             title.right == view.right - 20
             title.top == view.top + 10
-            description.left == view.left + 16
-            description.right == view.right - 10
+            description.left == view.left + leftLabelMargin
+            description.right == view.right - rightLabelMargin
             description.top == title.bottom + 10
         })
         
         let italic = UIFont(name: "AvenirNext-Italic", size: 13)
         let bold = UIFont(name: "AvenirNext-Bold", size: 13)
         
-        let instructorLabel = self.label("Instructor:")
+        let instructorLabel = course.faculty.count > 1 ? self.label("Instructors:") : self.label("Instructor:")
         instructorLabel.font = italic
         instructorLabel.textAlignment = .Right
         backgroundView.addSubview(instructorLabel)
         constrain(instructorLabel, descriptionLabel, {instructor, description in
-            instructor.left == instructor.superview!.left + 16
+            instructor.left == instructor.superview!.left + leftLabelMargin
             instructor.top == description.bottom + 10
-            instructor.width == 70
+            instructor.width == labelWidth
             instructor.height == 18
         })
         
@@ -82,9 +87,9 @@ class InfoCell: UITableViewCell {
         instructorDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
         backgroundView.addSubview(instructorDisplayLabel)
         constrain(instructorDisplayLabel, instructorLabel, {display, label in
-            display.left == label.right + 6
+            display.left == label.right + labelDisplaySpacing
             display.top == label.top
-            display.right == display.superview!.right - 10
+            display.right == display.superview!.right - rightLabelMargin
         })
 
         let meetsLabel = self.label("Meets:")
@@ -93,7 +98,7 @@ class InfoCell: UITableViewCell {
         backgroundView.addSubview(meetsLabel)
         constrain(meetsLabel, instructorLabel, instructorDisplayLabel, {meets, instructor, instructorDisplay in
             meets.left == instructor.left
-            meets.width == 70
+            meets.width == labelWidth
             meets.height == 18
             meets.top == instructorDisplay.bottom + 10
         })
@@ -113,7 +118,7 @@ class InfoCell: UITableViewCell {
         constrain(meetsDisplayLabel, meetsLabel, instructorDisplayLabel, {display, label, instructor in
             display.left == instructor.left
             display.top == label.top
-            display.right == display.superview!.right - 10
+            display.right == display.superview!.right - rightLabelMargin
         })
         
         let satisfiesLabel = self.label("Satisifies:")
@@ -121,9 +126,9 @@ class InfoCell: UITableViewCell {
         satisfiesLabel.textAlignment = .Right
         backgroundView.addSubview(satisfiesLabel)
         constrain(satisfiesLabel, meetsDisplayLabel, {satisfies, meets in
-            satisfies.left == satisfies.superview!.left + 16
+            satisfies.left == satisfies.superview!.left + leftLabelMargin
             satisfies.top == meets.bottom + 10
-            satisfies.width == 70
+            satisfies.width == labelWidth
             satisfies.height == 18
         })
         
@@ -133,9 +138,9 @@ class InfoCell: UITableViewCell {
         satisfiesDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
         backgroundView.addSubview(satisfiesDisplayLabel)
         constrain(satisfiesDisplayLabel, satisfiesLabel, {display, label in
-            display.left == label.right + 6
+            display.left == label.right + labelDisplaySpacing
             display.top == label.top
-            display.right == display.superview!.right - 10
+            display.right == display.superview!.right - rightLabelMargin
         })
         
         var last = satisfiesDisplayLabel
@@ -146,9 +151,9 @@ class InfoCell: UITableViewCell {
             enrollmentLabel.textAlignment = .Right
             backgroundView.addSubview(enrollmentLabel)
             constrain(enrollmentLabel, satisfiesDisplayLabel, {enrollment, satisfies in
-                enrollment.left == enrollment.superview!.left + 16
+                enrollment.left == enrollment.superview!.left + leftLabelMargin
                 enrollment.top == satisfies.bottom + 10
-                enrollment.width == 70
+                enrollment.width == labelWidth
                 enrollment.height == 18
             })
             
@@ -164,9 +169,9 @@ class InfoCell: UITableViewCell {
             enrollmentDisplayLabel.textAlignment = .Left
             backgroundView.addSubview(enrollmentDisplayLabel)
             constrain(enrollmentDisplayLabel, enrollmentLabel, {display, label in
-                display.left == label.right + 6
+                display.left == label.right + labelDisplaySpacing
                 display.top == label.top
-                display.right == display.superview!.right - 10
+                display.right == display.superview!.right - rightLabelMargin
             })
             last = enrollmentDisplayLabel
         }
@@ -177,8 +182,8 @@ class InfoCell: UITableViewCell {
         
         constrain(backgroundView, self.contentView, {background, cell in
             background.top == cell.top + 10
-            background.left == cell.left + 10
-            background.right == cell.right - 10
+            background.left == cell.left + cardMargin
+            background.right == cell.right - cardMargin
             background.bottom == cell.bottom - 10
         })
     }

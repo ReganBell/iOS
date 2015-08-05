@@ -13,7 +13,7 @@ import pop
 let percentileGraphInset: CGFloat = 10
 
 enum GraphViewTab: Int {
-    case Department = 1
+    case Group = 1
     case All = 2
     case Size = 3
 }
@@ -37,7 +37,7 @@ class BreakdownCell: UITableViewCell {
     var overallLabel: UILabel!
     var noDataAvailableLabel: UILabel!
     var allButton: UIButton!
-    var departmentButton: UIButton!
+    var groupButton: UIButton!
     var sizeButton: UIButton!
     var breakdownButton = UIButton()
     var circle: CAShapeLayer!
@@ -109,7 +109,7 @@ class BreakdownCell: UITableViewCell {
         }
 
         allButton.setTitle("all courses", forState: .Normal)
-        departmentButton.setTitle("department", forState: .Normal)
+        groupButton.setTitle(course.shortField.lowercaseString, forState: .Normal)
         sizeButton.setTitle("size", forState: .Normal)
         breakdownButton.hidden = false
         self.layoutSubviews()
@@ -173,7 +173,7 @@ class BreakdownCell: UITableViewCell {
         
         roundedBackgroundView.addSubview(percentileGraphView)
         constrain(percentileGraphView, circleView, {graph, circle in
-            graph.top == circle.bottom + 25
+            graph.top == circle.bottom + 15
             graph.left == graph.superview!.left + percentileGraphInset
             graph.right == graph.superview!.right - percentileGraphInset
             graph.height == 120
@@ -181,29 +181,29 @@ class BreakdownCell: UITableViewCell {
         
         allButton = self.baselineButton("")
         allButton.tag = GraphViewTab.All.rawValue
-        departmentButton = self.baselineButton("")
-        departmentButton.tag = GraphViewTab.Department.rawValue
+        groupButton = self.baselineButton("")
+        groupButton.tag = GraphViewTab.Group.rawValue
         sizeButton = self.baselineButton("")
         sizeButton.tag = GraphViewTab.Size.rawValue
         
         sizeButton.selected = true
         sizeButton.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
         
-        constrain(sizeButton, departmentButton, percentileGraphView, {size, department, graph in
+        constrain(sizeButton, groupButton, percentileGraphView, {size, group, graph in
             size.centerX == size.superview!.centerX
-            size.top == graph.bottom + 30
+            size.top == graph.bottom + 40
             size.height == 20
-            department.centerX == size.superview!.right * 0.20
-            department.top == graph.bottom + 30
-            department.height == 20
+            group.centerX == size.superview!.right * 0.20
+            group.top == graph.bottom + 40
+            group.height == 20
         })
         constrain(sizeButton, allButton, percentileGraphView, {size, all, graph in
             all.centerX == size.superview!.right * 0.80
-            all.top == graph.bottom + 30
+            all.top == graph.bottom + 40
             all.height == 20
         })
         
-        self.baselineButtons = [allButton, departmentButton, sizeButton]
+        self.baselineButtons = [allButton, groupButton, sizeButton]
         
         constrain(roundedBackgroundView, self.contentView, {background, cell in
             background.top == cell.top + 5
@@ -261,8 +261,8 @@ class BreakdownCell: UITableViewCell {
     func arrayForCurrentGraphTab() -> [Double] {
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         switch self.selectedTab {
-        case .All:        return delegate.allScores
-        case .Department: return delegate.allDepartmentScores[course.shortField]!
+        case .All:    return delegate.allScores
+        case .Group:  return delegate.allGroupScores[course.shortField]!
         case .Size:
             for range in delegate.allSizeScores {
                 if range.contains(course.enrollment) {return range.scores}

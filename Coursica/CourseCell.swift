@@ -52,7 +52,6 @@ class CourseCell: UITableViewCell {
         
         for (index, pair) in enumerate(map) {
             for response in report.responses {
-                println(response.question)
                 let (questionKey, questionDisplay) = pair
                 if response.question == questionKey {
                     let responseView = ResponseBarView(response: response, title: questionDisplay)

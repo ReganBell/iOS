@@ -135,18 +135,22 @@ class CoursesNavigationBar: UIView {
         bar.backgroundColor = UIColor(red: 31/255.0, green: 117/255.0, blue: 1, alpha: 1)
         bar.layer.cornerRadius = 4
         bar.setTranslatesAutoresizingMaskIntoConstraints(false)
-        bar.returnKeyType = UIReturnKeyType.Search
+        bar.returnKeyType = .Search
+        bar.autocorrectionType = .No
         bar.delegate = delegate
+        
         let font = UIFont(name: "AvenirNext-Medium", size: 14)!
         bar.font = font
         bar.textColor = UIColor.whiteColor()
+        
         let leftSpacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         bar.leftViewMode = UITextFieldViewMode.Always
         bar.leftView = leftSpacerView
+        
         let style = bar.defaultTextAttributes[NSParagraphStyleAttributeName]?.mutableCopy() as! NSMutableParagraphStyle
         style.minimumLineHeight = bar.font.lineHeight - (bar.font.lineHeight - font.lineHeight) / 2.0
-        let string = "Search for courses"
-        let placeholder = NSMutableAttributedString(string: string, attributes:
+        
+        let placeholder = NSMutableAttributedString(string: "Search for courses", attributes:
             [NSForegroundColorAttributeName: UIColor(white: 1, alpha: 0.4),
              NSFontAttributeName: font,
              NSParagraphStyleAttributeName: style])

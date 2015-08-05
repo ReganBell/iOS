@@ -18,6 +18,10 @@ class Course: Object {
     dynamic var enrollment = 0
     dynamic var enrollmentSource = ""
     
+    dynamic var percentileSize = 50
+    dynamic var percentileGroup = 50
+    dynamic var percentileAll = 50
+    
     dynamic var longField = ""
     dynamic var shortField = ""
     dynamic var notes = ""
@@ -39,6 +43,11 @@ class Course: Object {
     let prerequisites = List<Course>()
     
     var display: Display { get { return Display(course: self) }}
+}
+
+class FacultyAverage: Object {
+    dynamic var question = ""
+    dynamic var score = 0.0
 }
 
 class GenEd: Object {

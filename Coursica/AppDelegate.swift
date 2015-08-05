@@ -60,7 +60,7 @@ class SizeRange {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    var allDepartmentScores: Dictionary<String, [Double]>!
+    var allGroupScores: Dictionary<String, [Double]>!
     var allScores: [Double]!
     let range = Range<Int>(start: 0, end: 10)
     var allSizeScores: [SizeRange] =
@@ -80,14 +80,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func calculatePercentiles(courses: Results<Course>) {
-        allDepartmentScores = Dictionary<String, [Double]>()
+        allGroupScores = Dictionary<String, [Double]>()
         allScores = []
         for course in courses {
             if course.overall != 0 {
                 allScores.append(course.overall)
-                var departmentScores = allDepartmentScores[course.shortField] ?? []
-                departmentScores.append(course.overall)
-                allDepartmentScores.updateValue(departmentScores, forKey: course.shortField)
+                var groupScores = allGroupScores[course.shortField] ?? []
+                groupScores.append(course.overall)
+                allGroupScores.updateValue(groupScores, forKey: course.shortField)
                 if course.enrollment != 0 {
                     for range in allSizeScores {
                         if range.contains(course.enrollment) {
@@ -99,14 +99,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         allScores = sorted(allScores, <)
-        var sortedDepartmentScores = Dictionary<String, [Double]>()
-        for (department, var array) in allDepartmentScores {
-            sortedDepartmentScores[department] = sorted(array, <)
+        var sortedGroupScores = Dictionary<String, [Double]>()
+        for (group, var array) in allGroupScores {
+            sortedGroupScores[group] = sorted(array, <)
         }
-        allDepartmentScores = sortedDepartmentScores
+        allGroupScores = sortedGroupScores
         var scoresBySize: [((Int, Int), [Double])] = []
         for range in allSizeScores {
             range.scores.sort(<)
+        }
+    }
+    
+    func arrayForGraphTab(tab: GraphViewTab, course: Course) -> [Double] {
+        switch tab {
+        case .All:    return self.allScores
+        case .Group:  return self.allGroupScores[course.shortField]!
+        case .Size:
+            for range in self.allSizeScores {
+                if range.contains(course.enrollment) {return range.scores}
+            }
+        }
+        return []
+    }
+    
+    func savePercentilesOnCourses(courses: Results<Course>) {
+        NSLog("start")
+        for course in courses {
+            if course.overall < 0.1 {
+                course.percentileAll = -1
+                course.percentileGroup = -1
+                course.percentileSize = -1
+                continue
+            }
+            let tabs: [GraphViewTab] = [.All, .Group, .Size]
+            for tab in tabs {
+                let sortedScores = self.arrayForGraphTab(tab, course: course)
+                let index = find(sortedScores, course.overall)!
+                let percentile = Double(index) / Double(sortedScores.count)
+                let percentileInt = Int(percentile * 100)
+                switch tab {
+                case .All: course.percentileAll = percentileInt
+                case .Group: course.percentileGroup = percentileInt
+                case .Size: course.percentileSize = percentileInt
+                default: fatalError("uh oh")
+                }
+                NSLog("end")
+            }
         }
     }
     
@@ -116,10 +154,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let courses = Realm().objects(Course)
         if courses.count != 0 {
             for course in courses {
-//                if course.title == "Introduction to Computer Science I" {
-//                    courseDict["COMPSCI 50: Introduction to Computer Science I"] = course
-//                    continue
-//                }
                 courseDict[course.display.serverTitle] = course
             }
             Realm().write {
@@ -161,7 +195,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
                 for (question, scores) in self.facultyScores {
-                    self.facultyAverages[question] = self.averageOf(scores)
+                    let average = FacultyAverage()
+                    average.question = question
+                    average.score = self.averageOf(scores)
+                    Realm().add(average, update: false)
                 }
             }
         }
@@ -184,9 +221,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Realm.defaultPath = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
         
+        setSchemaVersion(1, Realm.defaultPath, {migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                
+            }
+        })
+        
         let courses = Realm().objects(Course)
         self.calculatePercentiles(courses)
+//        Realm().write {
+//            self.savePercentilesOnCourses(courses)
+//        }
         Search.shared.buildIndex(courses)
+        //        self.extractQData()
+//        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
+//        println(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"))
+
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -195,9 +245,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.navigationBar.tintColor = UIColor.whiteColor()
         navigationController.navigationBar.opaque = true
         navigationController.navigationBar.translucent = false
-//        self.extractQData()
-//        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
-        
         
         self.window!.rootViewController = navigationController
         self.window!.makeKeyAndVisible()

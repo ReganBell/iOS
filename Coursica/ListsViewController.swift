@@ -20,30 +20,28 @@ protocol ListsViewControllerDelegate {
 class ListsViewController: UIViewController {
     
     var lists: [CourseList] = []
-    @IBOutlet var tableView: UITableView?
+    var tableView = UITableView()
     var delegate: ListsViewControllerDelegate?
-    var promptLabel: UILabel?
-    var passwordField: UITextField?
-    var importSubmitButton: UIButton?
-    var importProgressBarBackground: UIView?
-    var importProgressBar: UIView?
-    var progressBarConstraint: NSLayoutConstraint?
-    var secretLoginWebView: LoginWebView?
+    var promptLabel: UILabel!
+    var passwordField: UITextField!
+    var importSubmitButton: UIButton!
+    var importProgressBarBackground: UIView!
+    var importProgressBar: UIView!
+    var progressBarConstraint: NSLayoutConstraint!
     var coursesAdded: Int = 0
     var coursesToAdd: Int = 0
     var listsAdded: Int = 0
     var listsToAdd: Int = 0
     
     override func viewDidLoad() {
-        
-        let label = UILabel()
-        label.backgroundColor = UIColor.clearColor()
-        label.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
-        label.text = "Lists"
-        label.textColor = UIColor.whiteColor()
-        label.sizeToFit()
-        label.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.importFooterView()
+        self.view.addSubview(tableView)
+        tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
+        tableView.dataSource = self
+        tableView.delegate = self
+        constrain(tableView, {table in
+            table.edges == table.superview!.edges
+        })
+        self.layoutImportFooterView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,15 +54,15 @@ class ListsViewController: UIViewController {
         CourseList.fetchListsForCurrentUserWithCompletion({lists in
             if let lists = lists {
                 weakSelf!.lists = lists
-                weakSelf!.tableView!.reloadData()
+                weakSelf!.tableView.reloadData()
             }
         })
     }
     
-    func importFooterView() {
+    func layoutImportFooterView() {
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 135))
-        footerView.backgroundColor = tableView?.backgroundColor
+        footerView.backgroundColor = tableView.backgroundColor
         
         let promptLabel = UILabel(frame: CGRectZero)
         promptLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
@@ -73,7 +71,7 @@ class ListsViewController: UIViewController {
         promptLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         footerView.addSubview(promptLabel)
         constrain(promptLabel, {prompt in
-            prompt.top == prompt.superview!.top
+            prompt.top == prompt.superview!.top + 20
             prompt.centerX == prompt.superview!.centerX
         })
         self.promptLabel = promptLabel
@@ -110,7 +108,7 @@ class ListsViewController: UIViewController {
         importSubmitButton = rightInsetView
         
         let importButton = UIButton(frame: CGRect(x: 0, y: 0, width: importButtonWidth, height: 41))
-        importButton.setTitle("Tap to Import", forState: UIControlState.Normal)
+        importButton.setTitle("Import", forState: UIControlState.Normal)
         importButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
         importButton.backgroundColor = coursicaBlue
         importButton.layer.cornerRadius = 4.0
@@ -143,14 +141,14 @@ class ListsViewController: UIViewController {
         })
         self.importProgressBar = progressBar
         
-        tableView!.tableFooterView = footerView
+        tableView.tableFooterView = footerView
     }
     
     func goButtonPressed(button: UIButton) {
         self.importProgressBarBackground?.alpha = 1
         self.animateImportPercentComplete(0.4, duration: 15, message: "Logging you in...")
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        self.secretLoginWebView?.tryUsernameWhenReady(HUID, password: self.passwordField!.text!)
+        ListsImporter.shared.getListsWithPassword(passwordField.text!)
     }
     
     func passwordDidChange(textField: UITextField) {
@@ -158,15 +156,9 @@ class ListsViewController: UIViewController {
     }
     
     func importButtonPressed(importButton: UIButton) {
-        
-        let secretWebView = LoginWebView()
-        secretWebView.loginDelegate = self
-        self.view.insertSubview(secretWebView, atIndex: 0)
-        constrain(secretWebView, {secret in
-            secret.edges == secret.superview!.edges
+        ListsImporter.shared.getLogIn({success, errorMessage in
+            
         })
-        secretWebView.loadLoginScreen()
-        self.secretLoginWebView = secretWebView
         UIView.animateWithDuration(0.3, animations: {
             importButton.alpha = 0
             self.promptLabel?.text = "Re-enter the password you use with your HUID"
@@ -177,6 +169,7 @@ class ListsViewController: UIViewController {
     func headerViewForList(list: CourseList, tableView: UITableView) -> UIView {
         
         let headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
+        headerView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
         let headerLabel = UILabel(frame: CGRectZero)
         headerLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
         headerLabel.text = list.name
@@ -201,7 +194,7 @@ class ListsViewController: UIViewController {
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        self.tableView!.setEditing(editing, animated: animated)
+        self.tableView.setEditing(editing, animated: animated)
     }
 }
 

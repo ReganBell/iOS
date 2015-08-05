@@ -91,11 +91,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/AppDelegate.swift"
-            timestampString = "460256996.397888"
+            timestampString = "460509128.495461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "extractQData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -107,11 +107,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/AppDelegate.swift"
-            timestampString = "460256996.397888"
+            timestampString = "460509128.495461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "extractQData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -123,11 +123,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/AppDelegate.swift"
-            timestampString = "460256996.397888"
+            timestampString = "460509128.495461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "extractQData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -187,11 +187,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/FiltersViewController.m"
-            timestampString = "460254667.936441"
+            timestampString = "460498352.629835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "-filters"
             landmarkType = "5">
          </BreakpointContent>

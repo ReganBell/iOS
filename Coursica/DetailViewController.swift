@@ -59,8 +59,22 @@ class DetailViewController: CoursicaViewController {
         })
         self.view.setTranslatesAutoresizingMaskIntoConstraints(true)
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "addCourseButtonPressed")
+        
         self.setNavigationBarTitle("\(course.shortField) \(course.number)")
         self.getReportFromServer()
+    }
+    
+    func addCourseButtonPressed() {
+        let alertController = UIAlertController(title: "Add to Lists", message: "Keep track of courses with Lists.", preferredStyle: .ActionSheet)
+        for listName in CourseList.listNames() {
+            let action = UIAlertAction(title: listName, style: .Default, handler: {action in
+                CourseList.addCourseToListWithName(listName, course: self.course)
+            })
+            alertController.addAction(action)
+        }
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler:nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func getReportFromServer() {
