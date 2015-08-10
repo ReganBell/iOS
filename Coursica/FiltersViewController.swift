@@ -44,7 +44,7 @@ class FiltersViewController: UIViewController {
     
     var delegate: FiltersViewControllerDelegate?
     var filters: NSPredicate {
-        let predicateOptions: [NSPredicate?] = [gradPredicate(), termPredicate(), overallPredicate(), workloadPredicate(), enrollmentPredicate()]
+        let predicateOptions: [NSPredicate?] = [gradPredicate(), termPredicate(), overallPredicate(), workloadPredicate(), enrollmentPredicate(), genEdPredicate()]
         var filters: [NSPredicate] = []
         for predicateOption in predicateOptions {
             if let predicate = predicateOption {
@@ -52,24 +52,6 @@ class FiltersViewController: UIViewController {
             }
         }
         return NSCompoundPredicate.andPredicateWithSubpredicates(filters)
-    }
-    var selectedGenEds: [GenEd]? {
-        
-        let genEds = ["Aesthetic and Interpretive Understanding",
-        "Culture and Belief",
-        "Empirical and Mathematical Reasoning",
-        "Ethical Reasoning",
-        "Science of Living Systems",
-        "Science of the Physical Universe",
-        "Societies of the World",
-        "United States in the World",
-        "Study of the Past"]
-        
-        var selected: [GenEd] = []
-        for button in genEdButtons {
-            selected.append(Realm().objects(GenEd).filter(NSPredicate(format: "name = %@", genEds[button.tag])).first!)
-        }
-        return selected.count > 0 ? selected : nil
     }
     
     func gradPredicate() -> NSPredicate? {
@@ -111,6 +93,31 @@ class FiltersViewController: UIViewController {
             return NSCompoundPredicate.andPredicateWithSubpredicates([lowerPredicate, upperPredicate])
         } else {
             return lowerPredicate
+        }
+    }
+    
+    func genEdPredicate() -> NSPredicate? {
+        var selectedGenEdButton: UIButton? = nil
+        for button in genEdButtons {
+            if button.selected == true {
+                selectedGenEdButton = button
+            }
+        }
+        if let selected = selectedGenEdButton {
+            
+            let genEds = ["Aesthetic and Interpretive Understanding",
+                          "Culture and Belief",
+                          "Empirical and Mathematical Reasoning",
+                          "Ethical Reasoning",
+                          "Science of Living Systems",
+                          "Science of the Physical Universe",
+                          "Societies of the World",
+                          "United States in the World",
+                          "Study of the Past"]
+            
+            return NSPredicate(format: "ANY genEds.name = %@", genEds[selected.tag])
+        } else {
+            return nil
         }
     }
     
@@ -173,12 +180,18 @@ class FiltersViewController: UIViewController {
         selectButton(button, labels: termBarLabels, buttons: termBarButtons)
     }
     
-    func genEdButtonPressed(button: UIButton) {
+    func genEdButtonPressed(pressedButton: UIButton) {
         delegate?.keyboardShouldDismiss()
-        button.selected = !button.selected
-        let newColor = button.selected ? coursicaBlue : unselectedGray
-        genEdLabels[button.tag].textColor = newColor
-        genEdImageViews[button.tag].tintColor = newColor
+        let selected = !pressedButton.selected
+        for button in genEdButtons {
+            button.selected == false
+            genEdImageViews[button.tag].tintColor = unselectedGray
+            genEdLabels[button.tag].textColor = unselectedGray
+        }
+        pressedButton.selected = selected
+        let newColor = selected ? coursicaBlue : unselectedGray
+        genEdLabels[pressedButton.tag].textColor = newColor
+        genEdImageViews[pressedButton.tag].tintColor = newColor
     }
     
     func layoutSliderWithTitle(title: String) -> DoubleSliderView {

@@ -57,7 +57,6 @@ class ResponseBarView: UIView {
             } else if response.mean < similarBaseline - epsilon {
                 bar.backgroundColor = questionLabel.text == "Workload" ? greenColor : redColor
             }
-            println("\(questionLabel.text) dept: \(baseline.group) size: \(baseline.size)")
         }
         
         let scoreString = NSString(format: "%.1f", response.mean) as String

@@ -57,13 +57,6 @@ class SizeRange {
     func contains(n: Int) -> Bool { return n >= start && n <= end }
 }
 
-extension Realm {
-    class func shared() -> Realm {
-        let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
-        return Realm(path: path, readOnly: true, encryptionKey: nil, error: NSErrorPointer())!
-    }
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -226,13 +219,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
-//        setSchemaVersion(1, Realm.defaultPath, {migration, oldSchemaVersion in
-//            if oldSchemaVersion < 1 {
-//                
-//            }
-//        })
+        let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+        NSFileManager.defaultManager().copyItemAtPath(path, toPath: Realm.defaultPath, error: NSErrorPointer())
         
-        let courses = Realm.shared().objects(Course)
+        setSchemaVersion(1, Realm.defaultPath, {migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                
+            }
+        })
+        
+        let courses = Realm().objects(Course)
         self.calculatePercentiles(courses)
 //        Realm().write {
 //            self.savePercentilesOnCourses(courses)

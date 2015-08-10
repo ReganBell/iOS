@@ -109,7 +109,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func updateCoursesData() {
         
-        courses = self.sortedCourses(Realm.shared().objects(Course))
+        courses = self.sortedCourses(Realm().objects(Course))
         if courses!.count == 0 {
             CS50Downloader.getCourses({
                 self.courses! = self.sortedCourses(Realm().objects(Course))
@@ -157,7 +157,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         }, completion: nil)
     }
     
-    func updatePredicate(filter: NSPredicate?, search: NSPredicate?, genEds: [GenEd]?) {
+    func updatePredicate(filter: NSPredicate?, search: NSPredicate?) {
         var predicates = [NSPredicate(format: "bracketed = %@", NSNumber(bool: false))]
 
         for optional in [filter, search] {
@@ -176,13 +176,13 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func filtersDidChange() {
         
-//        if !navigationBar.searchBar.text.isEmpty {
-//            Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
-//            self.updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05), genEds:)
-//        } else {
-//            self.updatePredicate(filtersController.filters, search: nil, genEds: )
-//        }
-//        self.setFiltersShowing(false, searchActive: true)
+        if !navigationBar.searchBar.text.isEmpty {
+            Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
+            self.updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05))
+        } else {
+            self.updatePredicate(filtersController.filters, search: nil)
+        }
+        self.setFiltersShowing(false, searchActive: true)
     }
     
     func editListsButtonPressed(button: UIButton) {
@@ -270,6 +270,6 @@ extension CoursesViewController: CoursesNavigationBarDelegate {
         self.setFiltersShowing(false, searchActive: false)
         navigationBar.searchBar.text = ""
         Search.shared.clearSearchScores()
-//        self.updatePredicate(nil, search: nil)
+        self.updatePredicate(nil, search: nil)
     }
 }
