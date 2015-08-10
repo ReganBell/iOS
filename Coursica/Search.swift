@@ -137,7 +137,7 @@ class Search: NSObject {
         Realm().write { () -> Void in
             weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight) })
             //Debug search with: 
-            //println(results)
+            println(self.results)
         }
     }
     

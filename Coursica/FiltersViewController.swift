@@ -37,8 +37,8 @@ class FiltersViewController: UIViewController {
     var qWorkloadSlider: NMRangeSlider!
     var enrollmentSlider: NMRangeSlider!
     
-    var selectedTermIndex = 0
-    var selectedGradIndex = 0
+    var selectedTermIndex = 2
+    var selectedGradIndex = 2
     
     @IBOutlet var filterCoursesButton: UIButton!
     
