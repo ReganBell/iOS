@@ -109,7 +109,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func updateCoursesData() {
         
-        courses = self.sortedCourses(Realm().objects(Course))
+        courses = self.sortedCourses(Realm.shared().objects(Course))
         if courses!.count == 0 {
             CS50Downloader.getCourses({
                 self.courses! = self.sortedCourses(Realm().objects(Course))
@@ -157,7 +157,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         }, completion: nil)
     }
     
-    func updatePredicate(filter: NSPredicate?, search: NSPredicate?) {
+    func updatePredicate(filter: NSPredicate?, search: NSPredicate?, genEds: [GenEd]?) {
         var predicates = [NSPredicate(format: "bracketed = %@", NSNumber(bool: false))]
 
         for optional in [filter, search] {
@@ -176,13 +176,13 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func filtersDidChange() {
         
-        if !navigationBar.searchBar.text.isEmpty {
-            Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
-            self.updatePredicate(filtersController.filters(), search: NSPredicate(format: "searchScore > %f", 0.05))
-        } else {
-            self.updatePredicate(filtersController.filters(), search: nil)
-        }
-        self.setFiltersShowing(false, searchActive: true)
+//        if !navigationBar.searchBar.text.isEmpty {
+//            Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
+//            self.updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05), genEds:)
+//        } else {
+//            self.updatePredicate(filtersController.filters, search: nil, genEds: )
+//        }
+//        self.setFiltersShowing(false, searchActive: true)
     }
     
     func editListsButtonPressed(button: UIButton) {
@@ -221,18 +221,6 @@ extension CoursesViewController: UITextFieldDelegate {
 
 extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func colorForPercentile(percentile: Int) -> UIColor {
-        switch percentile {
-        case 80...1000: return coursicaBlue
-        case 65...79:   return UIColor(red: 31/255.0,  green: 1, blue: 170/255.0,alpha: 1)
-        case 48...65:   return UIColor(red: 120/255.0, green: 1, blue: 31/255.0, alpha: 1)
-        case 30...47:   return UIColor(red: 242/255.0, green: 1, blue: 31/255.0, alpha: 1)
-        case 15...30:   return UIColor(red: 1, green: 130/225.0, blue: 31/255.0, alpha: 1)
-        case -1:        return UIColor(white: 241/255.0, alpha: 1)
-        default:        return UIColor(red: 1, green: 83/255.0,  blue: 31/255.0, alpha: 1)
-        }
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? CourseTableViewCell ?? CourseTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
         let course = courses![indexPath.row]
@@ -244,7 +232,7 @@ extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
         fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
         fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
         cell.textLabel!.attributedText = fancy
-        cell.colorBarView.backgroundColor = self.colorForPercentile(course.percentileSize)
+        cell.colorBarView.backgroundColor = colorForPercentile(course.percentileSize)
         return cell as UITableViewCell
     }
     
@@ -282,6 +270,6 @@ extension CoursesViewController: CoursesNavigationBarDelegate {
         self.setFiltersShowing(false, searchActive: false)
         navigationBar.searchBar.text = ""
         Search.shared.clearSearchScores()
-        self.updatePredicate(nil, search: nil)
+//        self.updatePredicate(nil, search: nil)
     }
 }

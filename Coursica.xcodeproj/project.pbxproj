@@ -23,6 +23,8 @@
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5905EE6A1B72BA6E00A4E29A /* CourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905EE691B72BA6E00A4E29A /* CourseTableViewCell.swift */; };
 		5905EE6C1B72D03700A4E29A /* seed.realm in Resources */ = {isa = PBXBuildFile; fileRef = 5905EE6B1B72D02A00A4E29A /* seed.realm */; };
+		5905EE6E1B72EB7900A4E29A /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905EE6D1B72EB7900A4E29A /* Colors.swift */; };
+		5905EE701B72FEC600A4E29A /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905EE6F1B72FEC600A4E29A /* FiltersViewController.swift */; };
 		590B6C4A1B69B3AF00B23C31 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 590B6C451B69B3AF00B23C31 /* TFHpple.m */; };
 		590B6C4B1B69B3AF00B23C31 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 590B6C471B69B3AF00B23C31 /* TFHppleElement.m */; };
 		590B6C4C1B69B3AF00B23C31 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 590B6C491B69B3AF00B23C31 /* XPathQuery.m */; };
@@ -41,7 +43,7 @@
 		5937474F1B6ECDF5002C1BEC /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5937474E1B6ECDF5002C1BEC /* CommentsCell.swift */; };
 		593747511B6ED2A5002C1BEC /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593747501B6ED2A5002C1BEC /* CommentsViewController.swift */; };
 		593747531B6EDA8A002C1BEC /* DoubleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */; };
-		5942844B1B5E1915004EABC6 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942844A1B5E1915004EABC6 /* FiltersViewController.swift */; };
+		5942844B1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942844A1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift */; };
 		594C88971B3004E4007F4DFD /* slider-default7-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */; };
 		594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */; };
 		594E93E01A68D197003DB4E7 /* ShortFields in Resources */ = {isa = PBXBuildFile; fileRef = 594E93DF1A68D197003DB4E7 /* ShortFields */; };
@@ -72,7 +74,6 @@
 		59959DB11B6B007D004DE777 /* ResponseBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59959DB01B6B007D004DE777 /* ResponseBarView.swift */; };
 		599648AA1B5B426000015D02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599648A91B5B426000015D02 /* AppDelegate.swift */; };
 		599648AC1B5B43CA00015D02 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599648AB1B5B43CA00015D02 /* NavigationController.swift */; };
-		599648AE1B5B460C00015D02 /* final_results copy.json in Resources */ = {isa = PBXBuildFile; fileRef = 599648AD1B5B460C00015D02 /* final_results copy.json */; };
 		59A2EDBC1B33E13D00B22558 /* slider-blue-track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A2EDBB1B33E13D00B22558 /* slider-blue-track@2x.png */; };
 		59ABFA3C1B4727F1006349A6 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 59ABFA3B1B4727F1006349A6 /* CommentTableViewCell.m */; };
 		59B0AEC21B43AEE40018AA85 /* TempCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B0AEC11B43AEE40018AA85 /* TempCourse.swift */; };
@@ -131,6 +132,8 @@
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5905EE691B72BA6E00A4E29A /* CourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewCell.swift; sourceTree = "<group>"; };
 		5905EE6B1B72D02A00A4E29A /* seed.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.realm; sourceTree = "<group>"; };
+		5905EE6D1B72EB7900A4E29A /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		5905EE6F1B72FEC600A4E29A /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		590B6C441B69B3AF00B23C31 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		590B6C451B69B3AF00B23C31 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		590B6C461B69B3AF00B23C31 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -158,7 +161,7 @@
 		5937474E1B6ECDF5002C1BEC /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		593747501B6ED2A5002C1BEC /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSliderView.swift; sourceTree = "<group>"; };
-		5942844A1B5E1915004EABC6 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
+		5942844A1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FiltersViewController-noStoryboard.swift"; sourceTree = "<group>"; };
 		594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground.png"; sourceTree = "<group>"; };
 		594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground@2x.png"; sourceTree = "<group>"; };
 		594E93DF1A68D197003DB4E7 /* ShortFields */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShortFields; sourceTree = "<group>"; };
@@ -351,6 +354,7 @@
 		596076AE1A1000700038D4F4 /* Coursica */ = {
 			isa = PBXGroup;
 			children = (
+				5905EE6D1B72EB7900A4E29A /* Colors.swift */,
 				5905EE6B1B72D02A00A4E29A /* seed.realm */,
 				599648AB1B5B43CA00015D02 /* NavigationController.swift */,
 				599648A91B5B426000015D02 /* AppDelegate.swift */,
@@ -426,7 +430,8 @@
 				593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */,
 				59F51C681A2545DF0025E021 /* FiltersViewController.h */,
 				59F51C691A2545DF0025E021 /* FiltersViewController.m */,
-				5942844A1B5E1915004EABC6 /* FiltersViewController.swift */,
+				5905EE6F1B72FEC600A4E29A /* FiltersViewController.swift */,
+				5942844A1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift */,
 				59E661D81B01A72A00200FAE /* FadeOut.png */,
 			);
 			name = Filters;
@@ -663,7 +668,6 @@
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
 				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
 				59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */,
-				599648AE1B5B460C00015D02 /* final_results copy.json in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */,
 				596076C31A1000710038D4F4 /* LaunchScreen.xib in Resources */,
@@ -753,6 +757,7 @@
 				59959DAD1B6AFD5D004DE777 /* CourseCell.swift in Sources */,
 				599648AA1B5B426000015D02 /* AppDelegate.swift in Sources */,
 				593747531B6EDA8A002C1BEC /* DoubleSliderView.swift in Sources */,
+				5905EE701B72FEC600A4E29A /* FiltersViewController.swift in Sources */,
 				59959DAB1B6AFC17004DE777 /* BreakdownViewController.swift in Sources */,
 				59959DB11B6B007D004DE777 /* ResponseBarView.swift in Sources */,
 				5919BB961B474F1800C81B2F /* LoginWebView.swift in Sources */,
@@ -763,6 +768,7 @@
 				59DB9F3D1B705BBB0027A16A /* ListsImporter.swift in Sources */,
 				5933DDF11B2E1BF500F95394 /* MapViewController.m in Sources */,
 				59ABFA3C1B4727F1006349A6 /* CommentTableViewCell.m in Sources */,
+				5905EE6E1B72EB7900A4E29A /* Colors.swift in Sources */,
 				595745861B54F2DB006D3FF1 /* Object.swift in Sources */,
 				595575FE1A2E74B9000ABAD8 /* QScore.m in Sources */,
 				592F670D1B56310600F1B5F7 /* CoursesViewController.swift in Sources */,
@@ -786,7 +792,7 @@
 				595745881B54F9DD006D3FF1 /* Search.swift in Sources */,
 				59FF55CC1B4F6D5600915BF4 /* BreakdownCell.swift in Sources */,
 				595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */,
-				5942844B1B5E1915004EABC6 /* FiltersViewController.swift in Sources */,
+				5942844B1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift in Sources */,
 				599648AC1B5B43CA00015D02 /* NavigationController.swift in Sources */,
 				59FCC2C91B3BD5C7001A2337 /* List.swift in Sources */,
 				595575FB1A2E74B9000ABAD8 /* QComment.m in Sources */,

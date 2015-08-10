@@ -10,3 +10,5 @@
 #import "FiltersViewController.h"
 #import "TFHpple.h"
 #import "CommentTableViewCell.h"
+#import "DoubleSliderView.h"
+#import "NMRangeSlider.h"

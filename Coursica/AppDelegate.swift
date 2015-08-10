@@ -57,6 +57,13 @@ class SizeRange {
     func contains(n: Int) -> Bool { return n >= start && n <= end }
 }
 
+extension Realm {
+    class func shared() -> Realm {
+        let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+        return Realm(path: path, readOnly: true, encryptionKey: nil, error: NSErrorPointer())!
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -219,15 +226,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
-        Realm.defaultPath = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+//        setSchemaVersion(1, Realm.defaultPath, {migration, oldSchemaVersion in
+//            if oldSchemaVersion < 1 {
+//                
+//            }
+//        })
         
-        setSchemaVersion(1, Realm.defaultPath, {migration, oldSchemaVersion in
-            if oldSchemaVersion < 1 {
-                
-            }
-        })
-        
-        let courses = Realm().objects(Course)
+        let courses = Realm.shared().objects(Course)
         self.calculatePercentiles(courses)
 //        Realm().write {
 //            self.savePercentilesOnCourses(courses)
@@ -241,7 +246,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = NavigationController(rootViewController: CoursesViewController())
-        navigationController.navigationBar.setBackgroundImage(UIImage(named:"NavBarBg"), forBarMetrics: .Default)
+//        navigationController.navigationBar.setBackgroundImage(UIImage(named:"NavBarBg"), forBarMetrics: .Default)
+        navigationController.navigationBar.barTintColor = coursicaBlue
         navigationController.navigationBar.tintColor = UIColor.whiteColor()
         navigationController.navigationBar.opaque = true
         navigationController.navigationBar.translucent = false

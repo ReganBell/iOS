@@ -29,7 +29,7 @@
         <!--Filters-->
         <scene sceneID="0TK-WW-OeW">
             <objects>
-                <viewController storyboardIdentifier="filtersController" title="Filters" id="DYQ-fo-Uao" customClass="FiltersViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="filtersController" title="Filters" id="DYQ-fo-Uao" customClass="FiltersViewController" customModule="Coursica" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gx3-Yz-LUH"/>
                         <viewControllerLayoutGuide type="bottom" id="MaI-2X-RCm"/>
@@ -1457,45 +1457,45 @@
                         <outlet property="genEdBarView" destination="kZk-F8-pv9" id="tBD-Mq-Ez7"/>
                         <outlet property="scrollView" destination="Kej-Os-19P" id="51U-S0-ese"/>
                         <outlet property="termBarView" destination="NVl-PG-6Tl" id="ao7-oR-Lkr"/>
-                        <outletCollection property="cards" destination="NVl-PG-6Tl" id="NQd-bS-dAl"/>
-                        <outletCollection property="cards" destination="DhA-Py-MPS" id="zFt-FR-xZY"/>
-                        <outletCollection property="cards" destination="kZk-F8-pv9" id="Z8S-TJ-HXl"/>
-                        <outletCollection property="genEdImageViews" destination="9d2-Q6-Qao" id="Rpj-lj-dbD"/>
-                        <outletCollection property="genEdImageViews" destination="g4v-zG-LgC" id="1HO-jp-Fuc"/>
-                        <outletCollection property="genEdImageViews" destination="Kdt-WW-e1K" id="UJE-mE-Mid"/>
-                        <outletCollection property="genEdImageViews" destination="3qp-DW-yau" id="v7S-xr-vPK"/>
-                        <outletCollection property="genEdImageViews" destination="dy8-rk-GDE" id="RPd-vu-qqe"/>
-                        <outletCollection property="genEdImageViews" destination="Ny7-aB-GvE" id="SbM-px-ChQ"/>
-                        <outletCollection property="genEdImageViews" destination="j69-85-3Wc" id="KtS-4z-MC9"/>
-                        <outletCollection property="genEdImageViews" destination="9sF-DR-3JZ" id="ON0-R0-sE5"/>
-                        <outletCollection property="genEdButtons" destination="xhp-Bp-a9J" id="a8P-PT-BkO"/>
-                        <outletCollection property="genEdButtons" destination="rMS-Jw-7Nv" id="1xH-e1-qR0"/>
-                        <outletCollection property="genEdButtons" destination="AvJ-r9-s4x" id="Goq-8C-ApN"/>
-                        <outletCollection property="genEdButtons" destination="LH9-ru-5Pa" id="epq-h9-Ylf"/>
-                        <outletCollection property="genEdButtons" destination="vya-Yo-gqp" id="6x2-4B-zsz"/>
-                        <outletCollection property="genEdButtons" destination="eAa-1p-Ynb" id="HSN-rQ-Y8c"/>
-                        <outletCollection property="genEdButtons" destination="QNQ-zL-MMx" id="J3f-cm-9V9"/>
-                        <outletCollection property="genEdButtons" destination="FPt-dy-Mhk" id="0Su-di-R75"/>
-                        <outletCollection property="genEdLabels" destination="Rax-ca-zbq" id="aX9-E8-ggf"/>
-                        <outletCollection property="genEdLabels" destination="XyP-Es-Pab" id="gUa-GC-Wlz"/>
-                        <outletCollection property="genEdLabels" destination="tVm-vr-yfG" id="7J4-eV-EW1"/>
-                        <outletCollection property="genEdLabels" destination="gWC-S8-DxK" id="LCq-hf-nGt"/>
-                        <outletCollection property="genEdLabels" destination="mW4-8M-fXs" id="CGD-At-Q1k"/>
-                        <outletCollection property="genEdLabels" destination="dLE-7c-BWc" id="s3x-RR-w2G"/>
-                        <outletCollection property="genEdLabels" destination="li8-wS-8ic" id="1Hc-aY-htC"/>
-                        <outletCollection property="genEdLabels" destination="Htq-fB-LF8" id="4B4-cx-hWc"/>
-                        <outletCollection property="termBarLabels" destination="oAz-Pd-ka7" id="b3G-WR-QpA"/>
-                        <outletCollection property="termBarLabels" destination="zHn-9I-ZpM" id="8Yu-PU-CB2"/>
-                        <outletCollection property="termBarLabels" destination="MWR-tW-FcX" id="WbM-DT-fej"/>
-                        <outletCollection property="termBarButtons" destination="rdS-7C-qAO" id="xCp-qM-wkZ"/>
-                        <outletCollection property="termBarButtons" destination="24Z-1o-Sw8" id="AKb-EK-vKM"/>
-                        <outletCollection property="termBarButtons" destination="Jga-OV-VyZ" id="yRB-6R-EfG"/>
-                        <outletCollection property="gradBarLabels" destination="15q-Dl-5Eu" id="twi-8L-Rgq"/>
-                        <outletCollection property="gradBarLabels" destination="zPI-iA-bbw" id="dZs-6K-5vl"/>
-                        <outletCollection property="gradBarLabels" destination="p3c-90-tN7" id="K4Y-JN-pmg"/>
-                        <outletCollection property="gradBarButtons" destination="g4t-Wu-EXa" id="OnU-hQ-nMC"/>
-                        <outletCollection property="gradBarButtons" destination="B0F-4K-oXn" id="Mas-sT-HSr"/>
-                        <outletCollection property="gradBarButtons" destination="oZn-EK-eFm" id="1Yo-vf-Pkz"/>
+                        <outletCollection property="cards" destination="NVl-PG-6Tl" collectionClass="NSMutableArray" id="NQd-bS-dAl"/>
+                        <outletCollection property="cards" destination="DhA-Py-MPS" collectionClass="NSMutableArray" id="zFt-FR-xZY"/>
+                        <outletCollection property="cards" destination="kZk-F8-pv9" collectionClass="NSMutableArray" id="Z8S-TJ-HXl"/>
+                        <outletCollection property="genEdImageViews" destination="9d2-Q6-Qao" collectionClass="NSMutableArray" id="Rpj-lj-dbD"/>
+                        <outletCollection property="genEdImageViews" destination="g4v-zG-LgC" collectionClass="NSMutableArray" id="1HO-jp-Fuc"/>
+                        <outletCollection property="genEdImageViews" destination="Kdt-WW-e1K" collectionClass="NSMutableArray" id="UJE-mE-Mid"/>
+                        <outletCollection property="genEdImageViews" destination="3qp-DW-yau" collectionClass="NSMutableArray" id="v7S-xr-vPK"/>
+                        <outletCollection property="genEdImageViews" destination="dy8-rk-GDE" collectionClass="NSMutableArray" id="RPd-vu-qqe"/>
+                        <outletCollection property="genEdImageViews" destination="Ny7-aB-GvE" collectionClass="NSMutableArray" id="SbM-px-ChQ"/>
+                        <outletCollection property="genEdImageViews" destination="j69-85-3Wc" collectionClass="NSMutableArray" id="KtS-4z-MC9"/>
+                        <outletCollection property="genEdImageViews" destination="9sF-DR-3JZ" collectionClass="NSMutableArray" id="ON0-R0-sE5"/>
+                        <outletCollection property="genEdButtons" destination="xhp-Bp-a9J" collectionClass="NSMutableArray" id="a8P-PT-BkO"/>
+                        <outletCollection property="genEdButtons" destination="rMS-Jw-7Nv" collectionClass="NSMutableArray" id="1xH-e1-qR0"/>
+                        <outletCollection property="genEdButtons" destination="AvJ-r9-s4x" collectionClass="NSMutableArray" id="Goq-8C-ApN"/>
+                        <outletCollection property="genEdButtons" destination="LH9-ru-5Pa" collectionClass="NSMutableArray" id="epq-h9-Ylf"/>
+                        <outletCollection property="genEdButtons" destination="vya-Yo-gqp" collectionClass="NSMutableArray" id="6x2-4B-zsz"/>
+                        <outletCollection property="genEdButtons" destination="eAa-1p-Ynb" collectionClass="NSMutableArray" id="HSN-rQ-Y8c"/>
+                        <outletCollection property="genEdButtons" destination="QNQ-zL-MMx" collectionClass="NSMutableArray" id="J3f-cm-9V9"/>
+                        <outletCollection property="genEdButtons" destination="FPt-dy-Mhk" collectionClass="NSMutableArray" id="0Su-di-R75"/>
+                        <outletCollection property="genEdLabels" destination="Rax-ca-zbq" collectionClass="NSMutableArray" id="aX9-E8-ggf"/>
+                        <outletCollection property="genEdLabels" destination="XyP-Es-Pab" collectionClass="NSMutableArray" id="gUa-GC-Wlz"/>
+                        <outletCollection property="genEdLabels" destination="tVm-vr-yfG" collectionClass="NSMutableArray" id="7J4-eV-EW1"/>
+                        <outletCollection property="genEdLabels" destination="gWC-S8-DxK" collectionClass="NSMutableArray" id="LCq-hf-nGt"/>
+                        <outletCollection property="genEdLabels" destination="mW4-8M-fXs" collectionClass="NSMutableArray" id="CGD-At-Q1k"/>
+                        <outletCollection property="genEdLabels" destination="dLE-7c-BWc" collectionClass="NSMutableArray" id="s3x-RR-w2G"/>
+                        <outletCollection property="genEdLabels" destination="li8-wS-8ic" collectionClass="NSMutableArray" id="1Hc-aY-htC"/>
+                        <outletCollection property="genEdLabels" destination="Htq-fB-LF8" collectionClass="NSMutableArray" id="4B4-cx-hWc"/>
+                        <outletCollection property="termBarLabels" destination="oAz-Pd-ka7" collectionClass="NSMutableArray" id="b3G-WR-QpA"/>
+                        <outletCollection property="termBarLabels" destination="zHn-9I-ZpM" collectionClass="NSMutableArray" id="8Yu-PU-CB2"/>
+                        <outletCollection property="termBarLabels" destination="MWR-tW-FcX" collectionClass="NSMutableArray" id="WbM-DT-fej"/>
+                        <outletCollection property="termBarButtons" destination="rdS-7C-qAO" collectionClass="NSMutableArray" id="xCp-qM-wkZ"/>
+                        <outletCollection property="termBarButtons" destination="24Z-1o-Sw8" collectionClass="NSMutableArray" id="AKb-EK-vKM"/>
+                        <outletCollection property="termBarButtons" destination="Jga-OV-VyZ" collectionClass="NSMutableArray" id="yRB-6R-EfG"/>
+                        <outletCollection property="gradBarLabels" destination="15q-Dl-5Eu" collectionClass="NSMutableArray" id="twi-8L-Rgq"/>
+                        <outletCollection property="gradBarLabels" destination="zPI-iA-bbw" collectionClass="NSMutableArray" id="dZs-6K-5vl"/>
+                        <outletCollection property="gradBarLabels" destination="p3c-90-tN7" collectionClass="NSMutableArray" id="K4Y-JN-pmg"/>
+                        <outletCollection property="gradBarButtons" destination="g4t-Wu-EXa" collectionClass="NSMutableArray" id="OnU-hQ-nMC"/>
+                        <outletCollection property="gradBarButtons" destination="B0F-4K-oXn" collectionClass="NSMutableArray" id="Mas-sT-HSr"/>
+                        <outletCollection property="gradBarButtons" destination="oZn-EK-eFm" collectionClass="NSMutableArray" id="1Yo-vf-Pkz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tQG-ra-23U" userLabel="First Responder" sceneMemberID="firstResponder"/>

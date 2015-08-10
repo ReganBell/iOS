@@ -10,7 +10,6 @@ import Cartography
 import pop
 import Alamofire
 
-let coursicaBlue = UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0)
 let importButtonWidth: CGFloat = 212
 
 protocol ListsViewControllerDelegate {
