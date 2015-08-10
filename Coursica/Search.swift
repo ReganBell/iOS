@@ -121,6 +121,12 @@ class Search: NSObject {
     }
     
     func assignScoresForSearch(search: String) {
+        
+        let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
+        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/searches")
+        let searchRef = firebaseRoot.childByAutoId()
+        searchRef.setValue(search)
+        
         if titleIndex.terms.count == 0 {
             self.buildIndex(Realm().objects(Course))
         }

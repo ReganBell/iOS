@@ -27,16 +27,18 @@ class ListsViewController: UIViewController {
     var importProgressBarBackground: UIView!
     var importProgressBar: UIView!
     var progressBarConstraint: NSLayoutConstraint!
-    var coursesAdded: Int = 0
-    var coursesToAdd: Int = 0
+    var secretLoginWebView: LoginWebView?
     var listsAdded: Int = 0
     var listsToAdd: Int = 0
     
     override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: self.view.window)
         self.view.addSubview(tableView)
         tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.keyboardDismissMode = .OnDrag
         constrain(tableView, {table in
             table.edges == table.superview!.edges
         })
@@ -45,6 +47,21 @@ class ListsViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         self.refreshLists()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let height = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size.height {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height + 20, right: 0)
+//            tableView.contentOffset = CGPoint(x: 0, y: tableView.contentSize.height)
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        tableView.contentInset = UIEdgeInsetsZero
     }
     
     func refreshLists() {
@@ -147,7 +164,9 @@ class ListsViewController: UIViewController {
         self.importProgressBarBackground?.alpha = 1
         self.animateImportPercentComplete(0.4, duration: 15, message: "Logging you in...")
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        ListsImporter.shared.getListsWithPassword(passwordField.text!)
+        self.secretLoginWebView?.tryUsernameWhenReady(HUID, password: self.passwordField!.text!)
+
+//        ListsImporter.shared.getListsWithPassword(passwordField.text!)
     }
     
     func passwordDidChange(textField: UITextField) {
@@ -155,12 +174,22 @@ class ListsViewController: UIViewController {
     }
     
     func importButtonPressed(importButton: UIButton) {
-        ListsImporter.shared.getLogIn({success, errorMessage in
-            
+        
+        let secretWebView = LoginWebView()
+        secretWebView.loginDelegate = self
+        self.view.insertSubview(secretWebView, atIndex: 0)
+        constrain(secretWebView, {webView in
+            webView.edges == webView.superview!.edges
         })
+        secretWebView.loadLoginScreen()
+        self.secretLoginWebView = secretWebView
+        
+//        ListsImporter.shared.getLogIn({success, errorMessage in
+//            
+//        })
         UIView.animateWithDuration(0.3, animations: {
             importButton.alpha = 0
-            self.promptLabel?.text = "Re-enter the password you use with your HUID"
+            self.promptLabel?.text = "Enter the password you use with your HUID"
             self.passwordField?.becomeFirstResponder()
         })
     }
@@ -183,24 +212,23 @@ class ListsViewController: UIViewController {
     
     func animateImportPercentComplete(percentComplete: CGFloat, duration: CFTimeInterval, message: String) {
         
+        promptLabel?.text = message
         let progressAnim = POPBasicAnimation(propertyNamed: kPOPLayoutConstraintConstant)
         progressAnim.toValue = NSNumber(float: Float(importButtonWidth * percentComplete))
         progressAnim.duration = duration
-        self.progressBarConstraint?.pop_removeAllAnimations()
-        self.progressBarConstraint?.pop_addAnimation(progressAnim, forKey: "progressAnim")
-
+        progressBarConstraint?.pop_removeAllAnimations()
+        progressBarConstraint?.pop_addAnimation(progressAnim, forKey: "progressAnim")
     }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        self.tableView.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: animated)
     }
 }
 
 extension ListsViewController: LoginWebViewDelegate {
     
     func didDownloadList(list: CourseList) {
-        coursesToAdd += list.courses.count
         listsAdded += 1
         
         for tempCourse in list.courses {
@@ -208,14 +236,14 @@ extension ListsViewController: LoginWebViewDelegate {
                 if error != nil {
                     print(error)
                 } else {
-                    self.coursesAdded++
-                    let maybePluralCourses = self.coursesAdded == 1 ? "course" : "courses"
-                    self.promptLabel?.text = "Downloaded \(self.coursesAdded)/\(self.coursesToAdd) \(maybePluralCourses)..."
-                    if self.listsAdded == self.listsToAdd && self.coursesAdded == self.coursesToAdd {
+                    if self.listsAdded == self.listsToAdd {
                         
                         self.promptLabel?.text = "Success!"
                         let progressAnim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant)
                         progressAnim.toValue = NSNumber(float: Float(importButtonWidth))
+                        progressAnim.completionBlock = {animation, finished in
+                            self.layoutImportFooterView()
+                        }
                         self.progressBarConstraint?.pop_removeAllAnimations()
                         self.progressBarConstraint?.pop_addAnimation(progressAnim, forKey: "progressAnim")
                         self.refreshLists()
@@ -225,14 +253,23 @@ extension ListsViewController: LoginWebViewDelegate {
         }
     }
     
+    func didTimeout() {
+        self.refreshLists()
+        self.layoutImportFooterView()
+    }
+    
     func didLoadCS50CoursesSuccessfullyWithLists(lists: [CourseList]) {
+        
+        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "didTimeout", userInfo: nil, repeats: false)
+        
+        self.secretLoginWebView?.removeFromSuperview()
+        self.secretLoginWebView = nil
         
         self.listsToAdd = lists.count
         
-        self.animateImportPercentComplete(0.9, duration: 1, message: "Downloading lists...")
+        self.animateImportPercentComplete(0.9, duration: 5, message: "Downloading lists...")
         
         for list in lists {
-            coursesToAdd += list.courses.count
             let parameters = ["id":list.id, "sortDir":"null", "sortField":"null"]
             
             Alamofire.request(.POST, "https://courses.cs50.net/lists/getFromSolr", parameters: parameters)
@@ -249,11 +286,14 @@ extension ListsViewController: LoginWebViewDelegate {
     }
     
     func didLoginSuccessfullyWithHUID(huid: String) {
-        self.animateImportPercentComplete(0.6, duration: 10, message: "Importing...")
+        self.animateImportPercentComplete(0.6, duration: 1, message: "Importing...")
     }
     
     func didFailWithError(error: LoginErrorType) {
         
+        self.secretLoginWebView?.removeFromSuperview()
+        self.secretLoginWebView = nil
+
         self.progressBarConstraint?.pop_removeAllAnimations()
         self.importProgressBarBackground?.alpha = 0
 

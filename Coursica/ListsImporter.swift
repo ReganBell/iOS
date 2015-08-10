@@ -13,11 +13,12 @@ class ListsImporter: NSObject {
     
     static let shared = ListsImporter()
     var parameters: [String: String]?
+    var xmlString: String?
     var urlString: String?
     var password: String?
     var completionBlock: ((Bool, String?) -> (Void))?
     
-    func setParametersForXMLString(xmlString: String) {
+    func parametersForXMLString(xmlString: String) ->  [String: String] {
         let htmlData = xmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
         let document = TFHpple(HTMLData: htmlData)
         var parameters: [String: String] = Dictionary<String, String>()
@@ -41,19 +42,51 @@ class ListsImporter: NSObject {
         for (key, value) in additional {
             parameters.updateValue(value!, forKey: key)
         }
-        self.parameters = parameters
+        return parameters
     }
     
     func listIDsForXMLString(xmlString: String) -> [String] {
         
+        NSLog(xmlString)
+        let htmlData = xmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        let document = TFHpple(HTMLData: htmlData)
+        var counts: [NSString] = []
+        var ids: [NSString] = []
+        for node in document.searchWithXPathQuery("//a[@class=\"list-link\"]/@data-list-id") {
+            if let element = node as? TFHppleElement {
+                if let id = element.content {
+                    ids.append(id)
+                }
+            }
+        }
+        for node in document.searchWithXPathQuery("//a[@class=\"list-link\"]/@data-list-count") {
+            if let element = node as? TFHppleElement {
+                if let count = element.content {
+                    counts.append(count)
+                }
+            }
+        }
         return []
     }
     
-    func tryLists() {
-        if self.urlString == nil || self.password == nil {
-            return
+    func canMakeLoginRequest() -> Bool {
+        for stringOption in [urlString, password, xmlString] {
+            if let string = stringOption {
+                if string.isEmpty {
+                    return false
+                }
+            } else {
+                return false
+            }
         }
-        Alamofire.request(.POST, urlString!, parameters: parameters, encoding: ParameterEncoding.URL, headers: nil).responseString { _, response, string, error in
+        return true
+    }
+    
+    func tryLists() {
+        if !canMakeLoginRequest() {
+           return
+        }
+        Alamofire.request(.POST, urlString!, parameters: parametersForXMLString(xmlString!), encoding: .URL, headers: nil).responseString { _, response, string, error in
             if let error = error {
                 self.completionBlock!(false, "Network error.")
                 return
@@ -76,7 +109,7 @@ class ListsImporter: NSObject {
         Alamofire.request(.GET, urlString, parameters: nil, encoding: ParameterEncoding.URL, headers: nil).responseString { _, response, string, error in
             if let xmlString = string {
                 self.urlString = response!.URL!.absoluteString
-                self.setParametersForXMLString(xmlString)
+                self.xmlString = xmlString
                 self.tryLists()
             } else {
                 completionBlock(false, "Network error.")

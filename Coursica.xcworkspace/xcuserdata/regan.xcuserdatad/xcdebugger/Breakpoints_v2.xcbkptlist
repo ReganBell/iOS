@@ -171,11 +171,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/Search.swift"
-            timestampString = "460254567.673179"
+            timestampString = "460934124.065102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "searchIndex(_:terms:zoneWeight:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -203,11 +203,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Coursica/Search.swift"
-            timestampString = "460933467.173822"
+            timestampString = "460934124.065102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "assignScoresForSearch(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -218,13 +218,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Coursica/CoursesViewController.swift"
-            timestampString = "460933497.18649"
+            filePath = "Coursica/ListsImporter.swift"
+            timestampString = "460938706.638871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "updatePredicate(_:search:)"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "listIDsForXMLString(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -234,13 +234,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Coursica/CoursesViewController.swift"
-            timestampString = "460933516.349826"
+            filePath = "Coursica/ListsImporter.swift"
+            timestampString = "460938706.638871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
-            landmarkName = "updatePredicate(_:search:)"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "listIDsForXMLString(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
