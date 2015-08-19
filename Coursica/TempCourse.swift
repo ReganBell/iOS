@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 extension FDataSnapshot {
     
@@ -29,6 +30,9 @@ class TempCourse {
         get {
             return "\(self.shortField) \(self.number): \(self.title)"
         }
+    }
+    var course: Course? {
+        return Realm().objects(Course).filter("number = '\(number)' AND shortField = '\(shortField)'").first
     }
     
     init(CS50Dictionary: NSDictionary) {

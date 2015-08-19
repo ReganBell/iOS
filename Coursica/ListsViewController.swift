@@ -18,7 +18,7 @@ protocol ListsViewControllerDelegate {
 
 class ListsViewController: UIViewController {
     
-    var lists: [CourseList] = []
+    var lists: [TempCourseList] = []
     var tableView = UITableView()
     var delegate: ListsViewControllerDelegate?
     var promptLabel: UILabel!
@@ -56,7 +56,6 @@ class ListsViewController: UIViewController {
     func keyboardWillShow(notification: NSNotification) {
         if let height = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size.height {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height + 20, right: 0)
-//            tableView.contentOffset = CGPoint(x: 0, y: tableView.contentSize.height)
         }
     }
     
@@ -67,7 +66,7 @@ class ListsViewController: UIViewController {
     func refreshLists() {
         
         weak var weakSelf = self
-        CourseList.fetchListsForCurrentUserWithCompletion({lists in
+        TempCourseList.fetchListsForCurrentUserWithCompletion({lists in
             if let lists = lists {
                 weakSelf!.lists = lists
                 weakSelf!.tableView.reloadData()
@@ -194,7 +193,7 @@ class ListsViewController: UIViewController {
         })
     }
     
-    func headerViewForList(list: CourseList, tableView: UITableView) -> UIView {
+    func headerViewForList(list: TempCourseList, tableView: UITableView) -> UIView {
         
         let headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
         headerView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
@@ -228,11 +227,11 @@ class ListsViewController: UIViewController {
 
 extension ListsViewController: LoginWebViewDelegate {
     
-    func didDownloadList(list: CourseList) {
+    func didDownloadList(list: TempCourseList) {
         listsAdded += 1
         
         for tempCourse in list.courses {
-            CourseList.addTempCourseToListWithName(list.name, tempCourse: tempCourse, completionBlock: {error in
+            TempCourseList.addTempCourseToListWithName(list.name, tempCourse: tempCourse, completionBlock: {error in
                 if error != nil {
                     print(error)
                 } else {
@@ -258,9 +257,9 @@ extension ListsViewController: LoginWebViewDelegate {
         self.layoutImportFooterView()
     }
     
-    func didLoadCS50CoursesSuccessfullyWithLists(lists: [CourseList]) {
+    func didLoadCS50CoursesSuccessfullyWithLists(lists: [TempCourseList]) {
         
-        NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "didTimeout", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "didTimeout", userInfo: nil, repeats: false)
         
         self.secretLoginWebView?.removeFromSuperview()
         self.secretLoginWebView = nil
@@ -333,7 +332,7 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         if sourceIndexPath.section != destinationIndexPath.section {
-            CourseList.moveCourseFromList(lists[sourceIndexPath.section],
+            TempCourseList.moveCourseFromList(lists[sourceIndexPath.section],
                 toList: lists[destinationIndexPath.section],
                 tempCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
         }

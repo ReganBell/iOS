@@ -1,5 +1,5 @@
 //
-//  List.swift
+//  TempCourseList.swift
 //  Coursica
 //
 //  Created by Regan Bell on 6/24/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CourseList {
+class TempCourseList {
     
     var name: String = ""
     var courses: [TempCourse] = []
@@ -40,12 +40,12 @@ class CourseList {
                 "Courses I've Disliked"]
     }
     
-    class func emptyListsDictionary() -> [CourseList] {
-        return [CourseList(name: "Courses I've Taken", courses: []),
-                CourseList(name: "Courses I'm Taking", courses: []),
-                CourseList(name: "Courses I'm Shopping", courses: []),
-                CourseList(name: "Courses I've Liked", courses: []),
-                CourseList(name: "Courses I've Disliked", courses: [])]
+    class func emptyListsDictionary() -> [TempCourseList] {
+        return [TempCourseList(name: "Courses I've Taken", courses: []),
+                TempCourseList(name: "Courses I'm Taking", courses: []),
+                TempCourseList(name: "Courses I'm Shopping", courses: []),
+                TempCourseList(name: "Courses I've Liked", courses: []),
+                TempCourseList(name: "Courses I've Disliked", courses: [])]
     }
     
     func removeTempCourse(tempCourse: TempCourse) -> Bool {
@@ -63,14 +63,14 @@ class CourseList {
         }
     }
     
-    class func moveCourseFromList(fromList: CourseList, toList: CourseList, tempCourse: TempCourse) {
+    class func moveCourseFromList(fromList: TempCourseList, toList: TempCourseList, tempCourse: TempCourse) {
     
         fromList.removeTempCourse(tempCourse)
         toList.courses.append(tempCourse)
         self.addTempCourseToListWithName(toList.name, tempCourse: tempCourse)
     }
 
-    class func fetchListsForCurrentUserWithCompletion(completionBlock: [CourseList]? -> Void) {
+    class func fetchListsForCurrentUserWithCompletion(completionBlock: [TempCourseList]? -> Void) {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/lists")
@@ -80,14 +80,14 @@ class CourseList {
                 completionBlock(nil)
                 return
             }
-            var lists: [CourseList] = []
+            var lists: [TempCourseList] = []
             for list in snapshot.snapshotChildren() {
                 let name = list.key
                 var courses: [TempCourse] = []
                 for course in list.snapshotChildren() {
                     courses.append(TempCourse(snapshot: course))
                 }
-                lists.append(CourseList(name: name, courses: courses))
+                lists.append(TempCourseList(name: name, courses: courses))
             }
             completionBlock(lists)
         })

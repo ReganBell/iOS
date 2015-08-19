@@ -7,7 +7,6 @@
 //
 
 import RealmSwift
-import TTTAttributedLabel
 import Cartography
 
 class DetailViewController: CoursicaViewController {
@@ -16,22 +15,17 @@ class DetailViewController: CoursicaViewController {
     var report: Report?
     var reportLookupFailed: Bool = false
     
-    var breakdownCell: BreakdownCell!
+    var infoCell: InfoCell?
+    var breakdownCell: BreakdownCell?
     
     var tableView = UITableView()
-    @IBOutlet var contentView: UIView!
     
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var courseInstructorLabel: UILabel!
-    @IBOutlet var courseMeetingLabel: UILabel!
-    @IBOutlet var courseLocationLabel: TTTAttributedLabel!
-    @IBOutlet var courseInfoLabel: UILabel!
-    @IBOutlet var satisfiesLabel: UILabel!
-    
-    class func detailViewControllerWithTempCourse(tempCourse: TempCourse) -> DetailViewController {
-        let course = Realm().objects(Course).filter("number = '\(tempCourse.number)' AND shortField = '\(tempCourse.shortField)'").first!
-        return self.detailViewControllerWithCourse(course)
+    class func detailViewControllerWithTempCourse(tempCourse: TempCourse) -> DetailViewController? {
+        if let course = tempCourse.course {
+            return self.detailViewControllerWithCourse(course)
+        } else {
+            return nil
+        }
     }
     
     class func detailViewControllerWithCourse(course: Course) -> DetailViewController {
@@ -53,23 +47,42 @@ class DetailViewController: CoursicaViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .None
-        self.view.addSubview(tableView)
-        constrain(self.view, tableView, {view, scrollView in
+        view.addSubview(tableView)
+        constrain(view, tableView, {view, scrollView in
             scrollView.edges == view.edges
         })
-        self.view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.setTranslatesAutoresizingMaskIntoConstraints(true)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "addCourseButtonPressed")
         
-        self.setNavigationBarTitle("\(course.shortField) \(course.number)")
-        self.getReportFromServer()
+        setNavigationBarTitle("\(course.shortField) \(course.number)")
+        getReportFromServer()
+    }
+    
+    func getListsToFindConflicts() {
+        weak var weakSelf = self
+        TempCourseList.fetchListsForCurrentUserWithCompletion({lists in
+            if let lists = lists {
+                for list in lists {
+                    if list.name == "Courses I'm Shopping" {
+                        var courses: [Course] = []
+                        for tempCourse in list.courses {
+                            if let course = tempCourse.course {
+                                courses.append(tempCourse.course!)
+                            }
+                        }
+                        weakSelf!.infoCell?.updateWithShoppingList(courses)
+                    }
+                }
+            }
+        })
     }
     
     func addCourseButtonPressed() {
         let alertController = UIAlertController(title: "Add to Lists", message: "Keep track of courses with Lists.", preferredStyle: .ActionSheet)
-        for listName in CourseList.listNames() {
+        for listName in TempCourseList.listNames() {
             let action = UIAlertAction(title: listName, style: .Default, handler: {action in
-                CourseList.addCourseToListWithName(listName, course: self.course)
+                TempCourseList.addCourseToListWithName(listName, course: self.course)
             })
             alertController.addAction(action)
         }
@@ -84,10 +97,10 @@ class DetailViewController: CoursicaViewController {
         root.observeSingleEventOfType(FEventType.Value, withBlock: {snapshot in
             if let report = ReportParser.reportFromSnapshot(snapshot) {
                 self.report = report
-                weakSelf?.breakdownCell.updateWithReport(report)
+                weakSelf?.breakdownCell?.updateWithReport(report)
             } else {
                 self.reportLookupFailed = true
-                weakSelf?.breakdownCell.updateForNoBreakdownFound()
+                weakSelf?.breakdownCell?.updateForNoBreakdownFound()
             }
         })
     }
@@ -111,10 +124,11 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("info") as? InfoCell ?? InfoCell()
+            cell.delegate = self
             cell.updateWithCourse(course)
             return cell
         } else if indexPath.row == 1 {
-            breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
+            let breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
             breakdownCell.delegate = self
             breakdownCell.initialLayoutWithCourse(course)
             if let _ = report {
@@ -122,6 +136,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             } else if reportLookupFailed {
                 breakdownCell.updateForNoBreakdownFound()
             }
+            self.breakdownCell = breakdownCell
             return breakdownCell
         } else {
             let commentsCell = CommentsCell()
@@ -136,6 +151,12 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension DetailViewController: InfoCellDelegate {
+    func mapButtonPressed(urlString: String) {
+        navigationController?.pushViewController(MapViewController(urlString: urlString), animated: true)
+    }
+}
+
 extension DetailViewController: CommentsCellDelegate {
     
     func viewCommentsButtonPressed(commentsCell: CommentsCell) {
@@ -147,16 +168,5 @@ extension DetailViewController: CommentsCellDelegate {
         } else {
             commentsCell.viewCommentsButton.setTitle("No comments found", forState: .Normal)
         }
-    }
-}
-
-extension DetailViewController: TTTAttributedLabelDelegate {
-    
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        
-        let mapController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapController") as! MapViewController
-        mapController.request = NSURLRequest(URL: url)
-        mapController.title = self.course.locations.first!.building
-        self.navigationController?.pushViewController(mapController, animated: true)
     }
 }
