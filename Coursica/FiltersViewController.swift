@@ -87,9 +87,17 @@ class FiltersViewController: UIViewController {
     }
     
     func enrollmentPredicate() -> NSPredicate? {
-        let lowerPredicate = NSPredicate(format: "enrollment >= %d", Int(enrollmentSlider.lowerValue))
-        if Int(enrollmentSlider.upperValue) < 250 {
-            let upperPredicate = NSPredicate(format: "enrollment <= %d", Int(enrollmentSlider.upperValue))
+        
+        let lowerValue = Int(enrollmentSlider.lowerValue)
+        let upperValue = Int(enrollmentSlider.upperValue)
+        
+        if upperValue == 250 && lowerValue == 1 {
+            return nil
+        }
+        
+        let lowerPredicate = NSPredicate(format: "enrollment >= %d", lowerValue)
+        if upperValue < 250 {
+            let upperPredicate = NSPredicate(format: "enrollment <= %d", upperValue)
             return NSCompoundPredicate.andPredicateWithSubpredicates([lowerPredicate, upperPredicate])
         } else {
             return lowerPredicate
