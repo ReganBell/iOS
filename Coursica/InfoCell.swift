@@ -40,7 +40,9 @@ class InfoCell: UITableViewCell {
     let redColor = UIColor(rgba: "#FF1F1F")
     
     let leftLabelMargin: CGFloat = 16
-    let labelWidth: CGFloat = 70
+    var labelWidth: CGFloat {
+        return count(course.prerequisitesString) > 0 ? 80 : 70
+    }
     
     let cardMargin: CGFloat = 10
     let rightLabelMargin: CGFloat = 10
@@ -69,6 +71,9 @@ class InfoCell: UITableViewCell {
     
     var enrollmentLeftLabel: UILabel!
     var enrollmentDisplayLabel: UILabel!
+    
+    var prerequisitesLeftLabel: UILabel!
+    var prerequisitesDisplayLabel: UILabel!
     
     var course: Course!
     var delegate: InfoCellDelegate!
@@ -227,6 +232,7 @@ class InfoCell: UITableViewCell {
 
     func updateWithCourse(course: Course) {
         
+        self.course = course
         roundedBackgroundView.backgroundColor = UIColor.whiteColor()
         contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         roundedBackgroundView.layer.cornerRadius = 4
@@ -308,6 +314,7 @@ class InfoCell: UITableViewCell {
         })
         
         var lastLabel = satisfiesDisplayLabel
+        var abovePrerequisitesLabel = satisfiesDisplayLabel
         
         if course.enrollment != 0 {
             enrollmentLeftLabel = leftItalicLabel("Enrollment:")
@@ -320,7 +327,23 @@ class InfoCell: UITableViewCell {
                 display.top == label.top
             })
             lastLabel = enrollmentDisplayLabel
+            abovePrerequisitesLabel = enrollmentDisplayLabel
         }
+        
+        if count(course.prerequisitesString) > 0 {
+            prerequisitesLeftLabel = leftItalicLabel("Prerequisites:")
+            constrain(prerequisitesLeftLabel, abovePrerequisitesLabel, {prereq, above in
+                prereq.top == above.bottom + 10
+            })
+            
+            prerequisitesDisplayLabel = displayLabel(course.prerequisitesString)
+            constrain(prerequisitesDisplayLabel, prerequisitesLeftLabel, {display, left in
+                display.top == left.top
+            })
+            
+            lastLabel = prerequisitesDisplayLabel
+        }
+
         
         constrain(roundedBackgroundView, lastLabel, {background, last in
             last.bottom == background.bottom - 10
@@ -332,8 +355,6 @@ class InfoCell: UITableViewCell {
             background.right == cell.right - self.cardMargin
             background.bottom == cell.bottom - 10
         })
-        
-        self.course = course
     }
     
     func label(text: String) -> UILabel {

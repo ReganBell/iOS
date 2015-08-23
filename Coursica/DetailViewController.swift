@@ -62,23 +62,25 @@ class DetailViewController: CoursicaViewController {
     
     func getListsToFindConflicts() {
         weak var weakSelf = self
-        TempCourseList.fetchListsForCurrentUserWithCompletion({lists in
-            if let lists = lists {
-                for list in lists {
-                    if list.name == "Courses I'm Shopping" {
-                        var courses: [Course] = []
-                        for tempCourse in list.courses {
-                            if let course = tempCourse.course {
-                                courses.append(tempCourse.course!)
+        if course.meetings.count > 0 {
+            TempCourseList.fetchListsForCurrentUserWithCompletion({lists in
+                if let lists = lists {
+                    for list in lists {
+                        if list.name == "Courses I'm Shopping" {
+                            var courses: [Course] = []
+                            for tempCourse in list.courses {
+                                if let course = tempCourse.course {
+                                    courses.append(tempCourse.course!)
+                                }
                             }
+                            weakSelf?.tableView.beginUpdates()
+                            weakSelf?.infoCell?.updateWithShoppingList(courses)
+                            weakSelf?.tableView.endUpdates()
                         }
-                        weakSelf?.tableView.beginUpdates()
-                        weakSelf?.infoCell?.updateWithShoppingList(courses)
-                        weakSelf?.tableView.endUpdates()
                     }
                 }
-            }
-        })
+            })
+        }
     }
     
     func addCourseButtonPressed() {
