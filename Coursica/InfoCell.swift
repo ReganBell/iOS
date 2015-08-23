@@ -288,9 +288,9 @@ class InfoCell: UITableViewCell {
             let mapButton = UIButton()
             mapButton.addTarget(self, action: "mapButtonPressed", forControlEvents: .TouchUpInside)
             mapButton.backgroundColor = UIColor.clearColor()
-            meetsDisplayLabel.addSubview(mapButton)
-            constrain(mapButton, {button in
-                button.edges == button.superview!.edges
+            addSubview(mapButton)
+            constrain(mapButton, meetsDisplayLabel, {button, displayLabel in
+                button.edges == displayLabel.edges
             })
         }
         constrain(meetsDisplayLabel, meetsLeftLabel, instructorDisplayLabel, {display, label, instructor in
