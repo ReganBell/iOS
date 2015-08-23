@@ -57,6 +57,7 @@ class DetailViewController: CoursicaViewController {
         
         setNavigationBarTitle("\(course.shortField) \(course.number)")
         getReportFromServer()
+        getListsToFindConflicts()
     }
     
     func getListsToFindConflicts() {
@@ -71,7 +72,9 @@ class DetailViewController: CoursicaViewController {
                                 courses.append(tempCourse.course!)
                             }
                         }
-                        weakSelf!.infoCell?.updateWithShoppingList(courses)
+                        weakSelf?.tableView.beginUpdates()
+                        weakSelf?.infoCell?.updateWithShoppingList(courses)
+                        weakSelf?.tableView.endUpdates()
                     }
                 }
             }
@@ -126,6 +129,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCellWithIdentifier("info") as? InfoCell ?? InfoCell()
             cell.delegate = self
             cell.updateWithCourse(course)
+            self.infoCell = cell
             return cell
         } else if indexPath.row == 1 {
             let breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")

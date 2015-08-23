@@ -12,6 +12,8 @@ class Display: NSObject {
     
     var course: Course?
     var meeting: Meeting?
+    let shortDays = ["0": "Sun", "1": "Mon", "2": "Tues", "3": "Wed", "4": "Thur", "5": "Fri", "6": "Sat"]
+    let letterDays = ["0": "Su", "1": "M", "2": "Tu", "3": "W", "4": "Th", "5": "F", "6": "Sa"]
     var title: String { get {
         if course != nil {
             return "\(course!.shortField) \(course!.number) - \(course!.title)"
@@ -63,8 +65,13 @@ class Display: NSObject {
             }
         }
     }
-    var meetings: String {
-        get {
+    var meetingsShort: String {
+        return meetings(shortDays)
+    }
+    var meetingsLetters: String {
+        return meetings(letterDays)
+    }
+    func meetings(dayAbbreviator: [String: String]) -> String {
             if course!.meetings.count == 0 {
                 return "TBD"
             } else {
@@ -72,33 +79,17 @@ class Display: NSObject {
                 var string = ""
                 for meeting in meetings {
                     if !meeting.day.isEmpty {
-                        string += (string.isEmpty ? "":", ") + self.abbreviatedString(meeting.day)
+                        string += (string.isEmpty ? "":", ") + (dayAbbreviator[meeting.day] ?? "")
                     }
                 }
                 let last = meetings.last! as Meeting
                 string += (" from " + last.display.title)
                 return string
             }
-        }
     }
     var enrollmentSource: String {
-        get {
-            let key = Key(string: course!.enrollmentSource)
-            return "(in \(key.term.capitalizedString) \(key.year))"
-        }
-    }
-    
-    func abbreviatedString(dayNumber: String) -> String {
-        switch dayNumber {
-            case "0": return "Sun"
-            case "1": return "Mon"
-            case "2": return "Tues"
-            case "3": return "Wed"
-            case "4": return "Thur"
-            case "5": return "Fri"
-            case "6": return "Sat"
-            default: return ""
-    }
+        let key = Key(string: course!.enrollmentSource)
+        return "(in \(key.term.capitalizedString) \(key.year))"
     }
     
     func standardTime(militaryTime: String) -> String {

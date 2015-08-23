@@ -8,11 +8,36 @@
 
 import Cartography
 
+extension NSMutableAttributedString {
+    
+    func addAttribute(name: String, value: NSObject, substring: String) {
+        let range = (string as NSString).rangeOfString(substring)
+        if range.location != NSNotFound {
+            addAttribute(name, value: value, range: range)
+        }
+    }
+    
+    func addColor(color: UIColor, substring: String) {
+        addAttribute(NSForegroundColorAttributeName, value: color, substring: substring)
+    }
+    
+    func addFont(font: UIFont, substring: String) {
+        addAttribute(NSFontAttributeName, value: font, substring: substring)
+    }
+    
+    func addFontAndColor(font: UIFont, color: UIColor, substring: String) {
+        addFont(font, substring: substring)
+        addColor(color, substring: substring)
+    }
+}
+
 protocol InfoCellDelegate {
     func mapButtonPressed(urlString: String)
 }
 
 class InfoCell: UITableViewCell {
+    
+    let redColor = UIColor(rgba: "#FF1F1F")
     
     let leftLabelMargin: CGFloat = 16
     let labelWidth: CGFloat = 70
@@ -34,6 +59,8 @@ class InfoCell: UITableViewCell {
     var meetsLeftLabel: UILabel!
     var meetsDisplayLabel: UILabel!
     
+    var meets_satisfiesGroup: ConstraintGroup!
+    
     var satisfiesLeftLabel: UILabel!
     var satisfiesDisplayLabel: UILabel!
     
@@ -43,8 +70,8 @@ class InfoCell: UITableViewCell {
     var course: Course!
     var delegate: InfoCellDelegate!
     
-    let italic = UIFont(name: "AvenirNext-Italic", size: 13)
-    let bold = UIFont(name: "AvenirNext-Bold", size: 13)
+    let italic = UIFont(name: "AvenirNext-Italic", size: 13)!
+    let bold = UIFont(name: "AvenirNext-Bold", size: 13)!
     
     func intFromMilitaryTime(var militaryTime: String) -> Int {
         
@@ -81,6 +108,9 @@ class InfoCell: UITableViewCell {
         if let first = course.meetings.first {
             var conflicts: Set<Course> = []
             for conflictCourse in courses {
+                if conflictCourse.title == course.title {
+                    continue
+                }
                 for potentialConflict in conflictCourse.meetings {
                     for courseMeeting in course.meetings {
                         if meetingsDoConflict(courseMeeting, b: potentialConflict) {
@@ -89,11 +119,51 @@ class InfoCell: UITableViewCell {
                     }
                 }
             }
+            if conflicts.count > 0 {
+                updateUIForConflicts(conflicts)
+            }
         }
     }
     
+    func updateUIForConflicts(conflicts: Set<Course>) {
+        
+        meetsDisplayLabel.attributedText = attributedMeetsStringForCourse(course, conflicts: true)
+        
+        let conflictsLeftLabel = leftItalicLabel("Conflicts:")
+        var labels: [UILabel] = []
+        for conflict in conflicts {
+            labels.append(displayLabel(attributedConflictStringForCourse(conflict)))
+        }
+        constrain(conflictsLeftLabel, meetsDisplayLabel, replace: meets_satisfiesGroup, {conflicts, meets in
+            conflicts.top == meets.bottom + 10
+        })
+        constrain([conflictsLeftLabel] + labels, {labels in
+            let left = labels[0]
+            for (index, label) in enumerate(labels) {
+                if index == 0 {continue}
+                if index == 1 {label.top == left.top}
+                else {
+                    label.top == labels[index - 1].bottom + 10
+                }
+            }
+        })
+        constrain(labels.last!, satisfiesLeftLabel, {last, satisfies in
+            satisfies.top == last.bottom + 10
+        })
+    }
+    
+    func attributedConflictStringForCourse(course: Course) -> NSAttributedString {
+        let courseName = course.shortField + " " + course.number
+        let conflictTime = course.display.meetingsLetters
+        let conflict =  courseName + "   " + conflictTime
+        let attributedConflict = NSMutableAttributedString(string: conflict)
+        attributedConflict.addFontAndColor(bold, color: redColor, substring: courseName)
+        attributedConflict.addFontAndColor(italic, color: UIColor.grayColor(), substring: conflictTime)
+        return attributedConflict
+    }
+    
     func leftItalicLabel(text: String) -> UILabel {
-        let italicLabel = self.label(text)
+        let italicLabel = label(text)
         italicLabel.font = italic
         italicLabel.textAlignment = .Right
         roundedBackgroundView.addSubview(italicLabel)
@@ -106,7 +176,7 @@ class InfoCell: UITableViewCell {
     }
     
     func displayLabel(text: NSObject) -> UILabel {
-        let displayLabel = self.label("")
+        let displayLabel = label("")
         displayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
         displayLabel.textAlignment = .Left
         displayLabel.font = bold
@@ -124,28 +194,25 @@ class InfoCell: UITableViewCell {
         return displayLabel
     }
     
-    func attributedMeetsStringForCourse(course: Course) -> NSAttributedString {
-        let locations = course.display.locations == "TBD" ? course.display.locations : (course.display.locations + " Map")
-        let meets = course.display.meetings + " in " + locations
-        let attributedMeets = NSMutableAttributedString(string: meets)
-        attributedMeets.addAttribute(NSFontAttributeName, value: bold!, range: NSMakeRange(0, count(meets)))
+    func attributedMeetsStringForCourse(course: Course, conflicts: Bool) -> NSAttributedString {
+        let locationsString = course.display.locations == "TBD" ? course.display.locations : (course.display.locations + " Map")
+        let meetsString = course.display.meetingsShort + " in " + locationsString
+        let attributedMeets = NSMutableAttributedString(string: meetsString)
+        attributedMeets.addFont(bold, substring: meetsString)
         let greenColor = UIColor(red: 30/255.0, green: 190/255.0, blue: 56/255.0, alpha: 1.0)
-        attributedMeets.addAttribute(NSForegroundColorAttributeName, value: greenColor, range: (meets as NSString).rangeOfString(course.display.meetings))
-        attributedMeets.addAttribute(NSForegroundColorAttributeName, value: coursicaBlue, range: (meets as NSString).rangeOfString("Map"))
-        attributedMeets.addAttribute(NSUnderlineColorAttributeName, value: coursicaBlue, range: (meets as NSString).rangeOfString("Map"))
-        attributedMeets.addAttribute(NSUnderlineStyleAttributeName, value: NSNumber(integer: 1), range: (meets as NSString).rangeOfString("Map"))
-        attributedMeets.addAttribute(NSFontAttributeName, value: italic!, range: (meets as NSString).rangeOfString("in"))
-        attributedMeets.addAttribute(NSFontAttributeName, value: italic!, range: (meets as NSString).rangeOfString("in"))
+        attributedMeets.addColor(conflicts ? redColor : greenColor, substring: course.display.meetingsShort)
+        attributedMeets.addColor(coursicaBlue, substring: "Map")
+        attributedMeets.addAttribute(NSUnderlineColorAttributeName, value: coursicaBlue, substring: "Map")
+        attributedMeets.addAttribute(NSUnderlineStyleAttributeName, value: NSNumber(integer: 1), substring: "Map")
+        attributedMeets.addFont(italic, substring: "in")
         return attributedMeets
     }
     
     func attributedEnrollmentStringForCourse(course: Course) -> NSAttributedString {
-        let enrollment = "\(course.enrollment)" + " " + course.display.enrollmentSource
-        let attributedEnrollment = NSMutableAttributedString(string: enrollment)
-        attributedEnrollment.addAttribute(NSFontAttributeName, value: bold!, range: NSMakeRange(0, count(enrollment)))
-        attributedEnrollment.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, count(enrollment)))
-        attributedEnrollment.addAttribute(NSForegroundColorAttributeName, value: UIColor.grayColor(), range: (enrollment as NSString).rangeOfString(course.display.enrollmentSource))
-        attributedEnrollment.addAttribute(NSFontAttributeName, value: italic!, range: (enrollment as NSString).rangeOfString(course.display.enrollmentSource))
+        let enrollmentString = "\(course.enrollment)" + " " + course.display.enrollmentSource
+        let attributedEnrollment = NSMutableAttributedString(string: enrollmentString)
+        attributedEnrollment.addFontAndColor(bold, color: UIColor.blackColor(), substring: enrollmentString)
+        attributedEnrollment.addFontAndColor(italic, color: UIColor.grayColor(), substring: course.display.enrollmentSource)
         return attributedEnrollment
     }
     
@@ -198,7 +265,7 @@ class InfoCell: UITableViewCell {
             meets.top == instructorDisplay.bottom + 10
         })
         
-        meetsDisplayLabel = displayLabel(attributedMeetsStringForCourse(course))
+        meetsDisplayLabel = displayLabel(attributedMeetsStringForCourse(course, conflicts: false))
         meetsDisplayLabel.userInteractionEnabled = true
         if course.display.locations != "TBD" {
             let mapButton = UIButton()
@@ -214,7 +281,7 @@ class InfoCell: UITableViewCell {
         })
         
         satisfiesLeftLabel = leftItalicLabel("Satisfies:")
-        constrain(satisfiesLeftLabel, meetsDisplayLabel, {satisfies, meets in
+        meets_satisfiesGroup = constrain(satisfiesLeftLabel, meetsDisplayLabel, {satisfies, meets in
             satisfies.top == meets.bottom + 10
         })
         
