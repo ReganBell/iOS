@@ -53,6 +53,9 @@ class InfoCell: UITableViewCell {
     var descriptionLabel: UILabel!
     var roundedBackgroundView = UIView()
     
+    var offeredLeftLabel: UILabel?
+    var offeredDisplayLabel: UILabel?
+    
     var instructorLeftLabel: UILabel!
     var instructorDisplayLabel: UILabel!
     
@@ -91,14 +94,14 @@ class InfoCell: UITableViewCell {
             return false
         }
         let aStartInt = intFromMilitaryTime(a.beginTime)
-        let aEndEint  = intFromMilitaryTime(a.endTime)
+        let aEndInt  = intFromMilitaryTime(a.endTime)
         let bStartInt = intFromMilitaryTime(b.beginTime)
         let bEndInt   = intFromMilitaryTime(b.endTime)
-        if aStartInt == bStartInt && aEndEint == bEndInt {
+        if aStartInt == bStartInt && aEndInt == bEndInt {
             return true
         } else if aStartInt >= bStartInt && aStartInt < bEndInt {
             return true
-        } else if aEndEint > bStartInt && aEndEint <= bEndInt {
+        } else if aEndInt > bStartInt && aEndInt <= bEndInt {
             return true
         }
         return false
@@ -108,7 +111,7 @@ class InfoCell: UITableViewCell {
         if let first = course.meetings.first {
             var conflicts: Set<Course> = []
             for conflictCourse in courses {
-                if conflictCourse.title == course.title {
+                if conflictCourse.title == course.title || conflictCourse.term != course.term {
                     continue
                 }
                 for potentialConflict in conflictCourse.meetings {
@@ -250,9 +253,23 @@ class InfoCell: UITableViewCell {
             description.top == title.bottom + 10
         })
         
+        if count(course.term) > 0 {
+            
+            offeredLeftLabel = leftItalicLabel("Offered:")
+            constrain(offeredLeftLabel!, descriptionLabel, {instructor, description in
+                instructor.top == description.bottom + 10
+            })
+            
+            offeredDisplayLabel = displayLabel(course.term.capitalizedString)
+            constrain(offeredDisplayLabel!, offeredLeftLabel!, {display, leftLabel in
+                display.top == leftLabel.top
+            })
+        }
+        
         instructorLeftLabel = course.faculty.count > 1 ? leftItalicLabel("Instructors:") : leftItalicLabel("Instructor:")
-        constrain(instructorLeftLabel, descriptionLabel, {instructor, description in
-            instructor.top == description.bottom + 10
+        var aboveLabel = (offeredDisplayLabel == nil) ? descriptionLabel : offeredDisplayLabel
+        constrain(instructorLeftLabel, aboveLabel, {instructor, above in
+            instructor.top == above.bottom + 10
         })
         
         instructorDisplayLabel = displayLabel(course.display.faculty)
