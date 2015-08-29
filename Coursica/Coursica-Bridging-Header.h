@@ -12,3 +12,4 @@
 #import "CommentTableViewCell.h"
 #import "DoubleSliderView.h"
 #import "NMRangeSlider.h"
+#import "KILabel.h"

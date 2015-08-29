@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func extractQData() {
-        let json = self.coursesJSONFromDisk()
+        let json = coursesJSONFromDisk()
         var courseDict: [String: Course] = Dictionary<String,Course>()
         let courses = Realm().objects(Course)
         if courses.count != 0 {
@@ -220,21 +220,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
         let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+        NSFileManager.defaultManager().removeItemAtPath(Realm.defaultPath, error: NSErrorPointer())
         NSFileManager.defaultManager().copyItemAtPath(path, toPath: Realm.defaultPath, error: NSErrorPointer())
         
-        setSchemaVersion(1, Realm.defaultPath, {migration, oldSchemaVersion in
-            if oldSchemaVersion < 1 {
-                
-            }
+        setSchemaVersion(2, Realm.defaultPath, {migration, oldSchemaVersion in
+//            if oldSchemaVersion < 2 {
+//                
+//            }
         })
         
         let courses = Realm().objects(Course)
-        self.calculatePercentiles(courses)
+//        for course in courses {
+//            if !course.prerequisitesString.isEmpty {
+//                println(course.display.title + ": " + course.prerequisitesString)
+//            }
+//        }
+        calculatePercentiles(courses)
 //        Realm().write {
 //            self.savePercentilesOnCourses(courses)
 //        }
         Search.shared.buildIndex(courses)
-        //        self.extractQData()
+//        self.extractQData()
 //        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
 //        println(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"))
 

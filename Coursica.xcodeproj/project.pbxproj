@@ -88,6 +88,7 @@
 		59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B9D5861AF6CA3F0006A57B /* Easel.png */; };
 		59BA6ECF1B3B130300B62FCC /* ListIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59BA6ECE1B3B130300B62FCC /* ListIcon.png */; };
 		59BC6E4B1B5361450027AA95 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BC6E4A1B5361450027AA95 /* Course.swift */; };
+		59BE60101B8B80C600881171 /* KILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BE600F1B8B80C600881171 /* KILabel.m */; };
 		59CF58201B3BA82500FB21FC /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF581F1B3BA82500FB21FC /* ListsViewController.swift */; };
 		59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59D4A04D1A349291003FD743 /* UILabel+HeightCalculation.m */; };
 		59DB9F3D1B705BBB0027A16A /* ListsImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DB9F3C1B705BBB0027A16A /* ListsImporter.swift */; };
@@ -225,6 +226,8 @@
 		59B9D5861AF6CA3F0006A57B /* Easel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Easel.png; sourceTree = "<group>"; };
 		59BA6ECE1B3B130300B62FCC /* ListIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ListIcon.png; sourceTree = "<group>"; };
 		59BC6E4A1B5361450027AA95 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		59BE600E1B8B80C600881171 /* KILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KILabel.h; sourceTree = "<group>"; };
+		59BE600F1B8B80C600881171 /* KILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KILabel.m; sourceTree = "<group>"; };
 		59C2E46C1A303D0300E13084 /* Coursica 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 2.xcdatamodel"; sourceTree = "<group>"; };
 		59C2E46D1A3145EE00E13084 /* Coursica 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Coursica 3.xcdatamodel"; sourceTree = "<group>"; };
 		59CF581F1B3BA82500FB21FC /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
@@ -452,6 +455,8 @@
 		5988650D1B239C900078B06F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				59BE600E1B8B80C600881171 /* KILabel.h */,
+				59BE600F1B8B80C600881171 /* KILabel.m */,
 				595745831B54E78F006D3FF1 /* DetailViewController.swift */,
 				5937474E1B6ECDF5002C1BEC /* CommentsCell.swift */,
 				59FF55CB1B4F6D5600915BF4 /* BreakdownCell.swift */,
@@ -793,6 +798,7 @@
 				595745821B54DF33006D3FF1 /* CoursicaViewController.swift in Sources */,
 				59774B2F1B55E0CC005E52A2 /* FastTokenizer.m in Sources */,
 				59B0AEC21B43AEE40018AA85 /* TempCourse.swift in Sources */,
+				59BE60101B8B80C600881171 /* KILabel.m in Sources */,
 				595745881B54F9DD006D3FF1 /* Search.swift in Sources */,
 				59FF55CC1B4F6D5600915BF4 /* BreakdownCell.swift in Sources */,
 				595CB1A31B2FFFA400E571C4 /* NMRangeSlider.m in Sources */,

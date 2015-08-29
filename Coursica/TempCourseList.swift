@@ -51,7 +51,7 @@ class TempCourseList {
     func removeTempCourse(tempCourse: TempCourse) -> Bool {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/lists/\(name)")
+        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)/\(name)")
         if courses.count == 1 {
             firebaseRoot.removeValue()
             return true //should delete List
@@ -73,7 +73,7 @@ class TempCourseList {
     class func fetchListsForCurrentUserWithCompletion(completionBlock: [TempCourseList]? -> Void) {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/lists")
+        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)")
         let snapshot: FDataSnapshot
         firebaseRoot.observeSingleEventOfType(FEventType.Value, withBlock: { snapshot in
             if let null = (snapshot.value as? NSNull) {
@@ -96,7 +96,7 @@ class TempCourseList {
     class func addTempCourseToListWithName(name: String, tempCourse: TempCourse, completionBlock: (NSError?) -> Void) {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/lists/\(name)")
+        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)/\(name)")
         let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle.encodedAsFirebaseKey())
         let courseDict = ["title": tempCourse.title, "number": tempCourse.number, "shortField": tempCourse.shortField]
         courseRef.setValue(courseDict, withCompletionBlock: {error, firebase in completionBlock(error) })

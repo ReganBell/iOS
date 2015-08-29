@@ -23,12 +23,12 @@ class InstructorCell: UITableViewCell {
     func layoutWithReport(report: FacultyReport) {
         
         roundedBackgroundView.backgroundColor = UIColor.whiteColor()
-        self.contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
+        contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         roundedBackgroundView.layer.cornerRadius = 4
         roundedBackgroundView.clipsToBounds = true
-        self.contentView.addSubview(roundedBackgroundView)
+        contentView.addSubview(roundedBackgroundView)
         
-        titleLabel = self.label(report.name)
+        titleLabel = label(report.name)
         titleLabel.font = UIFont(name: "AvenirNext-Bold", size: 16)
         titleLabel.textAlignment = .Center
         let width = UIScreen.mainScreen().bounds.size.width - 60
@@ -52,18 +52,20 @@ class InstructorCell: UITableViewCell {
         for (index, pair) in enumerate(map) {
             for response in report.responses {
                 let (questionKey, questionDisplay) = pair
-                if let average = Realm().objects(FacultyAverage).filter("question = %@", questionKey).first {
-                    let baseline = Baseline()
-                    baseline.group = average.score
-                    baseline.size = average.score
-                    response.baselineSingleTerm = baseline
+                if response.question == questionKey {
+                    if let average = Realm().objects(FacultyAverage).filter("question = %@", questionKey).first {
+                        let baseline = Baseline()
+                        baseline.group = average.score
+                        baseline.size = average.score
+                        response.baselineSingleTerm = baseline
+                    }
+                    let responseView = ResponseBarView(response: response, title: questionDisplay)
+                    responseView.response = response
+                    responseView.delayTime = CFTimeInterval(index) * 0.1
+                    roundedBackgroundView.addSubview(responseView)
+                    responseViews.append(responseView)
+                    break
                 }
-                let responseView = ResponseBarView(response: response, title: questionDisplay)
-                responseView.response = response
-                responseView.delayTime = CFTimeInterval(index) * 0.1
-                roundedBackgroundView.addSubview(responseView)
-                responseViews.append(responseView)
-                break
             }
         }
 

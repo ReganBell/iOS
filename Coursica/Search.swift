@@ -40,7 +40,7 @@ extension NSRegularExpression {
     }
     
     func firstMatchInWholeString(string: String) -> String? {
-        let matches = self.matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, count(string)))
+        let matches = matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, count(string)))
         if let first = matches.first as? NSTextCheckingResult {
             return (string as NSString).substringWithRange(first.range)
         }
@@ -58,51 +58,60 @@ class Search: NSObject {
     var numberIndex = Index(type: .Number)
     var _commonAbbreviations: [String: String]? = nil
     var commonAbbreviations: [String: String] {
-        get {
-            if self._commonAbbreviations == nil {
-                var abbreviations: [String: String] = Dictionary<String, String>()
-                let shortFieldPath = NSBundle.mainBundle().pathForResource("ShortFields", ofType: "")
-                let rawShortFields = NSString(contentsOfFile: shortFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
-                let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
-                let rawLongFields = NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
-                let shortFields = rawShortFields!.componentsSeparatedByString(",\n")
-                let longFields = rawLongFields!.componentsSeparatedByString(",\n")
-                for (index, longField) in enumerate(longFields) {
-                    let shortField = shortFields[index] 
-                    abbreviations[shortField.lowercaseString] = longField.lowercaseString;
-                }
-                let common =   ["cs":    "computer science",
-                                "ec":    "economics",
-                                "cb":    "culture and belief",
-                                "ai":    "aesthetic and interpretive understanding",
-                                "aiu":   "aesthetic and interpretive understanding",
-                                "astro": "astronomy",
-                                "bio":   "biology",
-                                "lit":   "literature",
-                                "comp":  "computer comparative",
-                                "sci":   "science",
-                                "em":    "empirical and mathematical reasoning",
-                                "eps":   "earth and planetary sciences",
-                                "es":    "engineering sciences",
-                                "er":    "ethical reasoning",
-                                "pol":   "policy politics",
-                                "hum":   "humanities",
-                                "hist":  "history",
-                                "kor":   "korean",
-                                "lat":   "latin",
-                                "med":   "medical",
-                                "sls":   "science of living systems",
-                                "spu":   "science of the physical universe",
-                                "syst":  "systems",
-                                "usw":   "united states in the world",
-                                "ls":    "life sciences"]
-                for (key, value) in common {
-                    abbreviations[key] = value
-                }
-                self._commonAbbreviations = abbreviations
+        if _commonAbbreviations == nil {
+            var abbreviations: [String: String] = Dictionary<String, String>()
+            let shortFieldPath = NSBundle.mainBundle().pathForResource("ShortFields", ofType: "")
+            let rawShortFields = NSString(contentsOfFile: shortFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+            let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
+            let rawLongFields = NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+            let shortFields = rawShortFields!.componentsSeparatedByString(",\n")
+            let longFields = rawLongFields!.componentsSeparatedByString(",\n")
+            for (index, longField) in enumerate(longFields) {
+                let shortField = shortFields[index] 
+                abbreviations[shortField.lowercaseString] = longField.lowercaseString;
             }
-            return _commonAbbreviations!
+            let common =   ["cs":    "computer science",
+                            "ec":    "economics",
+                            "cb":    "culture and belief",
+                            "ai":    "aesthetic and interpretive understanding",
+                            "aiu":   "aesthetic and interpretive understanding",
+                            "astro": "astronomy",
+                            "bio":   "biology",
+                            "lit":   "literature",
+                            "comp":  "computer comparative",
+                            "sci":   "science",
+                            "em":    "empirical and mathematical reasoning",
+                            "eps":   "earth and planetary sciences",
+                            "es":    "engineering sciences",
+                            "er":    "ethical reasoning",
+                            "pol":   "policy politics",
+                            "hum":   "humanities",
+                            "hist":  "history",
+                            "kor":   "korean",
+                            "lat":   "latin",
+                            "med":   "medical",
+                            "sls":   "science of living systems",
+                            "spu":   "science of the physical universe",
+                            "syst":  "systems",
+                            "usw":   "united states in the world",
+                            "ls":    "life sciences"]
+            for (key, value) in common {
+                abbreviations[key] = value
+            }
+            _commonAbbreviations = abbreviations
         }
+        return _commonAbbreviations!
+    }
+    var _longFields: [String]? = nil
+    var longFields: [String] {
+        if _longFields == nil {
+            var array: [String] = []
+            let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
+            let rawLongFields = NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+            let longFields = rawLongFields!.componentsSeparatedByString(",\n")
+            _longFields = longFields.map({field in return field.lowercaseString})
+        }
+        return _longFields!
     }
     
     func buildIndex(courses: Results<Course>) {
@@ -123,7 +132,7 @@ class Search: NSObject {
     func assignScoresForSearch(search: String) {
         
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/\(HUID)/searches")
+        let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/searches/\(HUID)/")
         let searchRef = firebaseRoot.childByAutoId()
         searchRef.setValue(search)
         

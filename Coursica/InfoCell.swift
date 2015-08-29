@@ -7,6 +7,7 @@
 //
 
 import Cartography
+import RealmSwift
 
 extension NSMutableAttributedString {
     
@@ -224,6 +225,27 @@ class InfoCell: UITableViewCell {
         return attributedEnrollment
     }
     
+    func attributedPrerequisitesStringForCourse(course: Course) -> NSAttributedString {
+        let prerequisitesString = course.prerequisitesString
+        let processed = " ".join(Search.shared.explodeSearch(prerequisitesString.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: ".")))).lowercaseString as NSString
+        var matches: [(NSRange, String)] = []
+        for field in Search.shared.longFields {
+            let range = processed.rangeOfString(field)
+            if range.location != NSNotFound {
+                let components = processed.componentsSeparatedByString(field).map({component in component.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: ", "))})
+                let number = components[1]
+                if let course = Realm().objects(Course).filter("longField = '\(field)' AND number = '\(number)'").first {
+                    println(course.display.title)
+                    matches.append((range, field))
+                }
+            }
+        }
+        
+        let attributedPrerequisites = NSMutableAttributedString(string: prerequisitesString)
+        attributedPrerequisites.addFont(bold, substring: prerequisitesString)
+        return attributedPrerequisites
+    }
+    
     func mapButtonPressed() {
         let encodedSearch = course.locations.first!.building.stringByReplacingOccurrencesOfString(" ", withString: "+")
         let mapURLString = "https://m.harvard.edu/map/map?search=Search&filter=\(encodedSearch)&feed=*"
@@ -336,7 +358,17 @@ class InfoCell: UITableViewCell {
                 prereq.top == above.bottom + 10
             })
             
-            prerequisitesDisplayLabel = displayLabel(course.prerequisitesString)
+            prerequisitesDisplayLabel = KILabel()
+            prerequisitesDisplayLabel.attributedText = attributedPrerequisitesStringForCourse(course)
+            prerequisitesDisplayLabel.backgroundColor = UIColor.whiteColor()
+            prerequisitesDisplayLabel.opaque = true
+            prerequisitesDisplayLabel.numberOfLines = 0
+            prerequisitesDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
+            roundedBackgroundView.addSubview(prerequisitesDisplayLabel)
+            constrain(prerequisitesDisplayLabel, {display in
+                display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
+                display.right == display.superview!.right - self.rightLabelMargin
+            })
             constrain(prerequisitesDisplayLabel, prerequisitesLeftLabel, {display, left in
                 display.top == left.top
             })
