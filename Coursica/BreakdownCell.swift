@@ -112,7 +112,6 @@ class BreakdownCell: UITableViewCell {
         groupButton.setTitle(course.shortField.lowercaseString, forState: .Normal)
         sizeButton.setTitle("size", forState: .Normal)
         breakdownButton.hidden = false
-        self.layoutSubviews()
     }
     
     func initialLayoutWithCourse(course: Course) {

@@ -8,6 +8,7 @@
 
 import Cartography
 import RealmSwift
+import TTTAttributedLabel
 
 extension NSMutableAttributedString {
     
@@ -34,6 +35,7 @@ extension NSMutableAttributedString {
 
 protocol InfoCellDelegate {
     func mapButtonPressed(urlString: String)
+    func courseLinkPressed(course: Course)
 }
 
 class InfoCell: UITableViewCell {
@@ -74,7 +76,7 @@ class InfoCell: UITableViewCell {
     var enrollmentDisplayLabel: UILabel!
     
     var prerequisitesLeftLabel: UILabel!
-    var prerequisitesDisplayLabel: UILabel!
+    var prerequisitesDisplayLabel: TTTAttributedLabel!
     
     var course: Course!
     var delegate: InfoCellDelegate!
@@ -226,23 +228,9 @@ class InfoCell: UITableViewCell {
     }
     
     func attributedPrerequisitesStringForCourse(course: Course) -> NSAttributedString {
-        let prerequisitesString = course.prerequisitesString
-        let processed = " ".join(Search.shared.explodeSearch(prerequisitesString.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: ".")))).lowercaseString as NSString
-        var matches: [(NSRange, String)] = []
-        for field in Search.shared.longFields {
-            let range = processed.rangeOfString(field)
-            if range.location != NSNotFound {
-                let components = processed.componentsSeparatedByString(field).map({component in component.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: ", "))})
-                let number = components[1]
-                if let course = Realm().objects(Course).filter("longField = '\(field)' AND number = '\(number)'").first {
-                    println(course.display.title)
-                    matches.append((range, field))
-                }
-            }
-        }
-        
-        let attributedPrerequisites = NSMutableAttributedString(string: prerequisitesString)
-        attributedPrerequisites.addFont(bold, substring: prerequisitesString)
+        let string = course.prerequisitesString.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "."))
+        let attributedPrerequisites = NSMutableAttributedString(string: string)
+        attributedPrerequisites.addFont(bold, substring: string)
         return attributedPrerequisites
     }
     
@@ -358,8 +346,17 @@ class InfoCell: UITableViewCell {
                 prereq.top == above.bottom + 10
             })
             
-            prerequisitesDisplayLabel = KILabel()
+            prerequisitesDisplayLabel = TTTAttributedLabel(frame: CGRectZero)
+            prerequisitesDisplayLabel.activeLinkAttributes = [NSForegroundColorAttributeName: coursicaBlue, NSUnderlineColorAttributeName: coursicaBlue,
+                NSUnderlineStyleAttributeName: NSNumber(integer: 1)]
+            prerequisitesDisplayLabel.linkAttributes = [NSForegroundColorAttributeName: coursicaBlue, NSUnderlineColorAttributeName: coursicaBlue,
+                NSUnderlineStyleAttributeName: NSNumber(integer: 1)]
             prerequisitesDisplayLabel.attributedText = attributedPrerequisitesStringForCourse(course)
+            for match in PrerequisitesParser().processPrerequisiteString(course.prerequisitesString) {
+                prerequisitesDisplayLabel.addLinkToAddress([match.course.title: match.course], withRange: match.range)
+//                attributedPrerequisites.addColor(coursicaBlue, substring: (string as NSString).substringWithRange(match.range))
+            }
+            prerequisitesDisplayLabel.delegate = self
             prerequisitesDisplayLabel.backgroundColor = UIColor.whiteColor()
             prerequisitesDisplayLabel.opaque = true
             prerequisitesDisplayLabel.numberOfLines = 0
@@ -397,5 +394,13 @@ class InfoCell: UITableViewCell {
         label.opaque = true
         label.numberOfLines = 0
         return label
+    }
+}
+
+extension InfoCell: TTTAttributedLabelDelegate {
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithAddress addressComponents: [NSObject : AnyObject]!) {
+        if let course = addressComponents.values.first as? Course {
+            delegate.courseLinkPressed(course)
+        }
     }
 }

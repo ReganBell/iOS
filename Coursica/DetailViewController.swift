@@ -161,6 +161,10 @@ extension DetailViewController: InfoCellDelegate {
     func mapButtonPressed(urlString: String) {
         navigationController?.pushViewController(MapViewController(urlString: urlString), animated: true)
     }
+    
+    func courseLinkPressed(course: Course) {
+        navigationController?.pushViewController(DetailViewController.detailViewControllerWithCourse(course), animated: true)
+    }
 }
 
 extension DetailViewController: CommentsCellDelegate {

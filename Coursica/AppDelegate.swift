@@ -219,20 +219,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         
-        let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
-        NSFileManager.defaultManager().removeItemAtPath(Realm.defaultPath, error: NSErrorPointer())
-        NSFileManager.defaultManager().copyItemAtPath(path, toPath: Realm.defaultPath, error: NSErrorPointer())
+        let versionKey = "modelVersion"
+        let modelVersion = NSUserDefaults.standardUserDefaults().integerForKey(versionKey)
+        
+        if let buildNumber = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? NSString)?.integerValue where buildNumber > modelVersion {
+            let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+            var removeErrorPointer: NSError?
+            NSFileManager.defaultManager().removeItemAtPath(Realm.defaultPath, error: &removeErrorPointer)
+            if let error = removeErrorPointer {
+                println(error)
+            }
+            var copyErrorPointer: NSError?
+            NSFileManager.defaultManager().copyItemAtPath(path, toPath: Realm.defaultPath, error: &copyErrorPointer)
+            if let error = copyErrorPointer {
+                println(error)
+            }
+            NSUserDefaults.standardUserDefaults().setInteger(buildNumber, forKey: versionKey)
+        }
         
         setSchemaVersion(2, Realm.defaultPath, {migration, oldSchemaVersion in
-//            if oldSchemaVersion < 2 {
-//                
-//            }
+            if oldSchemaVersion < 2 {
+                
+            }
         })
         
         let courses = Realm().objects(Course)
 //        for course in courses {
 //            if !course.prerequisitesString.isEmpty {
-//                println(course.display.title + ": " + course.prerequisitesString)
+//                processPrerequisiteString(course.prerequisitesString)
 //            }
 //        }
         calculatePercentiles(courses)
@@ -248,7 +262,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = NavigationController(rootViewController: CoursesViewController())
-//        navigationController.navigationBar.setBackgroundImage(UIImage(named:"NavBarBg"), forBarMetrics: .Default)
         navigationController.navigationBar.barTintColor = coursicaBlue
         navigationController.navigationBar.tintColor = UIColor.whiteColor()
         navigationController.navigationBar.opaque = true

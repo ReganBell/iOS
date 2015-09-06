@@ -111,10 +111,10 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         
         courses = self.sortedCourses(Realm().objects(Course))
         if courses!.count == 0 {
-            CS50Downloader.getCourses({
-                self.courses! = self.sortedCourses(Realm().objects(Course))
-                self.tableView.reloadData()
-            })
+//            CS50Downloader.getCourses({
+//                self.courses! = self.sortedCourses(Realm().objects(Course))
+//                self.tableView.reloadData()
+//            })
         }
     }
     

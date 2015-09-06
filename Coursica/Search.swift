@@ -90,6 +90,7 @@ class Search: NSObject {
                             "kor":   "korean",
                             "lat":   "latin",
                             "med":   "medical",
+                            "stats": "statistics",
                             "sls":   "science of living systems",
                             "spu":   "science of the physical universe",
                             "syst":  "systems",
