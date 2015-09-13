@@ -1,5 +1,5 @@
 //
-//  TempCourseList.swift
+//  CourseList.swift
 //  Coursica
 //
 //  Created by Regan Bell on 6/24/15.
@@ -8,27 +8,25 @@
 
 import UIKit
 
-class TempCourseList {
+class CourseList {
     
     var name: String = ""
-    var courses: [TempCourse] = []
+    var courses: [ListableCourse] = []
     var id: String = ""
     
-    init(name: String, courses: [TempCourse]) {
+    init(name: String, courses: [ListableCourse]) {
         self.name = name
         self.courses = courses
     }
     
     func setCoursesFromJSON(JSON: NSDictionary) {
-        
         if let courseDictionaries = JSON["list"] as? [NSDictionary] {
-            var tempCourses: [TempCourse] = []
+            var listCourses: [ListableCourse] = []
             for courseDict in courseDictionaries {
                 let tempCourse = TempCourse(CS50Dictionary: courseDict)
-                tempCourses.append(tempCourse)
+                listCourses.append(tempCourse.course ?? tempCourse)
             }
-            self.courses = tempCourses
-            
+            self.courses = listCourses
         }
     }
     
@@ -40,38 +38,27 @@ class TempCourseList {
                 "Courses I've Disliked"]
     }
     
-    class func emptyListsDictionary() -> [TempCourseList] {
-        return [TempCourseList(name: "Courses I've Taken", courses: []),
-                TempCourseList(name: "Courses I'm Taking", courses: []),
-                TempCourseList(name: "Courses I'm Shopping", courses: []),
-                TempCourseList(name: "Courses I've Liked", courses: []),
-                TempCourseList(name: "Courses I've Disliked", courses: [])]
-    }
-    
-    func removeTempCourse(tempCourse: TempCourse) -> Bool {
-        
+    func removeTempCourse(listableCourse: ListableCourse) -> Bool {
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)/\(name)")
         if courses.count == 1 {
             firebaseRoot.removeValue()
             return true //should delete List
         } else {
-            self.courses = self.courses.filter({ course in course.title != tempCourse.title })
-            let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle.encodedAsFirebaseKey())
+            courses = courses.filter({ course in course.title != listableCourse.title })
+            let courseRef = firebaseRoot.childByAppendingPath(listableCourse.displayTitle.asFirebaseKey)
             courseRef.removeValue()
             return false //should not delete List
         }
     }
     
-    class func moveCourseFromList(fromList: TempCourseList, toList: TempCourseList, tempCourse: TempCourse) {
-    
-        fromList.removeTempCourse(tempCourse)
-        toList.courses.append(tempCourse)
-        self.addTempCourseToListWithName(toList.name, tempCourse: tempCourse)
+    class func moveCourseFromList(fromList: CourseList, toList: CourseList, listableCourse: ListableCourse) {
+        fromList.removeTempCourse(listableCourse)
+        toList.courses.append(listableCourse)
+        addCourseToListWithName(toList.name, listableCourse: listableCourse, completionBlock: nil)
     }
 
-    class func fetchListsForCurrentUserWithCompletion(completionBlock: [TempCourseList]? -> Void) {
-        
+    class func fetchListsForCurrentUserWithCompletion(completionBlock: [CourseList]? -> Void) {
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)")
         let snapshot: FDataSnapshot
@@ -80,33 +67,25 @@ class TempCourseList {
                 completionBlock(nil)
                 return
             }
-            var lists: [TempCourseList] = []
+            var lists: [CourseList] = []
             for list in snapshot.snapshotChildren() {
                 let name = list.key
-                var courses: [TempCourse] = []
+                var courses: [ListableCourse] = []
                 for course in list.snapshotChildren() {
-                    courses.append(TempCourse(snapshot: course))
+                    let tempCourse = TempCourse(snapshot: course)
+                    courses.append(tempCourse.course ?? tempCourse)
                 }
-                lists.append(TempCourseList(name: name, courses: courses))
+                lists.append(CourseList(name: name, courses: courses))
             }
             completionBlock(lists)
         })
     }
     
-    class func addTempCourseToListWithName(name: String, tempCourse: TempCourse, completionBlock: (NSError?) -> Void) {
-        
+    class func addCourseToListWithName(name: String, listableCourse: ListableCourse, completionBlock: (NSError? -> Void)?) {
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)/\(name)")
-        let courseRef = firebaseRoot.childByAppendingPath(tempCourse.displayTitle.encodedAsFirebaseKey())
-        let courseDict = ["title": tempCourse.title, "number": tempCourse.number, "shortField": tempCourse.shortField]
-        courseRef.setValue(courseDict, withCompletionBlock: {error, firebase in completionBlock(error) })
-    }
-    
-    class func addTempCourseToListWithName(name: String, tempCourse: TempCourse) {
-        self.addTempCourseToListWithName(name, tempCourse: tempCourse, completionBlock: {error in })
-    }
-    
-    class func addCourseToListWithName(name: String, course: Course) {
-        self.addTempCourseToListWithName(name, tempCourse: TempCourse(course: course))
+        let courseRef = firebaseRoot.childByAppendingPath(listableCourse.displayTitle.asFirebaseKey)
+        let courseDict = ["title": listableCourse.title, "number": listableCourse.number, "shortField": listableCourse.shortField]
+        courseRef.setValue(courseDict, withCompletionBlock: {error, _ in completionBlock?(error)})
     }
 }

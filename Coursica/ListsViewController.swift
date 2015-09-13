@@ -13,12 +13,12 @@ import Alamofire
 let importButtonWidth: CGFloat = 212
 
 protocol ListsViewControllerDelegate {
-    func didSelectTempCourse(tempCourse: TempCourse)
+    func didSelectCourse(listableCourse: ListableCourse)
 }
 
 class ListsViewController: UIViewController {
     
-    var lists: [TempCourseList] = []
+    var lists: [CourseList] = []
     var tableView = UITableView()
     var delegate: ListsViewControllerDelegate?
     var promptLabel: UILabel!
@@ -34,7 +34,8 @@ class ListsViewController: UIViewController {
     override func viewDidLoad() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: self.view.window)
-        self.view.addSubview(tableView)
+        view.addSubview(tableView)
+        tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
@@ -42,11 +43,11 @@ class ListsViewController: UIViewController {
         constrain(tableView, {table in
             table.edges == table.superview!.edges
         })
-        self.layoutImportFooterView()
+        layoutImportFooterView()
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.refreshLists()
+        refreshLists()
     }
     
     deinit {
@@ -66,7 +67,7 @@ class ListsViewController: UIViewController {
     func refreshLists() {
         
         weak var weakSelf = self
-        TempCourseList.fetchListsForCurrentUserWithCompletion({lists in
+        CourseList.fetchListsForCurrentUserWithCompletion({lists in
             if let lists = lists {
                 weakSelf!.lists = lists
                 weakSelf!.tableView.reloadData()
@@ -160,16 +161,16 @@ class ListsViewController: UIViewController {
     }
     
     func goButtonPressed(button: UIButton) {
-        self.importProgressBarBackground?.alpha = 1
-        self.animateImportPercentComplete(0.4, duration: 15, message: "Logging you in...")
+        importProgressBarBackground?.alpha = 1
+        animateImportPercentComplete(0.4, duration: 15, message: "Logging you in...")
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
-        self.secretLoginWebView?.tryUsernameWhenReady(HUID, password: self.passwordField!.text!)
+        secretLoginWebView?.tryUsernameWhenReady(HUID, password: self.passwordField!.text!)
 
 //        ListsImporter.shared.getListsWithPassword(passwordField.text!)
     }
     
     func passwordDidChange(textField: UITextField) {
-        self.importSubmitButton?.hidden = count(textField.text) < 1
+        importSubmitButton?.hidden = count(textField.text) < 1
     }
     
     func importButtonPressed(importButton: UIButton) {
@@ -193,7 +194,7 @@ class ListsViewController: UIViewController {
         })
     }
     
-    func headerViewForList(list: TempCourseList, tableView: UITableView) -> UIView {
+    func headerViewForList(list: CourseList, tableView: UITableView) -> UIView {
         
         let headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
         headerView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
@@ -227,11 +228,11 @@ class ListsViewController: UIViewController {
 
 extension ListsViewController: LoginWebViewDelegate {
     
-    func didDownloadList(list: TempCourseList) {
+    func didDownloadList(list: CourseList) {
         listsAdded += 1
         
-        for tempCourse in list.courses {
-            TempCourseList.addTempCourseToListWithName(list.name, tempCourse: tempCourse, completionBlock: {error in
+        for course in list.courses {
+            CourseList.addCourseToListWithName(list.name, listableCourse: course, completionBlock: {error in
                 if error != nil {
                     print(error)
                 } else {
@@ -257,7 +258,7 @@ extension ListsViewController: LoginWebViewDelegate {
         self.layoutImportFooterView()
     }
     
-    func didLoadCS50CoursesSuccessfullyWithLists(lists: [TempCourseList]) {
+    func didLoadCS50CoursesSuccessfullyWithLists(lists: [CourseList]) {
         
         NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "didTimeout", userInfo: nil, repeats: false)
         
@@ -332,9 +333,9 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         if sourceIndexPath.section != destinationIndexPath.section {
-            TempCourseList.moveCourseFromList(lists[sourceIndexPath.section],
+            CourseList.moveCourseFromList(lists[sourceIndexPath.section],
                 toList: lists[destinationIndexPath.section],
-                tempCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
+                listableCourse: lists[sourceIndexPath.section].courses[sourceIndexPath.row])
         }
     }
     
@@ -351,26 +352,28 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return self.headerViewForList(lists[section], tableView: tableView)
+        return headerViewForList(lists[section], tableView: tableView)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.delegate!.didSelectTempCourse(lists[indexPath.section].courses[indexPath.row])
+        delegate?.didSelectCourse(lists[indexPath.section].courses[indexPath.row])
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell ?? UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-        let course = self.lists[indexPath.section].courses[indexPath.row]
-        
-        let plain = "\(course.shortField) \(course.number) - \(course.title)"
-        let boldRange = (plain as NSString).rangeOfString(course.title)
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? CourseTableViewCell ?? CourseTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        let listableCourse = lists[indexPath.section].courses[indexPath.row]
+        let plain = listableCourse.displayTitle
+        let boldRange = (plain as NSString).rangeOfString(listableCourse.title)
         let fancy = NSMutableAttributedString(string: plain)
         let regularFont = UIFont(name: "AvenirNext-Regular", size: 14)
         let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 17)
         fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
         fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
         cell.textLabel!.attributedText = fancy
+        if let course = listableCourse as? Course {
+            cell.colorBarView.backgroundColor = colorForPercentile(course.percentileSize)
+        }
         return cell as UITableViewCell
     }
 }

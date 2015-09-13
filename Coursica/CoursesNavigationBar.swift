@@ -37,7 +37,6 @@ class CoursesNavigationBar: UIView {
     var listsButton: UIButton!
     var listsBackButton: UIButton!
 
-
     func initialLayout(delegate: CoursesNavigationBarDelegate) {
         
         self.delegate = delegate
@@ -128,10 +127,14 @@ class CoursesNavigationBar: UIView {
         }
     }
     
+    func clearButtonPressed(button: UIButton) {
+        searchBar.text = ""
+    }
+    
     func bar() -> UITextField {
         
         let bar = UITextField()
-        self.addSubview(bar)
+        addSubview(bar)
         bar.backgroundColor = UIColor(red: 31/255.0, green: 117/255.0, blue: 1, alpha: 1)
         bar.layer.cornerRadius = 4
         bar.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -146,6 +149,18 @@ class CoursesNavigationBar: UIView {
         let leftSpacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         bar.leftViewMode = UITextFieldViewMode.Always
         bar.leftView = leftSpacerView
+        
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 44))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 44))
+        button.addTarget(self, action: "clearButtonPressed:", forControlEvents: .TouchUpInside)
+        rightView.addSubview(button)
+        let imageView = UIImageView(frame: CGRect(x: 30 / 2, y: 44 / 2, width: 15, height: 15))
+        imageView.image = UIImage(named: "ClearButton")?.imageWithRenderingMode(.AlwaysTemplate)
+        imageView.tintColor = coursicaBlue
+        imageView.center = CGPoint(x: rightView.bounds.width / 2, y: rightView.bounds.height / 2)
+        rightView.addSubview(imageView)
+        bar.rightViewMode = .WhileEditing
+        bar.rightView = rightView
         
         let style = bar.defaultTextAttributes[NSParagraphStyleAttributeName]?.mutableCopy() as! NSMutableParagraphStyle
         style.minimumLineHeight = bar.font.lineHeight - (bar.font.lineHeight - font.lineHeight) / 2.0

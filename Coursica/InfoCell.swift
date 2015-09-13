@@ -10,32 +10,11 @@ import Cartography
 import RealmSwift
 import TTTAttributedLabel
 
-extension NSMutableAttributedString {
-    
-    func addAttribute(name: String, value: NSObject, substring: String) {
-        let range = (string as NSString).rangeOfString(substring)
-        if range.location != NSNotFound {
-            addAttribute(name, value: value, range: range)
-        }
-    }
-    
-    func addColor(color: UIColor, substring: String) {
-        addAttribute(NSForegroundColorAttributeName, value: color, substring: substring)
-    }
-    
-    func addFont(font: UIFont, substring: String) {
-        addAttribute(NSFontAttributeName, value: font, substring: substring)
-    }
-    
-    func addFontAndColor(font: UIFont, color: UIColor, substring: String) {
-        addFont(font, substring: substring)
-        addColor(color, substring: substring)
-    }
-}
-
 protocol InfoCellDelegate {
     func mapButtonPressed(urlString: String)
     func courseLinkPressed(course: Course)
+    func facultyLinkPressed(faculty: Faculty)
+    func expandedNeededFor()
 }
 
 class InfoCell: UITableViewCell {
@@ -44,7 +23,7 @@ class InfoCell: UITableViewCell {
     
     let leftLabelMargin: CGFloat = 16
     var labelWidth: CGFloat {
-        return count(course.prerequisitesString) > 0 ? 80 : 70
+        return (count(course.prerequisitesString) > 0 || Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).count > 0) ? 80 : 70
     }
     
     let cardMargin: CGFloat = 10
@@ -62,7 +41,7 @@ class InfoCell: UITableViewCell {
     var offeredDisplayLabel: UILabel?
     
     var instructorLeftLabel: UILabel!
-    var instructorDisplayLabel: UILabel!
+    var instructorDisplayLabel: TTTAttributedLabel!
     
     var meetsLeftLabel: UILabel!
     var meetsDisplayLabel: UILabel!
@@ -77,6 +56,10 @@ class InfoCell: UITableViewCell {
     
     var prerequisitesLeftLabel: UILabel!
     var prerequisitesDisplayLabel: TTTAttributedLabel!
+    
+    var neededForLeftLabel: UILabel!
+    var neededForDisplayLabel: TTTAttributedLabel!
+    var neededForExpanded = false
     
     var course: Course!
     var delegate: InfoCellDelegate!
@@ -205,6 +188,93 @@ class InfoCell: UITableViewCell {
         return displayLabel
     }
     
+    func attributedInstructorsLabelForCourse(course: Course) -> TTTAttributedLabel {
+        let prerequisitesInstructorsLabel = TTTAttributedLabel(frame: CGRectZero)
+        let attributes =
+           [NSForegroundColorAttributeName:  coursicaBlue,
+            NSUnderlineColorAttributeName:   coursicaBlue,
+            NSUnderlineStyleAttributeName:   NSNumber(integer: 0)]
+        prerequisitesInstructorsLabel.activeLinkAttributes = attributes
+        prerequisitesInstructorsLabel.linkAttributes = attributes
+        let string = course.display.faculty
+        let attributed = NSMutableAttributedString(string: string)
+        attributed.addFont(bold, substring: string)
+        prerequisitesInstructorsLabel.attributedText = attributed
+        for faculty in course.faculty {
+            if !faculty.last.isEmpty {
+                let matchString = faculty.fullName
+                prerequisitesInstructorsLabel.addLinkToAddress([matchString: faculty], withRange: (string as NSString).rangeOfString(matchString))
+            }
+        }
+        prerequisitesInstructorsLabel.delegate = self
+        prerequisitesInstructorsLabel.backgroundColor = UIColor.whiteColor()
+        prerequisitesInstructorsLabel.opaque = true
+        prerequisitesInstructorsLabel.numberOfLines = 0
+        prerequisitesInstructorsLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
+        roundedBackgroundView.addSubview(prerequisitesInstructorsLabel)
+        return prerequisitesInstructorsLabel
+    }
+    
+    func attributedPrerequisitesLabel(course: Course) -> TTTAttributedLabel {
+        let prerequisitesDisplayLabel = TTTAttributedLabel(frame: CGRectZero)
+        let attributes =
+           [NSForegroundColorAttributeName: coursicaBlue,
+            NSUnderlineColorAttributeName:  coursicaBlue,
+            NSUnderlineStyleAttributeName:  NSNumber(integer: 0)]
+        prerequisitesDisplayLabel.activeLinkAttributes = attributes
+        prerequisitesDisplayLabel.linkAttributes = attributes
+        prerequisitesDisplayLabel.attributedText = attributedPrerequisitesString(course)
+        for match in PrerequisitesParser().processPrerequisiteString(course) {
+            prerequisitesDisplayLabel.addLinkToAddress([match.course.title: match.course], withRange: match.range)
+        }
+        prerequisitesDisplayLabel.delegate = self
+        prerequisitesDisplayLabel.backgroundColor = UIColor.whiteColor()
+        prerequisitesDisplayLabel.opaque = true
+        prerequisitesDisplayLabel.numberOfLines = 0
+        prerequisitesDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
+        roundedBackgroundView.addSubview(prerequisitesDisplayLabel)
+        return prerequisitesDisplayLabel
+    }
+    
+    func neededForString(neededFor: Results<Course>) -> String {
+        var string = ""
+        for (i, course) in enumerate(neededFor) {
+            if i < (neededForExpanded ? 100000 : 2) {
+                string += (string.isEmpty ? "":", ") + "\(course.shortField) \(course.number)"
+            } else {
+                string += ", and \(neededFor.count - 2) more..."
+                break
+            }
+        }
+        return string
+    }
+    
+    func configureAttributedNeededForLabel(label: TTTAttributedLabel, neededFor: Results<Course>) {
+        let attributes =
+           [NSForegroundColorAttributeName: coursicaBlue,
+            NSUnderlineColorAttributeName:  coursicaBlue,
+            NSUnderlineStyleAttributeName:  NSNumber(integer: 0)]
+        neededForDisplayLabel.activeLinkAttributes = attributes
+        neededForDisplayLabel.linkAttributes = attributes
+        let source = neededForString(neededFor)
+        let attributedNeededFor = NSMutableAttributedString(string: source)
+        attributedNeededFor.addFont(bold, substring: source)
+        neededForDisplayLabel.attributedText = attributedNeededFor
+        for (i, course) in enumerate(neededFor) {
+            if i < (neededForExpanded ? 100000 : 2) {
+                neededForDisplayLabel.addLinkToAddress(["\(course.shortField) \(course.number)": course], withRange: (source as NSString).rangeOfString("\(course.shortField) \(course.number)"))
+            } else {
+                neededForDisplayLabel.addLinkToAddress(["more": "more"], withRange: (source as NSString).rangeOfString("\(neededFor.count - 2) more..."))
+                break
+            }
+        }
+        neededForDisplayLabel.delegate = self
+        neededForDisplayLabel.backgroundColor = UIColor.whiteColor()
+        neededForDisplayLabel.opaque = true
+        neededForDisplayLabel.numberOfLines = 0
+        neededForDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
+    }
+    
     func attributedMeetsStringForCourse(course: Course, conflicts: Bool) -> NSAttributedString {
         let locationsString = course.display.locations == "TBD" ? course.display.locations : (course.display.locations + " Map")
         let meetsString = course.display.meetingsShort + " in " + locationsString
@@ -227,7 +297,7 @@ class InfoCell: UITableViewCell {
         return attributedEnrollment
     }
     
-    func attributedPrerequisitesStringForCourse(course: Course) -> NSAttributedString {
+    func attributedPrerequisitesString(course: Course) -> NSAttributedString {
         let string = course.prerequisitesString.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "."))
         let attributedPrerequisites = NSMutableAttributedString(string: string)
         attributedPrerequisites.addFont(bold, substring: string)
@@ -288,7 +358,11 @@ class InfoCell: UITableViewCell {
             instructor.top == above.bottom + 10
         })
         
-        instructorDisplayLabel = displayLabel(course.display.faculty)
+        instructorDisplayLabel = attributedInstructorsLabelForCourse(course)
+        constrain(instructorDisplayLabel, {display in
+            display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
+            display.right == display.superview!.right - self.rightLabelMargin
+        })
         constrain(instructorDisplayLabel, instructorLeftLabel, {display, leftLabel in
             display.top == leftLabel.top
         })
@@ -346,22 +420,7 @@ class InfoCell: UITableViewCell {
                 prereq.top == above.bottom + 10
             })
             
-            prerequisitesDisplayLabel = TTTAttributedLabel(frame: CGRectZero)
-            prerequisitesDisplayLabel.activeLinkAttributes = [NSForegroundColorAttributeName: coursicaBlue, NSUnderlineColorAttributeName: coursicaBlue,
-                NSUnderlineStyleAttributeName: NSNumber(integer: 1)]
-            prerequisitesDisplayLabel.linkAttributes = [NSForegroundColorAttributeName: coursicaBlue, NSUnderlineColorAttributeName: coursicaBlue,
-                NSUnderlineStyleAttributeName: NSNumber(integer: 1)]
-            prerequisitesDisplayLabel.attributedText = attributedPrerequisitesStringForCourse(course)
-            for match in PrerequisitesParser().processPrerequisiteString(course.prerequisitesString) {
-                prerequisitesDisplayLabel.addLinkToAddress([match.course.title: match.course], withRange: match.range)
-//                attributedPrerequisites.addColor(coursicaBlue, substring: (string as NSString).substringWithRange(match.range))
-            }
-            prerequisitesDisplayLabel.delegate = self
-            prerequisitesDisplayLabel.backgroundColor = UIColor.whiteColor()
-            prerequisitesDisplayLabel.opaque = true
-            prerequisitesDisplayLabel.numberOfLines = 0
-            prerequisitesDisplayLabel.preferredMaxLayoutWidth = maxDisplayLabelWidth
-            roundedBackgroundView.addSubview(prerequisitesDisplayLabel)
+            prerequisitesDisplayLabel = attributedPrerequisitesLabel(course)
             constrain(prerequisitesDisplayLabel, {display in
                 display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
                 display.right == display.superview!.right - self.rightLabelMargin
@@ -372,7 +431,36 @@ class InfoCell: UITableViewCell {
             
             lastLabel = prerequisitesDisplayLabel
         }
-
+        
+        let sortByEnrollment = SortDescriptor(property: "enrollment", ascending: false)
+        let neededFor = Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).sorted([sortByEnrollment])
+        if neededFor.count > 0 {
+            neededForLeftLabel = leftItalicLabel("Needed for:")
+            var aboveLabel: UILabel = abovePrerequisitesLabel
+            if count(course.prerequisitesString) > 0 {
+                aboveLabel = prerequisitesDisplayLabel
+            }
+            constrain(neededForLeftLabel, aboveLabel, {prereq, above in
+                prereq.top == above.bottom + 10
+            })
+            
+            neededForDisplayLabel = TTTAttributedLabel(frame: CGRectZero)
+            configureAttributedNeededForLabel(neededForDisplayLabel, neededFor: neededFor)
+            roundedBackgroundView.addSubview(neededForDisplayLabel)
+            constrain(neededForDisplayLabel, {display in
+                display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
+                display.right == display.superview!.right - self.rightLabelMargin
+            })
+            constrain(neededForDisplayLabel, neededForLeftLabel, {display, left in
+                display.top == left.top
+            })
+            
+            lastLabel = neededForDisplayLabel
+        }
+        
+        for course in neededFor {
+            println(course.display.title)
+        }
         
         constrain(roundedBackgroundView, lastLabel, {background, last in
             last.bottom == background.bottom - 10
@@ -402,5 +490,38 @@ extension InfoCell: TTTAttributedLabelDelegate {
         if let course = addressComponents.values.first as? Course {
             delegate.courseLinkPressed(course)
         }
+        if let faculty = addressComponents.values.first as? Faculty {
+            delegate.facultyLinkPressed(faculty)
+        }
+        if let _ = addressComponents.values.first as? String {
+            neededForExpanded = true
+            let sortByEnrollment = SortDescriptor(property: "enrollment", ascending: false)
+            let neededFor = Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).sorted([sortByEnrollment])
+            configureAttributedNeededForLabel(neededForDisplayLabel, neededFor: neededFor)
+            delegate.expandedNeededFor()
+        }
+    }
+}
+
+extension NSMutableAttributedString {
+    
+    func addAttribute(name: String, value: NSObject, substring: String) {
+        let range = (string as NSString).rangeOfString(substring)
+        if range.location != NSNotFound {
+            addAttribute(name, value: value, range: range)
+        }
+    }
+    
+    func addColor(color: UIColor, substring: String) {
+        addAttribute(NSForegroundColorAttributeName, value: color, substring: substring)
+    }
+    
+    func addFont(font: UIFont, substring: String) {
+        addAttribute(NSFontAttributeName, value: font, substring: substring)
+    }
+    
+    func addFontAndColor(font: UIFont, color: UIColor, substring: String) {
+        addFont(font, substring: substring)
+        addColor(color, substring: substring)
     }
 }

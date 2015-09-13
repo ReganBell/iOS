@@ -11,7 +11,7 @@ import Cartography
 
 class DetailViewController: CoursicaViewController {
     
-    var course: Course!
+    let course: Course
     var report: Report?
     var reportLookupFailed: Bool = false
     
@@ -20,19 +20,12 @@ class DetailViewController: CoursicaViewController {
     
     var tableView = UITableView()
     
-    class func detailViewControllerWithTempCourse(tempCourse: TempCourse) -> DetailViewController? {
-        if let course = tempCourse.course {
-            return self.detailViewControllerWithCourse(course)
-        } else {
-            return nil
-        }
+    init(course: Course) {
+        self.course = course
+        super.init(nibName: nil, bundle: nil)
     }
-    
-    class func detailViewControllerWithCourse(course: Course) -> DetailViewController {
-        let controller = DetailViewController()
-        controller.course = course
-        return controller
-    }
+
+    required init(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,14 +56,14 @@ class DetailViewController: CoursicaViewController {
     func getListsToFindConflicts() {
         weak var weakSelf = self
         if course.meetings.count > 0 {
-            TempCourseList.fetchListsForCurrentUserWithCompletion({lists in
+            CourseList.fetchListsForCurrentUserWithCompletion({lists in
                 if let lists = lists {
                     for list in lists {
                         if list.name == "Courses I'm Shopping" {
                             var courses: [Course] = []
-                            for tempCourse in list.courses {
-                                if let course = tempCourse.course {
-                                    courses.append(tempCourse.course!)
+                            for listableCourse in list.courses {
+                                if let course = listableCourse as? Course {
+                                    courses.append(course)
                                 }
                             }
                             weakSelf?.tableView.beginUpdates()
@@ -85,9 +78,9 @@ class DetailViewController: CoursicaViewController {
     
     func addCourseButtonPressed() {
         let alertController = UIAlertController(title: "Add to Lists", message: "Keep track of courses with Lists.", preferredStyle: .ActionSheet)
-        for listName in TempCourseList.listNames() {
+        for listName in CourseList.listNames() {
             let action = UIAlertAction(title: listName, style: .Default, handler: {action in
-                TempCourseList.addCourseToListWithName(listName, course: self.course)
+                CourseList.addCourseToListWithName(listName, listableCourse: self.course, completionBlock: nil)
             })
             alertController.addAction(action)
         }
@@ -126,6 +119,22 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         return 1
     }
     
+    func headerViewForTitle(title: String, tableView: UITableView) -> UIView {
+        
+        let headerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: tableView.bounds.size.width, height: 44)))
+        headerView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
+        let headerLabel = UILabel(frame: CGRectZero)
+        headerLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        headerLabel.text = title
+        headerLabel.sizeToFit()
+        headerLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
+        headerView.addSubview(headerLabel)
+        constrain(headerLabel, {header in
+            header.center == header.superview!.center
+        })
+        return headerView
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("info") as? InfoCell ?? InfoCell()
@@ -134,16 +143,23 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             self.infoCell = cell
             return cell
         } else if indexPath.row == 1 {
-            let breakdownCell = tableView.dequeueReusableCellWithIdentifier("breakdown") as? BreakdownCell ?? BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
-            breakdownCell.delegate = self
-            breakdownCell.initialLayoutWithCourse(course)
-            if let _ = report {
-                breakdownCell.updateWithReport(report!)
-            } else if reportLookupFailed {
-                breakdownCell.updateForNoBreakdownFound()
+            if course.overall > 0.01 {
+                let breakdownCell = BreakdownCell(style: .Default, reuseIdentifier: "breakdown")
+                breakdownCell.delegate = self
+                breakdownCell.initialLayoutWithCourse(course)
+                if let _ = report {
+                    breakdownCell.updateWithReport(report!)
+                } else if reportLookupFailed {
+                    breakdownCell.updateForNoBreakdownFound()
+                }
+                self.breakdownCell = breakdownCell
+                return breakdownCell
+            } else {
+                let cell = UITableViewCell()
+                cell.contentView.addSubview(headerViewForTitle("No Q Data is available", tableView: tableView))
+                cell.contentView.backgroundColor = UIColor.clearColor()
+                return cell
             }
-            self.breakdownCell = breakdownCell
-            return breakdownCell
         } else {
             let commentsCell = CommentsCell()
             commentsCell.layoutForReport(report)
@@ -153,7 +169,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return course.overall > 0.01 ? 3 : 2
     }
 }
 
@@ -163,7 +179,16 @@ extension DetailViewController: InfoCellDelegate {
     }
     
     func courseLinkPressed(course: Course) {
-        navigationController?.pushViewController(DetailViewController.detailViewControllerWithCourse(course), animated: true)
+        navigationController?.pushViewController(DetailViewController(course: course), animated: true)
+    }
+    
+    func facultyLinkPressed(faculty: Faculty) {
+        navigationController?.pushViewController(FacultyViewController(faculty: faculty), animated: true)
+    }
+    
+    func expandedNeededFor() {
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 }
 

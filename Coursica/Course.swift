@@ -7,7 +7,7 @@
 //
 import RealmSwift
 
-class Course: Object {
+class Course: Object, ListableCourse {
     
     dynamic var bracketed = false
     dynamic var graduate = false
@@ -43,6 +43,11 @@ class Course: Object {
     let prerequisites = List<Course>()
     
     var display: Display { get { return Display(course: self) }}
+    
+    // To conform to ListableCourse
+    var displayTitle: String {
+        return display.title
+    }
 }
 
 class FacultyAverage: Object {
@@ -65,6 +70,13 @@ class Faculty: Object {
     dynamic var middle = ""
     dynamic var last = ""
     dynamic var suffix = ""
+    var fullName: String {
+        if count(first) < 3 {
+            return " ".join([first, middle, last])
+        } else {
+            return " ".join([first, last])
+        }
+    }
     let courses = List<Course>()
 }
 
@@ -95,6 +107,10 @@ class Report: Object {
     dynamic var comments: [String] = []
     let responses = List<Response>()
     let facultyReports = List<FacultyReport>()
+    
+    override static func ignoredProperties() -> [String] {
+        return ["comments"]
+    }
 }
 
 class FacultyReport: Object {

@@ -36,10 +36,20 @@ class Key {
 
 extension String {
     
-    func encodedAsFirebaseKey() -> String {
+    var firebaseForbidden: [String] { return [".", "#", "$", "/", "[", "]"] }
+    
+    var asFirebaseKey: String {
         var string = self
-        for (i, forbidden) in enumerate([".", "#", "$", "/", "[", "]"]) {
+        for (i, forbidden) in enumerate(firebaseForbidden) {
             string = string.stringByReplacingOccurrencesOfString(forbidden, withString: "&\(i)&")
+        }
+        return string
+    }
+    
+    var decodedFirebaseKey: String {
+        var string = self
+        for (i, forbidden) in enumerate(firebaseForbidden) {
+            string = string.stringByReplacingOccurrencesOfString("&\(i)&", withString: forbidden)
         }
         return string
     }
@@ -237,18 +247,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSUserDefaults.standardUserDefaults().setInteger(buildNumber, forKey: versionKey)
         }
         
-        setSchemaVersion(2, Realm.defaultPath, {migration, oldSchemaVersion in
-            if oldSchemaVersion < 2 {
+        setSchemaVersion(4, Realm.defaultPath, {migration, oldSchemaVersion in
+            if oldSchemaVersion < 3 {
                 
             }
         })
         
         let courses = Realm().objects(Course)
-//        for course in courses {
-//            if !course.prerequisitesString.isEmpty {
-//                processPrerequisiteString(course.prerequisitesString)
+        Realm().write({
+//            var facultyDict = Dictionary<String, Faculty>()
+//            var deleteAfter: [Faculty] = []
+//            for faculty in Realm().objects(Faculty) {
+//                let fullName = faculty.fullName
+//                if let existing = facultyDict[fullName] {
+//                    for course in faculty.courses {
+//                        course.faculty.removeAtIndex(course.faculty.indexOf(faculty)!)
+//                        course.faculty.append(existing)
+//                        existing.courses.append(course)
+//                    }
+//                    deleteAfter.append(faculty)
+//                } else {
+//                    facultyDict[fullName] = faculty
+//                }
 //            }
-//        }
+//            Realm().delete(deleteAfter)
+//            for course in courses {
+//                if !course.prerequisitesString.isEmpty {
+//                    for match in PrerequisitesParser().processPrerequisiteString(course) {
+//                        course.prerequisites.append(match.course)
+//                    }
+//                }
+//            }
+        })
         calculatePercentiles(courses)
 //        Realm().write {
 //            self.savePercentilesOnCourses(courses)

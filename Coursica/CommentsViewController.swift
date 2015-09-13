@@ -17,7 +17,7 @@ class CommentsViewController: CoursicaViewController {
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
-        self.setNavigationBarTitle("Comments (\(report.comments.count))")
+        setNavigationBarTitle("Comments (\(report.comments.count))")
     }
 }
 

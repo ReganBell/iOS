@@ -14,55 +14,49 @@ class Display: NSObject {
     var meeting: Meeting?
     let shortDays = ["0": "Sun", "1": "Mon", "2": "Tues", "3": "Wed", "4": "Thur", "5": "Fri", "6": "Sat"]
     let letterDays = ["0": "Su", "1": "M", "2": "Tu", "3": "W", "4": "Th", "5": "F", "6": "Sa"]
-    var title: String { get {
-        if course != nil {
-            return "\(course!.shortField) \(course!.number) - \(course!.title)"
+    var title: String {
+        if let course = course {
+            return "\(course.shortField) \(course.number) - \(course.title)"
+        } else if let meeting = meeting {
+            return standardTime(meeting.beginTime) + "-" + standardTime(meeting.endTime)
         } else {
-            return self.standardTime(meeting!.beginTime) + "-" + self.standardTime(meeting!.endTime)
+            return ""
         }
-        }}
-    var serverTitle: String { get {
-            return "\(course!.shortField) \(course!.number): \(course!.title)".encodedAsFirebaseKey()
-        }}
+    }
+    var serverTitle: String { return "\(course!.shortField) \(course!.number): \(course!.title)".asFirebaseKey }
     var genEds: String {
-        get {
-            if course!.genEds.count == 0 {
-                return "None"
-            } else {
-                var string = ""
-                for genEd in course!.genEds {
-                    string += (string.isEmpty ? "":", ") + genEd.name
-                }
-                    return string
+        if course!.genEds.count == 0 {
+            return "None"
+        } else {
+            var string = ""
+            for genEd in course!.genEds {
+                string += (string.isEmpty ? "":", ") + genEd.name
             }
+                return string
         }
     }
     var locations: String {
-        get {
-            if course!.locations.count == 0 {
-                return "TBD"
+        if course!.locations.count == 0 {
+            return "TBD"
+        } else {
+            if let first = course?.locations.first {
+                return "\(first.building) \(first.room)"
             } else {
-                if let first = course?.locations.first {
-                    return "\(first.building) \(first.room)"
-                } else {
-                    return "TBD"
-                }
+                return "TBD"
             }
         }
     }
     var faculty: String {
-        get {
-            if course!.faculty.count == 0 {
-                return "TBD"
-            } else {
-                var string = ""
-                for faculty in course!.faculty {
-                    if !faculty.last.isEmpty {
-                        string += (string.isEmpty ? "":", ") + faculty.first + " " + faculty.last
-                    }
+        if course!.faculty.count == 0 {
+            return "TBD"
+        } else {
+            var string = ""
+            for faculty in course!.faculty {
+                if !faculty.last.isEmpty {
+                    string += (string.isEmpty ? "":", ") + faculty.fullName
                 }
-                return string
             }
+            return string
         }
     }
     var meetingsShort: String {

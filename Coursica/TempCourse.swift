@@ -22,7 +22,14 @@ extension FDataSnapshot {
     }
 }
 
-class TempCourse {
+protocol ListableCourse {
+    var number: String { get set }
+    var shortField: String { get set }
+    var title: String { get set }
+    var displayTitle: String { get }
+}
+
+class TempCourse: ListableCourse {
     var number: String = ""
     var shortField: String = ""
     var title: String = ""

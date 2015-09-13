@@ -116,15 +116,15 @@ class BreakdownCell: UITableViewCell {
     
     func initialLayoutWithCourse(course: Course) {
         self.course = course
-        let width = self.frame.width
+        let width = frame.width
         let screenWidth = UIScreen.mainScreen().bounds.size.width
         
         roundedBackgroundView = UIView()
         roundedBackgroundView.backgroundColor = UIColor.whiteColor()
-        self.contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
+        contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         roundedBackgroundView.layer.cornerRadius = 4
         roundedBackgroundView.clipsToBounds = true
-        self.contentView.addSubview(roundedBackgroundView)
+        contentView.addSubview(roundedBackgroundView)
         
         noDataAvailableLabel = UILabel()
         noDataAvailableLabel.text = "No Q Breakdown available"
@@ -178,11 +178,11 @@ class BreakdownCell: UITableViewCell {
             graph.height == 120
         })
         
-        allButton = self.baselineButton("")
+        allButton = baselineButton("")
         allButton.tag = GraphViewTab.All.rawValue
-        groupButton = self.baselineButton("")
+        groupButton = baselineButton("")
         groupButton.tag = GraphViewTab.Group.rawValue
-        sizeButton = self.baselineButton("")
+        sizeButton = baselineButton("")
         sizeButton.tag = GraphViewTab.Size.rawValue
         
         sizeButton.selected = true
@@ -285,18 +285,18 @@ class BreakdownCell: UITableViewCell {
         
         var heights: [CGFloat] = []
         
-        let sortedScores = self.arrayForCurrentGraphTab()
+        let sortedScores = arrayForCurrentGraphTab()
         let index = find(sortedScores, course.overall)!
         let percentileWidth = 2.0 / Double(barCountInt)
         var scoreIndex = 0
-        var runningHeight: CGFloat = 1.0
+        var cumulativeHeight: CGFloat = 1.0
         for i in 1...barCountInt {
             let maxScoreForCurrentWindow = 3.0 + percentileWidth * Double(i)
             while scoreIndex != sortedScores.count && sortedScores[scoreIndex] <= maxScoreForCurrentWindow {
-                runningHeight++
+                cumulativeHeight++
                 scoreIndex++
             }
-            heights.append(runningHeight)
+            heights.append(cumulativeHeight)
         }
         let percentile = Double(index) / Double(sortedScores.count)
         let percentileInt = Int(percentile * 100)
@@ -346,7 +346,7 @@ class BreakdownCell: UITableViewCell {
         percentileLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         percentileLabel.text = "\(percentileInt)\(self.suffixForInt(percentileInt)) percentile"
         percentileLabel.textAlignment = .Center
-        self.startCircleAnimation(percentileInt)
+        startCircleAnimation(percentileInt)
         roundedBackgroundView.addSubview(percentileLabel)
         constrain(percentileLabel, courseIndexBarView!, percentileGraphView, {percentile, bar, graph in
             percentile.top == graph.bottom + 5

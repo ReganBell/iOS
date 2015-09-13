@@ -10,14 +10,14 @@ import Cartography
 
 class BreakdownViewController: CoursicaViewController {
 
-    var tableView = UITableView()
+    let tableView = UITableView()
     var course: Course!
     var report: Report!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.setNavigationBarTitle("\(course.shortField) \(course.number)")
+        setNavigationBarTitle("\(course.shortField) \(course.number)")
         
         tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         tableView.allowsSelection = false
@@ -26,11 +26,11 @@ class BreakdownViewController: CoursicaViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .None
-        self.view.addSubview(tableView)
-        constrain(self.view, tableView, {view, scrollView in
+        view.addSubview(tableView)
+        constrain(view, tableView, {view, scrollView in
             scrollView.edges == view.edges
         })
-        self.view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.setTranslatesAutoresizingMaskIntoConstraints(true)
     }
 }
 
@@ -43,12 +43,12 @@ extension BreakdownViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = CourseCell(style: .Default, reuseIdentifier: "course")
-            cell.layoutWithReport(report)
+            cell.layoutWithReport(report, legend: true)
             return cell
         } else {
             let cell = InstructorCell(style: .Default, reuseIdentifier: "instructor")
             let facultyReport = report.facultyReports[indexPath.row - 1]
-            cell.layoutWithReport(facultyReport)
+            cell.layoutWithReport(facultyReport, legend: indexPath.row == 1)
             return cell
         }
     }

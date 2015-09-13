@@ -14,9 +14,10 @@ enum IndexType: String {
     case Title = "Title"
     case Field = "Field"
     case Number = "Number"
+    case Faculty = "Faculty"
 }
 
-class SearchHit: Printable {
+struct SearchHit: Printable {
     var term = ""
     var course: Course?
     var scoreAdd = 0.0
@@ -24,13 +25,6 @@ class SearchHit: Printable {
     var description : String {
         return "\nin \(index) \"\(term)\" \(course!.title) \(scoreAdd)"
     }
-    init(term: String, course: Course, scoreAdd: Double, index: String) {
-        self.term = term
-        self.course = course
-        self.scoreAdd = scoreAdd
-        self.index = index
-    }
-
 }
 
 extension NSRegularExpression {
@@ -56,6 +50,7 @@ class Search: NSObject {
     var titleIndex = Index(type: .Title)
     var fieldIndex = Index(type: .Field)
     var numberIndex = Index(type: .Number)
+    var facultyIndex = Index(type: .Faculty)
     var _commonAbbreviations: [String: String]? = nil
     var commonAbbreviations: [String: String] {
         if _commonAbbreviations == nil {
@@ -126,8 +121,11 @@ class Search: NSObject {
                 numberIndex.addField(integerString, fromCourse: course)
             }
             numberIndex.addField(course.number, fromCourse: course)
+            for faculty in course.faculty {
+                facultyIndex.addField(faculty.fullName, fromCourse: course)
+            }
         }
-        [titleIndex, fieldIndex, numberIndex].map({ index in index.calculateIDFs(courses.count) })
+        [titleIndex, fieldIndex, numberIndex, facultyIndex].map({ index in index.calculateIDFs(courses.count) })
     }
     
     func assignScoresForSearch(search: String) {
@@ -146,9 +144,9 @@ class Search: NSObject {
         results  = []
         var weights: [(Index, Double)]
         if let numbers = NSRegularExpression(pattern: "[0-9]+")?.firstMatchInWholeString(search) {
-            weights = [(titleIndex, 0.3), (fieldIndex, 0.6), (numberIndex, 0.6)]
+            weights = [(titleIndex, 0.3), (fieldIndex, 0.6), (numberIndex, 0.6), (facultyIndex, 0.3)]
         } else {
-            weights = [(titleIndex, 0.3), (fieldIndex, 0.3), (numberIndex, 0.3)]
+            weights = [(titleIndex, 0.3), (fieldIndex, 0.3), (numberIndex, 0.3), (facultyIndex, 0.3)]
         }
         Realm().write { () -> Void in
             weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight) })

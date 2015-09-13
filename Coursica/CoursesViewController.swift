@@ -19,21 +19,17 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     var navigationBarHeightConstraint: NSLayoutConstraint!
     var _filtersController: FiltersViewController?
     var filtersController: FiltersViewController {
-        get {
-            if _filtersController == nil {
-                _filtersController = self.createFiltersController()
-            }
-            return _filtersController!
+        if _filtersController == nil {
+            _filtersController = self.createFiltersController()
         }
+        return _filtersController!
     }
     var _listsController: ListsViewController?
     var listsController: ListsViewController {
-        get {
-            if _listsController == nil {
-                _listsController = self.createListsController()
-            }
-            return _listsController!
+        if _listsController == nil {
+            _listsController = self.createListsController()
         }
+        return _listsController!
     }
     var cancelButton: UIButton!
     var searchButton: UIButton!
@@ -62,20 +58,14 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         return listsController
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = false
-    }
+    override func viewWillAppear(animated: Bool)    { navigationController?.navigationBarHidden = true }
+    override func viewWillDisappear(animated: Bool) { navigationController?.navigationBarHidden = false }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Courses"
-        self.automaticallyAdjustsScrollViewInsets = false
-        
-        self.view.addSubview(containerView)
+        title = "Courses"
+        automaticallyAdjustsScrollViewInsets = false
+        view.addSubview(containerView)
         
         containerView.addSubview(tableView)
         tableView.delegate = self
@@ -86,7 +76,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         })
         navigationBar = CoursesNavigationBar()
         navigationBar.initialLayout(self)
-        self.view.addSubview(navigationBar)
+        view.addSubview(navigationBar)
         constrain(navigationBar, containerView, self.view, {navigationBar, container, view in
             align(left: navigationBar, view, container)
             align(right: navigationBar, view, container)
@@ -95,10 +85,10 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
             container.top == navigationBar.bottom
             container.bottom == view.bottom
         })
-        self.view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.setTranslatesAutoresizingMaskIntoConstraints(true)
         
-        self.tableView.tableFooterView = UIView()
-        self.updateCoursesData()
+        tableView.tableFooterView = UIView()
+        updateCoursesData()
     }
     
     func sortedCourses(courses: Results<Course>) -> Results<Course> {
@@ -109,7 +99,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func updateCoursesData() {
         
-        courses = self.sortedCourses(Realm().objects(Course))
+        courses = sortedCourses(Realm().objects(Course))
         if courses!.count == 0 {
 //            CS50Downloader.getCourses({
 //                self.courses! = self.sortedCourses(Realm().objects(Course))
@@ -130,11 +120,11 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     }
     
     func setListsShowing(showing: Bool) {
-        self.toggleViews(showing, searchActive: false, filters: false)
+        toggleViews(showing, searchActive: false, filters: false)
     }
     
     func setFiltersShowing(showing: Bool, searchActive: Bool) {
-        self.toggleViews(showing, searchActive: searchActive, filters: true)
+        toggleViews(showing, searchActive: searchActive, filters: true)
     }
     
     func toggleViews(showing: Bool, searchActive: Bool, filters: Bool) {
@@ -166,29 +156,29 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
             }
         }
         if let _ = search {
-            self.courses = Realm().objects(Course).filter(NSCompoundPredicate.andPredicateWithSubpredicates(predicates)).sorted("searchScore", ascending: false)
+            courses = Realm().objects(Course).filter(NSCompoundPredicate.andPredicateWithSubpredicates(predicates)).sorted("searchScore", ascending: false)
         } else {
-            self.courses = self.sortedCourses(Realm().objects(Course).filter(NSCompoundPredicate.andPredicateWithSubpredicates(predicates)))
+            courses = sortedCourses(Realm().objects(Course).filter(NSCompoundPredicate.andPredicateWithSubpredicates(predicates)))
         }
-        self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-        self.tableView.reloadData()
+        tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        tableView.reloadData()
     }
     
     func filtersDidChange() {
         
         if !navigationBar.searchBar.text.isEmpty {
             Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
-            self.updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05))
+            updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05))
         } else {
-            self.updatePredicate(filtersController.filters, search: nil)
+            updatePredicate(filtersController.filters, search: nil)
         }
-        self.setFiltersShowing(false, searchActive: true)
+        setFiltersShowing(false, searchActive: true)
     }
     
     func editListsButtonPressed(button: UIButton) {
         button.selected = !button.selected
         button.setTitle(button.selected ? "Done" : "Edit", forState: .Normal)
-        self.listsController.setEditing(button.selected, animated: true)
+        listsController.setEditing(button.selected, animated: true)
     }
     
     func keyboardShouldDismiss() {
@@ -202,9 +192,9 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
 
 extension CoursesViewController: ListsViewControllerDelegate {
     
-    func didSelectTempCourse(tempCourse: TempCourse) {
-        if let controller = DetailViewController.detailViewControllerWithTempCourse(tempCourse){
-            self.navigationController?.pushViewController(controller, animated: true)
+    func didSelectCourse(listableCourse: ListableCourse) {
+        if let course = listableCourse as? Course {
+            navigationController?.pushViewController(DetailViewController(course: course), animated: true)
         }
     }
 }
@@ -212,11 +202,11 @@ extension CoursesViewController: ListsViewControllerDelegate {
 extension CoursesViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        self.setFiltersShowing(true, searchActive: true)
+        setFiltersShowing(true, searchActive: true)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.filtersDidChange()
+        filtersDidChange()
         return true
     }
 }
@@ -241,7 +231,7 @@ extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let course: Course = self.courses![indexPath.row]
-        let detailController = DetailViewController.detailViewControllerWithCourse(course)
+        let detailController = DetailViewController(course: course)
         self.navigationController?.pushViewController(detailController, animated: true)
     }
     
@@ -250,28 +240,28 @@ extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.courses?.count ?? 0
+        return courses?.count ?? 0
     }
 }
 
 extension CoursesViewController: CoursesNavigationBarDelegate {
     
     func listsButtonPressed(button: UIButton) {
-        self.setListsShowing(true)
+        setListsShowing(true)
     }
     
     func listsBackButtonPressed(button: UIButton) {
-        self.setListsShowing(false)
+        setListsShowing(false)
     }
     
     func searchButtonPressed(button: UIButton) {
-        self.setFiltersShowing(true, searchActive: false)
+        setFiltersShowing(true, searchActive: false)
     }
     
     func cancelFiltersButtonPressed(button: UIButton) {
-        self.setFiltersShowing(false, searchActive: false)
+        setFiltersShowing(false, searchActive: false)
         navigationBar.searchBar.text = ""
         Search.shared.clearSearchScores()
-        self.updatePredicate(nil, search: nil)
+        updatePredicate(nil, search: nil)
     }
 }
