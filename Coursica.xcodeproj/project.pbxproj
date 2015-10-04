@@ -22,7 +22,6 @@
 		59002FC21B1AB0440096A92E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59002FC11B1AB0440096A92E /* Social.framework */; };
 		5902E61E1A3475DE00A38C11 /* NavBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5902E61D1A3475DE00A38C11 /* NavBarBg.png */; };
 		5905EE6A1B72BA6E00A4E29A /* CourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905EE691B72BA6E00A4E29A /* CourseTableViewCell.swift */; };
-		5905EE6C1B72D03700A4E29A /* seed.realm in Resources */ = {isa = PBXBuildFile; fileRef = 5905EE6B1B72D02A00A4E29A /* seed.realm */; };
 		5905EE6E1B72EB7900A4E29A /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905EE6D1B72EB7900A4E29A /* Colors.swift */; };
 		5905EE701B72FEC600A4E29A /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5905EE6F1B72FEC600A4E29A /* FiltersViewController.swift */; };
 		590B6C4A1B69B3AF00B23C31 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 590B6C451B69B3AF00B23C31 /* TFHpple.m */; };
@@ -63,6 +62,7 @@
 		596076CF1A1000710038D4F4 /* CoursicaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 596076CE1A1000710038D4F4 /* CoursicaTests.m */; };
 		596CD7661B5C4BF000FF5B21 /* CoursesNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596CD7651B5C4BF000FF5B21 /* CoursesNavigationBar.swift */; };
 		59700C8C1B54977F00BE07D5 /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59700C8B1B54977F00BE07D5 /* Display.swift */; };
+		5972A0751BAA6EFD00420692 /* seed.realm in Resources */ = {isa = PBXBuildFile; fileRef = 5972A0741BAA6EFD00420692 /* seed.realm */; };
 		5975FD371AE0C9F200180AEC /* jharvard_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5975FD361AE0C9F200180AEC /* jharvard_dark.png */; };
 		59774B2F1B55E0CC005E52A2 /* FastTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 59774B2E1B55E0CC005E52A2 /* FastTokenizer.m */; };
 		59774B311B55E1B8005E52A2 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59774B301B55E1B8005E52A2 /* Index.swift */; };
@@ -132,7 +132,6 @@
 		59002FC11B1AB0440096A92E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		5902E61D1A3475DE00A38C11 /* NavBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBg.png; sourceTree = "<group>"; };
 		5905EE691B72BA6E00A4E29A /* CourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewCell.swift; sourceTree = "<group>"; };
-		5905EE6B1B72D02A00A4E29A /* seed.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.realm; sourceTree = "<group>"; };
 		5905EE6D1B72EB7900A4E29A /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		5905EE6F1B72FEC600A4E29A /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		590B6C441B69B3AF00B23C31 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
@@ -182,6 +181,7 @@
 		596076CE1A1000710038D4F4 /* CoursicaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoursicaTests.m; sourceTree = "<group>"; };
 		596CD7651B5C4BF000FF5B21 /* CoursesNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoursesNavigationBar.swift; sourceTree = "<group>"; };
 		59700C8B1B54977F00BE07D5 /* Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
+		5972A0741BAA6EFD00420692 /* seed.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.realm; sourceTree = "<group>"; };
 		5975FD361AE0C9F200180AEC /* jharvard_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jharvard_dark.png; sourceTree = "<group>"; };
 		59774B2D1B55E0CC005E52A2 /* FastTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastTokenizer.h; sourceTree = "<group>"; };
 		59774B2E1B55E0CC005E52A2 /* FastTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastTokenizer.m; sourceTree = "<group>"; };
@@ -341,9 +341,9 @@
 			isa = PBXGroup;
 			children = (
 				5905EE6D1B72EB7900A4E29A /* Colors.swift */,
-				5905EE6B1B72D02A00A4E29A /* seed.realm */,
 				599648AB1B5B43CA00015D02 /* NavigationController.swift */,
 				599648A91B5B426000015D02 /* AppDelegate.swift */,
+				5972A0741BAA6EFD00420692 /* seed.realm */,
 				5934DFF31B9B90C800F56989 /* PrerequisitesParser.swift */,
 				595745811B54DF33006D3FF1 /* CoursicaViewController.swift */,
 				5988650C1B239C840078B06F /* Login */,
@@ -633,9 +633,9 @@
 			files = (
 				59B9D58E1AF6CA3F0006A57B /* Easel.png in Resources */,
 				594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */,
-				5905EE6C1B72D03700A4E29A /* seed.realm in Resources */,
 				59B9D5891AF6CA3F0006A57B /* telescope7.png in Resources */,
 				59B9D58B1AF6CA3F0006A57B /* function.png in Resources */,
+				5972A0751BAA6EFD00420692 /* seed.realm in Resources */,
 				59B9D58C1AF6CA3F0006A57B /* Globe.png in Resources */,
 				596076BE1A1000710038D4F4 /* Main.storyboard in Resources */,
 				59B9D58D1AF6CA3F0006A57B /* hinduism.png in Resources */,

@@ -70,6 +70,7 @@ class Search: NSObject {
                             "cb":    "culture and belief",
                             "ai":    "aesthetic and interpretive understanding",
                             "aiu":   "aesthetic and interpretive understanding",
+                            "am":    "applied math",
                             "astro": "astronomy",
                             "bio":   "biology",
                             "lit":   "literature",

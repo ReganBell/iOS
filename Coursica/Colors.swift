@@ -9,9 +9,9 @@
 import Foundation
 
 let coursicaBlue = UIColor(red:31/255.0, green:148/255.0, blue:255/255.0, alpha:1.0)
-let greenColor = UIColor(red:31/255.0, green:148/255.0, blue:100/255.0, alpha:1.0)
-let yellowColor = UIColor(red:1, green:213/255.0, blue:31/255.0, alpha:1.0)
-let redColor = UIColor(red:219/255.0, green:32/255.0, blue:35/255.0, alpha:1.0)
+let greenColor = UIColor(rgba: "#5AFB2B")
+let yellowColor = UIColor(rgba: "#FFE229")
+let redColor = UIColor(rgba: "#FFA11F")
 
 func colorForPercentile(percentile: Int) -> UIColor {
     switch percentile {

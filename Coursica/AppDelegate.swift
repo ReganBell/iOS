@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import Alamofire
 
 class Key {
     var term: String = ""
@@ -257,13 +256,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Realm().write({
 //            var facultyDict = Dictionary<String, Faculty>()
 //            var deleteAfter: [Faculty] = []
+//            for course in courses {
+//                for faculty in course.faculty {
+//                    faculty.courses.append(course)
+//                }
+//            }
 //            for faculty in Realm().objects(Faculty) {
 //                let fullName = faculty.fullName
 //                if let existing = facultyDict[fullName] {
 //                    for course in faculty.courses {
+//                        existing.courses.append(course)
 //                        course.faculty.removeAtIndex(course.faculty.indexOf(faculty)!)
 //                        course.faculty.append(existing)
-//                        existing.courses.append(course)
 //                    }
 //                    deleteAfter.append(faculty)
 //                } else {
