@@ -25,7 +25,7 @@ class AnimationBarView: UIView {
         self.color = color
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         //fatalError("This class does not support NSCoding")
     }
@@ -34,16 +34,16 @@ class AnimationBarView: UIView {
         
         super.layoutSubviews()
         
-        var delayTime: CFTimeInterval = 1.0
-        var barHeight: CGFloat = 16
+        let delayTime: CFTimeInterval = 1.0
+        let barHeight: CGFloat = 16
         
         let bar = UIView(frame: CGRectMake(0, 0, 0, barHeight))
         bar.layer.cornerRadius = self.cornerRadius
         bar.backgroundColor = color
-        self.animationBar.addSubview(bar)
+        animationBar.addSubview(bar)
         
         var widthConstraint: NSLayoutConstraint!
-        constrain(bar, {bar in
+        constrain(bar, block: {bar in
             widthConstraint = (bar.width == 0)
             bar.left == bar.superview!.left
             bar.bottom == bar.superview!.bottom
@@ -59,36 +59,13 @@ class AnimationBarView: UIView {
     }
     
     func updateWithDictionary(dictionary: NSDictionary) {
-        
-        let width = self.frame.width
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
-        
-        self.addSubview(animationBar)
-        
-        constrain(animationBar, {animationBar in
+        addSubview(animationBar)
+        constrain(animationBar, block: {animationBar in
             let superview = animationBar.superview!
             animationBar.top == superview.top
             animationBar.left == superview.left + 2
             animationBar.right == superview.right - 2
             animationBar.bottom == superview.bottom - 2
         })
-
-//        animationBar.autoPinEdgesToSuperviewEdgesWithInsets(UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2), excludingEdge: ALEdge.Top)
-//        animationBar.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: superview, withOffset: 0)
-        
-//        var label = UILabel(frame: CGRectMake(0, 0, 40, 20))
-//        label.center = CGPointMake(160, 284)
-//        label.textAlignment = NSTextAlignment.Center
-//        label.text = "4.3"
-//        label.font = UIFont(name: label.font.fontName, size: 6)
-//        label.textColor = UIColor.whiteColor()
-//        self.animationBar.addSubview(label)
-//
-//        label.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Left, ofView: superview, withOffset: 2)
-//        label.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: superview, withOffset: 0)
-//
-//        self.animationBar.bringSubviewToFront(label)
-        
     }
-    
 }

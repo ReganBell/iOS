@@ -22,7 +22,7 @@ class CourseCell: ReportCell {
             ("Section",                    "Section"),
             ("Would You Recommend",        "Recommend")]
         
-        for (index, pair) in enumerate(map) {
+        for (index, pair) in map.enumerate() {
             for response in report.responses {
                 let (questionKey, questionDisplay) = pair
                 if response.question == questionKey {

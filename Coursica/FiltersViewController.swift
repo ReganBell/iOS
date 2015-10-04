@@ -51,7 +51,7 @@ class FiltersViewController: UIViewController {
                 filters.append(predicate)
             }
         }
-        return NSCompoundPredicate.andPredicateWithSubpredicates(filters)
+        return NSCompoundPredicate(andPredicateWithSubpredicates: filters)
     }
     
     func gradPredicate() -> NSPredicate? {
@@ -98,7 +98,7 @@ class FiltersViewController: UIViewController {
         let lowerPredicate = NSPredicate(format: "enrollment >= %d", lowerValue)
         if upperValue < 250 {
             let upperPredicate = NSPredicate(format: "enrollment <= %d", upperValue)
-            return NSCompoundPredicate.andPredicateWithSubpredicates([lowerPredicate, upperPredicate])
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [lowerPredicate, upperPredicate])
         } else {
             return lowerPredicate
         }
@@ -148,7 +148,7 @@ class FiltersViewController: UIViewController {
         let pairs: [([UIButton], Selector)] = [(genEdButtons, "genEdButtonPressed:"), (termBarButtons, "termButtonPressed:"), (gradBarButtons, "gradButtonPressed:")]
         for pair in pairs {
             let (buttons, selector) = pair
-            for (index, button) in enumerate(buttons) {
+            for (index, button) in buttons.enumerate() {
                 button.tag = index
                 button.addTarget(self, action: selector, forControlEvents: UIControlEvents.TouchUpInside)
             }
@@ -207,7 +207,7 @@ class FiltersViewController: UIViewController {
         let textColor = UIColor(white: 155/255.0, alpha: 1)
         let sliderView = DoubleSliderView(title: title, font: font, textColor: textColor)
         scrollView.addSubview(sliderView)
-        constrain(sliderView, genEdBarView, {slider, genEdBar in
+        constrain(sliderView, genEdBarView, block: {slider, genEdBar in
             slider.left == genEdBar.left + 18
             slider.right == genEdBar.right - 18
             slider.height == 52
@@ -220,7 +220,7 @@ class FiltersViewController: UIViewController {
         overallSliderView.shouldFormatForFloatValue = true
         overallSliderView.valueChanged(overallSliderView.slider)
         qOverallSlider = overallSliderView.slider
-        constrain(overallSliderView, genEdBarView, {overall, genEdBar in
+        constrain(overallSliderView, genEdBarView, block: {overall, genEdBar in
             overall.top == genEdBar.bottom + 16
         })
         
@@ -228,7 +228,7 @@ class FiltersViewController: UIViewController {
         workloadSliderView.shouldFormatForFloatValue = true
         workloadSliderView.valueChanged(workloadSliderView.slider)
         qWorkloadSlider = workloadSliderView.slider
-        constrain(workloadSliderView, overallSliderView, {workload, overall in
+        constrain(workloadSliderView, overallSliderView, block: {workload, overall in
             workload.top == overall.bottom + 16
         })
         
@@ -239,7 +239,7 @@ class FiltersViewController: UIViewController {
         enrollmentSlider.maximumValue = 250
         enrollmentSlider.upperValue = 250
         enrollmentSliderView.valueChanged(enrollmentSliderView.slider)
-        constrain(enrollmentSliderView, workloadSliderView, {enrollment, workload in
+        constrain(enrollmentSliderView, workloadSliderView, block: {enrollment, workload in
             enrollment.top == workload.bottom + 16
         })
     }

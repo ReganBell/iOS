@@ -39,7 +39,7 @@ extension String {
     
     var asFirebaseKey: String {
         var string = self
-        for (i, forbidden) in enumerate(firebaseForbidden) {
+        for (i, forbidden) in firebaseForbidden.enumerate() {
             string = string.stringByReplacingOccurrencesOfString(forbidden, withString: "&\(i)&")
         }
         return string
@@ -47,7 +47,7 @@ extension String {
     
     var decodedFirebaseKey: String {
         var string = self
-        for (i, forbidden) in enumerate(firebaseForbidden) {
+        for (i, forbidden) in firebaseForbidden.enumerate() {
             string = string.stringByReplacingOccurrencesOfString("&\(i)&", withString: forbidden)
         }
         return string
@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func coursesJSONFromDisk() -> NSDictionary {
         let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")!)!
-        return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: nil) as! NSDictionary
+        return (try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())) as! NSDictionary
     }
     
     func calculatePercentiles(courses: Results<Course>) {
@@ -107,15 +107,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        allScores = sorted(allScores, <)
+        allScores = allScores.sort(<)
         var sortedGroupScores = Dictionary<String, [Double]>()
-        for (group, var array) in allGroupScores {
-            sortedGroupScores[group] = sorted(array, <)
+        for (group, array) in allGroupScores {
+            sortedGroupScores[group] = array.sort(<)
         }
         allGroupScores = sortedGroupScores
-        var scoresBySize: [((Int, Int), [Double])] = []
         for range in allSizeScores {
-            range.scores.sort(<)
+            range.scores.sortInPlace(<)
         }
     }
     
@@ -132,7 +131,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func savePercentilesOnCourses(courses: Results<Course>) {
-        NSLog("start")
         for course in courses {
             if course.overall < 0.1 {
                 course.percentileAll = -1
@@ -142,17 +140,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             let tabs: [GraphViewTab] = [.All, .Group, .Size]
             for tab in tabs {
-                let sortedScores = self.arrayForGraphTab(tab, course: course)
-                let index = find(sortedScores, course.overall)!
+                let sortedScores = arrayForGraphTab(tab, course: course)
+                let index = sortedScores.indexOf(course.overall)!
                 let percentile = Double(index) / Double(sortedScores.count)
                 let percentileInt = Int(percentile * 100)
                 switch tab {
                 case .All: course.percentileAll = percentileInt
                 case .Group: course.percentileGroup = percentileInt
                 case .Size: course.percentileSize = percentileInt
-                default: fatalError("uh oh")
                 }
-                NSLog("end")
             }
         }
     }
@@ -160,15 +156,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func extractQData() {
         let json = coursesJSONFromDisk()
         var courseDict: [String: Course] = Dictionary<String,Course>()
-        let courses = Realm().objects(Course)
+        let courses = try! Realm().objects(Course)
         if courses.count != 0 {
             for course in courses {
                 courseDict[course.display.serverTitle] = course
             }
-            Realm().write {
+            try! Realm().write {
                 for (key, value) in json {
                     var mostRecent = Key(string: "fall1870")
-                    for (id, dict) in (value as! NSDictionary) {
+                    for (id, _) in (value as! NSDictionary) {
                         mostRecent = Key.compare(Key(string: id as! String), b: mostRecent)
                     }
                     let mostRecentReport = (value as! NSDictionary)[mostRecent.string] as! NSDictionary
@@ -207,7 +203,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let average = FacultyAverage()
                     average.question = question
                     average.score = self.averageOf(scores)
-                    Realm().add(average, update: false)
+                    try! Realm().add(average, update: false)
                 }
             }
         }
@@ -233,27 +229,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let buildNumber = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? NSString)?.integerValue where buildNumber > modelVersion {
             let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
-            var removeErrorPointer: NSError?
-            NSFileManager.defaultManager().removeItemAtPath(Realm.defaultPath, error: &removeErrorPointer)
-            if let error = removeErrorPointer {
-                println(error)
-            }
-            var copyErrorPointer: NSError?
-            NSFileManager.defaultManager().copyItemAtPath(path, toPath: Realm.defaultPath, error: &copyErrorPointer)
-            if let error = copyErrorPointer {
-                println(error)
+            do {
+                if let defaultPath = Realm.Configuration.defaultConfiguration.path {
+                    try NSFileManager.defaultManager().removeItemAtPath(defaultPath)
+                    try NSFileManager.defaultManager().copyItemAtPath(path, toPath: defaultPath)
+                } else {
+                    print("No default Realm path found\n")
+                }
+            } catch {
+                print("Error copying realm file.\n")
             }
             NSUserDefaults.standardUserDefaults().setInteger(buildNumber, forKey: versionKey)
         }
         
-        setSchemaVersion(4, Realm.defaultPath, {migration, oldSchemaVersion in
-            if oldSchemaVersion < 3 {
+        setSchemaVersion(5, realmPath: Realm.Configuration.defaultConfiguration.path!, migrationBlock: {migration, oldSchemaVersion in
+            if oldSchemaVersion < 5 {
                 
             }
         })
         
-        let courses = Realm().objects(Course)
-        Realm().write({
+        if let courses = try? Realm().objects(Course)  {
+            calculatePercentiles(courses)
+            Search.shared.buildIndex(courses)
+        }
+//        Realm().write({
 //            var facultyDict = Dictionary<String, Faculty>()
 //            var deleteAfter: [Faculty] = []
 //            for course in courses {
@@ -282,27 +281,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                    }
 //                }
 //            }
-        })
-        calculatePercentiles(courses)
+//        })
 //        Realm().write {
 //            self.savePercentilesOnCourses(courses)
 //        }
-        Search.shared.buildIndex(courses)
 //        self.extractQData()
 //        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
 //        println(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"))
 
-        
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont(name: "AvenirNext-DemiBold", size: 14)!, NSForegroundColorAttributeName : UIColor.whiteColor()], forState: .Normal)
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = NavigationController(rootViewController: CoursesViewController())
-        navigationController.navigationBar.barTintColor = coursicaBlue
-        navigationController.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController.navigationBar.opaque = true
-        navigationController.navigationBar.translucent = false
-        
-        self.window!.rootViewController = navigationController
-        self.window!.makeKeyAndVisible()
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+        self.window = window
         if !NSUserDefaults.standardUserDefaults().boolForKey("loggedIn") {
             let loginController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("loginController") as! LoginViewController
             loginController.delegate = self

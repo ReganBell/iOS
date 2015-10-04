@@ -41,7 +41,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         filtersController.delegate = self
         filtersController.view.alpha = 0
         containerView.addSubview(filtersController.view)
-        constrain(filtersController.view, {filters in
+        constrain(filtersController.view, block: {filters in
             filters.edges == filters.superview!.edges
         })
         return filtersController
@@ -52,7 +52,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         listsController.delegate = self
         listsController.view.alpha = 0
         containerView.addSubview(listsController.view)
-        constrain(listsController.view, {lists in
+        constrain(listsController.view, block: {lists in
             lists.edges == lists.superview!.edges
         })
         return listsController
@@ -71,13 +71,13 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
-        constrain(tableView, {tableView in
+        constrain(tableView, block: {tableView in
             tableView.edges == tableView.superview!.edges
         })
         navigationBar = CoursesNavigationBar()
         navigationBar.initialLayout(self)
         view.addSubview(navigationBar)
-        constrain(navigationBar, containerView, self.view, {navigationBar, container, view in
+        constrain(navigationBar, containerView, self.view, block: {navigationBar, container, view in
             align(left: navigationBar, view, container)
             align(right: navigationBar, view, container)
             navigationBar.top == view.top
@@ -85,7 +85,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
             container.top == navigationBar.bottom
             container.bottom == view.bottom
         })
-        view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.translatesAutoresizingMaskIntoConstraints = true
         
         tableView.tableFooterView = UIView()
         updateCoursesData()
@@ -99,13 +99,15 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
     
     func updateCoursesData() {
         
-        courses = sortedCourses(Realm().objects(Course))
-        if courses!.count == 0 {
+        if let courses = try? Realm().objects(Course) {
+            self.courses = sortedCourses(courses)
+        }
+//        if courses!.count == 0 {
 //            CS50Downloader.getCourses({
 //                self.courses! = self.sortedCourses(Realm().objects(Course))
 //                self.tableView.reloadData()
 //            })
-        }
+//        }
     }
     
     func titleLabel(title: String) -> UILabel {
@@ -115,7 +117,7 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
         label.text = title
         label.textColor = UIColor.whiteColor()
         label.sizeToFit()
-        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
     
@@ -156,21 +158,22 @@ class CoursesViewController: CoursicaViewController, FiltersViewControllerDelega
             }
         }
         if let _ = search {
-            courses = Realm().objects(Course).filter(NSCompoundPredicate.andPredicateWithSubpredicates(predicates)).sorted("searchScore", ascending: false)
+            courses = try? Realm().objects(Course).filter(NSCompoundPredicate(andPredicateWithSubpredicates: predicates)).sorted("searchScore", ascending: false)
         } else {
-            courses = sortedCourses(Realm().objects(Course).filter(NSCompoundPredicate.andPredicateWithSubpredicates(predicates)))
+            if let courses = try? Realm().objects(Course).filter(NSCompoundPredicate(andPredicateWithSubpredicates: predicates)) {
+                self.courses = sortedCourses(courses)
+            }
         }
         tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         tableView.reloadData()
     }
     
     func filtersDidChange() {
-        
-        if !navigationBar.searchBar.text.isEmpty {
-            Search.shared.assignScoresForSearch(navigationBar.searchBar.text)
-            updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05))
-        } else {
+        if let text = navigationBar.searchBar.text where text.isEmpty || navigationBar.searchBar.text == nil {
             updatePredicate(filtersController.filters, search: nil)
+        } else {
+            Search.shared.assignScoresForSearch(navigationBar.searchBar.text!)
+            updatePredicate(filtersController.filters, search: NSPredicate(format: "searchScore > %f", 0.05))
         }
         setFiltersShowing(false, searchActive: true)
     }
@@ -221,7 +224,7 @@ extension CoursesViewController: UITableViewDataSource, UITableViewDelegate {
         let fancy = NSMutableAttributedString(string: plain)
         let regularFont = UIFont(name: "AvenirNext-Regular", size: 14)
         let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 17)
-        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
+        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, plain.characters.count))
         fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
         cell.textLabel!.attributedText = fancy
         cell.colorBarView.backgroundColor = colorForPercentile(course.percentileSize)

@@ -25,7 +25,7 @@ extension CommentsViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("commentCell") as! CommentTableViewCell
-        cell.commentLabel.text = report.comments[indexPath.row]
+        cell.commentLabel?.text = report.comments[indexPath.row]
         return cell
     }
     

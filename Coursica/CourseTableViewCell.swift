@@ -21,7 +21,7 @@ class CourseTableViewCell: UITableViewCell {
         
         colorBarView.backgroundColor = UIColor(white: 241/255.0, alpha: 1)
         self.contentView.addSubview(colorBarView)
-        constrain(colorBarView, contentView, separatorView, {colorBar, contentView, separator in
+        constrain(colorBarView, contentView, separatorView, block: {colorBar, contentView, separator in
             colorBar.left == contentView.left
             colorBar.top == contentView.top
             colorBar.bottom == contentView.bottom
@@ -33,7 +33,7 @@ class CourseTableViewCell: UITableViewCell {
         })
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }

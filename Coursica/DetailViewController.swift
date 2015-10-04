@@ -25,14 +25,10 @@ class DetailViewController: CoursicaViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let enrollment = course.enrollment
-        let overall = course.overall
-        let workload = course.workload
-        
         tableView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         tableView.allowsSelection = false
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -41,10 +37,10 @@ class DetailViewController: CoursicaViewController {
         tableView.delegate = self
         tableView.separatorStyle = .None
         view.addSubview(tableView)
-        constrain(view, tableView, {view, scrollView in
+        constrain(view, tableView, block: {view, scrollView in
             scrollView.edges == view.edges
         })
-        view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.translatesAutoresizingMaskIntoConstraints = true
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "addCourseButtonPressed")
         
@@ -129,7 +125,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         headerLabel.sizeToFit()
         headerLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         headerView.addSubview(headerLabel)
-        constrain(headerLabel, {header in
+        constrain(headerLabel, block: {header in
             header.center == header.superview!.center
         })
         return headerView

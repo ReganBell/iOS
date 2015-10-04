@@ -89,7 +89,7 @@ class BreakdownCell: UITableViewCell {
             titleLabel.textAlignment = NSTextAlignment.Right
             backgroundView.addSubview(scoreLabel)
             backgroundView.addSubview(titleLabel)
-            constrain(scoreLabel, titleLabel, {score, title in
+            constrain(scoreLabel, titleLabel, block: {score, title in
                 score.right == score.superview!.right
                 title.right == score.left
                 align(top: score.superview!, score, title)
@@ -98,7 +98,7 @@ class BreakdownCell: UITableViewCell {
                 title.width == 80
             })
             roundedBackgroundView.addSubview(backgroundView)
-            constrain(backgroundView, circleView, {background, circle in
+            constrain(backgroundView, circleView, block: {background, circle in
                 background.top == background.superview!.top + (33 + 25 * CGFloat(index))
                 background.right == background.superview!.right - 40 ~ 750
                 background.left >= circle.right + 10
@@ -133,7 +133,7 @@ class BreakdownCell: UITableViewCell {
         noDataAvailableLabel.alpha = 0
         roundedBackgroundView.addSubview(noDataAvailableLabel)
         
-        constrain(noDataAvailableLabel, {label in
+        constrain(noDataAvailableLabel, block: {label in
             label.centerX == label.superview!.centerX
             label.centerY == label.superview!.centerY + 40
         })
@@ -147,7 +147,7 @@ class BreakdownCell: UITableViewCell {
         circle.strokeEnd = 0
         circleView.layer.addSublayer(circle)
         roundedBackgroundView.addSubview(circleView)
-        constrain(circleView, {circle in
+        constrain(circleView, block: {circle in
             circle.height == 120
             circle.width == 120
             circle.top == circle.superview!.top + 20
@@ -157,7 +157,7 @@ class BreakdownCell: UITableViewCell {
         overallNumberLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 41))
         overallNumberLabel.font = UIFont(name: "AvenirNext-Bold", size: 40)
         circleView.addSubview(overallNumberLabel)
-        constrain(overallNumberLabel, {overall in
+        constrain(overallNumberLabel, block: {overall in
             overall.centerY == overall.superview!.centerY - 5
             overall.centerX == overall.superview!.centerX
         })
@@ -165,13 +165,13 @@ class BreakdownCell: UITableViewCell {
         overallLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 48, height: 41))
         overallLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         circleView.addSubview(overallLabel)
-        constrain(overallLabel, {overall in
+        constrain(overallLabel, block: {overall in
             overall.centerY == overall.superview!.centerY + 20
             overall.centerX == overall.superview!.centerX
         })
         
         roundedBackgroundView.addSubview(percentileGraphView)
-        constrain(percentileGraphView, circleView, {graph, circle in
+        constrain(percentileGraphView, circleView, block: {graph, circle in
             graph.top == circle.bottom + 15
             graph.left == graph.superview!.left + percentileGraphInset
             graph.right == graph.superview!.right - percentileGraphInset
@@ -188,7 +188,7 @@ class BreakdownCell: UITableViewCell {
         sizeButton.selected = true
         sizeButton.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 15)
         
-        constrain(sizeButton, groupButton, percentileGraphView, {size, group, graph in
+        constrain(sizeButton, groupButton, percentileGraphView, block: {size, group, graph in
             size.centerX == size.superview!.centerX
             size.top == graph.bottom + 40
             size.height == 20
@@ -196,7 +196,7 @@ class BreakdownCell: UITableViewCell {
             group.top == graph.bottom + 40
             group.height == 20
         })
-        constrain(sizeButton, allButton, percentileGraphView, {size, all, graph in
+        constrain(sizeButton, allButton, percentileGraphView, block: {size, all, graph in
             all.centerX == size.superview!.right * 0.80
             all.top == graph.bottom + 40
             all.height == 20
@@ -204,7 +204,7 @@ class BreakdownCell: UITableViewCell {
         
         self.baselineButtons = [allButton, groupButton, sizeButton]
         
-        constrain(roundedBackgroundView, self.contentView, {background, cell in
+        constrain(roundedBackgroundView, contentView, block: {background, cell in
             background.top == cell.top + 5
             background.left == cell.left + 10
             background.right == cell.right - 10
@@ -224,7 +224,7 @@ class BreakdownCell: UITableViewCell {
         breakdownButton.addTarget(self, action: "breakdownButtonPressed:", forControlEvents: .TouchUpInside)
         breakdownButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
         roundedBackgroundView.addSubview(breakdownButton)
-        constrain(sizeButton, roundedBackgroundView, breakdownButton, {size, background, breakdown in
+        constrain(sizeButton, roundedBackgroundView, breakdownButton, block: {size, background, breakdown in
             breakdown.top == size.bottom + 20
             breakdown.left == background.left
             breakdown.right == background.right
@@ -286,7 +286,7 @@ class BreakdownCell: UITableViewCell {
         var heights: [CGFloat] = []
         
         let sortedScores = arrayForCurrentGraphTab()
-        let index = find(sortedScores, course.overall)!
+        let index = sortedScores.indexOf(course.overall)!
         let percentileWidth = 2.0 / Double(barCountInt)
         var scoreIndex = 0
         var cumulativeHeight: CGFloat = 1.0
@@ -301,7 +301,7 @@ class BreakdownCell: UITableViewCell {
         let percentile = Double(index) / Double(sortedScores.count)
         let percentileInt = Int(percentile * 100)
         
-        let scaleFactor = 120.0 / maxElement(heights)
+        let scaleFactor = 120.0 / heights.maxElement()!
         heights = heights.map({height in return height * scaleFactor})
 
         let rawGraphWidth = (spacing + barWidth) * barCountFloat + barWidth
@@ -309,7 +309,7 @@ class BreakdownCell: UITableViewCell {
         let initialOffset: CGFloat = (rawGraphWidth - roundedGraphWidth) / 2 + 8
         
         var courseIndexBarView: UIView?
-        for (i, height) in enumerate(heights) {
+        for (i, height) in heights.enumerate() {
             let bar = UIView(frame: CGRectMake(0, 0, barWidth, 0))
             bar.layer.cornerRadius = barWidth / 2
             bar.backgroundColor = UIColor(white: 216/255.0, alpha: 1.0)
@@ -325,7 +325,7 @@ class BreakdownCell: UITableViewCell {
             var heightConstraint: NSLayoutConstraint!
             let leadingSpacing = initialOffset + CGFloat(i) * (barWidth + spacing)
             
-            constrain(bar, {bar in
+            constrain(bar, block: {bar in
                 heightConstraint = (bar.height == 0.1)
                 bar.width == barWidth
                 bar.left == bar.superview!.left + leadingSpacing
@@ -348,7 +348,7 @@ class BreakdownCell: UITableViewCell {
         percentileLabel.textAlignment = .Center
         startCircleAnimation(percentileInt)
         roundedBackgroundView.addSubview(percentileLabel)
-        constrain(percentileLabel, courseIndexBarView!, percentileGraphView, {percentile, bar, graph in
+        constrain(percentileLabel, courseIndexBarView!, percentileGraphView, block: {percentile, bar, graph in
             percentile.top == graph.bottom + 5
             percentile.centerX == bar.centerX ~ 750
             percentile.left == graph.left

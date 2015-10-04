@@ -90,8 +90,8 @@
 
         //    // Add programatic constraints to the slider
         [self pinHeight:40.0 view:overallSlider];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:overallSlider attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:titleLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
         
         [self valueChanged:overallSlider];

@@ -44,7 +44,7 @@ class CoursesNavigationBar: UIView {
         self.clipsToBounds = true
         
         self.addSubview(barView)
-        constrain(barView, self, {bar, view in
+        constrain(barView, self, block: {bar, view in
             self.statusBarHeightConstraint = (bar.top == view.top + 20)
             bar.left == view.left
             bar.right == view.right
@@ -55,7 +55,7 @@ class CoursesNavigationBar: UIView {
         listsTitleLabel = self.titleLabel("Lists")
         barView.addSubview(coursicaTitleLabel)
         barView.addSubview(listsTitleLabel)
-        constrain(coursicaTitleLabel, listsTitleLabel, barView, {coursica, lists, bar in
+        constrain(coursicaTitleLabel, listsTitleLabel, barView, block: {coursica, lists, bar in
             coursica.height == 20
             lists.height == 20
             coursica.center == bar.center
@@ -63,7 +63,7 @@ class CoursesNavigationBar: UIView {
         })
         
         searchBar = self.bar()
-        constrain(searchBar, barView, {search, nav in
+        constrain(searchBar, barView, block: {search, nav in
             search.centerY == nav.centerY
             search.height == nav.height - 10
             search.left == nav.left + 10
@@ -75,7 +75,7 @@ class CoursesNavigationBar: UIView {
         barView.addSubview(cancelButton)
         barView.addSubview(listsEditButton)
         barView.addSubview(searchButton)
-        constrain(cancelButton, listsEditButton, searchButton, {cancel, edit, search in
+        constrain(cancelButton, listsEditButton, searchButton, block: {cancel, edit, search in
             align(top: cancel, edit, search, cancel.superview!)
             align(bottom: cancel, edit, search, cancel.superview!)
             align(right: cancel, edit, search, cancel.superview!)
@@ -84,7 +84,7 @@ class CoursesNavigationBar: UIView {
             search.width == 75
         })
         
-        constrain(searchBar, cancelButton, {search, cancel in
+        constrain(searchBar, cancelButton, block: {search, cancel in
             search.right == cancel.left
         })
         
@@ -92,7 +92,7 @@ class CoursesNavigationBar: UIView {
         listsBackButton = self.navBarButton("Back", imageNamed: nil, target: "listsBackButtonPressed:")
         barView.addSubview(listsButton)
         barView.addSubview(listsBackButton)
-        constrain(listsButton, listsBackButton, {lists, back in
+        constrain(listsButton, listsBackButton, block: {lists, back in
             align(top: lists, back, back.superview!)
             align(bottom: lists, back, back.superview!)
             align(left: lists, back, back.superview!)
@@ -137,7 +137,7 @@ class CoursesNavigationBar: UIView {
         addSubview(bar)
         bar.backgroundColor = UIColor(red: 31/255.0, green: 117/255.0, blue: 1, alpha: 1)
         bar.layer.cornerRadius = 4
-        bar.setTranslatesAutoresizingMaskIntoConstraints(false)
+        bar.translatesAutoresizingMaskIntoConstraints = false
         bar.returnKeyType = .Search
         bar.autocorrectionType = .No
         bar.delegate = delegate
@@ -163,7 +163,7 @@ class CoursesNavigationBar: UIView {
         bar.rightView = rightView
         
         let style = bar.defaultTextAttributes[NSParagraphStyleAttributeName]?.mutableCopy() as! NSMutableParagraphStyle
-        style.minimumLineHeight = bar.font.lineHeight - (bar.font.lineHeight - font.lineHeight) / 2.0
+        style.minimumLineHeight = bar.font!.lineHeight - (bar.font!.lineHeight - font.lineHeight) / 2.0
         
         let placeholder = NSMutableAttributedString(string: "Search for courses", attributes:
             [NSForegroundColorAttributeName: UIColor(white: 1, alpha: 0.4),
@@ -180,13 +180,13 @@ class CoursesNavigationBar: UIView {
         label.text = title
         label.textColor = UIColor.whiteColor()
         label.sizeToFit()
-        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
     
     func navBarButton(title: String, imageNamed: String?, target: String?) -> UIButton {
         let button = UIButton()
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         let selector = target == nil ? title.lowercaseString + "ButtonPressed:" : target!
         button.addTarget(self.delegate, action: Selector(selector), forControlEvents: UIControlEvents.TouchUpInside)
         if let name = imageNamed {

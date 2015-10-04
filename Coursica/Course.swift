@@ -71,10 +71,10 @@ class Faculty: Object {
     dynamic var last = ""
     dynamic var suffix = ""
     var fullName: String {
-        if count(first) < 3 {
-            return " ".join([first, middle, last])
+        if first.characters.count < 3 {
+            return [first, middle, last].joinWithSeparator(" ")
         } else {
-            return " ".join([first, last])
+            return [first, last].joinWithSeparator(" ")
         }
     }
     let courses = List<Course>()
@@ -122,9 +122,9 @@ class FacultyReport: Object {
 class Response: Object {
     
     dynamic var question = ""
-    dynamic var breakdown = Breakdown()
-    dynamic var baselineSingleTerm = Baseline()
-    dynamic var baselineThreeYears = Baseline()
+    dynamic var breakdown: Breakdown? = Breakdown()
+    dynamic var baselineSingleTerm: Baseline? = Baseline()
+    dynamic var baselineThreeYears: Baseline? = Baseline()
     dynamic var mean = 0.0
     dynamic var median = 0
 }

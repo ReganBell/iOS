@@ -20,39 +20,39 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Alamofire (1.3.0)
-  - Cartography (0.5.0)
+  - Alamofire (2.0.2)
+  - Cartography (0.6.0)
   - Firebase (2.3.3)
   - Mantle (2.0.2):
     - Mantle/extobjc (= 2.0.2)
   - Mantle/extobjc (2.0.2)
   - pop (1.0.7)
-  - Realm (0.93.2):
-    - Realm/Headers (= 0.93.2)
-  - Realm/Headers (0.93.2)
-  - RealmSwift (0.93.2):
-    - Realm (= 0.93.2)
+  - Realm (0.95.2):
+    - Realm/Headers (= 0.95.2)
+  - Realm/Headers (0.95.2)
+  - RealmSwift (0.95.2):
+    - Realm (= 0.95.2)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
   - AFNetworking
-  - Alamofire
-  - Cartography
+  - Alamofire (~> 2.0)
+  - Cartography (~> 0.6)
   - Firebase
   - Mantle
   - pop (~> 1.0)
-  - RealmSwift
+  - RealmSwift (~> 0.95.2)
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
-  Alamofire: 220403a8d5840e0b4c946a6fbaf209dbca124282
-  Cartography: 774e5cc446f5a6bca5d4345c5aa6af9a1fe74dc6
+  Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
+  Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
   Firebase: 2db60272f68ce40c7d47e5ae6eddc16977c65d4c
   Mantle: 967fd31ea0220890b2e76589198996b534bb3fb1
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
-  Realm: 2fdd0ae74f730e190384e0338d8a0d3654df8220
-  RealmSwift: 231b064da9f98b1c4f325fe1f1cb8756aae2b8d6
+  Realm: 4c026902041bb39c4bd083ebc5e88f4f17973d72
+  RealmSwift: ac7822fe7ab8dca7fa979f4d576793b111d6dce1
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
 COCOAPODS: 0.37.2

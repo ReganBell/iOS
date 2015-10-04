@@ -10,7 +10,7 @@ import Cartography
 
 class MapViewController: CoursicaViewController {
 
-    var urlString: String
+    let urlString: String
     let webView = UIWebView()
     
     init(urlString: String) {
@@ -18,10 +18,7 @@ class MapViewController: CoursicaViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        self.urlString = ""
-        super.init(coder: aDecoder)
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +26,7 @@ class MapViewController: CoursicaViewController {
         if let URL = NSURL(string: urlString) {
             webView.loadRequest(NSURLRequest(URL: URL))
         }
-        constrain(webView, {webView in
+        constrain(webView, block: {webView in
             webView.edges == webView.superview!.edges
         })
     }

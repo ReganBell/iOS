@@ -20,9 +20,9 @@ class LegendView: UIView {
             legendBarViews.append(legendBarView)
         }
         
-        constrain([self] + legendBarViews, replace: ConstraintGroup(), {views in
+        constrain([self] + legendBarViews, replace: ConstraintGroup(), block: {views in
             let container = views[0]; let legendViews: [LayoutProxy] = Array(views[1..<views.count])
-            for (index, view) in enumerate(legendViews) {
+            for (index, view) in legendViews.enumerate() {
                 view.left == container.left
                 view.right == container.right
                 if index == 0 {
@@ -35,5 +35,5 @@ class LegendView: UIView {
         })
     }
 
-    required init(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }

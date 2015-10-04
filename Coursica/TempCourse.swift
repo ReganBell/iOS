@@ -39,7 +39,7 @@ class TempCourse: ListableCourse {
         }
     }
     var course: Course? {
-        return Realm().objects(Course).filter("number = '\(number)' AND shortField = '\(shortField)'").first
+        return (try? Realm().objects(Course).filter("number = '\(number)' AND shortField = '\(shortField)'"))?.first
     }
     
     init(CS50Dictionary: NSDictionary) {
@@ -64,7 +64,7 @@ class TempCourse: ListableCourse {
             case "title":
                 self.title = field.value as! String
             default:
-                print("Unexpected course field type", appendNewline: false)
+                print("Unexpected course field type\n")
             }
         }
     }

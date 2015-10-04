@@ -44,9 +44,7 @@ class ResponseBarView: UIView {
         questionLabel.numberOfLines = 0
         self.addSubview(questionLabel)
         
-        let baseline = response.baselineSingleTerm
-        if baseline.group > 0.1 {
-            
+        if let baseline = response.baselineSingleTerm where baseline.group > 0.1 {
             let epsilon = 0.1
             var similarBaseline = (baseline.group + baseline.size) / 2
             if title == "Workload" {
@@ -71,7 +69,7 @@ class ResponseBarView: UIView {
         
         questionLabel.preferredMaxLayoutWidth = labelWidth
         
-        constrain(bar, questionLabel, scoreLabel, {bar, question, score in
+        constrain(bar, questionLabel, scoreLabel, block: {bar, question, score in
             let view = question.superview!
             question.left == view.left
             question.top == view.top
@@ -102,7 +100,7 @@ class ResponseBarView: UIView {
         barWidthConstraint.pop_addAnimation(widthAnim, forKey: "widthAnim")
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }

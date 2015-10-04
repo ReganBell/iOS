@@ -18,14 +18,14 @@ class CommentsCell: UITableViewCell {
     var delegate: CommentsCellDelegate!
     
     func layoutForReport(report: Report?) {
-        self.contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
+        contentView.backgroundColor = UIColor(white: 241/255.0, alpha: 1.0)
         viewCommentsButton.backgroundColor = coursicaBlue
         viewCommentsButton.layer.cornerRadius = 4
         viewCommentsButton.setTitle("View Q Comments", forState: .Normal)
         viewCommentsButton.addTarget(self, action: "viewCommentsButtonPressed:", forControlEvents: .TouchUpInside)
         viewCommentsButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 17)
-        self.contentView.addSubview(viewCommentsButton)
-        constrain(viewCommentsButton, self.contentView, {button, cell in
+        contentView.addSubview(viewCommentsButton)
+        constrain(viewCommentsButton, contentView, block: {button, cell in
             button.top == cell.top + 5
             button.left == cell.left + 10
             button.right == cell.right - 10
@@ -35,6 +35,6 @@ class CommentsCell: UITableViewCell {
     }
     
     func viewCommentsButtonPressed(button: UIButton) {
-        self.delegate.viewCommentsButtonPressed(self)
+        delegate.viewCommentsButtonPressed(self)
     }
 }

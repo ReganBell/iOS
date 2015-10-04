@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Prestige Worldwide. All rights reserved.
 //
 
+import UIKit
 import Cartography
 
 class LegendBarView: UIView {
@@ -30,7 +31,7 @@ class LegendBarView: UIView {
         titleLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 15)
         addSubview(titleLabel)
         
-        constrain(self, circleView, titleLabel, {container, circle, title in
+        constrain(self, circleView, titleLabel, block: {container, circle, title in
             circle.left == container.left
             circle.width == 16
             circle.height == 16
@@ -42,5 +43,5 @@ class LegendBarView: UIView {
         })
     }
 
-    required init(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }

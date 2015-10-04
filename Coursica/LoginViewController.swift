@@ -51,7 +51,7 @@ class LoginViewController: CoursicaViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.checkAllowAnyLogin()
+        checkAllowAnyLogin()
 
         usernameField.layer.cornerRadius = 4.0
         passwordField.layer.cornerRadius = 4.0
@@ -113,28 +113,28 @@ class LoginViewController: CoursicaViewController {
     }
     
     @IBAction func loginButtonPressed(button: UIButton?) {
-        if (usernameField.text.isEmpty) {
-            self.displayErrorMessage("Your HUID is required to log in.")
+        guard let username = usernameField.text where !username.isEmpty else {
+            displayErrorMessage("Your HUID is required to log in.")
+            return
         }
-        else if (passwordField.text.isEmpty) {
-            self.displayErrorMessage("Your password is required to log in.")
+        guard let password = passwordField.text where !password.isEmpty else {
+            displayErrorMessage("Your password is required to log in.")
+            return
         }
-        else {
-            loginButton.setTitle("Logging in...", forState: .Normal)
-            secondsWaitedByUser = 0
-            NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateWaitingMessage:", userInfo: nil, repeats: true)
-            weak var weakSelf: LoginViewController! = self
-            Login.attemptLoginWithCredentials(usernameField.text, password: passwordField.text, completionBlock: {success, error in
-                if success || self.allowAnyLogin {
-                    weakSelf.usernameField.resignFirstResponder()
-                    weakSelf.passwordField.resignFirstResponder()
-                    weakSelf.delegate.userDidLoginWithHUID(weakSelf.usernameField.text)
-                    weakSelf.dismissViewControllerAnimated(true, completion: nil)
-                } else {
-                    self.displayErrorMessage(error)
-                }
-            })
-        }
+        loginButton.setTitle("Logging in...", forState: .Normal)
+        secondsWaitedByUser = 0
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateWaitingMessage:", userInfo: nil, repeats: true)
+        weak var weakSelf: LoginViewController! = self
+        Login.attemptLoginWithCredentials(username, password: password, completionBlock: {success, error in
+            if success || weakSelf.allowAnyLogin {
+                weakSelf.usernameField.resignFirstResponder()
+                weakSelf.passwordField.resignFirstResponder()
+                weakSelf.delegate.userDidLoginWithHUID(username)
+                weakSelf.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                weakSelf.displayErrorMessage(error)
+            }
+        })
     }
     
     // MARK: Keyboard

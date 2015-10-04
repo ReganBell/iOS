@@ -20,9 +20,10 @@ class Login: NSObject {
         
         var parameters: [String: String] = Dictionary<String, String>()
         
-        Alamofire.request(.POST, urlString, parameters: nil, encoding: ParameterEncoding.URL, headers: nil).responseString { _, _, string, _ in
+        Alamofire.request(.POST, urlString, parameters: nil, encoding: .URL, headers: nil).responseString { request, response, result in
 
-            if let xmlString = string {
+            switch result {
+            case .Success(let xmlString):
                 let htmlData = xmlString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
                 let document = TFHpple(HTMLData: htmlData)
                 for node in document.searchWithXPathQuery("//input") {
@@ -30,37 +31,39 @@ class Login: NSObject {
                         if let name = element.attributes["name"] {
                             if let value = element.attributes["value"] {
                                 parameters[name as! String] = value as! String
-                                println("\(name): \(value)")
+                                print("\(name): \(value)\n")
                             }
                         }
                     }
                 }
-
+                
                 let additional = [
                     "username": username,
                     "password": password,
                     "compositeAuthenticationSourceType": "PIN"]
-
+                
                 for (key, value) in additional {
                     parameters.updateValue(value, forKey: key)
                 }
-
-                Alamofire.request(.POST, urlString, parameters: parameters, encoding: ParameterEncoding.URL, headers: nil).responseString { _, response, string, error in
-                    if let error = error {
-                        completionBlock(false, "Network error.")
+                
+                Alamofire.request(.POST, urlString, parameters: parameters, encoding: .URL, headers: nil).responseString { request, response, result in
+                    switch result {
+                    case .Failure(_, let error):
+                        completionBlock(false, "Network error: \(error)")
                         return
-                    }
-                    if let response = response {
-                        let URLString = "\(response.URL!)"
-                        if let range = URLString.rangeOfString("https://webapps.fas.harvard.edu/course_evaluation_reports/fas/list", options: NSStringCompareOptions.allZeros, range: nil, locale: nil) {
-                            completionBlock(true, nil)
-                            return
+                    case .Success(_):
+                        if let response = response {
+                            let URLString = "\(response.URL!)"
+                            if let _ = URLString.rangeOfString("https://webapps.fas.harvard.edu/course_evaluation_reports/fas/list", options: NSStringCompareOptions(), range: nil, locale: nil) {
+                                completionBlock(true, nil)
+                                return
+                            }
                         }
                     }
                     completionBlock(false, "Invalid HUID or password, try again.")
-                }.resume()
-            } else {
-                completionBlock(false, "Network error.")
+                    }.resume()
+            case .Failure(_, let error):
+                completionBlock(false, "Network error: \(error)")
             }
         }.resume()
     }

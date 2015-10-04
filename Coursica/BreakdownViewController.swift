@@ -27,10 +27,10 @@ class BreakdownViewController: CoursicaViewController {
         tableView.delegate = self
         tableView.separatorStyle = .None
         view.addSubview(tableView)
-        constrain(view, tableView, {view, scrollView in
+        constrain(view, tableView, block: {view, scrollView in
             scrollView.edges == view.edges
         })
-        view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.translatesAutoresizingMaskIntoConstraints = true
     }
 }
 

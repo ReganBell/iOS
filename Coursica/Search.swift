@@ -17,7 +17,7 @@ enum IndexType: String {
     case Faculty = "Faculty"
 }
 
-struct SearchHit: Printable {
+struct SearchHit: CustomStringConvertible {
     var term = ""
     var course: Course?
     var scoreAdd = 0.0
@@ -30,12 +30,12 @@ struct SearchHit: Printable {
 extension NSRegularExpression {
     
     convenience init?(pattern: String) {
-        self.init(pattern: pattern, options: NSRegularExpressionOptions(), error: nil)
+        try! self.init(pattern: pattern, options: NSRegularExpressionOptions())
     }
     
     func firstMatchInWholeString(string: String) -> String? {
-        let matches = matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, count(string)))
-        if let first = matches.first as? NSTextCheckingResult {
+        let matches = matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, string.characters.count))
+        if let first = matches.first {
             return (string as NSString).substringWithRange(first.range)
         }
         return nil
@@ -56,12 +56,12 @@ class Search: NSObject {
         if _commonAbbreviations == nil {
             var abbreviations: [String: String] = Dictionary<String, String>()
             let shortFieldPath = NSBundle.mainBundle().pathForResource("ShortFields", ofType: "")
-            let rawShortFields = NSString(contentsOfFile: shortFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+            let rawShortFields = try? NSString(contentsOfFile: shortFieldPath!, encoding: NSUTF8StringEncoding)
             let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
-            let rawLongFields = NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+            let rawLongFields = try? NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding)
             let shortFields = rawShortFields!.componentsSeparatedByString(",\n")
             let longFields = rawLongFields!.componentsSeparatedByString(",\n")
-            for (index, longField) in enumerate(longFields) {
+            for (index, longField) in longFields.enumerate() {
                 let shortField = shortFields[index] 
                 abbreviations[shortField.lowercaseString] = longField.lowercaseString;
             }
@@ -104,7 +104,7 @@ class Search: NSObject {
         if _longFields == nil {
             var array: [String] = []
             let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
-            let rawLongFields = NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding, error: nil)
+            let rawLongFields = try? NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding)
             let longFields = rawLongFields!.componentsSeparatedByString(",\n")
             _longFields = longFields.map({field in return field.lowercaseString})
         }
@@ -136,20 +136,20 @@ class Search: NSObject {
         let searchRef = firebaseRoot.childByAutoId()
         searchRef.setValue(search)
         
-        if titleIndex.terms.count == 0 {
-            self.buildIndex(Realm().objects(Course))
+        if let courses = try? Realm().objects(Course) where titleIndex.terms.count == 0 {
+            buildIndex(courses)
         }
-        self.clearSearchScores()
-        let searchTerms = self.explodeSearch(search)
+        clearSearchScores()
+        let searchTerms = explodeSearch(search)
         //TODO: do a weaker match for word stems using NSLinguisticTagger
         results  = []
         var weights: [(Index, Double)]
-        if let numbers = NSRegularExpression(pattern: "[0-9]+")?.firstMatchInWholeString(search) {
+        if let _ = NSRegularExpression(pattern: "[0-9]+")?.firstMatchInWholeString(search) {
             weights = [(titleIndex, 0.3), (fieldIndex, 0.6), (numberIndex, 0.6), (facultyIndex, 0.3)]
         } else {
             weights = [(titleIndex, 0.3), (fieldIndex, 0.3), (numberIndex, 0.3), (facultyIndex, 0.3)]
         }
-        Realm().write { () -> Void in
+        try? Realm().write { () -> Void in
             weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight) })
             //Debug search with: 
 //            println(self.results)
@@ -183,7 +183,7 @@ class Search: NSObject {
                 let word = NSRegularExpression(pattern: "[a-zA-Z]+")!.firstMatchInWholeString(squish)
                 let rest = term.stringByReplacingOccurrencesOfString(word!, withString: "")
                 searchTerms.removeAtIndex(index)
-                searchTerms.extend([word!, rest])
+                searchTerms.appendContentsOf([word!, rest])
                 count++
                 index--
             }
@@ -202,10 +202,11 @@ class Search: NSObject {
     }
     
     func clearSearchScores() {
-        let courses = Realm().objects(Course)
-        Realm().write {
-            for course in courses {
-                course.searchScore = 0
+        if let courses = try? Realm().objects(Course) {
+            try? Realm().write {
+                for course in courses {
+                    course.searchScore = 0
+                }
             }
         }
     }

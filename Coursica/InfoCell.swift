@@ -23,7 +23,11 @@ class InfoCell: UITableViewCell {
     
     let leftLabelMargin: CGFloat = 16
     var labelWidth: CGFloat {
-        return (count(course.prerequisitesString) > 0 || Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).count > 0) ? 80 : 70
+        do {
+        return try ((course.prerequisitesString).characters.count > 0 || Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).count > 0) ? 80 : 70
+        } catch {
+            return 70
+        }
     }
     
     let cardMargin: CGFloat = 10
@@ -128,12 +132,12 @@ class InfoCell: UITableViewCell {
         for conflict in conflicts {
             labels.append(displayLabel(attributedConflictStringForCourse(conflict)))
         }
-        constrain(conflictsLeftLabel, meetsDisplayLabel, replace: meets_satisfiesGroup, {conflicts, meets in
+        constrain(conflictsLeftLabel, meetsDisplayLabel, replace: meets_satisfiesGroup, block: {conflicts, meets in
             conflicts.top == meets.bottom + 10
         })
-        constrain([conflictsLeftLabel] + labels, {labels in
+        constrain([conflictsLeftLabel] + labels, block: {labels in
             let left = labels[0]
-            for (index, label) in enumerate(labels) {
+            for (index, label) in labels.enumerate() {
                 if index == 0 {continue}
                 if index == 1 {label.top == left.top}
                 else {
@@ -141,7 +145,7 @@ class InfoCell: UITableViewCell {
                 }
             }
         })
-        constrain(labels.last!, satisfiesLeftLabel, {last, satisfies in
+        constrain(labels.last!, satisfiesLeftLabel, block: {last, satisfies in
             satisfies.top == last.bottom + 10
         })
     }
@@ -161,7 +165,7 @@ class InfoCell: UITableViewCell {
         italicLabel.font = italic
         italicLabel.textAlignment = .Right
         roundedBackgroundView.addSubview(italicLabel)
-        constrain(italicLabel, {label in
+        constrain(italicLabel, block: {label in
             label.width == self.labelWidth
             label.height == 18
             label.left == label.superview!.left + self.leftLabelMargin
@@ -175,7 +179,7 @@ class InfoCell: UITableViewCell {
         displayLabel.textAlignment = .Left
         displayLabel.font = bold
         roundedBackgroundView.addSubview(displayLabel)
-        constrain(displayLabel, {display in
+        constrain(displayLabel, block: {display in
             display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
             display.right == display.superview!.right - self.rightLabelMargin
         })
@@ -238,7 +242,7 @@ class InfoCell: UITableViewCell {
     
     func neededForString(neededFor: Results<Course>) -> String {
         var string = ""
-        for (i, course) in enumerate(neededFor) {
+        for (i, course) in neededFor.enumerate() {
             if i < (neededForExpanded ? 100000 : 2) {
                 string += (string.isEmpty ? "":", ") + "\(course.shortField) \(course.number)"
             } else {
@@ -260,7 +264,7 @@ class InfoCell: UITableViewCell {
         let attributedNeededFor = NSMutableAttributedString(string: source)
         attributedNeededFor.addFont(bold, substring: source)
         neededForDisplayLabel.attributedText = attributedNeededFor
-        for (i, course) in enumerate(neededFor) {
+        for (i, course) in neededFor.enumerate() {
             if i < (neededForExpanded ? 100000 : 2) {
                 neededForDisplayLabel.addLinkToAddress(["\(course.shortField) \(course.number)": course], withRange: (source as NSString).rangeOfString("\(course.shortField) \(course.number)"))
             } else {
@@ -330,7 +334,7 @@ class InfoCell: UITableViewCell {
         roundedBackgroundView.addSubview(descriptionLabel)
         roundedBackgroundView.addSubview(titleLabel)
         
-        constrain(titleLabel, descriptionLabel, roundedBackgroundView, {title, description, view in
+        constrain(titleLabel, descriptionLabel, roundedBackgroundView, block: {title, description, view in
             title.left == view.left + 20
             title.right == view.right - 20
             title.top == view.top + 10
@@ -339,36 +343,36 @@ class InfoCell: UITableViewCell {
             description.top == title.bottom + 10
         })
         
-        if count(course.term) > 0 {
+        if course.term.characters.count > 0 {
             
             offeredLeftLabel = leftItalicLabel("Offered:")
-            constrain(offeredLeftLabel!, descriptionLabel, {instructor, description in
+            constrain(offeredLeftLabel!, descriptionLabel, block: {instructor, description in
                 instructor.top == description.bottom + 10
             })
             
             offeredDisplayLabel = displayLabel(course.term.capitalizedString)
-            constrain(offeredDisplayLabel!, offeredLeftLabel!, {display, leftLabel in
+            constrain(offeredDisplayLabel!, offeredLeftLabel!, block: {display, leftLabel in
                 display.top == leftLabel.top
             })
         }
         
         instructorLeftLabel = course.faculty.count > 1 ? leftItalicLabel("Instructors:") : leftItalicLabel("Instructor:")
         var aboveLabel = (offeredDisplayLabel == nil) ? descriptionLabel : offeredDisplayLabel
-        constrain(instructorLeftLabel, aboveLabel, {instructor, above in
+        constrain(instructorLeftLabel, aboveLabel, block: {instructor, above in
             instructor.top == above.bottom + 10
         })
         
         instructorDisplayLabel = attributedInstructorsLabelForCourse(course)
-        constrain(instructorDisplayLabel, {display in
+        constrain(instructorDisplayLabel, block: {display in
             display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
             display.right == display.superview!.right - self.rightLabelMargin
         })
-        constrain(instructorDisplayLabel, instructorLeftLabel, {display, leftLabel in
+        constrain(instructorDisplayLabel, instructorLeftLabel, block: {display, leftLabel in
             display.top == leftLabel.top
         })
 
         meetsLeftLabel = leftItalicLabel("Meets:")
-        constrain(meetsLeftLabel, instructorDisplayLabel, {meets, instructorDisplay in
+        constrain(meetsLeftLabel, instructorDisplayLabel, block: {meets, instructorDisplay in
             meets.top == instructorDisplay.bottom + 10
         })
         
@@ -379,21 +383,21 @@ class InfoCell: UITableViewCell {
             mapButton.addTarget(self, action: "mapButtonPressed", forControlEvents: .TouchUpInside)
             mapButton.backgroundColor = UIColor.clearColor()
             addSubview(mapButton)
-            constrain(mapButton, meetsDisplayLabel, {button, displayLabel in
+            constrain(mapButton, meetsDisplayLabel, block: {button, displayLabel in
                 button.edges == displayLabel.edges
             })
         }
-        constrain(meetsDisplayLabel, meetsLeftLabel, instructorDisplayLabel, {display, label, instructor in
+        constrain(meetsDisplayLabel, meetsLeftLabel, instructorDisplayLabel, block: {display, label, instructor in
             display.top == label.top
         })
         
         satisfiesLeftLabel = leftItalicLabel("Satisfies:")
-        meets_satisfiesGroup = constrain(satisfiesLeftLabel, meetsDisplayLabel, {satisfies, meets in
+        meets_satisfiesGroup = constrain(satisfiesLeftLabel, meetsDisplayLabel, block: {satisfies, meets in
             satisfies.top == meets.bottom + 10
         })
         
         satisfiesDisplayLabel = displayLabel(course.display.genEds)
-        constrain(satisfiesDisplayLabel, satisfiesLeftLabel, {display, leftLabel in
+        constrain(satisfiesDisplayLabel, satisfiesLeftLabel, block: {display, leftLabel in
             display.top == leftLabel.top
         })
         
@@ -402,30 +406,30 @@ class InfoCell: UITableViewCell {
         
         if course.enrollment != 0 {
             enrollmentLeftLabel = leftItalicLabel("Enrollment:")
-            constrain(enrollmentLeftLabel, satisfiesDisplayLabel, {enrollment, satisfies in
+            constrain(enrollmentLeftLabel, satisfiesDisplayLabel, block: {enrollment, satisfies in
                 enrollment.top == satisfies.bottom + 10
             })
             
             enrollmentDisplayLabel = displayLabel(attributedEnrollmentStringForCourse(course))
-            constrain(enrollmentDisplayLabel, enrollmentLeftLabel, {display, label in
+            constrain(enrollmentDisplayLabel, enrollmentLeftLabel, block: {display, label in
                 display.top == label.top
             })
             lastLabel = enrollmentDisplayLabel
             abovePrerequisitesLabel = enrollmentDisplayLabel
         }
         
-        if count(course.prerequisitesString) > 0 {
+        if course.prerequisitesString.characters.count > 0 {
             prerequisitesLeftLabel = leftItalicLabel("Prerequisites:")
-            constrain(prerequisitesLeftLabel, abovePrerequisitesLabel, {prereq, above in
+            constrain(prerequisitesLeftLabel, abovePrerequisitesLabel, block: {prereq, above in
                 prereq.top == above.bottom + 10
             })
             
             prerequisitesDisplayLabel = attributedPrerequisitesLabel(course)
-            constrain(prerequisitesDisplayLabel, {display in
+            constrain(prerequisitesDisplayLabel, block: {display in
                 display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
                 display.right == display.superview!.right - self.rightLabelMargin
             })
-            constrain(prerequisitesDisplayLabel, prerequisitesLeftLabel, {display, left in
+            constrain(prerequisitesDisplayLabel, prerequisitesLeftLabel, block: {display, left in
                 display.top == left.top
             })
             
@@ -433,40 +437,35 @@ class InfoCell: UITableViewCell {
         }
         
         let sortByEnrollment = SortDescriptor(property: "enrollment", ascending: false)
-        let neededFor = Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).sorted([sortByEnrollment])
-        if neededFor.count > 0 {
+        if let neededFor = try? Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).sorted([sortByEnrollment]) where neededFor.count > 0 {
             neededForLeftLabel = leftItalicLabel("Needed for:")
             var aboveLabel: UILabel = abovePrerequisitesLabel
-            if count(course.prerequisitesString) > 0 {
+            if course.prerequisitesString.characters.count > 0 {
                 aboveLabel = prerequisitesDisplayLabel
             }
-            constrain(neededForLeftLabel, aboveLabel, {prereq, above in
+            constrain(neededForLeftLabel, aboveLabel, block: {prereq, above in
                 prereq.top == above.bottom + 10
             })
             
             neededForDisplayLabel = TTTAttributedLabel(frame: CGRectZero)
             configureAttributedNeededForLabel(neededForDisplayLabel, neededFor: neededFor)
             roundedBackgroundView.addSubview(neededForDisplayLabel)
-            constrain(neededForDisplayLabel, {display in
+            constrain(neededForDisplayLabel, block: {display in
                 display.left == display.superview!.left + self.leftLabelMargin + self.labelWidth + self.labelDisplaySpacing
                 display.right == display.superview!.right - self.rightLabelMargin
             })
-            constrain(neededForDisplayLabel, neededForLeftLabel, {display, left in
+            constrain(neededForDisplayLabel, neededForLeftLabel, block: {display, left in
                 display.top == left.top
             })
             
             lastLabel = neededForDisplayLabel
         }
         
-        for course in neededFor {
-            println(course.display.title)
-        }
-        
-        constrain(roundedBackgroundView, lastLabel, {background, last in
+        constrain(roundedBackgroundView, lastLabel, block: {background, last in
             last.bottom == background.bottom - 10
         })
         
-        constrain(roundedBackgroundView, self.contentView, {background, cell in
+        constrain(roundedBackgroundView, contentView, block: {background, cell in
             background.top == cell.top + 10
             background.left == cell.left + self.cardMargin
             background.right == cell.right - self.cardMargin
@@ -496,7 +495,7 @@ extension InfoCell: TTTAttributedLabelDelegate {
         if let _ = addressComponents.values.first as? String {
             neededForExpanded = true
             let sortByEnrollment = SortDescriptor(property: "enrollment", ascending: false)
-            let neededFor = Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).sorted([sortByEnrollment])
+            let neededFor = try! Realm().objects(Course).filter(NSPredicate(format: "ANY prerequisites.title = %@", course.title)).sorted([sortByEnrollment])
             configureAttributedNeededForLabel(neededForDisplayLabel, neededFor: neededFor)
             delegate.expandedNeededFor()
         }

@@ -14,7 +14,7 @@ class BreakdownParser: NSObject {
             return nil
         }
         let breakdown = Breakdown()
-        for (index, modelKey) in enumerate(["one", "two", "three", "four", "five"]) {
+        for (index, modelKey) in ["one", "two", "three", "four", "five"].enumerate() {
             if let value = array![index] as? Int {
                 breakdown.setValue(value, forKey: modelKey)
             }

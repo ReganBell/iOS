@@ -40,7 +40,7 @@ class ListsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.keyboardDismissMode = .OnDrag
-        constrain(tableView, {table in
+        constrain(tableView, block: {table in
             table.edges == table.superview!.edges
         })
         layoutImportFooterView()
@@ -55,7 +55,7 @@ class ListsViewController: UIViewController {
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        if let height = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size.height {
+        if let height = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size.height {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height + 20, right: 0)
         }
     }
@@ -86,7 +86,7 @@ class ListsViewController: UIViewController {
         promptLabel.sizeToFit()
         promptLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         footerView.addSubview(promptLabel)
-        constrain(promptLabel, {prompt in
+        constrain(promptLabel, block: {prompt in
             prompt.top == prompt.superview!.top + 20
             prompt.centerX == prompt.superview!.centerX
         })
@@ -99,7 +99,7 @@ class ListsViewController: UIViewController {
         passwordField.backgroundColor = UIColor.whiteColor()
         passwordField.secureTextEntry = true
         footerView.addSubview(passwordField)
-        constrain(passwordField, promptLabel, {passwordField, prompt in
+        constrain(passwordField, promptLabel, block: {passwordField, prompt in
             passwordField.centerX == passwordField.superview!.centerX
             passwordField.top == prompt.bottom + 10
             passwordField.width == importButtonWidth
@@ -137,7 +137,7 @@ class ListsViewController: UIViewController {
         progressBarBackground.clipsToBounds = true
         progressBarBackground.alpha = 0
         footerView.addSubview(progressBarBackground)
-        constrain(passwordField, importButton, progressBarBackground, {passwordField, importButton, progressBackground in
+        constrain(passwordField, importButton, progressBarBackground, block: {passwordField, importButton, progressBackground in
             align(centerX: passwordField, importButton, progressBackground)
             align(top: passwordField, importButton, progressBackground)
             align(left: passwordField, importButton, progressBackground)
@@ -149,7 +149,7 @@ class ListsViewController: UIViewController {
         let progressBar = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 41))
         progressBar.backgroundColor = coursicaBlue
         progressBarBackground.addSubview(progressBar)
-        constrain(progressBar, {progress in
+        constrain(progressBar, block: {progress in
             progress.left == progress.superview!.left
             progress.top == progress.superview!.top
             self.progressBarConstraint = (progress.width == 0)
@@ -170,7 +170,7 @@ class ListsViewController: UIViewController {
     }
     
     func passwordDidChange(textField: UITextField) {
-        importSubmitButton?.hidden = count(textField.text) < 1
+        importSubmitButton?.hidden = (textField.text?.characters.count ?? 0) < 1
     }
     
     func importButtonPressed(importButton: UIButton) {
@@ -178,7 +178,7 @@ class ListsViewController: UIViewController {
         let secretWebView = LoginWebView()
         secretWebView.loginDelegate = self
         self.view.insertSubview(secretWebView, atIndex: 0)
-        constrain(secretWebView, {webView in
+        constrain(secretWebView, block: {webView in
             webView.edges == webView.superview!.edges
         })
         secretWebView.loadLoginScreen()
@@ -204,7 +204,7 @@ class ListsViewController: UIViewController {
         headerLabel.sizeToFit()
         headerLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         headerView.addSubview(headerLabel)
-        constrain(headerLabel, {header in
+        constrain(headerLabel, block: {header in
             header.center == header.superview!.center
         })
         return headerView
@@ -234,7 +234,7 @@ extension ListsViewController: LoginWebViewDelegate {
         for course in list.courses {
             CourseList.addCourseToListWithName(list.name, listableCourse: course, completionBlock: {error in
                 if error != nil {
-                    print(error)
+                    print(error, terminator: "")
                 } else {
                     if self.listsAdded == self.listsToAdd {
                         
@@ -273,13 +273,15 @@ extension ListsViewController: LoginWebViewDelegate {
             let parameters = ["id":list.id, "sortDir":"null", "sortField":"null"]
             
             Alamofire.request(.POST, "https://courses.cs50.net/lists/getFromSolr", parameters: parameters)
-                .responseJSON { (request, response, JSON, error) in
-                    
-                    if let dictionary = JSON as? NSDictionary {
-                        list.setCoursesFromJSON(dictionary)
-                        self.didDownloadList(list)
-                    } else {
-                        println(error)
+                .responseJSON { request, response, result in
+                    switch result {
+                    case .Success(let dictionary):
+                        if let dictionary = dictionary as? NSDictionary {
+                            list.setCoursesFromJSON(dictionary)
+                            self.didDownloadList(list)
+                        }
+                    case .Failure(_, let error):
+                        print(error)
                     }
             }
         }
@@ -368,7 +370,7 @@ extension ListsViewController: UITableViewDataSource, UITableViewDelegate {
         let fancy = NSMutableAttributedString(string: plain)
         let regularFont = UIFont(name: "AvenirNext-Regular", size: 14)
         let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 17)
-        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
+        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, plain.characters.count))
         fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
         cell.textLabel!.attributedText = fancy
         if let course = listableCourse as? Course {

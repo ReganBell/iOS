@@ -28,9 +28,7 @@ class FacultyViewController: CoursicaViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented")}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +40,10 @@ class FacultyViewController: CoursicaViewController {
         tableView.delegate = self
         tableView.separatorStyle = .None
         view.addSubview(tableView)
-        constrain(view, tableView, {view, scrollView in
+        constrain(view, tableView, block: {view, scrollView in
             scrollView.edges == view.edges
         })
-        view.setTranslatesAutoresizingMaskIntoConstraints(true)
+        view.translatesAutoresizingMaskIntoConstraints = true
     }
 }
 
@@ -59,7 +57,7 @@ extension FacultyViewController: UITableViewDataSource, UITableViewDelegate {
         let fancy = NSMutableAttributedString(string: plain)
         let regularFont = UIFont(name: "AvenirNext-Regular", size: 14)
         let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 17)
-        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, count(plain)))
+        fancy.addAttributes([NSFontAttributeName: regularFont!, NSForegroundColorAttributeName: UIColor(white: 150/255.0, alpha: 1)], range: NSMakeRange(0, plain.characters.count))
         fancy.addAttributes([NSFontAttributeName: boldFont!,    NSForegroundColorAttributeName: UIColor.blackColor()],                range: boldRange)
         cell.textLabel!.attributedText = fancy
         cell.colorBarView.backgroundColor = colorForPercentile(course.percentileSize)
@@ -91,7 +89,7 @@ extension FacultyViewController: UITableViewDataSource, UITableViewDelegate {
         headerLabel.sizeToFit()
         headerLabel.textColor = UIColor(white: 142/255.0, alpha: 1.0)
         headerView.addSubview(headerLabel)
-        constrain(headerLabel, {header in
+        constrain(headerLabel, block: {header in
             header.center == header.superview!.center
         })
         return headerView

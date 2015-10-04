@@ -60,7 +60,7 @@ class LoginWebView: UIWebView {
         let listNames = ("Starred Courses" + namesString!).componentsSeparatedByString(",")
         
         var activeLists: [CourseList] = []
-        for (index, listId) in enumerate(listIDs) {
+        for (index, listId) in listIDs.enumerate() {
             if (listCounts[index] as NSString).integerValue > 0 {
                 let newList = CourseList(name: listNames[index], courses: [])
                 newList.id = listId

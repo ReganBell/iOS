@@ -14,7 +14,7 @@ struct PrerequisiteMatch {
     let course: Course
 }
 
-private struct Match: Printable, Hashable {
+private struct Match: CustomStringConvertible, Hashable {
     let number: Bool
     let range: NSRange
     let match: String
@@ -42,7 +42,7 @@ struct PrerequisitesParser {
         
         let source = masterCourse.prerequisitesString.stringByReplacingOccurrencesOfString("/", withString: "") as NSString
         
-        let courseNumberMatches = courseNumberRegEx?.matchesInString(source as String, options: NSMatchingOptions.allZeros, range: NSMakeRange(0, count(source as String)))
+        let courseNumberMatches = courseNumberRegEx?.matchesInString(source as String, options: NSMatchingOptions(), range: NSMakeRange(0, (source as String).characters.count))
         if courseNumberMatches == nil {
             return []
         }
@@ -52,7 +52,7 @@ struct PrerequisitesParser {
             unsortedMatches.append(Match(number: true, range: match.range, match: source.substringWithRange(match.range), field:""))
         }
         
-        let sortedByLengthMatches = Array(unsortedMatches).sorted({lhs, rhs in lhs.range.length > rhs.range.length})
+        let sortedByLengthMatches = Array(unsortedMatches).sort({lhs, rhs in lhs.range.length > rhs.range.length})
         var filteredMatches: [Match] = []
         // Sort by length, then de-duplicate intersecting matches
         // If we have intersecting matches on the string "Science of Living Systems" as both "Science of Living Systems" and "Systems"
@@ -71,7 +71,7 @@ struct PrerequisitesParser {
         }
         
         // Sort matches by order in the string. Then combine field names with every number that is between them and another field. This way we can match things like "Ec 10a and 10b"
-        let sortedMatches = filteredMatches.sorted({lhs, rhs in lhs.range.location < rhs.range.location})
+        let sortedMatches = filteredMatches.sort({lhs, rhs in lhs.range.location < rhs.range.location})
         var finalMatches: [PrerequisiteMatch] = []
         for var index = 0; index < sortedMatches.count; index++ {
             let current = sortedMatches[index]
@@ -82,9 +82,9 @@ struct PrerequisitesParser {
                     if next.number == true {
                         let number = next.match
                         var matchCourse: Course? = nil
-                        matchCourse = Realm().objects(Course).filter("longField = %@ && number = %@", current.field, number).first
-                        if matchCourse == nil {
-                            matchCourse = Realm().objects(Course).filter("shortField = %@ && number = %@", current.match.uppercaseString, number).first
+                        if let matchCourse = try? Realm().objects(Course).filter("longField = %@ && number = %@", current.field, number).first {}
+                        else {
+                            matchCourse = (try? Realm().objects(Course).filter("shortField = %@ && number = %@", current.match.uppercaseString, number))?.first
                         }
                         var range = next.range
                         if nextIndex - index == 1 {
@@ -107,7 +107,7 @@ struct PrerequisitesParser {
         var unsortedMatches: [Match] = []
         for (short, long) in Search.shared.commonAbbreviations {
             for field in ["\(short.capitalizedString) ", "\(short.uppercaseString) ", long] {
-                let options: NSStringCompareOptions = (field == long) ? .CaseInsensitiveSearch : .allZeros
+                let options: NSStringCompareOptions = (field == long) ? .CaseInsensitiveSearch : []
                 var range = source.rangeOfString(field, options: options)
                 while range.location != NSNotFound {
                     unsortedMatches.append(Match(number: false, range: range, match: source.substringWithRange(range), field: long))

@@ -27,7 +27,7 @@ class ListsImporter: NSObject {
                 if let name = element.attributes["name"] as? String {
                     if let value = element.attributes["value"] as? String {
                         parameters[name] = value
-                        println("\(name): \(value)")
+                        print("\(name): \(value)")
                     }
                 }
             }
@@ -86,33 +86,34 @@ class ListsImporter: NSObject {
         if !canMakeLoginRequest() {
            return
         }
-        Alamofire.request(.POST, urlString!, parameters: parametersForXMLString(xmlString!), encoding: .URL, headers: nil).responseString { _, response, string, error in
-            if let error = error {
-                self.completionBlock!(false, "Network error.")
-                return
-            }
-            if let response = response {
-                let URLString = "\(response.URL!)"
-                if let range = URLString.rangeOfString("https://courses.cs50.net/", options: NSStringCompareOptions.allZeros, range: nil, locale: nil) {
-                    let ids = self.listIDsForXMLString(string!)
+        Alamofire.request(.POST, urlString!, parameters: parametersForXMLString(xmlString!), encoding: .URL, headers: nil).responseString { request, response, result in
+            switch result {
+            case .Success:
+                let URLString = response?.URL?.absoluteString ?? ""
+                if let _ = URLString.rangeOfString("https://courses.cs50.net/", options: NSStringCompareOptions(), range: nil, locale: nil) {
+//                    let ids = self.listIDsForXMLString(string)
                     self.completionBlock!(true, nil)
                     return
+                } else {
+                    self.completionBlock!(false, "Invalid password, try again.")
                 }
+            case .Failure(_, let error):
+                self.completionBlock!(false, "Network error: \(error)")
             }
-            self.completionBlock!(false, "Invalid password, try again.")
         }.resume()
     }
     
     func getLogIn(completionBlock: (Bool, String?) -> (Void)) {
         self.completionBlock = completionBlock
         let urlString = "https://courses.cs50.net/classes/login"
-        Alamofire.request(.GET, urlString, parameters: nil, encoding: ParameterEncoding.URL, headers: nil).responseString { _, response, string, error in
-            if let xmlString = string {
-                self.urlString = response!.URL!.absoluteString
+        Alamofire.request(.GET, urlString, parameters: nil, encoding: .URL, headers: nil).responseString {request, response, result in
+            switch result {
+            case .Success(let xmlString):
+                self.urlString = response?.URL?.absoluteString ?? ""
                 self.xmlString = xmlString
                 self.tryLists()
-            } else {
-                completionBlock(false, "Network error.")
+            case .Failure(_, let error):
+                self.completionBlock!(false, "Network error: \(error)")
             }
         }.resume()
     }
