@@ -345,9 +345,9 @@ class FactorChecker {
     
     func checkCourseSatisfiesFactors(title: String, index: VariableIndex, factors: [Factor]) {
         var usedAsRequirement = false
+        checkPrerequisite(title, index: index)
         for (i, factor) in factors.enumerate() {
             if factor.allPossible.contains(title) {
-                checkPrerequisite(title, index: index)
                 factorCourseTitles[i].append(title)
                 usedAsRequirement = factorCourseTitles[i].count <= factor.count
                 break

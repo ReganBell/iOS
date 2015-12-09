@@ -461,19 +461,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             schedulesExplored++
             let successor = generateSuccessor(searchSchedule, result: oldResult)
             let newResult = factorChecker.analyze(successor, shouldPrint: true)
-            if oldResult.conflicts >= newResult.conflicts && oldResult.averageQScore - (stallCount / 100.0) <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation - (stallCount / 1000.0) {
+            if oldResult.conflicts > newResult.conflicts {
                 print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
                 oldResult = newResult
                 searchSchedule = successor
                 stallCount = 0
-            } else {
+            } else if oldResult.conflicts >= newResult.conflicts && oldResult.averageQScore - (stallCount / 100.0) <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation - (stallCount / 1000.0) {
+                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
+                oldResult = newResult
+                searchSchedule = successor
                 stallCount++
             }
-            if stallCount > 100 {
-                factorChecker.analyze(searchSchedule, shouldPrint: true)
-                stallCount = 0
-            }
-            
             if oldResult.conflicts == 0 {
                 let newResult = factorChecker.analyze(successor, shouldPrint: true)
             }
