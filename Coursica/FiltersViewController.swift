@@ -192,7 +192,7 @@ class FiltersViewController: UIViewController {
         delegate?.keyboardShouldDismiss()
         let selected = !pressedButton.selected
         for button in genEdButtons {
-            button.selected == false
+            button.selected = false
             genEdImageViews[button.tag].tintColor = unselectedGray
             genEdLabels[button.tag].textColor = unselectedGray
         }

@@ -102,7 +102,6 @@ class Search: NSObject {
     var _longFields: [String]? = nil
     var longFields: [String] {
         if _longFields == nil {
-            var array: [String] = []
             let longFieldPath = NSBundle.mainBundle().pathForResource("LongFields", ofType: "")
             let rawLongFields = try? NSString(contentsOfFile: longFieldPath!, encoding: NSUTF8StringEncoding)
             let longFields = rawLongFields!.componentsSeparatedByString(",\n")
@@ -114,7 +113,6 @@ class Search: NSObject {
     func buildIndex(courses: Results<Course>) {
         courseCount = Double(courses.count)
         for course in courses {
-            let longField = course.longField
             titleIndex.addField(course.title, fromCourse: course)
             fieldIndex.addField(course.longField, fromCourse: course)
             let integerString = "\(course.integerNumber)"
@@ -126,7 +124,9 @@ class Search: NSObject {
                 facultyIndex.addField(faculty.fullName, fromCourse: course)
             }
         }
-        [titleIndex, fieldIndex, numberIndex, facultyIndex].map({ index in index.calculateIDFs(courses.count) })
+        for index in [titleIndex, fieldIndex, numberIndex, facultyIndex] {
+            index.calculateIDFs(courses.count)
+        }
     }
     
     func assignScoresForSearch(search: String) {
@@ -149,16 +149,16 @@ class Search: NSObject {
         } else {
             weights = [(titleIndex, 0.3), (fieldIndex, 0.3), (numberIndex, 0.3), (facultyIndex, 0.3)]
         }
-        try? Realm().write { () -> Void in
-            weights.map({ (index, weight) in self.searchIndex(index, terms: searchTerms, zoneWeight: weight) })
-            //Debug search with: 
+        try! Realm().write { () -> Void in
+            for (index, weight) in weights {
+                self.searchIndex(index, terms: searchTerms, zoneWeight: weight)
+            }
+            //Debug search with:
 //            println(self.results)
         }
     }
     
     func searchIndex(index: Index, terms: [String], zoneWeight: Double) {
-        let indexName = index.type.rawValue
-        let termss = index.terms
         for term in terms {
             if let entry = index.terms[term.lowercaseString] {
                 let maxIDF = log(self.courseCount / 1.0)

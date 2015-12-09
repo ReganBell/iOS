@@ -8,6 +8,23 @@
 
 import UIKit
 import RealmSwift
+import Fabric
+import Crashlytics
+
+extension Array {
+    func randomElement() -> Element? {
+        if count == 0 { return nil }
+        return self[Int(arc4random() % UInt32(count))]
+    }
+}
+
+extension Set {
+    func randomElement() -> Element {
+        let n = Int(arc4random_uniform(UInt32(count)))
+        let i = startIndex.advancedBy(n)
+        return self[i]
+    }
+}
 
 class Key {
     var term: String = ""
@@ -66,6 +83,7 @@ class SizeRange {
     func contains(n: Int) -> Bool { return n >= start && n <= end }
 }
 
+@available(iOS 9.0, *)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -82,6 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          SizeRange(start: 501, end: 10000)]
     var facultyScores: [String: [Double]] = Dictionary<String, [Double]>()
     var facultyAverages: [String: Double] = Dictionary<String, Double>()
+    var realm: Realm!
+    var factorChecker: FactorChecker!
     
     func coursesJSONFromDisk() -> NSDictionary {
         let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("final_results copy", ofType: "json")!)!
@@ -222,36 +242,186 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return sum / Double(numbers.count)
     }
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        
-        let versionKey = "modelVersion"
-        let modelVersion = NSUserDefaults.standardUserDefaults().integerForKey(versionKey)
-        
-        if let buildNumber = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? NSString)?.integerValue where buildNumber > modelVersion {
-            let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
-            do {
-                if let defaultPath = Realm.Configuration.defaultConfiguration.path {
-                    try NSFileManager.defaultManager().removeItemAtPath(defaultPath)
-                    try NSFileManager.defaultManager().copyItemAtPath(path, toPath: defaultPath)
-                } else {
-                    print("No default Realm path found\n")
+    func factorMissingMove(schedule: Schedule, result: CheckerResult, move: Move, termUpperBound: TermKey) -> Schedule {
+        var variableIndex = result.unusedVariables.randomElement()!
+        var domain = factorChecker.domain(variableIndex.termKey)
+        var course = move.courses!.randomElement()!
+        var variablesTried = 0
+        while !variableIndex.termKey.before(termUpperBound) || !domain.contains(course) {
+            variableIndex = result.unusedVariables.randomElement()!
+            domain = factorChecker.domain(variableIndex.termKey)
+            course = move.courses!.randomElement()!
+            variablesTried++
+            if variablesTried > 10 {
+                break
+            }
+        }
+        print("\n** Solving factor with \(course) assigned to \(variableIndex.termKey.rawValue)\n")
+        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
+        newSchedule.assignCourse(course, index: variableIndex)
+        return newSchedule
+    }
+    
+    func duplicateCourseMove(schedule: Schedule, result: CheckerResult, move: Move) -> Schedule {
+        let duplicateCourse = move.courses!.first!
+        var newCourse: String?
+        for suggestedMove in result.suggestedMoves {
+            if !(suggestedMove.type == .PrereqMissing || suggestedMove.type == .FactorMissing) {
+                continue
+            }
+            if let moveCourses = suggestedMove.courses {
+                for course in moveCourses {
+                    if factorChecker.domain(move.index!.termKey).contains(course) && duplicateCourse != course {
+                        newCourse = course
+                    }
                 }
-            } catch {
-                print("Error copying realm file.\n")
+                if newCourse != nil { break }
             }
-            NSUserDefaults.standardUserDefaults().setInteger(buildNumber, forKey: versionKey)
         }
-        
-        setSchemaVersion(5, realmPath: Realm.Configuration.defaultConfiguration.path!, migrationBlock: {migration, oldSchemaVersion in
-            if oldSchemaVersion < 5 {
-                
+        let course = newCourse ?? factorChecker.domain(move.index!.termKey).randomElement()
+        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
+        print("\n** Replacing duplicate \(duplicateCourse) with \(course)\n")
+        newSchedule.assignCourse(course, index: move.index!)
+        return newSchedule
+    }
+    
+    func variableWithTerm(term: Int, variables: [VariableIndex]) -> VariableIndex? {
+        for variable in variables {
+            if variable.termKey == orderedVariableKeys[term] {
+                return variable
             }
-        })
-        
-        if let courses = try? Realm().objects(Course)  {
-            calculatePercentiles(courses)
-            Search.shared.buildIndex(courses)
         }
+        return nil
+    }
+    
+    func targetTerm(current: Int, cap: Int) -> Int {
+        let range = arc4random() % UInt32(abs(cap - current))
+        let negative = current > cap ? -1 : 1
+        return current + negative * Int(range)
+    }
+    
+    func movePrereqMove(schedule: Schedule, result: CheckerResult, move: Move, forward: Bool) -> Schedule {
+        
+        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
+        let prereqTermIndex = orderedVariableKeys.indexOf(move.index!.termKey)!
+        let cap = forward ? orderedVariableKeys.count - 1 : 0
+        if prereqTermIndex == cap { return schedule }
+        var targetTerm = self.targetTerm(prereqTermIndex, cap: cap)
+        var variable = variableWithTerm(targetTerm, variables: result.unusedVariables) ?? variableWithTerm(targetTerm, variables: [0, 1, 2, 3].map { return VariableIndex(termKey: orderedVariableKeys[targetTerm], index: $0) })!
+        var swapCourse = newSchedule.variable(variable.termKey).assignment[variable.index]
+        var tries = 0
+        var index = 0
+        while !factorChecker.domain(variable.termKey).contains(swapCourse) || !factorChecker.domain(move.index!.termKey).contains(move.courses!.first!) {
+            targetTerm = self.targetTerm(prereqTermIndex, cap: cap)
+            if tries < 10 {
+                variable = variableWithTerm(targetTerm, variables: result.unusedVariables) ?? variableWithTerm(targetTerm, variables: [0, 1, 2, 3].map { return VariableIndex(termKey: orderedVariableKeys[targetTerm], index: $0) })!
+            } else {
+                variable = VariableIndex(termKey: orderedVariableKeys[targetTerm], index: index)
+                index++; if index == 4 { index = 0 }
+            }
+            swapCourse = newSchedule.variable(variable.termKey).assignment[variable.index]
+            tries++
+            if tries > 50 {
+                return schedule
+            }
+        }
+        print("\n** Moving \(move.courses!.first!) \(forward ? "forward" : "backward"), swapping with \(swapCourse)\n")
+        newSchedule.assignCourse(move.courses!.first!, index: variable)
+        newSchedule.assignCourse(swapCourse, index: move.index!)
+        return newSchedule
+    }
+    
+    func generateSuccessor(schedule: Schedule, result: CheckerResult) -> Schedule {
+        if let move = result.suggestedMoves.randomElement() {
+            switch move.type {
+            case .FactorMissing: return factorMissingMove(schedule, result: result, move: move, termUpperBound: .All)
+            case .MovePrereq: return movePrereqMove(schedule, result: result, move: move, forward: false)
+            case .MovePostReq: return movePrereqMove(schedule, result: result, move: move, forward: true)
+            case .PrereqMissing: return factorMissingMove(schedule, result: result, move: move, termUpperBound: move.index!.termKey)
+            case .DuplicateCourse: return duplicateCourseMove(schedule, result: result, move: move)
+            }
+        }
+        return schedule
+    }
+    
+//    func randomSchedule() -> Schedule {
+//        let schedule = Schedule(copy: nil, assignment: nil, realm: realm)
+//        for termKey in orderedVariableKeys {
+//            let domain = self.domain(termKey)
+//            let variable = schedule.variable(termKey)
+//            while variable.assignment.count < 4 {
+//                variable.assignment.append(domain.randomElement())
+//            }
+//        }
+//        return schedule
+//    }
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+
+        let config = Realm.Configuration(
+            // Get the path to the bundled file
+            path: NSBundle.mainBundle().pathForResource("seed", ofType:"realm"),
+            // Open the file in read-only mode as application bundles are not writeable
+            readOnly: true)
+        
+        // Open the Realm with the configuration
+        realm = try! Realm(configuration: config)
+        
+//        let versionKey = "modelVersion"
+//        let modelVersion = NSUserDefaults.standardUserDefaults().integerForKey(versionKey)
+//        
+//        if let buildNumber = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? NSString)?.integerValue where buildNumber > modelVersion {
+//            let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
+//            do {
+//                if let defaultPath = Realm.Configuration.defaultConfiguration.path {
+//                    try NSFileManager.defaultManager().copyItemAtPath(path, toPath: defaultPath)
+//                } else {
+//                    fatalError("No default Realm path found\n")
+//                }
+//            } catch {
+////                fatalError("Error copying realm file.\n")
+//            }
+//            NSUserDefaults.standardUserDefaults().setInteger(buildNumber, forKey: versionKey)
+//        }
+//        
+//        setSchemaVersion(5, realmPath: Realm.Configuration.defaultConfiguration.path!, migrationBlock: {migration, oldSchemaVersion in
+//            if oldSchemaVersion < 5 {
+//                
+//            }
+//        })
+//        
+//        if let courses = try? Realm().objects(Course)  {
+//            calculatePercentiles(courses)
+//            Search.shared.buildIndex(courses)
+//        }
+
+        self.factorChecker = FactorChecker(realm: realm)
+        var searchSchedule = factorChecker.initialAssignment(self)
+        var oldResult = factorChecker.conflictsAndFreeVariables(searchSchedule, shouldPrint: true)
+        var schedulesExplored = 0; var stallCount = 0
+        while oldResult.conflicts > 0 {
+            schedulesExplored++
+            let successor = generateSuccessor(searchSchedule, result: oldResult)
+            let newResult = factorChecker.conflictsAndFreeVariables(successor, shouldPrint: true)
+            if oldResult.conflicts > newResult.conflicts + Int(Double(stallCount) / 100.0) {
+                print("\(oldResult.conflicts)->\(newResult.conflicts) in \(schedulesExplored) steps\n\n\(searchSchedule)")
+                oldResult = newResult
+                searchSchedule = successor
+                stallCount = 0
+            } else {
+                stallCount++
+            }
+            if stallCount > 100 {
+                factorChecker.conflictsAndFreeVariables(searchSchedule, shouldPrint: true)
+                stallCount = 0
+            }
+            
+            if oldResult.conflicts == 0 {
+                let newResult = factorChecker.conflictsAndFreeVariables(successor, shouldPrint: true)
+            }
+        }
+        print("Solution found. Explored \(schedulesExplored) schedules\n\(searchSchedule)")
+        factorChecker.conflictsAndFreeVariables(searchSchedule, shouldPrint: true)
 //        Realm().write({
 //            var facultyDict = Dictionary<String, Faculty>()
 //            var deleteAfter: [Faculty] = []
@@ -303,6 +473,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+@available(iOS 9.0, *)
 extension AppDelegate: LoginViewControllerDelegate {
     
     func userDidLoginWithHUID(HUID: String) {

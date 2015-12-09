@@ -69,7 +69,6 @@ class BreakdownCell: UITableViewCell {
             }
         }
         
-        var buttonViews: [UIView] = []
         var index = 0
         for (title, response) in [("Workload", workload), ("Instructor", instructor)] {
             let mean = response?.mean
@@ -116,8 +115,6 @@ class BreakdownCell: UITableViewCell {
     
     func initialLayoutWithCourse(course: Course) {
         self.course = course
-        let width = frame.width
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
         
         roundedBackgroundView = UIView()
         roundedBackgroundView.backgroundColor = UIColor.whiteColor()
@@ -247,16 +244,20 @@ class BreakdownCell: UITableViewCell {
     }
     
     func arrayForCurrentGraphTab() -> [Double] {
-        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        switch self.selectedTab {
-        case .All:    return delegate.allScores
-        case .Group:  return delegate.allGroupScores[course.shortField]!
-        case .Size:
-            for range in delegate.allSizeScores {
-                if range.contains(course.enrollment) {return range.scores}
+        if #available(iOS 9.0, *) {
+            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            switch self.selectedTab {
+            case .All:    return delegate.allScores
+            case .Group:  return delegate.allGroupScores[course.shortField]!
+            case .Size:
+                for range in delegate.allSizeScores {
+                    if range.contains(course.enrollment) {return range.scores}
+                }
             }
+            return []
+        } else {
+            return []
         }
-        return []
     }
     
     func eraseGraph() {
@@ -278,10 +279,10 @@ class BreakdownCell: UITableViewCell {
         
         self.eraseGraph()
         
-        var spacing: CGFloat = 7
-        var barWidth: CGFloat = 8
-        var barCountFloat = (graphWidth - barWidth) / (barWidth + spacing)
-        var barCountInt = Int(barCountFloat)
+        let spacing: CGFloat = 3
+        let barWidth: CGFloat = 4
+        let barCountFloat = (graphWidth - barWidth) / (barWidth + spacing)
+        let barCountInt = Int(barCountFloat)
         
         var heights: [CGFloat] = []
         

@@ -7,7 +7,11 @@
 //
 import RealmSwift
 
-class Course: Object, ListableCourse {
+func ==(lhs: Course, rhs: Course) -> Bool {
+    return lhs.title == rhs.title
+}
+
+class Course: Object, ListableCourse, Hashable {
     
     dynamic var bracketed = false
     dynamic var graduate = false
@@ -35,6 +39,10 @@ class Course: Object, ListableCourse {
     dynamic var workload = 0.0
     dynamic var difficulty = 0.0
     dynamic var searchScore = 0.0
+    
+    override var hashValue: Int {
+        return title.hashValue
+    }
     
     let genEds = List<GenEd>()
     let faculty = List<Faculty>()

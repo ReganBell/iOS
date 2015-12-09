@@ -22,37 +22,46 @@ PODS:
     - AFNetworking/NSURLSession
   - Alamofire (2.0.2)
   - Cartography (0.6.0)
+  - Crashlytics (3.4.0):
+    - Fabric (~> 1.6.0)
+  - Fabric (1.6.0):
+    - Fabric/Base (= 1.6.0)
+  - Fabric/Base (1.6.0)
   - Firebase (2.3.3)
   - Mantle (2.0.2):
     - Mantle/extobjc (= 2.0.2)
   - Mantle/extobjc (2.0.2)
   - pop (1.0.7)
-  - Realm (0.95.2):
-    - Realm/Headers (= 0.95.2)
-  - Realm/Headers (0.95.2)
-  - RealmSwift (0.95.2):
-    - Realm (= 0.95.2)
+  - Realm (0.96.2):
+    - Realm/Headers (= 0.96.2)
+  - Realm/Headers (0.96.2)
+  - RealmSwift (0.96.2):
+    - Realm (= 0.96.2)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
   - AFNetworking
   - Alamofire (~> 2.0)
   - Cartography (~> 0.6)
+  - Crashlytics
+  - Fabric
   - Firebase
   - Mantle
   - pop (~> 1.0)
-  - RealmSwift (~> 0.95.2)
+  - RealmSwift (~> 0.96.2)
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   Cartography: 70af183a248547694a8cfaa6b989cb7e04589985
+  Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
+  Fabric: d737eda3a26ac940a5430230eedb35f16b226131
   Firebase: 2db60272f68ce40c7d47e5ae6eddc16977c65d4c
   Mantle: 967fd31ea0220890b2e76589198996b534bb3fb1
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
-  Realm: 4c026902041bb39c4bd083ebc5e88f4f17973d72
-  RealmSwift: ac7822fe7ab8dca7fa979f4d576793b111d6dce1
+  Realm: 3ce8448151c571e90b85002d984d7f93f54fc8a3
+  RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.39.0

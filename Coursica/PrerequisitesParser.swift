@@ -82,7 +82,7 @@ struct PrerequisitesParser {
                     if next.number == true {
                         let number = next.match
                         var matchCourse: Course? = nil
-                        if let matchCourse = try? Realm().objects(Course).filter("longField = %@ && number = %@", current.field, number).first {}
+                        if let _ = try? Realm().objects(Course).filter("longField = %@ && number = %@", current.field, number).first {}
                         else {
                             matchCourse = (try? Realm().objects(Course).filter("shortField = %@ && number = %@", current.match.uppercaseString, number))?.first
                         }
@@ -113,7 +113,6 @@ struct PrerequisitesParser {
                     unsortedMatches.append(Match(number: false, range: range, match: source.substringWithRange(range), field: long))
                     let endIndex = range.location + range.length
                     let newRange = NSMakeRange(endIndex, source.length - endIndex)
-                    let newString = source.substringWithRange(newRange)
                     range = source.rangeOfString(field, options: options, range: newRange)
                 }
             }

@@ -13,8 +13,8 @@ class ResponseBarView: UIView {
     
     let labelWidth: CGFloat = 104
     let scoreWidth: CGFloat = 25
-    var leftMargin: CGFloat { get { return labelWidth + 10.0} }
-    var maxBarWidth: CGFloat { get { return UIScreen.mainScreen().bounds.size.width - 20 - leftMargin - scoreWidth - 35 } }
+    var leftMargin: CGFloat { return labelWidth + 10.0 }
+    var maxBarWidth: CGFloat { return UIScreen.mainScreen().bounds.size.width - 20 - leftMargin - scoreWidth - 35 }
     
     var bar = UIView()
     var barContainer = UIView()

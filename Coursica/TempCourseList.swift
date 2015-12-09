@@ -61,9 +61,8 @@ class CourseList {
     class func fetchListsForCurrentUserWithCompletion(completionBlock: [CourseList]? -> Void) {
         let HUID = NSUserDefaults.standardUserDefaults().objectForKey("huid") as! String
         let firebaseRoot: Firebase = Firebase(url: "glaring-heat-9505.firebaseIO.com/lists/\(HUID)")
-        let snapshot: FDataSnapshot
         firebaseRoot.observeSingleEventOfType(FEventType.Value, withBlock: { snapshot in
-            if let null = (snapshot.value as? NSNull) {
+            if let _ = (snapshot.value as? NSNull) {
                 completionBlock(nil)
                 return
             }

@@ -38,7 +38,7 @@ class CS50Parser {
         // Get gen eds specified in a course's notes
         for genEd in allGenEds.values {
             let range = notes.rangeOfString(genEd)
-            if let start = range?.startIndex {
+            if let _ = range?.startIndex {
                 genEds.insert(genEd)
             }
         }

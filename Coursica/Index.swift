@@ -47,7 +47,7 @@ class Index: NSObject {
     }
     
     func calculateIDFs(totalCourses: Int) {
-        for (term, entry) in terms {
+        for (_, entry) in terms {
             entry.idf = log(Double(totalCourses) / Double(entry.n))
         }
     }
