@@ -266,6 +266,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let duplicateCourse = move.courses!.first!
         var newCourse: String?
         for suggestedMove in result.suggestedMoves {
+            // Look for a prereq or requirement constraint that needs satisfying, replace this duplicate with a course from its domain
             if !(suggestedMove.type == .PrereqMissing || suggestedMove.type == .FactorMissing) {
                 continue
             }
@@ -273,6 +274,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 for course in moveCourses {
                     if factorChecker.domain(move.index!.termKey).contains(course) && duplicateCourse != course {
                         newCourse = course
+                        break
                     }
                 }
                 if newCourse != nil { break }
@@ -302,46 +304,102 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func movePrereqMove(schedule: Schedule, result: CheckerResult, move: Move, forward: Bool) -> Schedule {
         
-        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
-        let prereqTermIndex = orderedVariableKeys.indexOf(move.index!.termKey)!
+        let courseToMove = move.courses!.first!
+        let courseToMoveIndex = orderedVariableKeys.indexOf(move.index!.termKey)!
         let cap = forward ? orderedVariableKeys.count - 1 : 0
-        if prereqTermIndex == cap { return schedule }
-        var targetTerm = self.targetTerm(prereqTermIndex, cap: cap)
-        var variable = variableWithTerm(targetTerm, variables: result.unusedVariables) ?? variableWithTerm(targetTerm, variables: [0, 1, 2, 3].map { return VariableIndex(termKey: orderedVariableKeys[targetTerm], index: $0) })!
-        var swapCourse = newSchedule.variable(variable.termKey).assignment[variable.index]
+        // If a course is at the beginning of schedule, we can't move it earlier; likewise if it is at the end
+        if courseToMoveIndex == cap { return schedule }
+        var destinationTerm = self.targetTerm(courseToMoveIndex, cap: cap)
+        var destinationVariable = variableWithTerm(destinationTerm, variables: result.unusedVariables) ?? variableWithTerm(destinationTerm, variables: [0, 1, 2, 3].map { return VariableIndex(termKey: orderedVariableKeys[destinationTerm], index: $0) })!
+        var swapCourse = schedule.variable(destinationVariable.termKey).assignment[destinationVariable.index]
         var tries = 0
         var index = 0
-        while !factorChecker.domain(variable.termKey).contains(swapCourse) || !factorChecker.domain(move.index!.termKey).contains(move.courses!.first!) {
-            targetTerm = self.targetTerm(prereqTermIndex, cap: cap)
+        while !factorChecker.domain(destinationVariable.termKey).contains(courseToMove) || !factorChecker.domain(move.index!.termKey).contains(swapCourse) {
+            destinationTerm = self.targetTerm(courseToMoveIndex, cap: cap)
             if tries < 10 {
-                variable = variableWithTerm(targetTerm, variables: result.unusedVariables) ?? variableWithTerm(targetTerm, variables: [0, 1, 2, 3].map { return VariableIndex(termKey: orderedVariableKeys[targetTerm], index: $0) })!
+                destinationVariable = variableWithTerm(destinationTerm, variables: result.unusedVariables) ?? variableWithTerm(destinationTerm, variables: [0, 1, 2, 3].map { return VariableIndex(termKey: orderedVariableKeys[destinationTerm], index: $0) })!
             } else {
-                variable = VariableIndex(termKey: orderedVariableKeys[targetTerm], index: index)
+                destinationVariable = VariableIndex(termKey: orderedVariableKeys[destinationTerm], index: index)
                 index++; if index == 4 { index = 0 }
             }
-            swapCourse = newSchedule.variable(variable.termKey).assignment[variable.index]
+            swapCourse = schedule.variable(destinationVariable.termKey).assignment[destinationVariable.index]
             tries++
             if tries > 50 {
                 return schedule
             }
         }
         print("\n** Moving \(move.courses!.first!) \(forward ? "forward" : "backward"), swapping with \(swapCourse)\n")
-        newSchedule.assignCourse(move.courses!.first!, index: variable)
+        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
+        newSchedule.assignCourse(move.courses!.first!, index: destinationVariable)
         newSchedule.assignCourse(swapCourse, index: move.index!)
         return newSchedule
     }
     
-    func generateSuccessor(schedule: Schedule, result: CheckerResult) -> Schedule {
-        if let move = result.suggestedMoves.randomElement() {
-            switch move.type {
-            case .FactorMissing: return factorMissingMove(schedule, result: result, move: move, termUpperBound: .All)
-            case .MovePrereq: return movePrereqMove(schedule, result: result, move: move, forward: false)
-            case .MovePostReq: return movePrereqMove(schedule, result: result, move: move, forward: true)
-            case .PrereqMissing: return factorMissingMove(schedule, result: result, move: move, termUpperBound: move.index!.termKey)
-            case .DuplicateCourse: return duplicateCourseMove(schedule, result: result, move: move)
+    func timeConflictMove(schedule: Schedule, result: CheckerResult, move: Move) -> Schedule {
+        // Half the time swap the course with a different course, half the time give it a new assignment
+        if arc4random() % 2 == 0 {
+            return movePrereqMove(schedule, result: result, move: move, forward: (arc4random() % 2) == 0)
+        } else {
+            return duplicateCourseMove(schedule, result: result, move: move)
+        }
+    }
+    
+    func swapPrereqMove(schedule: Schedule, result: CheckerResult, move: Move) -> Schedule {
+        let prereqIndex = move.index!
+        let courseIndex = move.swapIndex!
+        let prereq = schedule.variable(prereqIndex.termKey).assignment[prereqIndex.index]
+        let course = schedule.variable(courseIndex.termKey).assignment[courseIndex.index]
+        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
+        if factorChecker.domain(courseIndex.termKey).contains(prereq) && factorChecker.domain(prereqIndex.termKey).contains(course) && prereqIndex.termKey != courseIndex.termKey {
+            newSchedule.variable(courseIndex.termKey).assignment[courseIndex.index] = prereq
+            newSchedule.variable(prereqIndex.termKey).assignment[prereqIndex.index] = course
+            return newSchedule
+        } else {
+            let forwardSchedule = movePrereqMove(schedule, result: result, move: Move(type: .MovePrereq, index: move.index!, swapIndex: move.swapIndex!, courses: [prereq]), forward: false)
+            return movePrereqMove(forwardSchedule, result: result, move: Move(type: .MovePostReq, index: move.swapIndex!, swapIndex: move.index!, courses: [course]), forward: true)
+            //                        suggestedMoves.append(Move(type: .MovePrereq, index: prereqVarIndex, swapIndex: index, courses: [prereq]))
+            //                        suggestedMoves.append(Move(type: .MovePostReq, index: index, swapIndex: prereqVarIndex, courses: [title]))
+        }
+    }
+
+    func qScoreReplaceMove(schedule: Schedule, move: Move) -> Schedule {
+        let variableIndex = move.index!
+        let domain = factorChecker.sortedDomain(variableIndex.termKey)
+        var course = ""; var continuePickingExpo = true; var i = 0
+        while continuePickingExpo {
+            // Bias towards high-ranked domain values by exponentially decaying probability of selection, but still maintain a low probability that any given course is picked
+            if arc4random() % 3 == 0 || i == domain.count - 1 {
+                course = domain[i]
+                continuePickingExpo = false
+            } else {
+                i++
             }
         }
-        return schedule
+        let oldCourse = move.courses!.first!
+        let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
+        print("\n** Replacing low Q score course \(oldCourse) (\(factorChecker.qScores[oldCourse]) with \(course) (\(factorChecker.qScores[course])\n")
+        newSchedule.assignCourse(course, index: variableIndex)
+        return newSchedule
+    }
+
+    
+    func generateSuccessor(schedule: Schedule, result: CheckerResult) -> Schedule {
+        var newSchedule: Schedule? = nil
+        if let move = result.suggestedMoves.randomElement() {
+            switch move.type {
+            case .FactorMissing: newSchedule = factorMissingMove(schedule, result: result, move: move, termUpperBound: .All)
+            case .MovePrereq: newSchedule = movePrereqMove(schedule, result: result, move: move, forward: false)
+            case .MovePostReq: newSchedule = movePrereqMove(schedule, result: result, move: move, forward: true)
+            case .SwapPrereq: newSchedule = swapPrereqMove(schedule, result: result, move: move)
+            case .TimeConflict: newSchedule = timeConflictMove(schedule, result: result, move: move)
+            case .PrereqMissing: newSchedule = factorMissingMove(schedule, result: result, move: move, termUpperBound: move.index!.termKey)
+            case .DuplicateCourse: newSchedule = duplicateCourseMove(schedule, result: result, move: move)
+            case .WorkloadSwap: newSchedule = swapPrereqMove(schedule, result: result, move: move)
+            case .QScoreReplace: newSchedule = qScoreReplaceMove(schedule, move: move)
+            }
+        }
+        print("\(newSchedule!)")
+        return newSchedule!
     }
     
 //    func randomSchedule() -> Schedule {
@@ -397,14 +455,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.factorChecker = FactorChecker(realm: realm)
         var searchSchedule = factorChecker.initialAssignment(self)
-        var oldResult = factorChecker.conflictsAndFreeVariables(searchSchedule, shouldPrint: true)
-        var schedulesExplored = 0; var stallCount = 0
+        var oldResult = factorChecker.analyze(searchSchedule, shouldPrint: true)
+        var schedulesExplored = 0; var stallCount = 0.0
         while oldResult.conflicts > 0 {
             schedulesExplored++
             let successor = generateSuccessor(searchSchedule, result: oldResult)
-            let newResult = factorChecker.conflictsAndFreeVariables(successor, shouldPrint: true)
-            if oldResult.conflicts > newResult.conflicts + Int(Double(stallCount) / 100.0) {
-                print("\(oldResult.conflicts)->\(newResult.conflicts) in \(schedulesExplored) steps\n\n\(searchSchedule)")
+            let newResult = factorChecker.analyze(successor, shouldPrint: true)
+            if oldResult.conflicts >= newResult.conflicts && oldResult.averageQScore - (stallCount / 100.0) <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation - (stallCount / 1000.0) {
+                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
                 oldResult = newResult
                 searchSchedule = successor
                 stallCount = 0
@@ -412,16 +470,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 stallCount++
             }
             if stallCount > 100 {
-                factorChecker.conflictsAndFreeVariables(searchSchedule, shouldPrint: true)
+                factorChecker.analyze(searchSchedule, shouldPrint: true)
                 stallCount = 0
             }
             
             if oldResult.conflicts == 0 {
-                let newResult = factorChecker.conflictsAndFreeVariables(successor, shouldPrint: true)
+                let newResult = factorChecker.analyze(successor, shouldPrint: true)
             }
         }
         print("Solution found. Explored \(schedulesExplored) schedules\n\(searchSchedule)")
-        factorChecker.conflictsAndFreeVariables(searchSchedule, shouldPrint: true)
+        factorChecker.analyze(searchSchedule, shouldPrint: true)
 //        Realm().write({
 //            var facultyDict = Dictionary<String, Faculty>()
 //            var deleteAfter: [Faculty] = []

@@ -11,7 +11,7 @@ import RealmSwift
 import GameKit
 
 enum MoveType {
-    case DuplicateCourse, FactorMissing, SwapPrereq, MovePrereq, MovePostReq, PrereqMissing
+    case DuplicateCourse, FactorMissing, SwapPrereq, MovePrereq, MovePostReq, PrereqMissing, TimeConflict, WorkloadSwap, QScoreReplace
 }
 
 struct Move {
@@ -62,10 +62,17 @@ struct CheckerResult {
     var conflicts: Int
     var unusedVariables: [VariableIndex]
     var suggestedMoves: [Move]
+    var highestWorkloadDeviation: Double
+    var averageQScore: Double
 }
 
 @available(iOS 9.0, *)
 class FactorChecker {
+    
+    var freshmanFallSorted: [String] = []
+    var freshmanSpringSorted: [String] = []
+    var upperClassmanFallSorted: [String] = []
+    var upperClassmanSpringSorted: [String] = []
     
     var freshmanFallCourses: Set<String> = []
     var freshmanSpringCourses: Set<String> = []
@@ -106,20 +113,30 @@ class FactorChecker {
     var shouldPrint = false
     var termPrecedingCourses = Dictionary<TermKey, Dictionary<String, VariableIndex>>()
     var factorCourseTitles = [[String]]()
+    var workloads = Dictionary<String, Double>()
+    var qScores = Dictionary<String, Double>()
+    var meetings = Dictionary<String, List<Meeting>>()
+    var termsTimeChecked = Set<TermKey>()
+    var highestWorkloadDeviation = 0.0
+    var averageQScore = 0.0
     
     init(realm: Realm) {
         
         let allCourses = realm.objects(Course).filter(NSPredicate(format: "graduate = false AND enrollment > 10", false, 10)).sorted("percentileSize", ascending: false)//.map() { return $0.title }
         for course in allCourses.filter(NSPredicate(format: "term != %@", "SPRING")).sorted("percentileSize", ascending: false) {
             freshmanFallCourses.insert(course.displayTitle)
+            freshmanFallSorted.append(course.displayTitle)
             if course.shortField != "EXPOS" && course.shortField != "FRSEMR" {
                 upperClassmanFallCourses.insert(course.displayTitle)
+                upperClassmanFallSorted.append(course.displayTitle)
             }
         }
         for course in allCourses.filter(NSPredicate(format: "term != %@", "FALL")).sorted("percentileSize", ascending: false) {
             freshmanSpringCourses.insert(course.displayTitle)
+            freshmanSpringSorted.append(course.displayTitle)
             if course.shortField != "EXPOS" && course.shortField != "FRSEMR" {
                 upperClassmanSpringCourses.insert(course.displayTitle)
+                upperClassmanSpringSorted.append(course.displayTitle)
             }
         }
         
@@ -157,8 +174,11 @@ class FactorChecker {
             if displayTitle == "COMPSCI 61 - Systems Programming and Machine Organization" {
                 prereqs.insert("COMPSCI 50 - Introduction to Computer Science I")
             }
+            self.workloads[displayTitle] = course.workload
+            self.qScores[displayTitle] = course.overall
             self.prerequisites[displayTitle] = prereqs
             self.prerequisiteStrings[displayTitle] = course.prerequisitesString
+            self.meetings[displayTitle] = course.meetings
         }
     }
     
@@ -198,6 +218,14 @@ class FactorChecker {
         }
     }
     
+    func sortedDomain(termKey: TermKey) -> [String] {
+        switch termKey {
+        case .FreshmanFall: return freshmanFallSorted
+        case .FreshmanSpring: return freshmanSpringSorted
+        default: return termKey.rawValue.containsString("Spring") ? upperClassmanSpringSorted : upperClassmanFallSorted
+        }
+    }
+    
     func initialAssignment(delegate: AppDelegate) -> Schedule {
         let unfixedVariables = orderedVariableKeys
         var scrambledGenEds = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(self.genEdFactors) as! [Factor]
@@ -232,9 +260,44 @@ class FactorChecker {
         return schedule
     }
     
+    func meetingsDoConflict(a: Meeting, b: Meeting) -> Bool {
+        if a.day != b.day {
+            return false
+        }
+        let aStartInt = intFromMilitaryTime(a.beginTime)
+        let aEndInt  = intFromMilitaryTime(a.endTime)
+        let bStartInt = intFromMilitaryTime(b.beginTime)
+        let bEndInt   = intFromMilitaryTime(b.endTime)
+        if aStartInt == bStartInt && aEndInt == bEndInt {
+            return true
+        } else if aStartInt >= bStartInt && aStartInt < bEndInt {
+            return true
+        } else if aEndInt > bStartInt && aEndInt <= bEndInt {
+            return true
+        }
+        return false
+    }
+    
+    func intFromMilitaryTime(var militaryTime: String) -> Int {
+        
+        let spaceComponents = militaryTime.componentsSeparatedByString(" ")
+        if spaceComponents.count > 1 {
+            militaryTime = spaceComponents[1]
+        }
+        
+        let components = militaryTime.componentsSeparatedByString(":")
+        let rawHours = components[0] as NSString
+        if components.count > 1 {
+            let rawMinutes = components[1] as NSString
+            return rawHours.integerValue * 10 + Int(rawMinutes.floatValue / 6.0)
+        } else {
+            return rawHours.integerValue * 10
+        }
+    }
+    
     func checkIfSeen(title: String, index: VariableIndex) -> Bool {
         if coursesSeen.contains(title) {
-            suggestedMoves.append(Move(type: .DuplicateCourse, index: index, courses: [title]))
+            suggestedMoves.append(Move(type: .DuplicateCourse, index: index, swapIndex: nil, courses: [title]))
             conflicts++
             if shouldPrint { print("Already seen \(title)") }
             return true
@@ -252,6 +315,9 @@ class FactorChecker {
         shouldPrint = false
         termPrecedingCourses = Dictionary<TermKey, Dictionary<String, VariableIndex>>()
         factorCourseTitles = factors.map() { _ in return [String]() }
+        termsTimeChecked = Set<TermKey>()
+        averageQScore = 0.0
+        highestWorkloadDeviation = 0.0
     }
     
     func checkPrerequisite(title: String, index: VariableIndex) {
@@ -261,8 +327,6 @@ class FactorChecker {
                     if termPrecedingCourses[index.termKey]![prereq] == nil {
                         // If prereq exists in the schedule but after or in same term as this course, move prereq backward and course forward
                         suggestedMoves.append(Move(type: .SwapPrereq, index: prereqVarIndex, swapIndex: index, courses: [prereq]))
-                        suggestedMoves.append(Move(type: .MovePrereq, index: prereqVarIndex, swapIndex: index, courses: [prereq]))
-                        suggestedMoves.append(Move(type: .MovePostReq, index: index, swapIndex: prereqVarIndex, courses: [title]))
                         if shouldPrint { print("Prereq \(prereq) is not before \(title) – will try to swap") }
                         conflicts++
                     } else {
@@ -294,6 +358,92 @@ class FactorChecker {
         }
     }
     
+    // fixed variables
+    // pivot for prereq swap
+    
+    func coursesDoConflict(course: String, conflictCourse: String) -> Bool {
+        if let courseMeetings = meetings[course], conflictMeetings = meetings[conflictCourse] {
+            for potentialConflict in conflictMeetings {
+                for courseMeeting in courseMeetings {
+                    if meetingsDoConflict(courseMeeting, b: potentialConflict) {
+                        if shouldPrint { print("Conflict: \(course) and \(conflictCourse) can't meet at \(courseMeeting.display.title) and \(potentialConflict.display.title)") }
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    func sortedWorkloadVar(variable: Variable, ascending: Bool) -> [(String, Double, Int)] {
+        var list: [(String, Double, Int)] = []
+        for (i, course) in variable.assignment.enumerate() { list.append((course, workloads[course]!, i)) }
+        return list.sort() { A, B in let (_, a, _) = A; let (_, b, _) = B; return ascending ? a < b : b < a }
+    }
+    
+    func analyzeTermQScores(courses: [(String, VariableIndex)]) {
+        let sorted = courses.sort() { qScores[$0.0] < qScores[$1.0]}
+        averageQScore = sorted.reduce(0.0) { return $0 + qScores[$1.0]! } / Double(sorted.count)
+        for i in 0..<2 {
+            suggestedMoves.append(Move(type: .QScoreReplace, index: sorted[i].1, swapIndex: nil, courses: [sorted[i].0]))
+        }
+    }
+    
+    func analyzeTermWorkloads(schedule: Schedule) {
+        let variables = orderedVariableKeys.map() { return schedule.variable($0) }
+        let variableWorkloads = variables.map() { $0.assignment.reduce(0, combine: { $0 + workloads[$1]! }) }
+        let targetAverage = variableWorkloads.reduce(0, combine: +) / 8.0
+        var highestWorkload = 0.0; var highestWorkloadVar: Int?
+        var lowestWorkload = 9999.0; var lowestWorkloadVar: Int?
+        for i in 0..<variables.count {
+            let workload = variableWorkloads[i]
+            if workload > highestWorkload {
+                highestWorkload = workload
+                highestWorkloadVar = i
+            }
+            if workload < lowestWorkload {
+                lowestWorkload = workload
+                lowestWorkloadVar = i
+            }
+        }
+        let highestSorted = sortedWorkloadVar(variables[highestWorkloadVar!], ascending: false)
+        let lowestSorted = sortedWorkloadVar(variables[lowestWorkloadVar!], ascending: true)
+        for i in 0..<lowestSorted.count {
+            let highest = highestSorted[i]; let lowest = lowestSorted[i]
+            if highest.1 > lowest.1 {
+                suggestedMoves.append(Move(type: .WorkloadSwap, index: VariableIndex(termKey: orderedVariableKeys[highestWorkloadVar!], index: highest.2), swapIndex: VariableIndex(termKey: orderedVariableKeys[lowestWorkloadVar!], index: lowest.2), courses: [highest.0]))
+            } else {
+                break
+            }
+        }
+        let highDeviation = abs(highestWorkload - targetAverage); let lowDeviation = abs(lowestWorkload - targetAverage);
+        highestWorkloadDeviation = highDeviation > lowDeviation ? highDeviation : lowDeviation
+        print("Workloads (absolute, deviation) : \(variableWorkloads.map() { return ($0, $0 - targetAverage) })")
+    }
+    
+    func checkTermForMeetingTimeConflicts(index: VariableIndex, schedule: Schedule) {
+        let term = index.termKey
+        if termsTimeChecked.contains(term) {
+            return
+        }
+        termsTimeChecked.insert(term)
+        let courses = schedule.variable(term).assignment
+        for (i, course) in courses.enumerate() {
+            for j in (i+1)..<courses.count {
+                let conflictCourse = courses[j]
+                if coursesDoConflict(course, conflictCourse: conflictCourse) {
+                    conflicts++
+                    // Randomly choose one of the two conflicting courses to try to move
+                    if arc4random() % 2 == 0 {
+                        suggestedMoves.append(Move(type: .TimeConflict, index: VariableIndex(termKey: term, index: i), swapIndex: nil, courses: [course]))
+                    } else {
+                        suggestedMoves.append(Move(type: .TimeConflict, index: VariableIndex(termKey: term, index: j), swapIndex: nil, courses: [conflictCourse]))
+                    }
+                }
+            }
+        }
+    }
+    
     func checkFactorsSatisfied(factors: [Factor]) {
         for (i, factor) in factors.enumerate() {
             let titles = factorCourseTitles[i]
@@ -305,19 +455,23 @@ class FactorChecker {
         }
     }
 
-    func conflictsAndFreeVariables(schedule: Schedule, shouldPrint: Bool) -> CheckerResult {
+    func analyze(schedule: Schedule, shouldPrint: Bool) -> CheckerResult {
         wipeGlobalVariables()
         flipFactorOrder = !flipFactorOrder
         self.shouldPrint = shouldPrint
         let factors = flipFactorOrder ? reverseFactors : self.factors
         termPrecedingCourses = termPrecedingCourses(schedule)
-        for (courseTitle, variableIndex) in requirementsEliminationList(schedule) {
+        let courses = requirementsEliminationList(schedule)
+        for (courseTitle, variableIndex) in courses {
             if checkIfSeen(courseTitle, index: variableIndex) {
                 continue
             }
+            checkTermForMeetingTimeConflicts(variableIndex, schedule: schedule)
             checkCourseSatisfiesFactors(courseTitle, index: variableIndex, factors: factors)
         }
+        analyzeTermWorkloads(schedule)
+        analyzeTermQScores(courses)
         checkFactorsSatisfied(factors)
-        return CheckerResult(conflicts: conflicts, unusedVariables: unusedVariables, suggestedMoves: suggestedMoves)
+        return CheckerResult(conflicts: conflicts, unusedVariables: unusedVariables, suggestedMoves: suggestedMoves, highestWorkloadDeviation: highestWorkloadDeviation, averageQScore: averageQScore)
     }
 }
