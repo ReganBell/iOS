@@ -27,10 +27,6 @@ enum TermKey: String {
 
 let orderedVariableKeys: [TermKey] = [.FreshmanFall, .FreshmanSpring, .SophomoreFall, .SophomoreSpring, .JuniorFall, .JuniorSpring, .SeniorFall, .SeniorSpring]
 
-//private func initialDomain(realm: Realm) -> Results<Course> {
-//    return realm.objects(Course)
-//}
-
 class Schedule: CustomStringConvertible {
     let freshmanFall: Variable    
     let freshmanSpring: Variable  
@@ -51,7 +47,7 @@ class Schedule: CustomStringConvertible {
         return variableDescriptions.joinWithSeparator("\n")
     }
     
-    func assignCourse(title: String, index: VariableIndex) {
+    func assignCourse(title: Int, index: VariableIndex) {
         variable(index.termKey).assignment.removeAtIndex(index.index)
         variable(index.termKey).assignment.insert(title, atIndex: index.index)
     }
@@ -68,39 +64,20 @@ class Schedule: CustomStringConvertible {
             seniorFall = copy.seniorFall.copy(assignment)
             seniorSpring = copy.seniorSpring.copy(assignment)
         } else {
-            freshmanFall =    Variable(assignment: [])//, domain: initialDomain(realm))
-            freshmanSpring =  Variable(assignment: [])//, domain: initialDomain(realm))
-            sophomoreFall =   Variable(assignment: [])//, domain: initialDomain(realm))
-            sophomoreSpring = Variable(assignment: [])//, domain: initialDomain(realm))
-            juniorFall =   Variable(assignment: [])//, domain: initialDomain(realm))
-            juniorSpring = Variable(assignment: [])//, domain: initialDomain(realm))
-            seniorFall =   Variable(assignment: [])//, domain: initialDomain(realm))
-            seniorSpring = Variable(assignment: [])//, domain: initialDomain(realm))
+            freshmanFall =    Variable(assignment: [])
+            freshmanSpring =  Variable(assignment: [])
+            sophomoreFall =   Variable(assignment: [])
+            sophomoreSpring = Variable(assignment: [])
+            juniorFall =   Variable(assignment: [])
+            juniorSpring = Variable(assignment: [])
+            seniorFall =   Variable(assignment: [])
+            seniorSpring = Variable(assignment: [])
         }
         let orderedVariables = [freshmanFall, freshmanSpring, sophomoreFall, sophomoreSpring, juniorFall, juniorSpring, seniorFall, seniorSpring]
         for (key, value) in zip(orderedVariableKeys, orderedVariables) { variableDict[key] = value }
-        if let assignment = assignment {
-            for key in orderedVariableKeys {
-                let variable = variableDict[key]!
-                if variable.assignment.count != 4 {
-                    variable.assignment.append(assignment)
-                    break
-                }
-            }
-        }
     }
     
     func variable(termKey: TermKey) -> Variable {
         return variableDict[termKey]!
-    }
-    
-    func nextVariable() -> Variable? {
-        for key in orderedVariableKeys {
-            let variable = variableDict[key]!
-            if variable.assignment.count != 4 {
-                return variable
-            }
-        }
-        return nil
     }
 }

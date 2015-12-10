@@ -10,21 +10,19 @@ import Foundation
 import RealmSwift
 
 class Variable: CustomStringConvertible {
-    var assignment: [String]  = []
-//    let domain: Results<Course>
+    var assignment: [Int]  = []
     var conflicts = 0
-    init(assignment: [String]) {//, domain: Results<Course>) {
+    init(assignment: [Int]) {
         self.assignment = assignment
-//        self.domain = domain
     }
     var description: String {
         return assignment.map({ return "    \($0)" }).joinWithSeparator("\n")
     }
     func copy(without: String?) -> Variable {
         if let without = without {
-            return Variable(assignment: assignment)//, domain: domain.filter("title != '\(without.title)'"))
+            return Variable(assignment: assignment)
         } else {
-            return Variable(assignment: assignment)//, domain: domain)
+            return Variable(assignment: assignment)
         }
     }
 }

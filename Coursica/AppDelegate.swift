@@ -242,6 +242,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return sum / Double(numbers.count)
     }
     
+    // **** CS 182 code starts here!
+    // If a factor is unfulfilled, we locate an unused variable and assign it a course from that factor's domain
     func factorMissingMove(schedule: Schedule, result: CheckerResult, move: Move, termUpperBound: TermKey) -> Schedule {
         var variableIndex = result.unusedVariables.randomElement()!
         var domain = factorChecker.domain(variableIndex.termKey)
@@ -256,15 +258,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 break
             }
         }
-//        print("\n** Solving factor with \(course) assigned to \(variableIndex.termKey.rawValue)\n")
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
         newSchedule.assignCourse(course, index: variableIndex)
         return newSchedule
     }
     
+    // If a course is a duplicate, we search through the other moves to find one that wants to assign a course, and assign that course where the duplicate is
     func duplicateCourseMove(schedule: Schedule, result: CheckerResult, move: Move) -> Schedule {
         let duplicateCourse = move.courses!.first!
-        var newCourse: String?
+        var newCourse: Int?
         for suggestedMove in result.suggestedMoves {
             // Look for a prereq or requirement constraint that needs satisfying, replace this duplicate with a course from its domain
             if !(suggestedMove.type == .PrereqMissing || suggestedMove.type == .FactorMissing) {
@@ -282,7 +284,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let course = newCourse ?? factorChecker.domain(move.index!.termKey).randomElement()
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
-//        print("\n** Replacing duplicate \(duplicateCourse) with \(course)\n")
         newSchedule.assignCourse(course, index: move.index!)
         return newSchedule
     }
@@ -296,12 +297,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
     
+    // Find a random term between the current term and the beginning or end of the schedule depending on whch direction we are moving
     func targetTerm(current: Int, cap: Int) -> Int {
         let range = arc4random() % UInt32(abs(cap - current))
         let negative = current > cap ? -1 : 1
         return current + negative * Int(range)
     }
     
+    // Move a course (could be a prereq, or a course that has a prereq) forward or backward so that the preq will be behind the course that needs it and the constraint will no longer be violated
     func movePrereqMove(schedule: Schedule, result: CheckerResult, move: Move, forward: Bool) -> Schedule {
         
         let courseToMove = move.courses!.first!
@@ -328,7 +331,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return schedule
             }
         }
-//        print("\n** Moving \(move.courses!.first!) \(forward ? "forward" : "backward"), swapping with \(swapCourse)\n")
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
         newSchedule.assignCourse(move.courses!.first!, index: destinationVariable)
         newSchedule.assignCourse(swapCourse, index: move.index!)
@@ -344,6 +346,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    // If we have a prereq that's in front or in the same term as the course that needs it, we try to swap them to remedy that
+    // If we can directly swap them without violating a domain, we do, otherwise we move them both opposite directions and swap them indirectly
     func swapPrereqMove(schedule: Schedule, result: CheckerResult, move: Move) -> Schedule {
         let prereqIndex = move.index!
         let courseIndex = move.swapIndex!
@@ -357,15 +361,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let forwardSchedule = movePrereqMove(schedule, result: result, move: Move(type: .MovePrereq, index: move.index!, swapIndex: move.swapIndex!, courses: [prereq]), forward: false)
             return movePrereqMove(forwardSchedule, result: result, move: Move(type: .MovePostReq, index: move.swapIndex!, swapIndex: move.index!, courses: [course]), forward: true)
-            //                        suggestedMoves.append(Move(type: .MovePrereq, index: prereqVarIndex, swapIndex: index, courses: [prereq]))
-            //                        suggestedMoves.append(Move(type: .MovePostReq, index: index, swapIndex: prereqVarIndex, courses: [title]))
         }
     }
 
+    // Find a low Q score course and replace it with a high qscore course
     func qScoreReplaceMove(schedule: Schedule, move: Move) -> Schedule {
         let variableIndex = move.index!
         let domain = factorChecker.sortedDomain(variableIndex.termKey)
-        var course = ""; var continuePickingExpo = true; var i = 0
+        var course = -1; var continuePickingExpo = true; var i = 0
         while continuePickingExpo {
             // Bias towards high-ranked domain values by exponentially decaying probability of selection, but still maintain a low probability that any given course is picked
             if arc4random() % 3 == 0 || i == domain.count - 1 {
@@ -377,12 +380,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let oldCourse = move.courses!.first!
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
-//        print("\n** Replacing low Q score course \(oldCourse) (\(factorChecker.qScores[oldCourse]) with \(course) (\(factorChecker.qScores[course])\n")
         newSchedule.assignCourse(course, index: variableIndex)
         return newSchedule
     }
 
-    
+    // Generate a successor based on a move selected uniformly at random
     func generateSuccessor(schedule: Schedule, result: CheckerResult) -> Schedule {
         var newSchedule: Schedule? = nil
         if let move = result.suggestedMoves.randomElement() {
@@ -398,21 +400,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case .QScoreReplace: newSchedule = qScoreReplaceMove(schedule, move: move)
             }
         }
-//        print("\(newSchedule!)")
         return newSchedule!
     }
     
-//    func randomSchedule() -> Schedule {
-//        let schedule = Schedule(copy: nil, assignment: nil, realm: realm)
-//        for termKey in orderedVariableKeys {
-//            let domain = self.domain(termKey)
-//            let variable = schedule.variable(termKey)
-//            while variable.assignment.count < 4 {
-//                variable.assignment.append(domain.randomElement())
-//            }
-//        }
-//        return schedule
-//    }
+    // Used for evaluating difference between initial assignment that is biased towards a solution
+    func randomSchedule() -> Schedule {
+        let schedule = Schedule(copy: nil, assignment: nil, realm: realm)
+        for termKey in orderedVariableKeys {
+            let domain = factorChecker.domain(termKey)
+            let variable = schedule.variable(termKey)
+            while variable.assignment.count < 4 {
+                variable.assignment.append(domain.randomElement())
+            }
+        }
+        return schedule
+    }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
 
@@ -424,102 +426,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Open the Realm with the configuration
         realm = try! Realm(configuration: config)
-        
-//        let versionKey = "modelVersion"
-//        let modelVersion = NSUserDefaults.standardUserDefaults().integerForKey(versionKey)
-//        
-//        if let buildNumber = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleVersion") as? NSString)?.integerValue where buildNumber > modelVersion {
-//            let path = NSBundle.mainBundle().pathForResource("seed", ofType: "realm")!
-//            do {
-//                if let defaultPath = Realm.Configuration.defaultConfiguration.path {
-//                    try NSFileManager.defaultManager().copyItemAtPath(path, toPath: defaultPath)
-//                } else {
-//                    fatalError("No default Realm path found\n")
-//                }
-//            } catch {
-////                fatalError("Error copying realm file.\n")
-//            }
-//            NSUserDefaults.standardUserDefaults().setInteger(buildNumber, forKey: versionKey)
-//        }
-//        
-//        setSchemaVersion(5, realmPath: Realm.Configuration.defaultConfiguration.path!, migrationBlock: {migration, oldSchemaVersion in
-//            if oldSchemaVersion < 5 {
-//                
-//            }
-//        })
-//        
-//        if let courses = try? Realm().objects(Course)  {
-//            calculatePercentiles(courses)
-//            Search.shared.buildIndex(courses)
-//        }
 
+        // Initialize factor domains and factor checker
         self.factorChecker = FactorChecker(realm: realm)
         var searchSchedule = factorChecker.initialAssignment(self)
         var oldResult = factorChecker.analyze(searchSchedule, shouldPrint: true)
-        var schedulesExplored = 1; var stallCount = 0.0
+        var schedulesExplored = 1
+        NSLog("Starting")
         while oldResult.conflicts > 0 {
             schedulesExplored++
             let successor = generateSuccessor(searchSchedule, result: oldResult)
             let newResult = factorChecker.analyze(successor, shouldPrint: false)
-//            if oldResult.conflicts > newResult.conflicts {//  {
-//                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
-//                oldResult = newResult
-//                searchSchedule = successor
-//                stallCount = 0
-//            }
             if oldResult.conflicts >= newResult.conflicts && oldResult.averageQScore - 5 <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation - 0.05 {
-                //oldResult.averageQScore <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation {
-//                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
+                if oldResult.conflicts > newResult.conflicts {
+                    print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n")
+                    factorChecker.printSchedule(searchSchedule)
+                }
                 oldResult = newResult
                 searchSchedule = successor
-                stallCount++
             }
+
             if schedulesExplored % 1000 == 0 {
                 searchSchedule = factorChecker.initialAssignment(self)
                 oldResult = factorChecker.analyze(searchSchedule, shouldPrint: false)
             }
-            if oldResult.conflicts == 0 {
-                let newResult = factorChecker.analyze(successor, shouldPrint: true)
-            }
         }
-        print("Solution found, Q: \(oldResult.averageQScore), Workload: \(oldResult.highestWorkloadDeviation). Explored \(schedulesExplored) schedules\n\(searchSchedule)")
-        factorChecker.analyze(searchSchedule, shouldPrint: true)
-//        Realm().write({
-//            var facultyDict = Dictionary<String, Faculty>()
-//            var deleteAfter: [Faculty] = []
-//            for course in courses {
-//                for faculty in course.faculty {
-//                    faculty.courses.append(course)
-//                }
-//            }
-//            for faculty in Realm().objects(Faculty) {
-//                let fullName = faculty.fullName
-//                if let existing = facultyDict[fullName] {
-//                    for course in faculty.courses {
-//                        existing.courses.append(course)
-//                        course.faculty.removeAtIndex(course.faculty.indexOf(faculty)!)
-//                        course.faculty.append(existing)
-//                    }
-//                    deleteAfter.append(faculty)
-//                } else {
-//                    facultyDict[fullName] = faculty
-//                }
-//            }
-//            Realm().delete(deleteAfter)
-//            for course in courses {
-//                if !course.prerequisitesString.isEmpty {
-//                    for match in PrerequisitesParser().processPrerequisiteString(course) {
-//                        course.prerequisites.append(match.course)
-//                    }
-//                }
-//            }
-//        })
-//        Realm().write {
-//            self.savePercentilesOnCourses(courses)
-//        }
-//        self.extractQData()
-//        let error = Realm().writeCopyToPath(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"), encryptionKey: nil)
-//        println(NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("seed"))
+        NSLog("Done")
+        
+        // *** CS 182 code ends here!
 
         let window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = NavigationController(rootViewController: CoursesViewController())

@@ -11,11 +11,11 @@ import RealmSwift
 
 class Factor {
     let name: String
-    let allPossible: Set<String>
-    let rankedPossible: [String]
+    let allPossible: Set<Int>
+    let rankedPossible: [Int]
     let count: Int
     var validTerm: String -> Bool = { _ in return true }
-    init(name: String, count: Int, validTerm: (String -> Bool)?, block: Course -> Bool) {
+    init(name: String, count: Int, validTerm: (String -> Bool)?, coursesStringKey: Dictionary<String, Int>, block: Course -> Bool) {
         self.name = name
         let config = Realm.Configuration(
             // Get the path to the bundled file
@@ -29,12 +29,12 @@ class Factor {
         if let validTerm = validTerm {
             self.validTerm = validTerm
         }
-        var possibleCourses = Set<String>()
-        var ranked = [String]()
+        var possibleCourses = Set<Int>()
+        var ranked = [Int]()
         for course in realm.objects(Course).filter(NSPredicate(format: "graduate = false AND enrollment > 10", false, 10)).sorted("percentileSize", ascending: false) {
             if block(course) {
-                possibleCourses.insert(course.displayTitle)
-                ranked.append(course.displayTitle)
+                possibleCourses.insert(coursesStringKey[course.displayTitle]!)
+                ranked.append(coursesStringKey[course.displayTitle]!)
             }
         }
         self.allPossible = possibleCourses
