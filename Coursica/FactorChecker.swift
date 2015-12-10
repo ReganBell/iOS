@@ -95,7 +95,6 @@ class FactorChecker {
     let sls: Factor
     let sow: Factor
     let usw: Factor
-    let sop: Factor
     let expos: Factor
     let genEdFactors: [Factor]
     let factors: [Factor]
@@ -114,7 +113,7 @@ class FactorChecker {
     var termPrecedingCourses = Dictionary<TermKey, Dictionary<String, VariableIndex>>()
     var factorCourseTitles = [[String]]()
     var workloads = Dictionary<String, Double>()
-    var qScores = Dictionary<String, Double>()
+    var qScores = Dictionary<String, Int>()
     var meetings = Dictionary<String, List<Meeting>>()
     var termsTimeChecked = Set<TermKey>()
     var highestWorkloadDeviation = 0.0
@@ -134,13 +133,13 @@ class FactorChecker {
         for course in allCourses.filter(NSPredicate(format: "term != %@", "FALL")).sorted("percentileSize", ascending: false) {
             freshmanSpringCourses.insert(course.displayTitle)
             freshmanSpringSorted.append(course.displayTitle)
-            if course.shortField != "EXPOS" && course.shortField != "FRSEMR" {
+            if !(course.shortField == "EXPOS" && course.number != "40") && course.shortField != "FRSEMR" {
                 upperClassmanSpringCourses.insert(course.displayTitle)
                 upperClassmanSpringSorted.append(course.displayTitle)
             }
         }
         
-        self.expos = Factor(name: "Expos", count: 1, validTerm: { return $0.containsString("Freshman") }) { return $0.shortField == "EXPOS" }
+        self.expos = Factor(name: "Expos", count: 1, validTerm: { return $0.containsString("Freshman") }) { return $0.shortField == "EXPOS" && $0.number != "40" }
         
         self.basicPrep = Factor(name: "Basic Math", count: 2, validTerm: nil) { return $0.namedIn([("MATH~1a"), ("MATH~1b")]) }
         self.multivariable = Factor(name: "Math 21a", count: 1, validTerm: nil) { return $0.namedIn(["MATH~21a",]) }
@@ -161,7 +160,6 @@ class FactorChecker {
         self.sls = genEdFactor("SCI-LIVSYS")
         self.sow = genEdFactor("SOC-WORLD")
         self.usw = genEdFactor("US-WORLD")
-        self.sop = genEdFactor("SOP")
         self.genEdFactors = [aiu, cb, er, em, spu, sls, usw, sow]
         self.factors = [expos] + concentrationFactors + genEdFactors
         self.reverseFactors = [expos] + concentrationFactors + genEdFactors.reverse()
@@ -175,7 +173,7 @@ class FactorChecker {
                 prereqs.insert("COMPSCI 50 - Introduction to Computer Science I")
             }
             self.workloads[displayTitle] = course.workload
-            self.qScores[displayTitle] = course.overall
+            self.qScores[displayTitle] = course.percentileSize
             self.prerequisites[displayTitle] = prereqs
             self.prerequisiteStrings[displayTitle] = course.prerequisitesString
             self.meetings[displayTitle] = course.meetings
@@ -236,7 +234,7 @@ class FactorChecker {
             if let genEd = scrambledGenEds.popLast() {
                 var i = 0
                 var genEdCourse = genEd.rankedPossible[i]
-                while self.domain(termKey).contains(genEdCourse) {
+                while !self.domain(termKey).contains(genEdCourse) {
                     i++
                     genEdCourse = genEd.rankedPossible[i]
                 }
@@ -382,8 +380,8 @@ class FactorChecker {
     }
     
     func analyzeTermQScores(courses: [(String, VariableIndex)]) {
-        let sorted = courses.sort() { qScores[$0.0] < qScores[$1.0]}
-        averageQScore = sorted.reduce(0.0) { return $0 + qScores[$1.0]! } / Double(sorted.count)
+        let sorted = courses.sort() { qScores[$0.0]! < qScores[$1.0]!}
+        averageQScore = Double(sorted.reduce(0) { return $0 + qScores[$1.0]! }) / Double(sorted.count)
         for i in 0..<2 {
             suggestedMoves.append(Move(type: .QScoreReplace, index: sorted[i].1, swapIndex: nil, courses: [sorted[i].0]))
         }
@@ -418,7 +416,7 @@ class FactorChecker {
         }
         let highDeviation = abs(highestWorkload - targetAverage); let lowDeviation = abs(lowestWorkload - targetAverage);
         highestWorkloadDeviation = highDeviation > lowDeviation ? highDeviation : lowDeviation
-        print("Workloads (absolute, deviation) : \(variableWorkloads.map() { return ($0, $0 - targetAverage) })")
+        if shouldPrint { print("Workloads (absolute, deviation) : \(variableWorkloads.map() { return ($0, $0 - targetAverage) })") }
     }
     
     func checkTermForMeetingTimeConflicts(index: VariableIndex, schedule: Schedule) {

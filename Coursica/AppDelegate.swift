@@ -256,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 break
             }
         }
-        print("\n** Solving factor with \(course) assigned to \(variableIndex.termKey.rawValue)\n")
+//        print("\n** Solving factor with \(course) assigned to \(variableIndex.termKey.rawValue)\n")
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
         newSchedule.assignCourse(course, index: variableIndex)
         return newSchedule
@@ -282,7 +282,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let course = newCourse ?? factorChecker.domain(move.index!.termKey).randomElement()
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
-        print("\n** Replacing duplicate \(duplicateCourse) with \(course)\n")
+//        print("\n** Replacing duplicate \(duplicateCourse) with \(course)\n")
         newSchedule.assignCourse(course, index: move.index!)
         return newSchedule
     }
@@ -328,7 +328,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return schedule
             }
         }
-        print("\n** Moving \(move.courses!.first!) \(forward ? "forward" : "backward"), swapping with \(swapCourse)\n")
+//        print("\n** Moving \(move.courses!.first!) \(forward ? "forward" : "backward"), swapping with \(swapCourse)\n")
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
         newSchedule.assignCourse(move.courses!.first!, index: destinationVariable)
         newSchedule.assignCourse(swapCourse, index: move.index!)
@@ -377,7 +377,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let oldCourse = move.courses!.first!
         let newSchedule = Schedule(copy: schedule, assignment: nil, realm: realm)
-        print("\n** Replacing low Q score course \(oldCourse) (\(factorChecker.qScores[oldCourse]) with \(course) (\(factorChecker.qScores[course])\n")
+//        print("\n** Replacing low Q score course \(oldCourse) (\(factorChecker.qScores[oldCourse]) with \(course) (\(factorChecker.qScores[course])\n")
         newSchedule.assignCourse(course, index: variableIndex)
         return newSchedule
     }
@@ -398,7 +398,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case .QScoreReplace: newSchedule = qScoreReplaceMove(schedule, move: move)
             }
         }
-        print("\(newSchedule!)")
+//        print("\(newSchedule!)")
         return newSchedule!
     }
     
@@ -456,27 +456,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.factorChecker = FactorChecker(realm: realm)
         var searchSchedule = factorChecker.initialAssignment(self)
         var oldResult = factorChecker.analyze(searchSchedule, shouldPrint: true)
-        var schedulesExplored = 0; var stallCount = 0.0
+        var schedulesExplored = 1; var stallCount = 0.0
         while oldResult.conflicts > 0 {
             schedulesExplored++
             let successor = generateSuccessor(searchSchedule, result: oldResult)
-            let newResult = factorChecker.analyze(successor, shouldPrint: true)
-            if oldResult.conflicts > newResult.conflicts {
-                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
-                oldResult = newResult
-                searchSchedule = successor
-                stallCount = 0
-            } else if oldResult.conflicts >= newResult.conflicts && oldResult.averageQScore - (stallCount / 100.0) <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation - (stallCount / 1000.0) {
-                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
+            let newResult = factorChecker.analyze(successor, shouldPrint: false)
+//            if oldResult.conflicts > newResult.conflicts {//  {
+//                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
+//                oldResult = newResult
+//                searchSchedule = successor
+//                stallCount = 0
+//            }
+            if oldResult.conflicts >= newResult.conflicts && oldResult.averageQScore - 5 <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation - 0.05 {
+                //oldResult.averageQScore <= newResult.averageQScore && oldResult.highestWorkloadDeviation >= newResult.highestWorkloadDeviation {
+//                print("\(oldResult.conflicts)->\(newResult.conflicts) \(oldResult.averageQScore)->\(newResult.averageQScore) \(oldResult.highestWorkloadDeviation)->\(newResult.highestWorkloadDeviation) in \(schedulesExplored) steps\n\n\(searchSchedule)")
                 oldResult = newResult
                 searchSchedule = successor
                 stallCount++
+            }
+            if schedulesExplored % 1000 == 0 {
+                searchSchedule = factorChecker.initialAssignment(self)
+                oldResult = factorChecker.analyze(searchSchedule, shouldPrint: false)
             }
             if oldResult.conflicts == 0 {
                 let newResult = factorChecker.analyze(successor, shouldPrint: true)
             }
         }
-        print("Solution found. Explored \(schedulesExplored) schedules\n\(searchSchedule)")
+        print("Solution found, Q: \(oldResult.averageQScore), Workload: \(oldResult.highestWorkloadDeviation). Explored \(schedulesExplored) schedules\n\(searchSchedule)")
         factorChecker.analyze(searchSchedule, shouldPrint: true)
 //        Realm().write({
 //            var facultyDict = Dictionary<String, Faculty>()
