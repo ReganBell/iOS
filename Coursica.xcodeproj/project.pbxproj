@@ -45,6 +45,8 @@
 		593747511B6ED2A5002C1BEC /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593747501B6ED2A5002C1BEC /* CommentsViewController.swift */; };
 		593747531B6EDA8A002C1BEC /* DoubleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */; };
 		5941AA741B8431CE00CFB986 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5941AA731B8431CE00CFB986 /* MapViewController.swift */; };
+		59426D8F1C25BFE300442255 /* Planner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59426D8E1C25BFE300442255 /* Planner.swift */; };
+		59426D911C25C28B00442255 /* Containers+RandomElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59426D901C25C28B00442255 /* Containers+RandomElement.swift */; };
 		5942844B1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942844A1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift */; };
 		594C88971B3004E4007F4DFD /* slider-default7-trackBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */; };
 		594C88981B3004E4007F4DFD /* slider-default7-trackBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */; };
@@ -163,6 +165,8 @@
 		593747501B6ED2A5002C1BEC /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		593747521B6EDA8A002C1BEC /* DoubleSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSliderView.swift; sourceTree = "<group>"; };
 		5941AA731B8431CE00CFB986 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		59426D8E1C25BFE300442255 /* Planner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planner.swift; sourceTree = "<group>"; };
+		59426D901C25C28B00442255 /* Containers+RandomElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Containers+RandomElement.swift"; sourceTree = "<group>"; };
 		5942844A1B5E1915004EABC6 /* FiltersViewController-noStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FiltersViewController-noStoryboard.swift"; sourceTree = "<group>"; };
 		594C88951B3004E4007F4DFD /* slider-default7-trackBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground.png"; sourceTree = "<group>"; };
 		594C88961B3004E4007F4DFD /* slider-default7-trackBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default7-trackBackground@2x.png"; sourceTree = "<group>"; };
@@ -324,6 +328,18 @@
 			name = Hpple;
 			sourceTree = "<group>";
 		};
+		59426D921C25C38300442255 /* Planner */ = {
+			isa = PBXGroup;
+			children = (
+				59426D8E1C25BFE300442255 /* Planner.swift */,
+				59C314AF1C123C1C0062A725 /* Factor.swift */,
+				59C314B01C123C1C0062A725 /* FactorChecker.swift */,
+				59C314B11C123C1C0062A725 /* Schedule.swift */,
+				59C314B21C123C1C0062A725 /* Variable.swift */,
+			);
+			name = Planner;
+			sourceTree = "<group>";
+		};
 		596076A31A1000700038D4F4 = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +367,8 @@
 				5905EE6D1B72EB7900A4E29A /* Colors.swift */,
 				599648AB1B5B43CA00015D02 /* NavigationController.swift */,
 				599648A91B5B426000015D02 /* AppDelegate.swift */,
+				59426D901C25C28B00442255 /* Containers+RandomElement.swift */,
+				59426D921C25C38300442255 /* Planner */,
 				5972A0741BAA6EFD00420692 /* seed.realm */,
 				5934DFF31B9B90C800F56989 /* PrerequisitesParser.swift */,
 				595745811B54DF33006D3FF1 /* CoursicaViewController.swift */,
@@ -358,10 +376,6 @@
 				59BC6E4C1B5361550027AA95 /* Model */,
 				59CF581F1B3BA82500FB21FC /* ListsViewController.swift */,
 				59FCC2C81B3BD5C7001A2337 /* TempCourseList.swift */,
-				59C314AF1C123C1C0062A725 /* Factor.swift */,
-				59C314B01C123C1C0062A725 /* FactorChecker.swift */,
-				59C314B11C123C1C0062A725 /* Schedule.swift */,
-				59C314B21C123C1C0062A725 /* Variable.swift */,
 				5919BB951B474F1800C81B2F /* LoginWebView.swift */,
 				59B0AEC11B43AEE40018AA85 /* TempCourse.swift */,
 				598865141B23A3C50078B06F /* NSString+FirebaseEncode.h */,
@@ -780,7 +794,9 @@
 				593747491B6E9551002C1BEC /* Login.swift in Sources */,
 				59D4A04E1A349291003FD743 /* UILabel+HeightCalculation.m in Sources */,
 				5934DFF41B9B90C800F56989 /* PrerequisitesParser.swift in Sources */,
+				59426D8F1C25BFE300442255 /* Planner.swift in Sources */,
 				59FEEFE31B53953A009BA078 /* CS50Downloader.swift in Sources */,
+				59426D911C25C28B00442255 /* Containers+RandomElement.swift in Sources */,
 				59CF58201B3BA82500FB21FC /* ListsViewController.swift in Sources */,
 				595745821B54DF33006D3FF1 /* CoursicaViewController.swift in Sources */,
 				59774B2F1B55E0CC005E52A2 /* FastTokenizer.m in Sources */,

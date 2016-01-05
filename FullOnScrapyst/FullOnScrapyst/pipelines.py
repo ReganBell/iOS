@@ -33,6 +33,9 @@ class FullOnScrapystPipeline(object):
     finished_items = {}
 
     def process_item(self, item, spider):
+        return item
+        # Comment above to run for Q scores
+
         title = item['title']
         item_term_year = item['term'] + item['year']
         item_dict = dict(item)
@@ -47,9 +50,6 @@ class FullOnScrapystPipeline(object):
             self.finished_items[title] = {item_term_year: item_dict}
         return item
 
-    def close_spider(self, spider):
-        with open('final_results.json', 'w') as f:
-
-            json.dump(self.finished_items, f)
-
-
+    # def close_spider(self, spider):
+    #     with open('final_results.json', 'w') as f:
+    #         json.dump(self.finished_items, f)

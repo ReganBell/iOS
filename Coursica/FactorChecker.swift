@@ -252,7 +252,7 @@ class FactorChecker {
     }
     
     // Generate initial assignment to be close to a solution
-    func initialAssignment(delegate: AppDelegate) -> Schedule {
+    func initialAssignment() -> Schedule {
         let unfixedVariables = orderedVariableKeys
         var scrambledGenEds = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(self.genEdFactors) as! [Factor]
         let schedule = Schedule(copy: nil, assignment: nil, realm: realm)

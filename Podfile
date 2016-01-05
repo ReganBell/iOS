@@ -1,7 +1,7 @@
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'RealmSwift', '~> 0.96.2'
+pod 'RealmSwift', '~> 0.97.0'
 pod 'Alamofire', '~> 2.0'
 pod 'pop', '~> 1.0'
 pod 'Mantle'

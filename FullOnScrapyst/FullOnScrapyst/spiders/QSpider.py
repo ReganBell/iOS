@@ -9,7 +9,7 @@ import urllib
 import urlparse
 import re
 from scrapy.shell import inspect_response
-from ..items import Course
+from ..items import QCourse
 
 
 def firebase_sanitize(string):
@@ -29,7 +29,7 @@ class QSpider(scrapy.Spider):
     error_requests = {}
 
     def start_requests(self):
-        yield scrapy.Request('https://webapps.fas.harvard.edu/course_evaluation_reports/fas/list', callback=self.log_in)
+        yield scrapy.Request(self.base + 'list', callback=self.log_in)
 
     def log_in(self, response):
         request = scrapy.FormRequest.from_response(response,
@@ -106,7 +106,7 @@ class QSpider(scrapy.Spider):
                 print "Retrying %s succeeded" % response.url
             raw_enrollment = response.xpath('//div[@id = "summaryStats"]/text()').extract()
             enrollment = re.compile("[0-9]+").search(raw_enrollment[0]).group()
-            course = Course()
+            course = QCourse()
             course['title'] = course_title[0]
             course['enrollment'] = enrollment
             course['term'] = response.meta['term']

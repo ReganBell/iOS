@@ -32,11 +32,11 @@ PODS:
     - Mantle/extobjc (= 2.0.2)
   - Mantle/extobjc (2.0.2)
   - pop (1.0.7)
-  - Realm (0.96.2):
-    - Realm/Headers (= 0.96.2)
-  - Realm/Headers (0.96.2)
-  - RealmSwift (0.96.2):
-    - Realm (= 0.96.2)
+  - Realm (0.97.0):
+    - Realm/Headers (= 0.97.0)
+  - Realm/Headers (0.97.0)
+  - RealmSwift (0.97.0):
+    - Realm (= 0.97.0)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
@@ -48,7 +48,7 @@ DEPENDENCIES:
   - Firebase
   - Mantle
   - pop (~> 1.0)
-  - RealmSwift (~> 0.96.2)
+  - RealmSwift (~> 0.97.0)
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
@@ -60,8 +60,8 @@ SPEC CHECKSUMS:
   Firebase: 2db60272f68ce40c7d47e5ae6eddc16977c65d4c
   Mantle: 967fd31ea0220890b2e76589198996b534bb3fb1
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
-  Realm: 3ce8448151c571e90b85002d984d7f93f54fc8a3
-  RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
+  Realm: b498a6fb9d288b171ff98d0e2d4384c295be8990
+  RealmSwift: d014810dec75c9a3f1a33926d2dabfed855c582c
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
 COCOAPODS: 0.39.0
